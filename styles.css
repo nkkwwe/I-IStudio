@@ -2368,3 +2368,60 @@ html[data-theme="dark"] .nav-menu {
 html[data-theme="dark"] .footer-bottom {
   border-top-color: var(--border);
 }
+
+/* Dark theme: keep mockups and solution details in the same palette. */
+html[data-theme="dark"] .solution-output-card,
+html[data-theme="dark"] .pill-item {
+  background-color: var(--bg-surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .case-badge-metric {
+  background-color: var(--bg-panel);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .laptop-screen,
+html[data-theme="dark"] .phone-screen {
+  background-color: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .screen-browser-nav {
+  background-color: var(--bg-subtle);
+  border-bottom-color: var(--border);
+}
+
+html[data-theme="dark"] .b2b-card-mini,
+html[data-theme="dark"] .phone-card,
+html[data-theme="dark"] .m-cat-card,
+html[data-theme="dark"] .cat-pill {
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+}
+
+html[data-theme="dark"] .mockup-lead-bubble,
+html[data-theme="dark"] .live-status-pill,
+html[data-theme="dark"] .ad-trend-badge,
+html[data-theme="dark"] .score-badge,
+html[data-theme="dark"] .phone-badge {
+  background-color: #153329;
+  border-color: #286b52;
+  color: #a7f3d0;
+}
+
+html[data-theme="dark"] .bubble-info strong,
+html[data-theme="dark"] .bubble-info span {
+  color: #a7f3d0;
+}
+
+html[data-theme="dark"] .m-hero-btn,
+html[data-theme="dark"] .cat-pill.active,
+html[data-theme="dark"] .phone-btn,
+html[data-theme="dark"] .workflow-card:hover .workflow-icon-box {
+  background-color: var(--accent-black);
+  border-color: var(--accent-black);
+  color: var(--text-inverse);
+}
