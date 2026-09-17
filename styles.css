@@ -2425,3 +2425,10 @@ html[data-theme="dark"] .workflow-card:hover .workflow-icon-box {
   border-color: var(--accent-black);
   color: var(--text-inverse);
 }
+html[data-theme="dark"] .btn-primary:hover,
+html[data-theme="dark"] .btn-primary:focus-visible {
+  background-color: var(--bg-panel);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-subtle);
+}
