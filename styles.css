@@ -2432,3 +2432,10 @@ html[data-theme="dark"] .btn-primary:focus-visible {
   color: var(--text-primary);
   box-shadow: var(--shadow-subtle);
 }
+/* Desktop dark theme: keep header navigation transparent. */
+@media (min-width: 769px) {
+  html[data-theme="dark"] .nav-menu {
+    background-color: transparent;
+    border-bottom-color: transparent;
+  }
+}
