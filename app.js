@@ -5,11 +5,13 @@
 let currentLanguage = 'ru';
 let activeGoalKey = 'landing';
 
+const savedTheme = localStorage.getItem('ii_studio_theme');
+if (savedTheme === 'dark') {
+  document.documentElement.dataset.theme = 'dark';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  // Clear any legacy theme tokens
-  localStorage.removeItem('flow_studio_theme');
-  document.body.removeAttribute('data-theme');
-  
+  initThemeSwitcher();
   initMobileMenu();
   initLanguageSwitcher();
   initSolutionsByGoal();
@@ -20,6 +22,41 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ==========================================================================
    1. Language Switcher & Localization Controller
    ========================================================================== */
+/* ==========================================================================
+   1. Theme Switcher
+   ========================================================================== */
+function initThemeSwitcher() {
+  const languageSwitcher = document.querySelector('.language-switcher');
+  if (!languageSwitcher) return;
+
+  let toggle = document.getElementById('themeToggle');
+
+  if (!toggle) {
+    toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.id = 'themeToggle';
+    toggle.className = 'theme-toggle';
+    toggle.innerHTML = '<svg class="theme-icon theme-icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4"></path></svg>' +
+      '<svg class="theme-icon theme-icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z"></path></svg>';
+    languageSwitcher.insertAdjacentElement('afterend', toggle);
+  }
+
+  const applyTheme = (theme) => {
+    const isDark = theme === 'dark';
+    document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+    toggle.setAttribute('aria-pressed', String(isDark));
+    toggle.setAttribute('aria-label', isDark ? 'Enable light theme' : 'Enable dark theme');
+    toggle.setAttribute('title', isDark ? 'Light theme' : 'Dark theme');
+    localStorage.setItem('ii_studio_theme', isDark ? 'dark' : 'light');
+  };
+
+  toggle.addEventListener('click', () => {
+    const isDark = document.documentElement.dataset.theme === 'dark';
+    applyTheme(isDark ? 'light' : 'dark');
+  });
+
+  applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
+}
 function initLanguageSwitcher() {
   const options = document.querySelectorAll('.language-option');
   if (!options.length) return;
