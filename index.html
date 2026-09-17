@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I&I Studio | Modern Websites, Redesign & Performance Ads</title>
+  <meta name="description" content="We build high-converting landing pages, functional business websites, modern website redesigns, and high-ROI ad campaigns.">
+  
+  <!-- Fonts: Swiss Grotesque -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header class="site-header">
+    <div class="container header-container">
+      <a href="#hero" class="logo">
+        <span class="logo-symbol">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="20" height="20" rx="6" fill="#09090b"/>
+            <path d="M7 7V17M17 7V17M10.5 13.5C11.2 12.8 12.8 11.2 13.5 10.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="1.5" fill="#ffffff"/>
+          </svg>
+        </span>
+        <span class="logo-text">I&amp;I<span class="logo-sub">Studio</span></span>
+      </a>
+
+      <nav class="nav-menu" id="navMenu">
+        <a href="#hero" class="nav-link active" data-i18n="nav_home">Home</a>
+        <a href="#services" class="nav-link" data-i18n="nav_services">Services</a>
+        <a href="#solutions" class="nav-link" data-i18n="nav_solutions">Solutions</a>
+        <a href="#cases" class="nav-link" data-i18n="nav_cases">Cases</a>
+        <a href="#process" class="nav-link" data-i18n="nav_process">How We Work</a>
+        <a href="#advantages" class="nav-link" data-i18n="nav_about">About</a>
+        <a href="#contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="language-switcher" role="group" aria-label="Language selection">
+          <button type="button" class="language-option" data-language="en" aria-pressed="false">EN</button>
+          <span class="language-divider" aria-hidden="true"></span>
+          <button type="button" class="language-option active" data-language="ru" aria-pressed="true">RU</button>
+        </div>
+        <a href="#inquiry" class="btn btn-primary btn-sm">
+          <span data-i18n="btn_discuss">Discuss Project</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="hero">
+    <div class="container hero-container">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        <span data-i18n="hero_badge">Websites • Redesign • Targeted Advertising</span>
+      </div>
+
+      <h1 class="hero-title" data-i18n-html="hero_title">
+        We build websites, redesign existing pages, and launch ads that <span class="gradient-text">bring you clients.</span>
+      </h1>
+
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
+        From high-converting landing pages and functional business sites to modern website overhauls and targeted advertising — we turn visitors into actual inquiries.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#inquiry" class="btn btn-primary btn-lg">
+          <span data-i18n="hero_btn_discuss">Discuss Project</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#services" class="btn btn-secondary btn-lg">
+          <span data-i18n="hero_btn_explore">Explore Services</span>
+        </a>
+      </div>
+
+      <!-- Comprehensive Editorial Description of What We Do -->
+      <div class="hero-editorial-wrap">
+        <div class="hero-editorial-intro">
+          <h3 data-i18n="hero_ed_title">Focused digital execution for modern businesses</h3>
+          <p data-i18n-html="hero_ed_desc">
+            At <strong>I&amp;I Studio</strong>, we specialize in high-impact web development and customer acquisition. We don't drag out projects for months or build complicated bloated systems you can't manage. We focus strictly on what brings real commercial inquiries to your business.
+          </p>
+        </div>
+
+        <div class="hero-services-text-grid">
+          <div class="service-text-item">
+            <div class="text-item-header">
+              <span class="text-item-num">01</span>
+              <h4 data-i18n="hero_serv_01_title">High-Converting Landing Pages</h4>
+            </div>
+            <p data-i18n="hero_serv_01_desc">
+              One-page websites built to present a specific service, product, or promotion with crystal clarity. We write persuasive texts, design clean modern layouts, and optimize forms so visitors turn into direct inquiries. Fast turnaround: ready for traffic in 5–7 days.
+            </p>
+          </div>
+
+          <div class="service-text-item">
+            <div class="text-item-header">
+              <span class="text-item-num">02</span>
+              <h4 data-i18n="hero_serv_02_title">Functional Business Websites</h4>
+            </div>
+            <p data-i18n="hero_serv_02_desc">
+              Complete multi-page platforms for established companies that need to showcase multiple services, transparent pricing, verified client portfolio, team credentials, and quote calculators. Fast, clean code that loads in under 1 second.
+            </p>
+          </div>
+
+          <div class="service-text-item">
+            <div class="text-item-header">
+              <span class="text-item-num">03</span>
+              <h4 data-i18n-html="hero_serv_03_title">Website Redesign &amp; Modernization</h4>
+            </div>
+            <p data-i18n="hero_serv_03_desc">
+              Complete overhaul of outdated, slow, or low-converting websites. We transform the UI into a modern Swiss/Corporate Tech aesthetic, fix mobile responsiveness, boost PageSpeed scores to 95+, and preserve all existing Google SEO rankings.
+            </p>
+          </div>
+
+          <div class="service-text-item">
+            <div class="text-item-header">
+              <span class="text-item-num">04</span>
+              <h4 data-i18n-html="hero_serv_04_title">Targeted Advertising (Google &amp; Meta)</h4>
+            </div>
+            <p data-i18n="hero_serv_04_desc">
+              Bringing paying clients from day one. We set up Google Search campaigns for people actively looking for your services right now, plus visually engaging Instagram and Facebook ads with custom creatives, tracking pixels, and cost-per-lead optimization.
+            </p>
+          </div>
+        </div>
+
+        <div class="hero-trust-bar">
+          <div class="trust-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="hero_trust_1">5–7 Days Typical Launch</span></div>
+          <div class="trust-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="hero_trust_2">15s Lead Alerts to Telegram</span></div>
+          <div class="trust-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="hero_trust_3">100% Mobile Optimized</span></div>
+          <div class="trust-pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n-html="hero_trust_4">Fixed Pricing &amp; Direct Contact</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions By Objective Section -->
+  <section class="solutions-section" id="solutions">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="sol_tag">[ 01 / SOLUTIONS ]</span>
+        <h2 class="section-title" data-i18n="sol_title">Solutions Tailored to Your Goal</h2>
+        <p class="section-desc" data-i18n="sol_desc">Choose what your business needs right now to see the exact recommended approach.</p>
+      </div>
+
+      <div class="goals-pills-wrapper">
+        <button class="goal-pill active" data-goal="landing">
+          <span class="goal-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span> <span data-i18n="goal_landing">Launch a Landing Page</span>
+        </button>
+        <button class="goal-pill" data-goal="functional-site">
+          <span class="goal-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="6" x2="15" y2="6"/><line x1="9" y1="10" x2="15" y2="10"/><line x1="9" y1="14" x2="15" y2="14"/></svg></span> <span data-i18n="goal_business">Functional Business Website</span>
+        </button>
+        <button class="goal-pill" data-goal="redesign">
+          <span class="goal-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg></span> <span data-i18n="goal_redesign">Redesign Existing Website</span>
+        </button>
+        <button class="goal-pill" data-goal="ads">
+          <span class="goal-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span> <span data-i18n-html="goal_ads">Launch Paid Ads (Google &amp; Meta)</span>
+        </button>
+        <button class="goal-pill" data-goal="full-pack">
+          <span class="goal-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="12 6 12 12 16 14"/></svg></span> <span data-i18n="goal_bundle">Website + Ads Bundle</span>
+        </button>
+      </div>
+
+      <div class="solution-output-card" id="solutionOutput">
+        <!-- Dynamically rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Bento Grid Section -->
+  <section class="services-section" id="services">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="serv_tag">[ 02 / CORE SERVICES ]</span>
+        <h2 class="section-title" data-i18n="serv_title">What We Build For You</h2>
+        <p class="section-desc" data-i18n="serv_desc">Practical, conversion-focused digital solutions crafted in a modern modular ecosystem.</p>
+      </div>
+
+      <div class="bento-grid">
+        
+        <!-- Bento 1: Landing Pages (Span 7) -->
+        <div class="bento-card bento-span-7">
+          <div class="bento-card-top">
+            <div class="bento-tag-group">
+              <span class="bento-badge" data-i18n="bento_1_badge">Landing Pages</span>
+              <span class="bento-subbadge"><svg class="inline-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span data-i18n="bento_1_subbadge">7-Day Launch</span></span>
+            </div>
+            <div class="card-icon-wrapper">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            </div>
+          </div>
+
+          <h3 class="bento-title" data-i18n="bento_1_title">High-Converting Landing Pages</h3>
+          <p class="bento-desc" data-i18n="bento_1_desc">One-page websites built to present your product or service with maximum clarity, overcoming client objections and turning paid clicks into direct inquiries.</p>
+
+          <!-- Bento Inner Panel -->
+          <div class="bento-inner-panel">
+            <div class="browser-mockup-header">
+              <div class="browser-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="browser-address">iistudio.dev/preview/landing</div>
+              <div class="live-status-pill"><span class="live-dot"></span> Live</div>
+            </div>
+            <div class="bento-panel-stat">
+              <span class="stat-number">4.8% – 9.2%</span>
+              <span class="stat-desc" data-i18n="bento_1_stat_desc">Target form conversion rate</span>
+            </div>
+            <div class="bento-feature-chips">
+              <span class="chip" data-i18n="bento_1_chip_1">✓ 100% Mobile Perfection</span>
+              <span class="chip" data-i18n="bento_1_chip_2">✓ Telegram Lead Ping in 15s</span>
+              <span class="chip" data-i18n="bento_1_chip_3">✓ Tracking Pixels</span>
+            </div>
+          </div>
+
+          <a href="#inquiry" class="bento-link" onclick="preselectService('landing')">
+            <span data-i18n="bento_1_link">Configure Landing Page Form</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+
+        <!-- Bento 2: Targeted Advertising (Span 5) -->
+        <div class="bento-card bento-span-5">
+          <div class="bento-card-top">
+            <div class="bento-tag-group">
+              <span class="bento-badge" data-i18n="bento_2_badge">Paid Acquisition</span>
+              <span class="bento-subbadge"><svg class="inline-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> <span data-i18n="bento_2_subbadge">High ROAS</span></span>
+            </div>
+            <div class="card-icon-wrapper">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+            </div>
+          </div>
+
+          <h3 class="bento-title" data-i18n="bento_2_title">Targeted Advertising</h3>
+          <p class="bento-desc" data-i18n="bento_2_desc">Laser-targeted campaigns in Google Search and Meta (Instagram &amp; Facebook) to reach people actively seeking your services.</p>
+
+          <!-- Bento Inner Panel -->
+          <div class="bento-inner-panel">
+            <div class="ad-metric-banner">
+              <span class="ad-stat-big">3.8x</span>
+              <span class="ad-stat-tag" data-i18n="bento_2_roas">Average Ad ROAS</span>
+              <span class="ad-trend-badge"><svg class="inline-svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg> <span data-i18n="bento_2_reach">+240% reach</span></span>
+            </div>
+            <div class="bento-channels-row">
+              <span class="channel-pill" data-i18n="bento_2_ch_1">Google Search</span>
+              <span class="channel-pill" data-i18n="bento_2_ch_2">Instagram Feed</span>
+              <span class="channel-pill" data-i18n="bento_2_ch_3">Meta Ads</span>
+            </div>
+          </div>
+
+          <a href="#inquiry" class="bento-link" onclick="preselectService('ads')">
+            <span data-i18n="bento_2_link">Configure Advertising Form</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+
+        <!-- Bento 3: Website Redesign (Span 5) -->
+        <div class="bento-card bento-span-5">
+          <div class="bento-card-top">
+            <div class="bento-tag-group">
+              <span class="bento-badge" data-i18n="bento_3_badge">Modernization</span>
+              <span class="bento-subbadge"><svg class="inline-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> <span data-i18n="bento_3_subbadge">Speed Boost</span></span>
+            </div>
+            <div class="card-icon-wrapper">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            </div>
+          </div>
+
+          <h3 class="bento-title" data-i18n="bento_3_title">Website Redesign &amp; Overhaul</h3>
+          <p class="bento-desc" data-i18n="bento_3_desc">Upgrade slow, outdated websites into crisp modern experiences that look premium and function flawlessly on smartphones.</p>
+
+          <!-- Bento Inner Panel -->
+          <div class="bento-inner-panel">
+            <div class="speed-score-widget">
+              <div class="score-badge">98<span>/100</span></div>
+              <div class="score-info">
+                <strong data-i18n="bento_3_score">Google PageSpeed Score</strong>
+                <span class="speed-compare">3.8s &rarr; <strong data-i18n="bento_3_time">0.9s load time</strong></span>
+              </div>
+            </div>
+            <div class="bento-feature-chips" style="margin-top: 12px;">
+              <span class="chip" data-i18n="bento_3_chip_1">✓ Zero Lost Traffic</span>
+              <span class="chip" data-i18n="bento_3_chip_2">✓ Preserved Google SEO</span>
+            </div>
+          </div>
+
+          <a href="#inquiry" class="bento-link" onclick="preselectService('redesign')">
+            <span data-i18n="bento_3_link">Configure Redesign Form</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+
+        <!-- Bento 4: Functional Business Websites (Span 7) -->
+        <div class="bento-card bento-span-7">
+          <div class="bento-card-top">
+            <div class="bento-tag-group">
+              <span class="bento-badge" data-i18n="bento_4_badge">Corporate Web</span>
+              <span class="bento-subbadge"><svg class="inline-svg" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="9" y1="6" x2="15" y2="6"/><line x1="9" y1="10" x2="15" y2="10"/><line x1="9" y1="14" x2="15" y2="14"/></svg> <span data-i18n="bento_4_subbadge">Multi-Page</span></span>
+            </div>
+            <div class="card-icon-wrapper">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            </div>
+          </div>
+
+          <h3 class="bento-title" data-i18n="bento_4_title">Functional Business Websites</h3>
+          <p class="bento-desc" data-i18n="bento_4_desc">Multi-page corporate and service platforms designed to showcase your complete offerings, cases, calculators, and allow your staff to manage content easily.</p>
+
+          <!-- Bento Inner Panel -->
+          <div class="bento-inner-panel">
+            <div class="bento-pill-grid">
+              <div class="pill-item"><svg class="inline-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> <span data-i18n-html="bento_4_pill_1">Structured Services &amp; Pricing</span></div>
+              <div class="pill-item"><svg class="inline-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg> <span data-i18n="bento_4_pill_2">Interactive Quote Calculators</span></div>
+              <div class="pill-item"><svg class="inline-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg> <span data-i18n="bento_4_pill_3">Verified Case Studies Portfolio</span></div>
+              <div class="pill-item"><svg class="inline-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> <span data-i18n="bento_4_pill_4">Easy-to-Manage Admin CMS</span></div>
+            </div>
+          </div>
+
+          <a href="#inquiry" class="bento-link" onclick="preselectService('corporate')">
+            <span data-i18n="bento_4_link">Configure Business Website Form</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Cases & Results Section -->
+  <section class="cases-section" id="cases">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="case_tag">[ 03 / CASE STUDIES ]</span>
+        <h2 class="section-title" data-i18n="case_title">Selected Case Studies</h2>
+        <p class="section-desc" data-i18n="case_desc">Practical examples of how our websites and advertising deliver measurable business outcomes.</p>
+      </div>
+
+      <div class="cases-grid">
+        
+        <!-- Case 1 -->
+        <article class="case-card">
+          <div class="case-visual visual-mockup-wrap">
+            <div class="case-badge-overlay">
+              <span class="case-category" data-i18n="case_1_cat">Landing Page + Meta Ads</span>
+              <span class="case-badge-metric" data-i18n="case_1_metric">-38% Lead Cost</span>
+            </div>
+            
+            <!-- Laptop Device Mockup -->
+            <div class="device-mockup laptop-frame">
+              <div class="laptop-camera"></div>
+              <div class="laptop-screen">
+                <div class="screen-browser-nav">
+                  <div class="nav-dots">
+                    <span class="nav-dot red"></span>
+                    <span class="nav-dot yellow"></span>
+                    <span class="nav-dot green"></span>
+                  </div>
+                  <span class="nav-url">renovations-pro.com</span>
+                </div>
+                <div class="screen-content mockup-landing">
+                  <div class="mockup-hero-banner">
+                    <span class="m-hero-badge"><svg class="inline-svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Turnkey Reno</span>
+                    <h5>Apartment Renovation in 30 Days</h5>
+                    <div class="m-hero-btn">Calculate Quote</div>
+                  </div>
+                  <div class="mockup-lead-bubble">
+                    <span class="bubble-icon"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+                    <div class="bubble-info">
+                      <strong>New Lead: +1 555...</strong>
+                      <span>2-Bed Apt Reno • $8.20 CAC</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="laptop-base"></div>
+            </div>
+          </div>
+
+          <div class="case-body">
+            <div class="case-meta" data-i18n-html="case_1_meta">
+              <span>Timeline: 10 Days</span> • <span>Home Services &amp; Renovation</span>
+            </div>
+            <h3 class="case-title" data-i18n="case_1_title">High-Converting Service Landing &amp; Instagram Ads</h3>
+            <p class="case-challenge" data-i18n-html="case_1_obj"><strong>Objective:</strong> Client needed a fast launch to generate inquiries for apartment renovations before the high season started.</p>
+            
+            <div class="case-scope">
+              <span class="scope-tag" data-i18n="case_1_tag_1">Responsive Landing</span>
+              <span class="scope-tag" data-i18n="case_1_tag_2">Instagram &amp; Facebook Ads</span>
+              <span class="scope-tag" data-i18n="case_1_tag_3">Telegram Alert Bot</span>
+              <span class="scope-tag" data-i18n="case_1_tag_4">Cost Calculator</span>
+            </div>
+
+            <div class="case-metrics-row">
+              <div class="metric-box">
+                <span class="metric-val">84</span>
+                <span class="metric-label" data-i18n="case_1_lbl_1">Inquiries / Mo</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val">$8.20</span>
+                <span class="metric-label" data-i18n="case_1_lbl_2">Avg. Lead Cost</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val">2 min</span>
+                <span class="metric-label" data-i18n="case_1_lbl_3">Lead Notification</span>
+              </div>
+            </div>
+
+            <a href="#inquiry" class="btn btn-secondary btn-block" onclick="preselectService('landing')">
+              <span data-i18n="case_btn_similar">I Want Similar Results</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Case 2 -->
+        <article class="case-card">
+          <div class="case-visual visual-mockup-wrap">
+            <div class="case-badge-overlay">
+              <span class="case-category" data-i18n="case_2_cat">Website Redesign</span>
+              <span class="case-badge-metric" data-i18n="case_2_metric">+160% Conversions</span>
+            </div>
+
+            <!-- Dual Device Mockup (Laptop + Phone) -->
+            <div class="dual-devices-wrapper">
+              <div class="device-mockup laptop-frame mini-laptop">
+                <div class="laptop-camera"></div>
+                <div class="laptop-screen">
+                  <div class="screen-browser-nav">
+                    <div class="nav-dots"><span></span><span></span><span></span></div>
+                    <span class="nav-url">apex-consulting.com</span>
+                  </div>
+                  <div class="screen-content mockup-b2b">
+                    <div class="mockup-b2b-header">
+                      <span class="m-logo">APEX.</span>
+                      <div class="m-nav-lines"><span></span><span></span><span></span></div>
+                    </div>
+                    <div class="mockup-b2b-content">
+                      <span class="b2b-title">Strategic Advisory</span>
+                      <div class="b2b-grid">
+                        <div class="b2b-card-mini">Financial</div>
+                        <div class="b2b-card-mini">Operations</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="laptop-base"></div>
+              </div>
+
+              <!-- Smartphone Mockup -->
+              <div class="device-mockup phone-frame">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                  <div class="phone-badge"><svg class="inline-svg" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> 98/100</div>
+                  <div class="phone-card">
+                    <span>Mobile Ready</span>
+                    <div class="phone-btn">Consult</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="case-body">
+            <div class="case-meta" data-i18n-html="case_2_meta">
+              <span>Timeline: 2 Weeks</span> • <span>B2B Consulting Agency</span>
+            </div>
+            <h3 class="case-title" data-i18n="case_2_title">Complete Redesign of Outdated Corporate Website</h3>
+            <p class="case-challenge" data-i18n-html="case_2_obj"><strong>Objective:</strong> Modernize a 7-year-old slow website that was losing traffic on mobile and failing to generate consultation requests.</p>
+            
+            <div class="case-scope">
+              <span class="scope-tag" data-i18n="case_2_tag_1">Modern UI/UX</span>
+              <span class="scope-tag" data-i18n="case_2_tag_2">Mobile Optimization</span>
+              <span class="scope-tag" data-i18n="case_2_tag_3">Speed Boost (96 PageSpeed)</span>
+              <span class="scope-tag" data-i18n="case_2_tag_4">Smart Quote Forms</span>
+            </div>
+
+            <div class="case-metrics-row">
+              <div class="metric-box">
+                <span class="metric-val">2.6x</span>
+                <span class="metric-label" data-i18n="case_2_lbl_1">More Inquiries</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val">1.2s</span>
+                <span class="metric-label" data-i18n="case_2_lbl_2">Load Time</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val">+45%</span>
+                <span class="metric-label" data-i18n="case_2_lbl_3">Mobile Engagement</span>
+              </div>
+            </div>
+
+            <a href="#inquiry" class="btn btn-secondary btn-block" onclick="preselectService('redesign')">
+              <span data-i18n="case_btn_similar">I Want Similar Results</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Case 3 -->
+        <article class="case-card">
+          <div class="case-visual visual-mockup-wrap">
+            <div class="case-badge-overlay">
+              <span class="case-category" data-i18n="case_3_cat">Business Site + Google Ads</span>
+              <span class="case-badge-metric" data-i18n="case_3_metric">3.9x ROAS</span>
+            </div>
+
+            <!-- Laptop Catalog Mockup -->
+            <div class="device-mockup laptop-frame">
+              <div class="laptop-camera"></div>
+              <div class="laptop-screen">
+                <div class="screen-browser-nav">
+                  <div class="nav-dots">
+                    <span class="nav-dot red"></span>
+                    <span class="nav-dot yellow"></span>
+                    <span class="nav-dot green"></span>
+                  </div>
+                  <span class="nav-url">machinery-fleet.com/catalog</span>
+                </div>
+                <div class="screen-content mockup-catalog">
+                  <div class="mockup-catalog-pills">
+                    <span class="cat-pill active">Excavators</span>
+                    <span class="cat-pill">Cranes</span>
+                    <span class="cat-pill">Dumpers</span>
+                  </div>
+                  <div class="mockup-catalog-cards">
+                    <div class="m-cat-card">
+                      <div class="m-cat-tag">CAT 320D</div>
+                      <span class="m-cat-price">$240 / day</span>
+                    </div>
+                    <div class="m-cat-card">
+                      <div class="m-cat-tag">Liebherr 50T</div>
+                      <span class="m-cat-price">$450 / day</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="laptop-base"></div>
+            </div>
+          </div>
+          <div class="case-body">
+            <div class="case-meta" data-i18n-html="case_3_meta">
+              <span>Timeline: 3 Weeks</span> • <span>Logistics &amp; Equipment Rental</span>
+            </div>
+            <h3 class="case-title" data-i18n="case_3_title">Functional Multi-Page Website &amp; Google Search Campaign</h3>
+            <p class="case-challenge" data-i18n-html="case_3_obj"><strong>Objective:</strong> Present machinery fleet, enable online quote requests, and attract warm commercial search traffic.</p>
+            
+            <div class="case-scope">
+              <span class="scope-tag" data-i18n="case_3_tag_1">Catalog Structure</span>
+              <span class="scope-tag" data-i18n="case_3_tag_2">Google Search Ads</span>
+              <span class="scope-tag" data-i18n="case_3_tag_3">Analytics Setup</span>
+              <span class="scope-tag" data-i18n="case_3_tag_4">Fast Contact Triggers</span>
+            </div>
+
+            <div class="case-metrics-row">
+              <div class="metric-box">
+                <span class="metric-val">112</span>
+                <span class="metric-label" data-i18n="case_3_lbl_1">Warm Leads</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val">3.9x</span>
+                <span class="metric-label" data-i18n="case_3_lbl_2">Ad ROI</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val">0</span>
+                <span class="metric-label" data-i18n="case_3_lbl_3">Missed Inquiries</span>
+              </div>
+            </div>
+
+            <a href="#inquiry" class="btn btn-secondary btn-block" onclick="preselectService('corporate')">
+              <span data-i18n="case_btn_similar">I Want Similar Results</span>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- How We Work / 5 Steps -->
+  <section class="process-section" id="process">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="wf_tag">[ 04 / WORKFLOW ]</span>
+        <h2 class="section-title" data-i18n="wf_title">How We Deliver Your Project</h2>
+        <p class="section-desc" data-i18n="wf_desc">Clear communication, fast turnarounds, and no complicated corporate bureaucracy.</p>
+      </div>
+
+      <!-- Swiss Connected Workflow Architecture -->
+      <div class="workflow-flow-wrapper">
+        <div class="workflow-grid">
+
+          <!-- Step 1 -->
+          <div class="workflow-card">
+            <div class="workflow-card-top">
+              <span class="workflow-num">01</span>
+              <span class="workflow-tag" data-i18n="wf_step_1_tag">Discovery</span>
+            </div>
+            <div class="workflow-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                <line x1="8" y1="9" x2="16" y2="9"/>
+                <line x1="8" y1="13" x2="13" y2="13"/>
+              </svg>
+            </div>
+            <h4 data-i18n-html="wf_step_1_title">Brief &amp; Strategy</h4>
+            <p data-i18n="wf_step_1_desc">We discuss your goals, audience, and offer to pick the highest-converting format (landing, business site, or ad campaign).</p>
+            <div class="workflow-footer">
+              <span class="workflow-meta">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span data-i18n="wf_step_1_del">Clear Scope</span>
+              </span>
+              <span class="workflow-duration" data-i18n="wf_step_1_dur">1–2 Days</span>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="workflow-card">
+            <div class="workflow-card-top">
+              <span class="workflow-num">02</span>
+              <span class="workflow-tag" data-i18n="wf_step_2_tag">Roadmap</span>
+            </div>
+            <div class="workflow-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <h4 data-i18n-html="wf_step_2_title">Fixed Proposal &amp; Structure</h4>
+            <p data-i18n="wf_step_2_desc">We establish the page wireframe, key conversion blocks, agreed timeline (typically 1–3 weeks), and a fixed transparent price.</p>
+            <div class="workflow-footer">
+              <span class="workflow-meta">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span data-i18n="wf_step_2_del">Fixed Terms</span>
+              </span>
+              <span class="workflow-duration" data-i18n="wf_step_2_dur">1 Day</span>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="workflow-card">
+            <div class="workflow-card-top">
+              <span class="workflow-num">03</span>
+              <span class="workflow-tag" data-i18n="wf_step_3_tag">Production</span>
+            </div>
+            <div class="workflow-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <h4 data-i18n-html="wf_step_3_title">Design &amp; Web Development</h4>
+            <p data-i18n="wf_step_3_desc">We design a clean layout, write concise texts, build fast responsive code, and set up instant notifications to your Telegram or Email.</p>
+            <div class="workflow-footer">
+              <span class="workflow-meta">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span data-i18n="wf_step_3_del">Live Staging</span>
+              </span>
+              <span class="workflow-duration" data-i18n="wf_step_3_dur">5–10 Days</span>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="workflow-card">
+            <div class="workflow-card-top">
+              <span class="workflow-num">04</span>
+              <span class="workflow-tag" data-i18n="wf_step_4_tag">Launch</span>
+            </div>
+            <div class="workflow-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+              </svg>
+            </div>
+            <h4 data-i18n-html="wf_step_4_title">Advertising &amp; Go-Live</h4>
+            <p data-i18n="wf_step_4_desc">We deploy the website to your domain, configure analytics pixels, and launch targeted Google or Meta ad campaigns to bring traffic.</p>
+            <div class="workflow-footer">
+              <span class="workflow-meta">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span data-i18n="wf_step_4_del">Traffic Active</span>
+              </span>
+              <span class="workflow-duration" data-i18n="wf_step_4_dur">2–3 Days</span>
+            </div>
+          </div>
+
+          <!-- Step 5 -->
+          <div class="workflow-card">
+            <div class="workflow-card-top">
+              <span class="workflow-num">05</span>
+              <span class="workflow-tag" data-i18n="wf_step_5_tag">Scale</span>
+            </div>
+            <div class="workflow-icon-box">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+            </div>
+            <h4 data-i18n-html="wf_step_5_title">Support &amp; Lead Growth</h4>
+            <p data-i18n="wf_step_5_desc">We monitor incoming leads, test which headlines and creatives convert best, and make fine adjustments to maximize results.</p>
+            <div class="workflow-footer">
+              <span class="workflow-meta">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span data-i18n="wf_step_5_del">Continuous ROI</span>
+              </span>
+              <span class="workflow-duration" data-i18n="wf_step_5_dur">Ongoing</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Advantages Section -->
+  <section class="advantages-section" id="advantages">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag" data-i18n="adv_tag">[ 05 / WHY US ]</span>
+        <h2 class="section-title" data-i18n="adv_title">Practical, Modern &amp; Focused</h2>
+        <p class="section-desc" data-i18n="adv_desc">Direct communication and focus on getting your business real inquiries.</p>
+      </div>
+
+      <div class="advantages-grid">
+        <div class="advantage-card">
+          <div class="adv-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 data-i18n="adv_1_title">Fast Launch (1–3 Weeks)</h3>
+          <p data-i18n="adv_1_desc">We don't drag projects out for months. Your landing page or redesign is ready and working in days.</p>
+        </div>
+
+        <div class="advantage-card">
+          <div class="adv-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <h3 data-i18n="adv_2_title">100% Mobile Optimized</h3>
+          <p data-i18n="adv_2_desc">Over 75% of your clients browse on phones. Every button, image, and form looks and works flawlessly on mobile.</p>
+        </div>
+
+        <div class="advantage-card">
+          <div class="adv-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <h3 data-i18n="adv_3_title">Conversion-Oriented</h3>
+          <p data-i18n="adv_3_desc">Not just pretty visuals. We write clear offers, place strategic buttons, and remove friction to maximize inquiries.</p>
+        </div>
+
+        <div class="advantage-card">
+          <div class="adv-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <h3 data-i18n="adv_4_title">Instant Lead Alerts</h3>
+          <p data-i18n="adv_4_desc">New inquiries go directly to your Telegram or Email in seconds, allowing you to call clients while they are hot.</p>
+        </div>
+
+        <div class="advantage-card">
+          <div class="adv-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 4.5V11c0 5.5-3.8 10.7-9 12-5.2-1.3-9-6.5-9-12V6.5L12 2z"/><polyline points="9 12 11 14 15 10"/></svg>
+          </div>
+          <h3 data-i18n-html="adv_5_title">Clear &amp; Fixed Pricing</h3>
+          <p data-i18n="adv_5_desc">You know the exact cost before we start. No unexpected bills or hidden charges along the way.</p>
+        </div>
+
+        <div class="advantage-card">
+          <div class="adv-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><line x1="8" y1="9" x2="16" y2="9"/><line x1="8" y1="13" x2="13" y2="13"/></svg>
+          </div>
+          <h3 data-i18n="adv_6_title">Direct Communication</h3>
+          <p data-i18n="adv_6_desc">You speak directly with the creators building your site and running your ads, with fast response times.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Smart Inquiry / Interactive Form Section -->
+  <section class="inquiry-section" id="inquiry">
+    <div class="container">
+      <div class="inquiry-container">
+        
+        <div class="inquiry-info">
+          <span class="section-tag" data-i18n="inq_tag">[ 06 / PROJECT INQUIRY ]</span>
+          <h2 class="inquiry-title" data-i18n="inq_title">Let's discuss your project.</h2>
+          <p class="inquiry-desc" data-i18n="inq_desc">
+            Tell us what you want to create or upgrade. Write freely in your own words — we'll review your task and get back to you with ideas, structure, and a transparent estimate.
+          </p>
+
+          <div class="inquiry-guarantees">
+            <div class="guarantee-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="inq_guar_1">Quick response within 1–2 hours</span>
+            </div>
+            <div class="guarantee-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n="inq_guar_2">Transparent quote with no obligations</span>
+            </div>
+            <div class="guarantee-item">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              <span data-i18n-html="inq_guar_3">Help with domain, hosting &amp; launch</span>
+            </div>
+          </div>
+
+          <div class="inquiry-contact-card">
+            <h4 data-i18n="inq_direct_title">Prefer direct messaging?</h4>
+            <p data-i18n="inq_direct_desc">Send us a quick message directly:</p>
+            <div class="direct-contacts">
+              <a href="mailto:hello@iistudio.com" class="direct-link">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <span>hello@iistudio.com</span>
+              </a>
+              <a href="https://t.me/ii_studio_lead" target="_blank" rel="noopener" class="direct-link">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"></path></svg>
+                <span>Telegram: @ii_studio_lead</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="inquiry-form-wrapper">
+          <div class="form-header">
+            <h3 data-i18n-html="form_title">Get in Touch with I&amp;I Studio</h3>
+            <p data-i18n="form_desc">Leave your contacts and describe what you have in mind.</p>
+          </div>
+
+          <!-- Quick Service Interest (Optional Pill Selector) -->
+          <div class="form-topic-group">
+            <span class="form-topic-label" data-i18n="form_tab_label">Service direction (optional):</span>
+            <div class="service-selector-tabs" id="serviceTabs">
+              <button type="button" class="tab-btn active" data-service="landing" data-i18n="tab_landing">Landing Page</button>
+              <button type="button" class="tab-btn" data-service="corporate" data-i18n="tab_corporate">Business Website</button>
+              <button type="button" class="tab-btn" data-service="redesign" data-i18n="tab_redesign">Website Redesign</button>
+              <button type="button" class="tab-btn" data-service="ads" data-i18n="tab_ads">Advertising</button>
+              <button type="button" class="tab-btn" data-service="other" data-i18n="tab_other">Consultation</button>
+            </div>
+          </div>
+
+          <form id="projectForm" class="smart-form">
+            <!-- Hidden input for selected service -->
+            <input type="hidden" name="service_type" id="serviceTypeInput" value="landing">
+
+            <!-- Client Contact Details -->
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="clientName" data-i18n-html="form_name_label">Your Name <span class="req">*</span></label>
+                <input type="text" id="clientName" name="client_name" placeholder="Alex" data-i18n-placeholder="form_name_ph" required>
+              </div>
+              <div class="form-group">
+                <label for="clientContact" data-i18n-html="form_contact_label">Phone, Telegram, WhatsApp or Email <span class="req">*</span></label>
+                <input type="text" id="clientContact" name="client_contact" placeholder="+1 (555) 019-2834 / @telegram" data-i18n-placeholder="form_contact_ph" required>
+              </div>
+            </div>
+
+            <!-- Free-form Project Description -->
+            <div class="form-group">
+              <label for="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span class="req">*</span></label>
+              <textarea id="projectComment" name="project_comment" rows="5" placeholder="Write in your own words: what your company does, what you want to achieve (launch a landing, redesign an existing site, or start ads), any reference links, questions, or your approximate budget. We'll reply quickly with a concrete proposal." data-i18n-placeholder="form_comment_ph" required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-submit" id="submitBtn">
+              <span data-i18n="form_btn_submit">Send Request</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+            </button>
+          </form>
+
+          <!-- Success Modal / Overlay -->
+          <div class="form-feedback-overlay" id="feedbackOverlay">
+            <div class="feedback-card">
+              <div class="feedback-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <h3 data-i18n="feedback_title">Thank you! Inquiry Received.</h3>
+              <p class="feedback-msg" data-i18n="feedback_msg">We have registered your request and will contact you shortly.</p>
+              
+              <div class="ticket-box">
+                <span class="ticket-label" data-i18n="feedback_ticket_lbl">Inquiry ID</span>
+                <span class="ticket-number" id="ticketNumberDisplay">#II-8924</span>
+              </div>
+
+              <div class="automated-actions-list">
+                <div class="action-step done">
+                  <span class="step-icon">✓</span>
+                  <span><span data-i18n="feedback_step_1">Category:</span> <strong id="assignedService">Landing Page Development</strong></span>
+                </div>
+                <div class="action-step done">
+                  <span class="step-icon">✓</span>
+                  <span data-i18n="feedback_step_2">Instant notification dispatched to manager</span>
+                </div>
+                <div class="action-step done">
+                  <span class="step-icon">✓</span>
+                  <span data-i18n="feedback_step_3">Estimated reply time: within 1–2 hours</span>
+                </div>
+              </div>
+
+              <p class="feedback-note" data-i18n="feedback_note">We'll review your requirements and message you with an estimate and suggestions.</p>
+
+              <button class="btn btn-secondary btn-block" id="closeFeedbackBtn" data-i18n="feedback_btn_close">Close</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Site Footer -->
+  <footer class="site-footer" id="contact">
+    <div class="container footer-container">
+      <div class="footer-brand">
+        <a href="#hero" class="logo">
+          <span class="logo-symbol">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="2" width="20" height="20" rx="6" fill="#09090b"/>
+              <path d="M7 7V17M17 7V17M10.5 13.5C11.2 12.8 12.8 11.2 13.5 10.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="12" cy="12" r="1.5" fill="#ffffff"/>
+            </svg>
+          </span>
+          <span class="logo-text">I&amp;I<span class="logo-sub">Studio</span></span>
+        </a>
+        <p class="footer-tagline" data-i18n="footer_tagline">
+          Creating modern landing pages, functional business websites, clean redesigns, and high-impact advertising campaigns.
+        </p>
+      </div>
+
+      <div class="footer-links-col">
+        <h4 data-i18n="footer_col_nav">Navigation</h4>
+        <ul>
+          <li><a href="#hero" data-i18n="nav_home">Main</a></li>
+          <li><a href="#services" data-i18n="nav_services">Services</a></li>
+          <li><a href="#solutions" data-i18n="nav_solutions">Solutions</a></li>
+          <li><a href="#cases" data-i18n="nav_cases">Case Studies</a></li>
+          <li><a href="#process" data-i18n="nav_process">How We Work</a></li>
+          <li><a href="#advantages" data-i18n="nav_about">Why Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4 data-i18n="footer_col_services">Services</h4>
+        <ul>
+          <li><a href="#services" onclick="preselectService('landing')" data-i18n="tab_landing">Landing Pages</a></li>
+          <li><a href="#services" onclick="preselectService('corporate')" data-i18n="tab_corporate">Functional Websites</a></li>
+          <li><a href="#services" onclick="preselectService('redesign')" data-i18n="tab_redesign">Website Redesign</a></li>
+          <li><a href="#services" onclick="preselectService('ads')" data-i18n="tab_ads">Targeted Advertising</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-col">
+        <h4 data-i18n="footer_col_contact">Direct Contact</h4>
+        <ul>
+          <li><a href="mailto:hello@iistudio.com">hello@iistudio.com</a></li>
+          <li><a href="tel:+15550192834">+1 (555) 019-2834</a></li>
+          <li><a href="https://t.me/ii_studio_lead" target="_blank" rel="noopener">Telegram: @ii_studio_lead</a></li>
+          <li><span class="hours-badge" data-i18n="footer_hours">Mon - Sat: 09:00 - 20:00</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p data-i18n-html="footer_copy">&copy; 2026 I&amp;I Studio. Designed to bring real clients to your business.</p>
+      <div class="footer-sublinks">
+        <a href="#inquiry" data-i18n="footer_consult">Quick Consultation</a>
+        <a href="#inquiry" data-i18n="footer_discuss">Discuss Project</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="translations.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
