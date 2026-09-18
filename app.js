@@ -374,8 +374,8 @@ function initServiceTabs() {
   });
 }
 
-// Global preselect helper for buttons on page
-window.preselectService = function(serviceKey) {
+// Global preselect helper for buttons and pills across page
+window.preselectService = function(serviceKey, openModal = true) {
   const tabs = document.querySelectorAll('#serviceTabs .tab-btn');
   const targetTab = document.querySelector(`#serviceTabs .tab-btn[data-service="${serviceKey}"]`);
   const serviceInput = document.getElementById('serviceTypeInput');
@@ -383,31 +383,89 @@ window.preselectService = function(serviceKey) {
   if (targetTab) {
     tabs.forEach(t => t.classList.remove('active'));
     targetTab.classList.add('active');
-    if (serviceInput) serviceInput.value = serviceKey;
   }
+  if (serviceInput) serviceInput.value = serviceKey;
 
-  // Smooth scroll to form
-  const inquirySection = document.getElementById('inquiry');
-  if (inquirySection) {
-    inquirySection.scrollIntoView({ behavior: 'smooth' });
+  if (openModal && window.openInquiryModal) {
+    window.openInquiryModal();
   }
 };
 
 /* ==========================================================================
-   5. Smart Form Submission & Confirmation
+   5. Inquiry Modal, Smart Form & Ticket Confirmation
    ========================================================================== */
 function initSmartForm() {
+  const modal = document.getElementById('inquiryModal');
+  const openModalBtns = document.querySelectorAll('#openInquiryModalBtn, [data-open-modal="inquiry"]');
+  const closeModalBtn = document.getElementById('closeModalBtn');
   const form = document.getElementById('projectForm');
   const overlay = document.getElementById('feedbackOverlay');
-  const closeBtn = document.getElementById('closeFeedbackBtn');
+  const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
   const ticketDisplay = document.getElementById('ticketNumberDisplay');
   const assignedService = document.getElementById('assignedService');
+  const serviceInput = document.getElementById('serviceTypeInput');
 
+  if (!modal) return;
+
+  window.openInquiryModal = function() {
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    // Auto-focus first field
+    setTimeout(() => {
+      const firstInput = modal.querySelector('#clientName');
+      if (firstInput) firstInput.focus();
+    }, 150);
+  };
+
+  window.closeInquiryModal = function() {
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  };
+
+  openModalBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.openInquiryModal();
+    });
+  });
+
+  // Connect all "Discuss Project" / "Consultation" anchor buttons
+  document.querySelectorAll('a[href="#inquiry"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.openInquiryModal();
+    });
+  });
+
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', () => {
+      window.closeInquiryModal();
+    });
+  }
+
+  // Close when clicking on backdrop outside modal-card
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      window.closeInquiryModal();
+    }
+  });
+
+  // ESC key closes modal
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('active')) {
+      window.closeInquiryModal();
+    }
+  });
+
+  // Form submission & Ticket generation
   if (form && overlay) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const serviceType = document.getElementById('serviceTypeInput')?.value || 'landing';
+      const serviceType = serviceInput?.value || 'landing';
       const mapObj = window.serviceManagerMap ? window.serviceManagerMap[currentLanguage] : null;
       const mapping = mapObj ? (mapObj[serviceType] || mapObj['landing']) : { serviceName: 'Landing Page' };
 
@@ -418,15 +476,15 @@ function initSmartForm() {
       if (ticketDisplay) ticketDisplay.textContent = ticketId;
       if (assignedService) assignedService.textContent = mapping.serviceName;
 
-      // Show overlay
       overlay.classList.add('active');
     });
 
-    if (closeBtn) {
-      closeBtn.addEventListener('click', () => {
+    if (closeFeedbackBtn) {
+      closeFeedbackBtn.addEventListener('click', () => {
         overlay.classList.remove('active');
         form.reset();
-        preselectService('landing');
+        window.closeInquiryModal();
+        window.preselectService('landing', false);
       });
     }
   }

@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>I&I Studio | Modern Websites, Redesign & Performance Ads</title>
+  <title>I&I Studio</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <meta name="description" content="We build high-converting landing pages, functional business websites, modern website redesigns, and high-ROI ad campaigns.">
   
   <!-- Fonts: Swiss Grotesque -->
@@ -11,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="styles.css?v=6302e1b">
+  <link rel="stylesheet" href="styles.css?v=7a39e8f">
 </head>
 <body>
 
@@ -827,91 +828,164 @@
           </div>
         </div>
 
-        <div class="inquiry-form-wrapper">
-          <div class="form-header">
-            <h3 data-i18n-html="form_title">Get in Touch with I&amp;I Studio</h3>
-            <p data-i18n="form_desc">Leave your contacts and describe what you have in mind.</p>
+        <div class="inquiry-action-card">
+          <div class="inquiry-action-header">
+            <div class="inquiry-badge-row">
+              <span class="action-pill-badge" data-i18n="inq_cta_badge">Online Brief • 2 min</span>
+              <span class="live-status-dot"><span class="dot-ping"></span> <span data-i18n="inq_feat_1">1–2 hours response time</span></span>
+            </div>
+            <h3 class="inquiry-action-title" data-i18n="inq_cta_card_title">Calculate Cost or Discuss Project</h3>
+            <p class="inquiry-action-desc" data-i18n="inq_cta_card_desc">
+              Open our interactive brief, select your service direction, and describe your idea. We'll reply within 1–2 hours with an estimate and plan.
+            </p>
           </div>
 
-          <!-- Quick Service Interest (Optional Pill Selector) -->
-          <div class="form-topic-group">
-            <span class="form-topic-label" data-i18n="form_tab_label">Service direction (optional):</span>
-            <div class="service-selector-tabs" id="serviceTabs">
-              <button type="button" class="tab-btn active" data-service="landing" data-i18n="tab_landing">Landing Page</button>
-              <button type="button" class="tab-btn" data-service="corporate" data-i18n="tab_corporate">Business Website</button>
-              <button type="button" class="tab-btn" data-service="redesign" data-i18n="tab_redesign">Website Redesign</button>
-              <button type="button" class="tab-btn" data-service="ads" data-i18n="tab_ads">Advertising</button>
-              <button type="button" class="tab-btn" data-service="other" data-i18n="tab_other">Consultation</button>
+          <!-- Quick Service Interest (Pill Selector that opens modal) -->
+          <div class="action-topic-group">
+            <span class="action-topic-label" data-i18n="form_tab_label">Service direction (optional):</span>
+            <div class="action-service-pills">
+              <button type="button" class="action-service-pill" data-service="landing" onclick="preselectService('landing')">
+                <span class="pill-dot"></span>
+                <span data-i18n="tab_landing">Landing Page</span>
+              </button>
+              <button type="button" class="action-service-pill" data-service="corporate" onclick="preselectService('corporate')">
+                <span class="pill-dot"></span>
+                <span data-i18n="tab_corporate">Business Website</span>
+              </button>
+              <button type="button" class="action-service-pill" data-service="redesign" onclick="preselectService('redesign')">
+                <span class="pill-dot"></span>
+                <span data-i18n="tab_redesign">Website Redesign</span>
+              </button>
+              <button type="button" class="action-service-pill" data-service="ads" onclick="preselectService('ads')">
+                <span class="pill-dot"></span>
+                <span data-i18n="tab_ads">Advertising</span>
+              </button>
+              <button type="button" class="action-service-pill" data-service="other" onclick="preselectService('other')">
+                <span class="pill-dot"></span>
+                <span data-i18n="tab_other">Consultation</span>
+              </button>
             </div>
           </div>
 
-          <form id="projectForm" class="smart-form">
-            <!-- Hidden input for selected service -->
-            <input type="hidden" name="service_type" id="serviceTypeInput" value="landing">
-
-            <!-- Client Contact Details -->
-            <div class="form-grid-2">
-              <div class="form-group">
-                <label for="clientName" data-i18n-html="form_name_label">Your Name <span class="req">*</span></label>
-                <input type="text" id="clientName" name="client_name" placeholder="Alex" data-i18n-placeholder="form_name_ph" required>
-              </div>
-              <div class="form-group">
-                <label for="clientContact" data-i18n-html="form_contact_label">Phone, Telegram, WhatsApp or Email <span class="req">*</span></label>
-                <input type="text" id="clientContact" name="client_contact" placeholder="+1 (555) 019-2834 / @telegram" data-i18n-placeholder="form_contact_ph" required>
-              </div>
-            </div>
-
-            <!-- Free-form Project Description -->
-            <div class="form-group">
-              <label for="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span class="req">*</span></label>
-              <textarea id="projectComment" name="project_comment" rows="5" placeholder="Write in your own words: what your company does, what you want to achieve (launch a landing, redesign an existing site, or start ads), any reference links, questions, or your approximate budget. We'll reply quickly with a concrete proposal." data-i18n-placeholder="form_comment_ph" required></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block btn-submit" id="submitBtn">
-              <span data-i18n="form_btn_submit">Send Request</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+          <div class="inquiry-action-main">
+            <button type="button" class="btn btn-primary btn-lg btn-block btn-open-modal" id="openInquiryModalBtn">
+              <span data-i18n="inq_cta_btn">Open Project Brief</span>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </button>
-          </form>
+          </div>
 
-          <!-- Success Modal / Overlay -->
-          <div class="form-feedback-overlay" id="feedbackOverlay">
-            <div class="feedback-card">
-              <div class="feedback-icon">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-              </div>
-              <h3 data-i18n="feedback_title">Thank you! Inquiry Received.</h3>
-              <p class="feedback-msg" data-i18n="feedback_msg">We have registered your request and will contact you shortly.</p>
-              
-              <div class="ticket-box">
-                <span class="ticket-label" data-i18n="feedback_ticket_lbl">Inquiry ID</span>
-                <span class="ticket-number" id="ticketNumberDisplay">#II-8924</span>
-              </div>
-
-              <div class="automated-actions-list">
-                <div class="action-step done">
-                  <span class="step-icon">✓</span>
-                  <span><span data-i18n="feedback_step_1">Category:</span> <strong id="assignedService">Landing Page Development</strong></span>
-                </div>
-                <div class="action-step done">
-                  <span class="step-icon">✓</span>
-                  <span data-i18n="feedback_step_2">Instant notification dispatched to manager</span>
-                </div>
-                <div class="action-step done">
-                  <span class="step-icon">✓</span>
-                  <span data-i18n="feedback_step_3">Estimated reply time: within 1–2 hours</span>
-                </div>
-              </div>
-
-              <p class="feedback-note" data-i18n="feedback_note">We'll review your requirements and message you with an estimate and suggestions.</p>
-
-              <button class="btn btn-secondary btn-block" id="closeFeedbackBtn" data-i18n="feedback_btn_close">Close</button>
+          <div class="inquiry-features-grid">
+            <div class="inquiry-feat-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span data-i18n="inq_feat_1">1–2 hours response time</span>
+            </div>
+            <div class="inquiry-feat-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              <span data-i18n="inq_feat_2">Fixed transparent estimate</span>
+            </div>
+            <div class="inquiry-feat-item">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span data-i18n="inq_feat_3">Direct contact with creators</span>
             </div>
           </div>
 
+          <div class="inquiry-action-footer">
+            <span class="security-note" data-i18n="inq_cta_hint">No spam, no intrusive calls • Free consultation</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- Interactive Project Brief Modal -->
+  <div class="modal-backdrop" id="inquiryModal" role="dialog" aria-modal="true" aria-labelledby="modalInquiryTitle" aria-hidden="true">
+    <div class="modal-card">
+      <button type="button" class="modal-close-btn" id="closeModalBtn" aria-label="Close modal">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <div class="modal-header">
+        <span class="section-tag" data-i18n="inq_tag">[ 06 / PROJECT INQUIRY ]</span>
+        <h3 id="modalInquiryTitle" data-i18n-html="form_title">Get in Touch with I&amp;I Studio</h3>
+        <p data-i18n="form_desc">Leave your contacts and describe what you have in mind.</p>
+      </div>
+
+      <!-- Quick Service Interest (Pill Selector in Modal) -->
+      <div class="form-topic-group">
+        <span class="form-topic-label" data-i18n="form_tab_label">Service direction (optional):</span>
+        <div class="service-selector-tabs" id="serviceTabs">
+          <button type="button" class="tab-btn active" data-service="landing" data-i18n="tab_landing">Landing Page</button>
+          <button type="button" class="tab-btn" data-service="corporate" data-i18n="tab_corporate">Business Website</button>
+          <button type="button" class="tab-btn" data-service="redesign" data-i18n="tab_redesign">Website Redesign</button>
+          <button type="button" class="tab-btn" data-service="ads" data-i18n="tab_ads">Advertising</button>
+          <button type="button" class="tab-btn" data-service="other" data-i18n="tab_other">Consultation</button>
+        </div>
+      </div>
+
+      <form id="projectForm" class="smart-form">
+        <!-- Hidden input for selected service -->
+        <input type="hidden" name="service_type" id="serviceTypeInput" value="landing">
+
+        <!-- Client Contact Details -->
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="clientName" data-i18n-html="form_name_label">Your Name <span class="req">*</span></label>
+            <input type="text" id="clientName" name="client_name" placeholder="Alex" data-i18n-placeholder="form_name_ph" required>
+          </div>
+          <div class="form-group">
+            <label for="clientContact" data-i18n-html="form_contact_label">Phone, Telegram, WhatsApp or Email <span class="req">*</span></label>
+            <input type="text" id="clientContact" name="client_contact" placeholder="+1 (555) 019-2834 / @telegram" data-i18n-placeholder="form_contact_ph" required>
+          </div>
+        </div>
+
+        <!-- Free-form Project Description -->
+        <div class="form-group">
+          <label for="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span class="req">*</span></label>
+          <textarea id="projectComment" name="project_comment" rows="4" placeholder="Write in your own words: what your company does, what you want to achieve (launch a landing, redesign an existing site, or start ads), any reference links, questions, or your approximate budget. We'll reply quickly with a concrete proposal." data-i18n-placeholder="form_comment_ph" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block btn-submit" id="submitBtn">
+          <span data-i18n="form_btn_submit">Send Request</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
+
+      <!-- Success Confirmation State inside Modal -->
+      <div class="form-feedback-overlay" id="feedbackOverlay">
+        <div class="feedback-card">
+          <div class="feedback-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          </div>
+          <h3 data-i18n="feedback_title">Thank you! Inquiry Received.</h3>
+          <p class="feedback-msg" data-i18n="feedback_msg">We have registered your request and will contact you shortly.</p>
+          
+          <div class="ticket-box">
+            <span class="ticket-label" data-i18n="feedback_ticket_lbl">Inquiry ID</span>
+            <span class="ticket-number" id="ticketNumberDisplay">#II-8924</span>
+          </div>
+
+          <div class="automated-actions-list">
+            <div class="action-step done">
+              <span class="step-icon">✓</span>
+              <span><span data-i18n="feedback_step_1">Category:</span> <strong id="assignedService">Landing Page Development</strong></span>
+            </div>
+            <div class="action-step done">
+              <span class="step-icon">✓</span>
+              <span data-i18n="feedback_step_2">Instant notification dispatched to manager</span>
+            </div>
+            <div class="action-step done">
+              <span class="step-icon">✓</span>
+              <span data-i18n="feedback_step_3">Estimated reply time: within 1–2 hours</span>
+            </div>
+          </div>
+
+          <p class="feedback-note" data-i18n="feedback_note">We'll review your requirements and message you with an estimate and suggestions.</p>
+
+          <button class="btn btn-secondary btn-block" id="closeFeedbackBtn" data-i18n="feedback_btn_close">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Site Footer -->
   <footer class="site-footer" id="contact">
@@ -974,7 +1048,7 @@
     </div>
   </footer>
 
-  <script src="translations.js?v=6302e1b"></script>
-  <script src="app.js?v=6302e1b"></script>
+  <script src="translations.js?v=7a39e8f"></script>
+  <script src="app.js?v=7a39e8f"></script>
 </body>
 </html>

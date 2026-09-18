@@ -1714,27 +1714,257 @@ p {
   color: var(--accent-blue);
 }
 
-/* Inquiry Form Wrapper */
-.inquiry-form-wrapper {
+/* Inquiry Action Card in Section 06 */
+.inquiry-action-card {
   background: #ffffff;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
   padding: 40px;
   box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   position: relative;
+  overflow: hidden;
 }
 
-.form-header {
-  margin-bottom: 24px;
+.inquiry-action-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-black) 0%, rgba(9, 9, 11, 0.2) 100%);
 }
 
-.form-header h3 {
-  font-size: 1.5rem;
+.inquiry-action-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inquiry-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.action-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.live-status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.dot-ping {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.inquiry-action-title {
+  font-size: clamp(1.35rem, 2vw, 1.625rem);
   letter-spacing: -0.03em;
-  margin-bottom: 6px;
+  color: var(--text-primary);
+  line-height: 1.25;
 }
 
-.form-header p {
+.inquiry-action-desc {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.action-topic-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-topic-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.action-service-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.action-service-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-service-pill .pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  transition: background-color 0.2s ease;
+}
+
+.action-service-pill:hover {
+  background: var(--bg-panel);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+}
+
+.action-service-pill:hover .pill-dot {
+  background: var(--accent-black);
+}
+
+.inquiry-action-main {
+  margin-top: 4px;
+}
+
+.inquiry-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.inquiry-feat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.inquiry-feat-item svg {
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.inquiry-action-footer {
+  text-align: center;
+}
+
+.security-note {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   Project Brief Interactive Modal
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background-color: rgba(9, 9, 11, 0.68);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-card {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 40px;
+  box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.3);
+  transform: scale(0.94) translateY(18px);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s;
+}
+
+.modal-backdrop.active .modal-card {
+  transform: scale(1) translateY(0);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  z-index: 12;
+}
+
+.modal-close-btn:hover {
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.modal-header {
+  margin-bottom: 24px;
+  padding-right: 36px;
+}
+
+.modal-header h3 {
+  font-size: 1.625rem;
+  letter-spacing: -0.03em;
+  margin: 10px 0 6px 0;
+}
+
+.modal-header p {
   font-size: 0.9375rem;
   color: var(--text-muted);
 }
@@ -2128,8 +2358,17 @@ p {
     grid-template-columns: 1fr;
   }
 
-  .inquiry-form-wrapper {
-    padding: 24px;
+  .inquiry-action-card {
+    padding: 28px 20px;
+  }
+
+  .inquiry-features-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .modal-card {
+    padding: 28px 18px;
   }
 
   .footer-container {
@@ -2223,7 +2462,8 @@ html[data-theme="dark"] .workflow-card,
 html[data-theme="dark"] .advantages-section,
 html[data-theme="dark"] .advantage-card,
 html[data-theme="dark"] .inquiry-contact-card,
-html[data-theme="dark"] .inquiry-form-wrapper,
+html[data-theme="dark"] .inquiry-action-card,
+html[data-theme="dark"] .modal-card,
 html[data-theme="dark"] .site-footer {
   background-color: var(--bg-surface);
   border-color: var(--border);
@@ -2246,6 +2486,8 @@ html[data-theme="dark"] .workflow-icon-box,
 html[data-theme="dark"] .adv-icon,
 html[data-theme="dark"] .dynamic-fields-box,
 html[data-theme="dark"] .ticket-box,
+html[data-theme="dark"] .action-service-pill,
+html[data-theme="dark"] .modal-close-btn,
 html[data-theme="dark"] .tab-btn {
   background-color: var(--bg-panel);
   border-color: var(--border);
@@ -2254,6 +2496,8 @@ html[data-theme="dark"] .tab-btn {
 
 html[data-theme="dark"] .goal-pill:hover,
 html[data-theme="dark"] .tab-btn:hover,
+html[data-theme="dark"] .action-service-pill:hover,
+html[data-theme="dark"] .modal-close-btn:hover,
 html[data-theme="dark"] .theme-toggle:hover {
   background-color: var(--bg-subtle);
   border-color: var(--border-strong);
