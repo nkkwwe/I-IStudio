@@ -293,13 +293,13 @@ p {
 }
 
 .language-trigger {
-  min-width: 68px;
+  min-width: 58px;
   height: 38px;
-  padding: 0 8px 0 11px;
+  padding: 0 7px;
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 4px;
+  justify-content: center;
+  gap: 1px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--bg-surface);
@@ -320,6 +320,8 @@ p {
 }
 
 .language-chevron {
+  width: 12px;
+  height: 12px;
   color: var(--text-muted);
   transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
 }
