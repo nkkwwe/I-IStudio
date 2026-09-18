@@ -293,13 +293,13 @@ p {
 }
 
 .language-trigger {
-  min-width: 76px;
+  min-width: 68px;
   height: 38px;
-  padding: 0 11px 0 14px;
+  padding: 0 8px 0 11px;
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 4px;
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--bg-surface);
@@ -2998,6 +2998,10 @@ html[data-theme="dark"] .inquiry-form-card {
 .inquiry-form-only-card {
   max-width: 860px;
   margin: 64px auto 0;
+}
+
+.inquiry-form-only-card::before {
+  display: none;
 }
 
 .inquiry-form-only-card .inquiry-form-header h1 {
