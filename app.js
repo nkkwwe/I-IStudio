@@ -183,9 +183,22 @@ function initScrollSpy() {
     .map(link => ({ link, section: getTargetSection(link) }))
     .filter(item => item.section !== null);
 
-  if (!sectionsWithLinks.length) return;
+  let isClickScrolling = false;
+  let clickScrollTimer = null;
+
+  const setActiveLink = (targetLink) => {
+    sectionsWithLinks.forEach(({ link }) => {
+      if (link === targetLink) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  };
 
   const updateActiveNav = () => {
+    if (isClickScrolling) return;
+
     const headerHeight = document.querySelector('.site-header')?.offsetHeight || 72;
     const scrollPos = window.scrollY + headerHeight + 60;
     const isBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
@@ -205,14 +218,20 @@ function initScrollSpy() {
       }
     }
 
-    sectionsWithLinks.forEach(({ link }) => {
-      if (link === activeItem.link) {
-        link.classList.add('active');
-      } else {
-        link.classList.remove('active');
-      }
-    });
+    setActiveLink(activeItem.link);
   };
+
+  sectionsWithLinks.forEach(({ link }) => {
+    link.addEventListener('click', () => {
+      setActiveLink(link);
+      isClickScrolling = true;
+      clearTimeout(clickScrollTimer);
+      clickScrollTimer = setTimeout(() => {
+        isClickScrolling = false;
+        updateActiveNav();
+      }, 800);
+    });
+  });
 
   window.addEventListener('scroll', updateActiveNav, { passive: true });
   window.addEventListener('resize', updateActiveNav, { passive: true });
