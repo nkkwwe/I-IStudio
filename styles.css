@@ -372,7 +372,7 @@ p {
   font-weight: 600;
   text-align: left;
   cursor: pointer;
-  transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .language-option span {
@@ -386,10 +386,6 @@ p {
 .language-option.active {
   background: var(--bg-panel);
   color: var(--text-primary);
-}
-
-.language-option:hover {
-  transform: translateX(2px);
 }
 
 .language-option.active {
