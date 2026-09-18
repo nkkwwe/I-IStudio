@@ -4,126 +4,75 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>I&I Studio — Project Brief</title>
-  <meta name="description" content="Tell I&I Studio about your project and receive a clear estimate and launch plan.">
+  <meta name="description" content="Tell I&I Studio about your project.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg?v=3">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=inquiry-page-20260918">
+  <link rel="stylesheet" href="styles.css?v=inquiry-form-20260918">
 </head>
-<body class="inquiry-page-body">
-  <header class="site-header">
-    <div class="container header-container">
-      <a href="index.html#hero" class="logo">
-        <span class="logo-symbol">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" fill="#09090b"/><path d="M7 7V17M17 7V17M10.5 13.5C11.2 12.8 12.8 11.2 13.5 10.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="1.5" fill="#ffffff"/></svg>
-        </span>
+<body class="inquiry-page-body inquiry-form-only-body">
+  <main class="inquiry-form-only">
+    <div class="inquiry-form-topbar">
+      <a href="index.html#hero" class="inquiry-mini-logo" aria-label="Back to I&I Studio home">
+        <span class="logo-symbol"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="6" fill="#09090b"/><path d="M7 7V17M17 7V17M10.5 13.5C11.2 12.8 12.8 11.2 13.5 10.5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="1.5" fill="#ffffff"/></svg></span>
         <span class="logo-text">I&amp;I<span class="logo-sub">Studio</span></span>
       </a>
-
-      <nav class="nav-menu" id="navMenu">
-        <a href="index.html#hero" class="nav-link" data-i18n="nav_home">Home</a>
-        <a href="index.html#solutions" class="nav-link" data-i18n="nav_solutions">Solutions</a>
-        <a href="index.html#services" class="nav-link" data-i18n="nav_services">Services</a>
-        <a href="index.html#cases" class="nav-link" data-i18n="nav_cases">Cases</a>
-        <a href="index.html#process" class="nav-link" data-i18n="nav_process">How We Work</a>
-        <a href="index.html#advantages" class="nav-link" data-i18n="nav_about">About</a>
-        <a href="index.html#contact" class="nav-link" data-i18n="nav_contact">Contact</a>
-      </nav>
-
-      <div class="header-actions">
-        <a href="index.html#hero" class="btn btn-secondary btn-sm" data-i18n="inquiry_back">Back to website</a>
-        <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
-          <svg class="theme-icon theme-icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4"></path></svg>
-          <svg class="theme-icon theme-icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z"></path></svg>
-        </button>
+      <div class="inquiry-form-tools">
+        <a href="index.html#hero" class="inquiry-back-link" data-i18n="inquiry_back">Back to website</a>
+        <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle theme"><svg class="theme-icon theme-icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3.5"></circle><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4"></path></svg><svg class="theme-icon theme-icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z"></path></svg></button>
         <div class="language-switcher" aria-label="Language selection">
           <button type="button" class="language-trigger" aria-haspopup="listbox" aria-expanded="false"><span class="language-current">EN</span><svg class="language-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>
-          <div class="language-menu" role="listbox" aria-label="Available languages">
-            <button type="button" class="language-option active" data-language="en" role="option" aria-selected="true">English <span>EN</span></button>
-            <button type="button" class="language-option" data-language="uk" role="option" aria-selected="false">Українська <span>UK</span></button>
-            <button type="button" class="language-option" data-language="ro" role="option" aria-selected="false">Română <span>RO</span></button>
-          </div>
+          <div class="language-menu" role="listbox" aria-label="Available languages"><button type="button" class="language-option active" data-language="en" role="option" aria-selected="true">English <span>EN</span></button><button type="button" class="language-option" data-language="uk" role="option" aria-selected="false">Українська <span>UK</span></button><button type="button" class="language-option" data-language="ro" role="option" aria-selected="false">Română <span>RO</span></button></div>
         </div>
-        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
       </div>
     </div>
-  </header>
 
-  <main class="inquiry-page">
-    <div class="container inquiry-page-container">
-      <div class="inquiry-page-intro">
-        <span class="section-tag" data-i18n="inquiry_eyebrow">[ PROJECT BRIEF / 2 MIN ]</span>
-        <h1 class="inquiry-page-title" data-i18n="inquiry_intro_title">Let’s build something that brings you clients.</h1>
-        <p class="inquiry-page-description" data-i18n="inquiry_intro_desc">Tell us what you want to launch, improve, or promote. The more context you share, the more useful our first proposal will be.</p>
-
-        <div class="inquiry-page-benefits">
-          <div class="inquiry-page-benefit"><span>01</span><p data-i18n="inquiry_benefit_1">A clear scope, realistic timeline, and transparent estimate.</p></div>
-          <div class="inquiry-page-benefit"><span>02</span><p data-i18n="inquiry_benefit_2">Direct communication with the people building your project.</p></div>
-          <div class="inquiry-page-benefit"><span>03</span><p data-i18n="inquiry_benefit_3">A practical next-step plan, not a generic sales response.</p></div>
+    <section class="inquiry-form-card inquiry-form-only-card" aria-labelledby="inquiryPageTitle">
+      <div class="inquiry-form-header">
+        <div>
+          <span class="form-eyebrow" data-i18n="inquiry_eyebrow">[ PROJECT BRIEF / 2 MIN ]</span>
+          <h1 id="inquiryPageTitle" data-i18n-html="form_title">Get in Touch with I&amp;I Studio</h1>
+          <p data-i18n="form_desc">Leave your contacts and describe what you have in mind.</p>
         </div>
-
-        <a class="inquiry-page-back" href="index.html#services"><span data-i18n="inquiry_back_services">See our services</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
       </div>
 
-      <section class="inquiry-form-card" aria-labelledby="inquiryPageTitle">
-        <div class="inquiry-form-header">
-          <div>
-            <span class="form-eyebrow" data-i18n="form_tab_label">Service direction (optional):</span>
-            <h2 id="inquiryPageTitle" data-i18n-html="form_title">Get in Touch with I&amp;I Studio</h2>
-            <p data-i18n="form_desc">Leave your contacts and describe what you have in mind.</p>
-          </div>
-        </div>
+      <div class="service-selector-tabs" id="serviceTabs">
+        <button type="button" class="tab-btn active" data-service="landing" data-i18n="tab_landing">Landing Page</button>
+        <button type="button" class="tab-btn" data-service="corporate" data-i18n="tab_corporate">Business Website</button>
+        <button type="button" class="tab-btn" data-service="redesign" data-i18n="tab_redesign">Website Redesign</button>
+        <button type="button" class="tab-btn" data-service="ads" data-i18n="tab_ads">Advertising</button>
+        <button type="button" class="tab-btn" data-service="consultation" data-i18n="tab_consultation">Consultation</button>
+        <button type="button" class="tab-btn" data-service="other" data-i18n="tab_other">Other</button>
+      </div>
 
-        <div class="service-selector-tabs" id="serviceTabs">
-          <button type="button" class="tab-btn active" data-service="landing" data-i18n="tab_landing">Landing Page</button>
-          <button type="button" class="tab-btn" data-service="corporate" data-i18n="tab_corporate">Business Website</button>
-          <button type="button" class="tab-btn" data-service="redesign" data-i18n="tab_redesign">Website Redesign</button>
-          <button type="button" class="tab-btn" data-service="ads" data-i18n="tab_ads">Advertising</button>
-          <button type="button" class="tab-btn" data-service="consultation" data-i18n="tab_consultation">Consultation</button>
-          <button type="button" class="tab-btn" data-service="other" data-i18n="tab_other">Other</button>
+      <form id="projectForm" class="smart-form">
+        <input type="hidden" name="service_type" id="serviceTypeInput" value="landing">
+        <div class="form-grid-2 inquiry-form-grid">
+          <div class="form-group"><label for="clientName" data-i18n-html="form_name_label">Your Name <span class="req">*</span></label><input type="text" id="clientName" name="client_name" placeholder="Alex" data-i18n-placeholder="form_name_ph" required></div>
+          <div class="form-group"><label for="clientContact" data-i18n="form_contact_label">Your business Instagram or social media (optional)</label><input type="text" id="clientContact" name="client_contact" placeholder="Instagram, Telegram or social handle (optional)" data-i18n-placeholder="form_contact_ph"></div>
         </div>
+        <div class="form-group"><label for="clientBudget" data-i18n="form_budget_label">Proposed budget / payment amount (optional)</label><input type="text" id="clientBudget" name="client_budget" placeholder="e.g. $500, $1,000, 20,000 ₴ or your offer" data-i18n-placeholder="form_budget_ph"></div>
+        <div class="form-group project-comment-group"><label for="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span class="req">*</span></label><textarea id="projectComment" name="project_comment" rows="14" placeholder="Write in your own words: what your company does, what you want to achieve, any reference links, questions, or your approximate budget. We'll reply quickly with a concrete proposal." data-i18n-placeholder="form_comment_ph" required></textarea></div>
+        <p class="inquiry-form-note" data-i18n="inquiry_form_note">We usually reply within 1–2 hours during working hours.</p>
+        <button type="submit" class="btn btn-primary btn-block btn-submit" id="submitBtn"><span data-i18n="form_btn_submit">Send Request</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
+      </form>
 
-        <form id="projectForm" class="smart-form">
-          <input type="hidden" name="service_type" id="serviceTypeInput" value="landing">
-          <div class="form-grid-2 inquiry-form-grid">
-            <div class="form-group"><label for="clientName" data-i18n-html="form_name_label">Your Name <span class="req">*</span></label><input type="text" id="clientName" name="client_name" placeholder="Alex" data-i18n-placeholder="form_name_ph" required></div>
-            <div class="form-group"><label for="clientContact" data-i18n="form_contact_label">Your business Instagram or social media (optional)</label><input type="text" id="clientContact" name="client_contact" placeholder="Instagram, Telegram or social handle (optional)" data-i18n-placeholder="form_contact_ph"></div>
-          </div>
-          <div class="form-group"><label for="clientBudget" data-i18n="form_budget_label">Proposed budget / payment amount (optional)</label><input type="text" id="clientBudget" name="client_budget" placeholder="e.g. $500, $1,000, 20,000 ₴ or your offer" data-i18n-placeholder="form_budget_ph"></div>
-          <div class="form-group project-comment-group"><label for="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span class="req">*</span></label><textarea id="projectComment" name="project_comment" rows="12" placeholder="Write in your own words: what your company does, what you want to achieve, any reference links, questions, or your approximate budget. We'll reply quickly with a concrete proposal." data-i18n-placeholder="form_comment_ph" required></textarea></div>
-          <p class="inquiry-form-note" data-i18n="inquiry_form_note">We usually reply within 1–2 hours during working hours.</p>
-          <button type="submit" class="btn btn-primary btn-block btn-submit" id="submitBtn"><span data-i18n="form_btn_submit">Send Request</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
-        </form>
-
-        <div class="form-feedback-overlay" id="feedbackOverlay">
-          <div class="feedback-card">
-            <div class="feedback-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
-            <h3 data-i18n="feedback_title">Thank you! Inquiry Received.</h3>
-            <p class="feedback-msg" data-i18n="feedback_msg">We have registered your request and will contact you shortly.</p>
-            <div class="ticket-box"><span class="ticket-label" data-i18n="feedback_ticket_lbl">Inquiry ID</span><span class="ticket-number" id="ticketNumberDisplay">#II-8924</span></div>
-            <div class="automated-actions-list">
-              <div class="action-step done"><span class="step-icon">✓</span><span><span data-i18n="feedback_step_1">Category:</span> <strong id="assignedService">Landing Page Development</strong></span></div>
-              <div class="action-step done" id="feedbackBudgetRow" style="display: none;"><span class="step-icon">✓</span><span><span data-i18n="feedback_budget_lbl">Budget:</span> <strong id="assignedBudget"></strong></span></div>
-              <div class="action-step done"><span class="step-icon">✓</span><span data-i18n="feedback_step_2">Instant notification dispatched to manager</span></div>
-              <div class="action-step done"><span class="step-icon">✓</span><span data-i18n="feedback_step_3">Estimated reply time: within 1–2 hours</span></div>
-            </div>
-            <p class="feedback-note" data-i18n="feedback_note">We'll review your requirements and message you with an estimate and suggestions.</p>
-            <button class="btn btn-secondary btn-block" id="closeFeedbackBtn" data-i18n="feedback_btn_close">Close</button>
-          </div>
+      <div class="form-feedback-overlay" id="feedbackOverlay">
+        <div class="feedback-card">
+          <div class="feedback-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+          <h2 data-i18n="feedback_title">Thank you! Inquiry Received.</h2>
+          <p class="feedback-msg" data-i18n="feedback_msg">We have registered your request and will contact you shortly.</p>
+          <div class="ticket-box"><span class="ticket-label" data-i18n="feedback_ticket_lbl">Inquiry ID</span><span class="ticket-number" id="ticketNumberDisplay">#II-8924</span></div>
+          <div class="automated-actions-list"><div class="action-step done"><span class="step-icon">✓</span><span><span data-i18n="feedback_step_1">Category:</span> <strong id="assignedService">Landing Page Development</strong></span></div><div class="action-step done" id="feedbackBudgetRow" style="display: none;"><span class="step-icon">✓</span><span><span data-i18n="feedback_budget_lbl">Budget:</span> <strong id="assignedBudget"></strong></span></div><div class="action-step done"><span class="step-icon">✓</span><span data-i18n="feedback_step_2">Instant notification dispatched to manager</span></div><div class="action-step done"><span class="step-icon">✓</span><span data-i18n="feedback_step_3">Estimated reply time: within 1–2 hours</span></div></div>
+          <p class="feedback-note" data-i18n="feedback_note">We'll review your requirements and message you with an estimate and suggestions.</p>
+          <button class="btn btn-secondary btn-block" id="closeFeedbackBtn" data-i18n="feedback_btn_close">Close</button>
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer inquiry-page-footer">
-    <div class="container footer-bottom">
-      <p data-i18n-html="footer_copy">&copy; 2026 I&amp;I Studio. Designed to bring real clients to your business.</p>
-      <div class="footer-sublinks"><a href="index.html#services" data-i18n="footer_col_services">Services</a><a href="index.html#contact" data-i18n="footer_col_contact">Direct Contact</a></div>
-    </div>
-  </footer>
-
-  <script src="translations.js?v=inquiry-page-20260918"></script>
-  <script src="app.js?v=inquiry-page-20260918"></script>
+  <script src="translations.js?v=inquiry-form-20260918"></script>
+  <script src="app.js?v=inquiry-form-20260918"></script>
 </body>
 </html>

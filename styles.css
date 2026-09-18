@@ -2957,3 +2957,70 @@ html[data-theme="dark"] .inquiry-form-card {
     padding-top: 22px;
   }
 }
+
+/* Form-only route: no site navigation or duplicated landing-page content. */
+.inquiry-form-only {
+  width: min(100%, 960px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 30px 24px 72px;
+}
+
+.inquiry-form-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.inquiry-mini-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--text-primary);
+}
+
+.inquiry-mini-logo .logo-text {
+  font-size: 1rem;
+}
+
+.inquiry-form-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inquiry-form-tools .inquiry-back-link {
+  margin-top: 0;
+  font-size: 0.8rem;
+}
+
+.inquiry-form-only-card {
+  max-width: 860px;
+  margin: 64px auto 0;
+}
+
+.inquiry-form-only-card .inquiry-form-header h1 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.055em;
+}
+
+@media (max-width: 560px) {
+  .inquiry-form-only {
+    padding: 20px 14px 48px;
+  }
+
+  .inquiry-form-topbar {
+    align-items: flex-start;
+  }
+
+  .inquiry-form-tools .inquiry-back-link {
+    display: none;
+  }
+
+  .inquiry-form-only-card {
+    margin-top: 38px;
+  }
+}
