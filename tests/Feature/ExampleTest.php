@@ -20,4 +20,12 @@ class ExampleTest extends TestCase
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page->component('Inquiry'));
     }
+
+    public function test_forwarded_https_requests_generate_https_asset_urls(): void
+    {
+        $this->withHeader('X-Forwarded-Proto', 'https')
+            ->get('https://i-istudio.onrender.com/')
+            ->assertOk()
+            ->assertSee('https://i-istudio.onrender.com/build/assets/', false);
+    }
 }
