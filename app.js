@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSolutionsByGoal();
   initServiceTabs();
   initSmartForm();
+  initScrollSpy();
 });
 
 /* ==========================================================================
@@ -163,6 +164,59 @@ function initMobileMenu() {
       }
     }, { passive: true });
   }
+}
+
+/* ==========================================================================
+   2.1. ScrollSpy Navigation
+   ========================================================================== */
+function initScrollSpy() {
+  const navLinks = document.querySelectorAll('.nav-menu .nav-link');
+  if (!navLinks.length) return;
+
+  const getTargetSection = (link) => {
+    const hash = link.getAttribute('href');
+    if (!hash || !hash.startsWith('#')) return null;
+    return document.querySelector(hash);
+  };
+
+  const sectionsWithLinks = Array.from(navLinks)
+    .map(link => ({ link, section: getTargetSection(link) }))
+    .filter(item => item.section !== null);
+
+  if (!sectionsWithLinks.length) return;
+
+  const updateActiveNav = () => {
+    const headerHeight = document.querySelector('.site-header')?.offsetHeight || 72;
+    const scrollPos = window.scrollY + headerHeight + 60;
+    const isBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
+
+    let activeItem = sectionsWithLinks[0];
+
+    if (isBottom) {
+      activeItem = sectionsWithLinks[sectionsWithLinks.length - 1];
+    } else {
+      for (const item of sectionsWithLinks) {
+        const top = item.section.offsetTop;
+        if (scrollPos >= top) {
+          activeItem = item;
+        } else {
+          break;
+        }
+      }
+    }
+
+    sectionsWithLinks.forEach(({ link }) => {
+      if (link === activeItem.link) {
+        link.classList.add('active');
+      } else {
+        link.classList.remove('active');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  window.addEventListener('resize', updateActiveNav, { passive: true });
+  updateActiveNav();
 }
 
 /* ==========================================================================

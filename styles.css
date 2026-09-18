@@ -262,7 +262,7 @@ p {
   color: var(--text-secondary);
   padding: 8px 14px;
   border-radius: var(--radius-pill);
-  transition: color 0.15s ease, background-color 0.15s ease;
+  transition: color 0.25s ease, background-color 0.25s ease, font-weight 0.25s ease;
 }
 
 .nav-link:hover {
@@ -271,8 +271,10 @@ p {
 }
 
 .nav-link.active {
-  color: var(--text-primary);
+  color: #09090b;
   font-weight: 600;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .header-actions {
@@ -2396,6 +2398,21 @@ html[data-theme="dark"] .btn-primary:focus-visible {
   color: var(--text-primary);
   box-shadow: var(--shadow-subtle);
 }
+html[data-theme="dark"] .nav-link {
+  color: var(--text-muted);
+}
+
+html[data-theme="dark"] .nav-link:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-panel);
+}
+
+html[data-theme="dark"] .nav-link.active {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+
 /* Desktop dark theme: keep header navigation transparent. */
 @media (min-width: 769px) {
   html[data-theme="dark"] .nav-menu {
