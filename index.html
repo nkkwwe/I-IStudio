@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="styles.css?v=lang-menu-20260918">
+  <link rel="stylesheet" href="styles.css?v=project-page-20260918">
 </head>
 <body>
 
@@ -46,7 +46,7 @@
       </nav>
 
       <div class="header-actions">
-        <a href="#inquiry" class="btn btn-primary btn-sm">
+        <a href="inquiry.html" class="btn btn-primary btn-sm">
           <span data-i18n="btn_discuss">Discuss Project</span>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
         </a>
@@ -91,7 +91,7 @@
       </p>
 
       <div class="hero-cta-group">
-        <a href="#inquiry" class="btn btn-primary btn-lg">
+        <a href="inquiry.html" class="btn btn-primary btn-lg">
           <span data-i18n="hero_btn_discuss">Discuss Project</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -240,7 +240,7 @@
             </div>
           </div>
 
-          <a href="#inquiry" class="bento-link" onclick="preselectService('landing')">
+          <a href="inquiry.html" class="bento-link" onclick="preselectService('landing')">
             <span data-i18n="bento_1_link">Configure Landing Page Form</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
@@ -275,7 +275,7 @@
             </div>
           </div>
 
-          <a href="#inquiry" class="bento-link" onclick="preselectService('ads')">
+          <a href="inquiry.html" class="bento-link" onclick="preselectService('ads')">
             <span data-i18n="bento_2_link">Configure Advertising Form</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
@@ -311,7 +311,7 @@
             </div>
           </div>
 
-          <a href="#inquiry" class="bento-link" onclick="preselectService('redesign')">
+          <a href="inquiry.html" class="bento-link" onclick="preselectService('redesign')">
             <span data-i18n="bento_3_link">Configure Redesign Form</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
@@ -342,7 +342,7 @@
             </div>
           </div>
 
-          <a href="#inquiry" class="bento-link" onclick="preselectService('corporate')">
+          <a href="inquiry.html" class="bento-link" onclick="preselectService('corporate')">
             <span data-i18n="bento_4_link">Configure Business Website Form</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
           </a>
@@ -431,7 +431,7 @@
               </div>
             </div>
 
-            <a href="#inquiry" class="btn btn-secondary btn-block" onclick="preselectService('landing')">
+            <a href="inquiry.html" class="btn btn-secondary btn-block" onclick="preselectService('landing')">
               <span data-i18n="case_btn_similar">I Want Similar Results</span>
             </a>
           </div>
@@ -514,7 +514,7 @@
               </div>
             </div>
 
-            <a href="#inquiry" class="btn btn-secondary btn-block" onclick="preselectService('redesign')">
+            <a href="inquiry.html" class="btn btn-secondary btn-block" onclick="preselectService('redesign')">
               <span data-i18n="case_btn_similar">I Want Similar Results</span>
             </a>
           </div>
@@ -590,7 +590,7 @@
               </div>
             </div>
 
-            <a href="#inquiry" class="btn btn-secondary btn-block" onclick="preselectService('corporate')">
+            <a href="inquiry.html" class="btn btn-secondary btn-block" onclick="preselectService('corporate')">
               <span data-i18n="case_btn_similar">I Want Similar Results</span>
             </a>
           </div>
@@ -883,10 +883,10 @@
           </div>
 
           <div class="inquiry-action-main">
-            <button type="button" class="btn btn-primary btn-lg btn-block btn-open-modal" id="openInquiryModalBtn">
+            <a href="inquiry.html" class="btn btn-primary btn-lg btn-block btn-open-page" id="openInquiryPageBtn">
               <span data-i18n="inq_cta_btn">Open Project Brief</span>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </button>
+            </a>
           </div>
 
           <div class="inquiry-features-grid">
@@ -912,7 +912,8 @@
     </div>
   </section>
 
-  <!-- Interactive Project Brief Modal -->
+  <!-- Legacy form markup kept as a non-rendered template for compatibility. -->
+  <template id="legacyInquiryForm">
   <div class="modal-backdrop" id="inquiryModal" role="dialog" aria-modal="true" aria-labelledby="modalInquiryTitle" aria-hidden="true">
     <div class="modal-card">
       <button type="button" class="modal-close-btn" id="closeModalBtn" aria-label="Close modal">
@@ -1011,6 +1012,7 @@
       </div>
     </div>
   </div>
+  </template>
 
   <!-- Site Footer -->
   <footer class="site-footer" id="contact">
@@ -1067,13 +1069,13 @@
     <div class="container footer-bottom">
       <p data-i18n-html="footer_copy">&copy; 2026 I&amp;I Studio. Designed to bring real clients to your business.</p>
       <div class="footer-sublinks">
-        <a href="#inquiry" data-i18n="footer_consult">Quick Consultation</a>
-        <a href="#inquiry" data-i18n="footer_discuss">Discuss Project</a>
+        <a href="inquiry.html" data-i18n="footer_consult">Quick Consultation</a>
+        <a href="inquiry.html" data-i18n="footer_discuss">Discuss Project</a>
       </div>
     </div>
   </footer>
 
-  <script src="translations.js?v=lang-menu-20260918"></script>
-  <script src="app.js?v=lang-menu-20260918"></script>
+  <script src="translations.js?v=project-page-20260918"></script>
+  <script src="app.js?v=project-page-20260918"></script>
 </body>
 </html>

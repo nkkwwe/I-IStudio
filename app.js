@@ -213,6 +213,7 @@ function initScrollSpy() {
   const sectionsWithLinks = Array.from(navLinks)
     .map(link => ({ link, section: getTargetSection(link) }))
     .filter(item => item.section !== null);
+  if (!sectionsWithLinks.length) return;
 
   let isClickScrolling = false;
   let scrollEndTimer = null;
@@ -411,85 +412,61 @@ window.preselectService = function(serviceKey, openModal = true) {
   const targetTab = document.querySelector(`#serviceTabs .tab-btn[data-service="${serviceKey}"]`);
   const serviceInput = document.getElementById('serviceTypeInput');
 
+  if (!serviceInput && openModal) {
+    window.location.href = `inquiry.html?service=${encodeURIComponent(serviceKey)}`;
+    return;
+  }
+
   if (targetTab) {
     tabs.forEach(t => t.classList.remove('active'));
     targetTab.classList.add('active');
   }
   if (serviceInput) serviceInput.value = serviceKey;
 
-  if (openModal && window.openInquiryModal) {
-    window.openInquiryModal();
+  if (openModal && window.openInquiryPage) {
+    window.openInquiryPage(serviceKey);
   }
 };
 
 /* ==========================================================================
-   5. Inquiry Modal, Smart Form & Ticket Confirmation
+   5. Inquiry Page, Smart Form & Ticket Confirmation
    ========================================================================== */
 function initSmartForm() {
-  const modal = document.getElementById('inquiryModal');
-  const openModalBtns = document.querySelectorAll('#openInquiryModalBtn, [data-open-modal="inquiry"]');
-  const closeModalBtn = document.getElementById('closeModalBtn');
   const form = document.getElementById('projectForm');
+  const inquiryPage = document.querySelector('.inquiry-page');
+  const openInquiryBtns = document.querySelectorAll('#openInquiryPageBtn, [data-open-page="inquiry"]');
   const overlay = document.getElementById('feedbackOverlay');
   const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
   const ticketDisplay = document.getElementById('ticketNumberDisplay');
   const assignedService = document.getElementById('assignedService');
   const serviceInput = document.getElementById('serviceTypeInput');
 
-  if (!modal) return;
-
-  window.openInquiryModal = function() {
-    modal.classList.add('active');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-
-    // Auto-focus first field
-    setTimeout(() => {
-      const firstInput = modal.querySelector('#clientName');
-      if (firstInput) firstInput.focus();
-    }, 150);
+  window.openInquiryPage = function(serviceKey = 'landing') {
+    window.location.href = `inquiry.html?service=${encodeURIComponent(serviceKey)}`;
   };
 
-  window.closeInquiryModal = function() {
-    modal.classList.remove('active');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  };
-
-  openModalBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.openInquiryModal();
+  if (!form || !inquiryPage) {
+    openInquiryBtns.forEach(btn => {
+      btn.addEventListener('click', (event) => {
+        event.preventDefault();
+        window.openInquiryPage(btn.dataset.service || 'landing');
+      });
     });
-  });
-
-  // Connect all "Discuss Project" / "Consultation" anchor buttons
-  document.querySelectorAll('a[href="#inquiry"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      e.preventDefault();
-      window.openInquiryModal();
-    });
-  });
-
-  if (closeModalBtn) {
-    closeModalBtn.addEventListener('click', () => {
-      window.closeInquiryModal();
-    });
+    return;
   }
 
-  // Close when clicking on backdrop outside modal-card
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      window.closeInquiryModal();
-    }
+  openInquiryBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.openInquiryPage(btn.dataset.service || 'landing');
+    });
   });
 
-  // ESC key closes modal
-  window.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('active')) {
-      window.closeInquiryModal();
-    }
-  });
+  const requestedService = new URLSearchParams(window.location.search).get('service');
+  if (requestedService) {
+    const requestedTab = document.querySelector(`#serviceTabs .tab-btn[data-service="${requestedService}"]`);
+    if (requestedTab) requestedTab.click();
+  }
 
   // Form submission & Ticket generation
   if (form && overlay) {
@@ -530,7 +507,6 @@ function initSmartForm() {
         form.reset();
         const budgetRow = document.getElementById('feedbackBudgetRow');
         if (budgetRow) budgetRow.style.display = 'none';
-        window.closeInquiryModal();
         window.preselectService('landing', false);
       });
     }
