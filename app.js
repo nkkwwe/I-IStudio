@@ -184,7 +184,7 @@ function initScrollSpy() {
     .filter(item => item.section !== null);
 
   let isClickScrolling = false;
-  let clickScrollTimer = null;
+  let scrollEndTimer = null;
 
   const setActiveLink = (targetLink) => {
     sectionsWithLinks.forEach(({ link }) => {
@@ -200,41 +200,86 @@ function initScrollSpy() {
     if (isClickScrolling) return;
 
     const headerHeight = document.querySelector('.site-header')?.offsetHeight || 72;
-    const scrollPos = window.scrollY + headerHeight + 60;
-    const isBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 60);
-
-    let activeItem = sectionsWithLinks[0];
+    const isBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 50);
 
     if (isBottom) {
-      activeItem = sectionsWithLinks[sectionsWithLinks.length - 1];
-    } else {
-      for (const item of sectionsWithLinks) {
-        const top = item.section.offsetTop;
-        if (scrollPos >= top) {
-          activeItem = item;
-        } else {
-          break;
-        }
+      setActiveLink(sectionsWithLinks[sectionsWithLinks.length - 1].link);
+      return;
+    }
+
+    if (window.scrollY < 80) {
+      setActiveLink(sectionsWithLinks[0].link);
+      return;
+    }
+
+    const threshold = headerHeight + 80;
+    let activeItem = sectionsWithLinks[0];
+
+    for (let i = sectionsWithLinks.length - 1; i >= 0; i--) {
+      const item = sectionsWithLinks[i];
+      const rect = item.section.getBoundingClientRect();
+      if (rect.top <= threshold) {
+        activeItem = item;
+        break;
       }
     }
 
     setActiveLink(activeItem.link);
   };
 
+  const endClickScroll = () => {
+    if (!isClickScrolling) return;
+    isClickScrolling = false;
+    clearTimeout(scrollEndTimer);
+  };
+
   sectionsWithLinks.forEach(({ link }) => {
     link.addEventListener('click', () => {
       setActiveLink(link);
       isClickScrolling = true;
-      clearTimeout(clickScrollTimer);
-      clickScrollTimer = setTimeout(() => {
-        isClickScrolling = false;
-        updateActiveNav();
-      }, 800);
+      clearTimeout(scrollEndTimer);
+      // Fallback timer: auto-release if no scroll events occur
+      scrollEndTimer = setTimeout(endClickScroll, 1200);
     });
   });
 
-  window.addEventListener('scroll', updateActiveNav, { passive: true });
+  const logo = document.querySelector('.site-header .logo');
+  if (logo) {
+    logo.addEventListener('click', () => {
+      const heroLink = document.querySelector('.nav-menu .nav-link[href="#hero"]');
+      if (heroLink) setActiveLink(heroLink);
+      isClickScrolling = true;
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(endClickScroll, 1200);
+    });
+  }
+
+  const handleScroll = () => {
+    if (isClickScrolling) {
+      // While smooth scrolling to target, keep blocking any other active state changes.
+      // Reset timer: only release lock 150ms after the very last scroll frame has settled.
+      clearTimeout(scrollEndTimer);
+      scrollEndTimer = setTimeout(endClickScroll, 150);
+      return;
+    }
+    updateActiveNav();
+  };
+
+  window.addEventListener('scroll', handleScroll, { passive: true });
   window.addEventListener('resize', updateActiveNav, { passive: true });
+
+  if ('onscrollend' in window) {
+    window.addEventListener('scrollend', endClickScroll, { passive: true });
+  }
+
+  window.addEventListener('wheel', endClickScroll, { passive: true });
+  window.addEventListener('touchmove', endClickScroll, { passive: true });
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)) {
+      endClickScroll();
+    }
+  }, { passive: true });
+
   updateActiveNav();
 }
 

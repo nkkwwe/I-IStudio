@@ -271,7 +271,8 @@ p {
   background-color: var(--bg-panel);
 }
 
-.nav-link.active {
+.nav-link.active,
+.nav-link.active:hover {
   color: #09090b;
   font-weight: 600;
   background-color: #ffffff;
@@ -2408,7 +2409,8 @@ html[data-theme="dark"] .nav-link:hover {
   background-color: var(--bg-panel);
 }
 
-html[data-theme="dark"] .nav-link.active {
+html[data-theme="dark"] .nav-link.active,
+html[data-theme="dark"] .nav-link.active:hover {
   color: #ffffff;
   background-color: rgba(255, 255, 255, 0.12);
   box-shadow: none;
