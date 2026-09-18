@@ -4,6 +4,13 @@
 .dockerignore
 Dockerfile
 README.md
+.env
+.env.*
 node_modules
 vendor
+public/build
+public/hot
+storage/logs/*
+tests
+scripts
 *.log

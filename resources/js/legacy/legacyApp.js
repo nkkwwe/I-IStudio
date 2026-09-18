@@ -10,7 +10,7 @@ if (savedTheme === 'dark') {
   document.documentElement.dataset.theme = 'dark';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+export function initLegacyApp() {
   initThemeSwitcher();
   initMobileMenu();
   initLanguageSwitcher();
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initServiceTabs();
   initSmartForm();
   initScrollSpy();
-});
+}
 
 /* ==========================================================================
    1. Language Switcher & Localization Controller
@@ -413,7 +413,7 @@ window.preselectService = function(serviceKey, openModal = true) {
   const serviceInput = document.getElementById('serviceTypeInput');
 
   if (!serviceInput && openModal) {
-    window.location.href = `inquiry.html?service=${encodeURIComponent(serviceKey)}`;
+    window.location.href = `/inquiry?service=${encodeURIComponent(serviceKey)}`;
     return;
   }
 
@@ -434,7 +434,7 @@ window.preselectService = function(serviceKey, openModal = true) {
 function initSmartForm() {
   const form = document.getElementById('projectForm');
   const inquiryPage = document.querySelector('.inquiry-page');
-  const openInquiryBtns = document.querySelectorAll('#openInquiryPageBtn, [data-open-page="inquiry"]');
+  const openInquiryBtns = document.querySelectorAll('#openInquiryPageBtn, [data-open-page="inquiry"], .action-service-pill');
   const overlay = document.getElementById('feedbackOverlay');
   const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
   const ticketDisplay = document.getElementById('ticketNumberDisplay');
@@ -442,7 +442,7 @@ function initSmartForm() {
   const serviceInput = document.getElementById('serviceTypeInput');
 
   window.openInquiryPage = function(serviceKey = 'landing') {
-    window.location.href = `inquiry.html?service=${encodeURIComponent(serviceKey)}`;
+    window.location.href = `/inquiry?service=${encodeURIComponent(serviceKey)}`;
   };
 
   if (!form || !inquiryPage) {
@@ -473,7 +473,8 @@ function initSmartForm() {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const serviceType = serviceInput?.value || 'landing';
+      const activeServiceTab = document.querySelector('#serviceTabs .tab-btn.active');
+      const serviceType = activeServiceTab?.dataset.service || serviceInput?.value || 'landing';
       const mapObj = window.serviceManagerMap ? window.serviceManagerMap[currentLanguage] : null;
       const mapping = mapObj ? (mapObj[serviceType] || mapObj['landing']) : { serviceName: 'Landing Page' };
 

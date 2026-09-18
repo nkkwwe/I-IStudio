@@ -878,3 +878,7 @@ Object.assign(window.translations.uk, {
 Object.assign(window.translations.ro, {
   inquiry_back: 'Înapoi la site', inquiry_eyebrow: '[ BRIEF PROIECT / 2 MIN ]', inquiry_intro_title: 'Hai să construim ceva care îți aduce clienți.', inquiry_intro_desc: 'Spune-ne ce vrei să lansezi, să îmbunătățești sau să promovezi. Cu cât oferi mai mult context, cu atât prima noastră propunere va fi mai utilă.', inquiry_benefit_1: 'Domeniu clar, termen realist și estimare transparentă.', inquiry_benefit_2: 'Comunicare directă cu oamenii care construiesc proiectul.', inquiry_benefit_3: 'Un plan practic pentru următorii pași, nu un răspuns generic de vânzări.', inquiry_back_services: 'Vezi serviciile noastre', inquiry_form_note: 'De obicei răspundem în 1–2 ore în timpul programului de lucru.'
 });
+
+export const translations = window.translations;
+export const solutionsData = window.solutionsData;
+export const serviceManagerMap = window.serviceManagerMap;
