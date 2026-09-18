@@ -476,6 +476,20 @@ function initSmartForm() {
       if (ticketDisplay) ticketDisplay.textContent = ticketId;
       if (assignedService) assignedService.textContent = mapping.serviceName;
 
+      // Handle budget if provided
+      const clientBudgetInput = document.getElementById('clientBudget');
+      const budgetRow = document.getElementById('feedbackBudgetRow');
+      const assignedBudget = document.getElementById('assignedBudget');
+      if (clientBudgetInput && budgetRow && assignedBudget) {
+        const val = clientBudgetInput.value.trim();
+        if (val) {
+          assignedBudget.textContent = val;
+          budgetRow.style.display = 'flex';
+        } else {
+          budgetRow.style.display = 'none';
+        }
+      }
+
       overlay.classList.add('active');
     });
 
@@ -483,6 +497,8 @@ function initSmartForm() {
       closeFeedbackBtn.addEventListener('click', () => {
         overlay.classList.remove('active');
         form.reset();
+        const budgetRow = document.getElementById('feedbackBudgetRow');
+        if (budgetRow) budgetRow.style.display = 'none';
         window.closeInquiryModal();
         window.preselectService('landing', false);
       });

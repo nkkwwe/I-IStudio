@@ -190,11 +190,14 @@ window.translations = {
     "tab_corporate": "Business Website",
     "tab_redesign": "Website Redesign",
     "tab_ads": "Advertising",
-    "tab_other": "Consultation",
+    "tab_consultation": "Consultation",
+    "tab_other": "Other",
     "form_name_label": "Your Name <span class=\"req\">*</span>",
     "form_name_ph": "Alex",
-    "form_contact_label": "Phone, Telegram, WhatsApp or Email <span class=\"req\">*</span>",
-    "form_contact_ph": "+1 (555) 019-2834 / @telegram",
+    "form_contact_label": "Your business Instagram or social media (optional)",
+    "form_contact_ph": "Instagram, Telegram or social handle (optional)",
+    "form_budget_label": "Proposed budget / payment amount (optional)",
+    "form_budget_ph": "e.g. $500, $1,000, 20,000 ₴ or your offer",
     "form_comment_label": "Tell us about your project or task <span class=\"req\">*</span>",
     "form_comment_ph": "Write in your own words: what your company does, what you want to achieve (launch a landing, redesign an existing site, or start ads), any reference links, questions, or your approximate budget. We'll reply quickly with a concrete proposal.",
     "form_btn_submit": "Send Request",
@@ -202,6 +205,7 @@ window.translations = {
     "feedback_msg": "We have registered your request and will contact you shortly.",
     "feedback_ticket_lbl": "Inquiry ID",
     "feedback_step_1": "Category:",
+    "feedback_budget_lbl": "Proposed budget:",
     "feedback_step_2": "Instant notification dispatched to manager",
     "feedback_step_3": "Estimated reply time: within 1–2 hours",
     "feedback_note": "We'll review your requirements and message you with an estimate and suggestions.",
@@ -406,11 +410,14 @@ window.translations = {
     "tab_corporate": "Сайт для бизнеса",
     "tab_redesign": "Редизайн сайта",
     "tab_ads": "Реклама",
-    "tab_other": "Консультация",
+    "tab_consultation": "Консультация",
+    "tab_other": "Iнше",
     "form_name_label": "Ваше имя <span class=\"req\">*</span>",
     "form_name_ph": "Алексей",
-    "form_contact_label": "Телефон, Telegram, WhatsApp или Email <span class=\"req\">*</span>",
-    "form_contact_ph": "+7 (999) 000-00-00 / @telegram",
+    "form_contact_label": "Instagram вашего бизнеса или другие соцсети (необязательно)",
+    "form_contact_ph": "Instagram вашого бізнесу (необов'язково)",
+    "form_budget_label": "Предлагаемая сумма оплаты / бюджет (опционально)",
+    "form_budget_ph": "Например: $500, $1,000, 20 000 ₴ или ваш вариант",
     "form_comment_label": "Расскажите о вашем проекте или задаче <span class=\"req\">*</span>",
     "form_comment_ph": "Напишите своими словами: чем занимается ваша компания, что хотите реализовать (запустить лендинг, обновить текущий сайт или настроить рекламу), ссылки на примеры, вопросы или бюджет. Мы быстро ответим с конкретным предложением.",
     "form_btn_submit": "Отправить заявку",
@@ -418,6 +425,7 @@ window.translations = {
     "feedback_msg": "Мы зарегистрировали ваше обращение и свяжемся с вами в ближайшее время.",
     "feedback_ticket_lbl": "Номер заявки",
     "feedback_step_1": "Категория:",
+    "feedback_budget_lbl": "Бюджет:",
     "feedback_step_2": "Мгновенное оповещение отправлено менеджеру",
     "feedback_step_3": "Ориентировочное время ответа: в течение 1–2 часов",
     "feedback_note": "Мы изучим ваши требования и напишем вам с расчётом и рекомендациями.",
@@ -604,8 +612,11 @@ window.serviceManagerMap = {
     "ads": {
       "serviceName": "Targeted Advertising Campaign"
     },
-    "other": {
+    "consultation": {
       "serviceName": "Project Consultation"
+    },
+    "other": {
+      "serviceName": "Custom Project Request (Other)"
     }
   },
   "ru": {
@@ -621,8 +632,11 @@ window.serviceManagerMap = {
     "ads": {
       "serviceName": "Таргетированная реклама"
     },
-    "other": {
+    "consultation": {
       "serviceName": "Консультация по проекту"
+    },
+    "other": {
+      "serviceName": "Iнше / Индивидуальная задача"
     }
   }
 };

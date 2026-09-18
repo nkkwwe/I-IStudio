@@ -865,9 +865,13 @@
                 <span class="pill-dot"></span>
                 <span data-i18n="tab_ads">Advertising</span>
               </button>
+              <button type="button" class="action-service-pill" data-service="consultation" onclick="preselectService('consultation')">
+                <span class="pill-dot"></span>
+                <span data-i18n="tab_consultation">Consultation</span>
+              </button>
               <button type="button" class="action-service-pill" data-service="other" onclick="preselectService('other')">
                 <span class="pill-dot"></span>
-                <span data-i18n="tab_other">Consultation</span>
+                <span data-i18n="tab_other">Other</span>
               </button>
             </div>
           </div>
@@ -923,7 +927,8 @@
           <button type="button" class="tab-btn" data-service="corporate" data-i18n="tab_corporate">Business Website</button>
           <button type="button" class="tab-btn" data-service="redesign" data-i18n="tab_redesign">Website Redesign</button>
           <button type="button" class="tab-btn" data-service="ads" data-i18n="tab_ads">Advertising</button>
-          <button type="button" class="tab-btn" data-service="other" data-i18n="tab_other">Consultation</button>
+          <button type="button" class="tab-btn" data-service="consultation" data-i18n="tab_consultation">Consultation</button>
+          <button type="button" class="tab-btn" data-service="other" data-i18n="tab_other">Other</button>
         </div>
       </div>
 
@@ -938,9 +943,15 @@
             <input type="text" id="clientName" name="client_name" placeholder="Alex" data-i18n-placeholder="form_name_ph" required>
           </div>
           <div class="form-group">
-            <label for="clientContact" data-i18n-html="form_contact_label">Phone, Telegram, WhatsApp or Email <span class="req">*</span></label>
-            <input type="text" id="clientContact" name="client_contact" placeholder="+1 (555) 019-2834 / @telegram" data-i18n-placeholder="form_contact_ph" required>
+            <label for="clientContact" data-i18n="form_contact_label">Instagram вашего бизнеса или другие соцсети (необязательно)</label>
+            <input type="text" id="clientContact" name="client_contact" placeholder="Instagram вашого бізнесу (необов'язково)" data-i18n-placeholder="form_contact_ph">
           </div>
+        </div>
+
+        <!-- Proposed Budget / Order Payment Amount -->
+        <div class="form-group">
+          <label for="clientBudget" data-i18n="form_budget_label">Предлагаемая сумма оплаты / бюджет (опционально)</label>
+          <input type="text" id="clientBudget" name="client_budget" placeholder="Например: $500, $1,000, 20 000 ₴ или ваш вариант" data-i18n-placeholder="form_budget_ph">
         </div>
 
         <!-- Free-form Project Description -->
@@ -973,6 +984,10 @@
             <div class="action-step done">
               <span class="step-icon">✓</span>
               <span><span data-i18n="feedback_step_1">Category:</span> <strong id="assignedService">Landing Page Development</strong></span>
+            </div>
+            <div class="action-step done" id="feedbackBudgetRow" style="display: none;">
+              <span class="step-icon">✓</span>
+              <span><span data-i18n="feedback_budget_lbl">Budget:</span> <strong id="assignedBudget"></strong></span>
             </div>
             <div class="action-step done">
               <span class="step-icon">✓</span>
