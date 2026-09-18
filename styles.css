@@ -737,13 +737,6 @@ p {
   flex-direction: column;
   justify-content: space-between;
   box-shadow: var(--shadow-subtle);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  transform: none !important;
-}
-
-.bento-card:hover {
-  border-color: var(--border-dark);
-  box-shadow: var(--shadow-hover);
   transform: none !important;
 }
 
@@ -1034,13 +1027,6 @@ p {
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-subtle);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  transform: none !important;
-}
-
-.case-card:hover {
-  border-color: var(--border-dark);
-  box-shadow: var(--shadow-hover);
   transform: none !important;
 }
 
@@ -1467,15 +1453,8 @@ p {
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-subtle);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   transform: none !important;
   position: relative;
-}
-
-.workflow-card:hover {
-  border-color: var(--accent-black);
-  box-shadow: var(--shadow-card);
-  transform: none !important;
 }
 
 .workflow-card-top {
@@ -1519,13 +1498,6 @@ p {
   justify-content: center;
   color: var(--accent-black);
   margin-bottom: 16px;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-}
-
-.workflow-card:hover .workflow-icon-box {
-  background: var(--accent-black);
-  color: #ffffff;
-  border-color: var(--accent-black);
 }
 
 .workflow-card h4 {
@@ -1588,13 +1560,6 @@ p {
   border-radius: var(--radius-card);
   padding: 32px;
   box-shadow: var(--shadow-subtle);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  transform: none !important;
-}
-
-.advantage-card:hover {
-  border-color: var(--border-dark);
-  box-shadow: var(--shadow-hover);
   transform: none !important;
 }
 
@@ -2419,8 +2384,7 @@ html[data-theme="dark"] .bubble-info span {
 
 html[data-theme="dark"] .m-hero-btn,
 html[data-theme="dark"] .cat-pill.active,
-html[data-theme="dark"] .phone-btn,
-html[data-theme="dark"] .workflow-card:hover .workflow-icon-box {
+html[data-theme="dark"] .phone-btn {
   background-color: var(--accent-black);
   border-color: var(--accent-black);
   color: var(--text-inverse);
