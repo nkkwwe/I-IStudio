@@ -286,57 +286,114 @@ p {
 }
 
 .language-switcher {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  padding: 3px;
-  border: 1px solid #e2e8f0;
-  border-radius: var(--radius-pill);
-  background: #ffffff;
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+  z-index: 20;
+}
+
+.language-trigger {
+  min-width: 76px;
+  height: 38px;
+  padding: 0 11px 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.language-trigger:hover,
+.language-switcher.open .language-trigger {
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  box-shadow: var(--shadow-subtle);
+}
+
+.language-chevron {
+  color: var(--text-muted);
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.language-switcher.open .language-chevron {
+  transform: rotate(180deg);
+}
+
+.language-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 170px;
+  padding: 6px;
+  display: grid;
+  gap: 3px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(0.98);
+  transform-origin: top right;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+}
+
+.language-switcher.open .language-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
 .language-option {
-  min-width: 38px;
-  height: 30px;
-  padding: 0 10px;
-  border: 0;
-  border-radius: var(--radius-pill);
-  background: transparent;
-  color: #64748b;
-  font-family: var(--font-sans);
-  font-size: 0.8125rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-  display: inline-flex;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 10px 0 12px;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  transform: none !important;
-  user-select: none;
+  justify-content: space-between;
+  gap: 16px;
+  border: 0;
+  border-radius: calc(var(--radius-sm) - 2px);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.language-option span {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+}
+
+.language-option:hover,
+.language-option.active {
+  background: var(--bg-panel);
+  color: var(--text-primary);
 }
 
 .language-option:hover {
-  color: #0f172a;
+  transform: translateX(2px);
 }
 
 .language-option.active {
-  color: #ffffff;
-  background: var(--accent-black);
-  box-shadow: 0 2px 6px rgba(9, 9, 11, 0.18);
-}
-
-.language-option.active:hover {
-  color: #ffffff;
-  background: #18181b;
-}
-
-.language-divider {
-  width: 1px;
-  height: 16px;
-  background: #e2e8f0;
-  margin: 0 2px;
+  box-shadow: inset 2px 0 0 var(--accent-black);
 }
 
 .theme-toggle {
@@ -2295,17 +2352,6 @@ p {
 }
 
 @media (max-width: 768px) {
-  .language-switcher {
-    padding: 2px;
-  }
-
-  .language-option {
-    min-width: 29px;
-    height: 26px;
-    padding: 0 6px;
-    font-size: 0.66rem;
-  }
-
   .nav-menu {
     position: fixed;
     top: 72px;
@@ -2401,16 +2447,6 @@ p {
     font-size: 0.78rem;
   }
 
-  .language-switcher {
-    padding: 2px;
-  }
-
-  .language-option {
-    min-width: 32px;
-    height: 26px;
-    padding: 0 6px;
-    font-size: 0.72rem;
-  }
 }
 
 /* ==========================================================================
@@ -2674,4 +2710,16 @@ html[data-theme="dark"] .nav-link.active:hover {
     background-color: transparent;
     border-bottom-color: transparent;
   }
+}
+
+/* Language dropdown: keep the trigger aligned with the header in dark mode. */
+html[data-theme="dark"] .language-switcher {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+html[data-theme="dark"] .language-trigger:hover,
+html[data-theme="dark"] .language-switcher.open .language-trigger {
+  background: var(--bg-panel);
 }

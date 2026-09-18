@@ -2,7 +2,7 @@
  * I&I Studio - Frontend Interactivity & Language Switcher
  */
 
-let currentLanguage = 'ru';
+let currentLanguage = 'en';
 let activeGoalKey = 'landing';
 
 const savedTheme = localStorage.getItem('ii_studio_theme');
@@ -60,23 +60,31 @@ function initThemeSwitcher() {
 }
 function initLanguageSwitcher() {
   const options = document.querySelectorAll('.language-option');
-  if (!options.length) return;
+  const switcher = document.querySelector('.language-switcher');
+  const trigger = document.querySelector('.language-trigger');
+  const currentLabel = document.querySelector('.language-current');
+  if (!options.length || !switcher || !trigger) return;
 
-  // Retrieve saved language, default to 'ru'
-  const savedLanguage = localStorage.getItem('ii_studio_language') || 'ru';
+  const supportedLanguages = ['en', 'uk', 'ro'];
+  const languageLabels = { en: 'EN', uk: 'UK', ro: 'RO' };
+  const savedLanguage = localStorage.getItem('ii_studio_language');
 
   window.setLanguage = function(lang) {
     if (!window.translations || !window.translations[lang]) {
-      lang = 'ru';
+      lang = 'en';
     }
+    if (!supportedLanguages.includes(lang)) lang = 'en';
     currentLanguage = lang;
 
-    // Update switcher pill buttons
     options.forEach(opt => {
       const isActive = opt.dataset.language === lang;
       opt.classList.toggle('active', isActive);
-      opt.setAttribute('aria-pressed', String(isActive));
+      opt.setAttribute('aria-selected', String(isActive));
     });
+    currentLabel.textContent = languageLabels[lang];
+    trigger.setAttribute('aria-label', `Language: ${languageLabels[lang]}`);
+    switcher.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
 
     // Update html attributes
     document.documentElement.lang = lang;
@@ -125,12 +133,35 @@ function initLanguageSwitcher() {
       const targetLang = option.dataset.language;
       if (targetLang && targetLang !== currentLanguage) {
         window.setLanguage(targetLang);
+      } else {
+        switcher.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
       }
     });
   });
 
+  trigger.addEventListener('click', () => {
+    const isOpen = switcher.classList.toggle('open');
+    trigger.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  document.addEventListener('click', (event) => {
+    if (!switcher.contains(event.target)) {
+      switcher.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      switcher.classList.remove('open');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.focus();
+    }
+  });
+
   // Apply initially
-  window.setLanguage(savedLanguage);
+  window.setLanguage(supportedLanguages.includes(savedLanguage) ? savedLanguage : 'en');
 }
 
 /* ==========================================================================
@@ -303,9 +334,9 @@ function initSolutionsByGoal() {
   function renderSolution(key) {
     if (!window.solutionsData || !window.translations) return;
 
-    const langData = window.solutionsData[currentLanguage] || window.solutionsData['ru'];
+    const langData = window.solutionsData[currentLanguage] || window.solutionsData['en'];
     const data = langData ? langData[key] : null;
-    const t = window.translations[currentLanguage] || window.translations['ru'];
+    const t = window.translations[currentLanguage] || window.translations['en'];
     if (!data || !output || !t) return;
 
     output.innerHTML = `
