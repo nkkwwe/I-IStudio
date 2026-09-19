@@ -60,14 +60,17 @@ function initThemeSwitcher() {
 }
 function initLanguageSwitcher() {
   const options = document.querySelectorAll('.language-option');
-  const switcher = document.querySelector('.language-switcher');
-  const trigger = document.querySelector('.language-trigger');
-  const currentLabel = document.querySelector('.language-current');
-  if (!options.length || !switcher || !trigger) return;
+  const switchers = Array.from(document.querySelectorAll('.language-switcher'));
+  if (!options.length || !switchers.length) return;
 
   const supportedLanguages = ['en', 'uk', 'ro'];
   const languageLabels = { en: 'EN', uk: 'UK', ro: 'RO' };
   const savedLanguage = localStorage.getItem('ii_studio_language');
+  const closeSwitcher = (switcher) => {
+    const trigger = switcher.querySelector('.language-trigger');
+    switcher.classList.remove('open');
+    trigger?.setAttribute('aria-expanded', 'false');
+  };
 
   window.setLanguage = function(lang) {
     if (!window.translations || !window.translations[lang]) {
@@ -76,15 +79,20 @@ function initLanguageSwitcher() {
     if (!supportedLanguages.includes(lang)) lang = 'en';
     currentLanguage = lang;
 
-    options.forEach(opt => {
-      const isActive = opt.dataset.language === lang;
-      opt.classList.toggle('active', isActive);
-      opt.setAttribute('aria-selected', String(isActive));
+    switchers.forEach(switcher => {
+      const trigger = switcher.querySelector('.language-trigger');
+      const currentLabel = switcher.querySelector('.language-current');
+
+      switcher.querySelectorAll('.language-option').forEach(opt => {
+        const isActive = opt.dataset.language === lang;
+        opt.classList.toggle('active', isActive);
+        opt.setAttribute('aria-selected', String(isActive));
+      });
+
+      if (currentLabel) currentLabel.textContent = languageLabels[lang];
+      trigger?.setAttribute('aria-label', `Language: ${languageLabels[lang]}`);
+      closeSwitcher(switcher);
     });
-    currentLabel.textContent = languageLabels[lang];
-    trigger.setAttribute('aria-label', `Language: ${languageLabels[lang]}`);
-    switcher.classList.remove('open');
-    trigger.setAttribute('aria-expanded', 'false');
 
     // Update html attributes
     document.documentElement.lang = lang;
@@ -134,29 +142,36 @@ function initLanguageSwitcher() {
       if (targetLang && targetLang !== currentLanguage) {
         window.setLanguage(targetLang);
       } else {
-        switcher.classList.remove('open');
-        trigger.setAttribute('aria-expanded', 'false');
+        const parentSwitcher = option.closest('.language-switcher');
+        if (parentSwitcher) closeSwitcher(parentSwitcher);
       }
     });
   });
 
-  trigger.addEventListener('click', () => {
-    const isOpen = switcher.classList.toggle('open');
-    trigger.setAttribute('aria-expanded', String(isOpen));
+  switchers.forEach(switcher => {
+    const trigger = switcher.querySelector('.language-trigger');
+    if (!trigger) return;
+
+    trigger.addEventListener('click', (event) => {
+      event.stopPropagation();
+      const isOpen = switcher.classList.toggle('open');
+      switchers.forEach(otherSwitcher => {
+        if (otherSwitcher !== switcher) closeSwitcher(otherSwitcher);
+      });
+      trigger.setAttribute('aria-expanded', String(isOpen));
+    });
   });
 
   document.addEventListener('click', (event) => {
-    if (!switcher.contains(event.target)) {
-      switcher.classList.remove('open');
-      trigger.setAttribute('aria-expanded', 'false');
+    if (!switchers.some(switcher => switcher.contains(event.target))) {
+      switchers.forEach(closeSwitcher);
     }
   });
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-      switcher.classList.remove('open');
-      trigger.setAttribute('aria-expanded', 'false');
-      trigger.focus();
+      switchers.forEach(closeSwitcher);
+      switchers[0].querySelector('.language-trigger')?.focus();
     }
   });
 

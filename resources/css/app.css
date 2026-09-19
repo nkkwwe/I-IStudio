@@ -236,6 +236,12 @@ p {
   justify-content: center;
 }
 
+.logo-symbol svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
 .logo-text {
   font-family: var(--font-display);
   font-size: 1.25rem;
@@ -332,8 +338,9 @@ p {
 }
 
 .account-header-link svg {
-  width: 17px;
-  height: 17px;
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 /* Authentication and account */
@@ -1020,6 +1027,10 @@ p {
   animation: account-modal-backdrop-in 0.2s ease both;
 }
 
+.language-switcher.mobile-language-switcher {
+  display: none;
+}
+
 .account-modal {
   width: min(100%, 440px);
   padding: 27px;
@@ -1277,6 +1288,14 @@ p {
   width: 44px;
   min-width: 44px;
   flex-basis: 44px;
+}
+
+.header-actions .theme-toggle svg,
+.account-logout svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  margin: auto;
 }
 
 .theme-icon {
@@ -3234,6 +3253,30 @@ p {
     display: flex;
   }
 
+  .header-actions > .language-switcher {
+    display: none;
+  }
+
+  .nav-menu .mobile-language-switcher {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 4px;
+  }
+
+  .mobile-language-switcher .language-trigger {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .mobile-language-switcher .language-menu {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    margin-top: 8px;
+  }
+
   .hero-section {
     padding: 64px 0 56px 0;
   }
@@ -3327,8 +3370,8 @@ p {
   }
 
   .logo-symbol svg {
-    width: 19px;
-    height: 19px;
+    width: 24px;
+    height: 24px;
   }
 
   .logo-text {
@@ -3376,11 +3419,6 @@ p {
     width: 44px;
     height: 44px;
     min-height: 44px;
-  }
-
-  .theme-toggle svg {
-    width: 14px;
-    height: 14px;
   }
 
   .language-trigger {
