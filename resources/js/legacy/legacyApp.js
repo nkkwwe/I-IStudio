@@ -322,13 +322,19 @@ function initScrollSpy() {
     window.addEventListener('scrollend', endClickScroll, { passive: true });
   }
 
-  window.addEventListener('wheel', endClickScroll, { passive: true });
-  window.addEventListener('touchmove', endClickScroll, { passive: true });
-  window.addEventListener('keydown', (e) => {
-    if (['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(e.key)) {
-      endClickScroll();
+  const preventManualScroll = (event) => {
+    if (isClickScrolling) {
+      event.preventDefault();
     }
-  }, { passive: true });
+  };
+
+  window.addEventListener('wheel', preventManualScroll, { passive: false });
+  window.addEventListener('touchmove', preventManualScroll, { passive: false });
+  window.addEventListener('keydown', (event) => {
+    if (isClickScrolling && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) {
+      event.preventDefault();
+    }
+  });
 
   updateActiveNav();
 }
