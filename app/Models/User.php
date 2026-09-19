@@ -19,12 +19,13 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        $configuredEmail = mb_strtolower(trim((string) config('admin.email')));
         $userEmail = mb_strtolower(trim((string) $this->email));
 
-        return $configuredEmail !== ''
-            && $userEmail !== ''
-            && hash_equals($configuredEmail, $userEmail);
+        if ($userEmail === '') {
+            return false;
+        }
+
+        return in_array($userEmail, config('admin.emails', []), true);
     }
 
     /**

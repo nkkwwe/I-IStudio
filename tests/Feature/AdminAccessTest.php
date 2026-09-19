@@ -15,7 +15,7 @@ class AdminAccessTest extends TestCase
     {
         parent::setUp();
 
-        config(['admin.email' => 'admin@example.com']);
+        config(['admin.emails' => ['admin@example.com', 'second-admin@example.com']]);
     }
 
     public function test_guests_are_sent_to_login_before_admin_check(): void
@@ -34,6 +34,16 @@ class AdminAccessTest extends TestCase
     public function test_configured_admin_can_open_admin_and_receives_admin_flag(): void
     {
         $this->actingAs(User::factory()->create(['email' => 'Admin@Example.com']))
+            ->get('/admin')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Admin/Index')
+                ->where('auth.user.is_admin', true));
+    }
+
+    public function test_secondary_configured_admin_can_open_admin(): void
+    {
+        $this->actingAs(User::factory()->create(['email' => 'SECOND-ADMIN@example.com']))
             ->get('/admin')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
