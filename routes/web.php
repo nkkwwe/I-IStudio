@@ -16,6 +16,9 @@ Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+    Route::post('/register/request-code', [AuthController::class, 'requestRegistrationCode'])->name('register.request-code');
+    Route::post('/register/verify-code', [AuthController::class, 'verifyRegistrationCode'])->name('register.verify-code');
+    Route::get('/register/reset', [AuthController::class, 'resetRegistration'])->name('register.reset');
     Route::post('/register', [AuthController::class, 'register'])->name('register.store');
     Route::get('/auth/google', [AuthController::class, 'googleRedirect'])->name('auth.google');
     Route::get('/auth/google/callback', [AuthController::class, 'googleCallback'])->name('auth.google.callback');

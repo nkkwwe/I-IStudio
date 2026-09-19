@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -26,19 +30,160 @@ class AuthController extends Controller
         return Inertia::render('Auth', ['mode' => 'register']);
     }
 
+    public function requestRegistrationCode(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'email' => ['required', 'email:rfc', 'max:255'],
+        ], [
+            'email.email' => 'Введіть коректний email.',
+        ]);
+
+        $email = mb_strtolower(trim($data['email']));
+
+        if (User::query()->whereRaw('LOWER(email) = ?', [$email])->exists()) {
+            throw ValidationException::withMessages([
+                'email' => 'Цей email уже зареєстрований. Увійдіть у профіль.',
+            ]);
+        }
+
+        $rateLimitKey = 'registration-code:'.$email;
+        if (RateLimiter::tooManyAttempts($rateLimitKey, 3)) {
+            throw ValidationException::withMessages([
+                'email' => 'Код уже відправлявся кілька разів. Спробуйте ще раз трохи пізніше.',
+            ]);
+        }
+
+        if (config('mail.default') === 'log') {
+            throw ValidationException::withMessages([
+                'email' => 'Відправка кодів на email ще не налаштована на сервері.',
+            ]);
+        }
+
+        RateLimiter::hit($rateLimitKey, 600);
+        $code = (string) random_int(100000, 999999);
+        $now = now();
+
+        DB::table('email_verifications')->updateOrInsert(
+            ['email' => $email],
+            [
+                'code_hash' => Hash::make($code),
+                'expires_at' => $now->copy()->addMinutes(10),
+                'attempts' => 0,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ],
+        );
+
+        try {
+            Mail::raw(
+                "Ваш код подтверждения I&I Studio: {$code}\n\nКод действителен 10 минут.",
+                function ($message) use ($email): void {
+                    $message
+                        ->to($email)
+                        ->subject('Код подтверждения I&I Studio');
+                },
+            );
+        } catch (Throwable $exception) {
+            report($exception);
+            DB::table('email_verifications')->where('email', $email)->delete();
+
+            throw ValidationException::withMessages([
+                'email' => 'Не удалось отправить код. Проверьте email и попробуйте ещё раз.',
+            ]);
+        }
+
+        $request->session()->put('registration', [
+            'email' => $email,
+            'code_sent' => true,
+            'verified' => false,
+        ]);
+
+        return redirect()->route('register')->with('verification_sent', true);
+    }
+
+    public function verifyRegistrationCode(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'email' => ['required', 'email:rfc', 'max:255'],
+            'code' => ['required', 'digits:6'],
+        ], [
+            'email.email' => 'Введіть коректний email.',
+            'code.digits' => 'Код має містити 6 цифр.',
+        ]);
+
+        $email = mb_strtolower(trim($data['email']));
+        $registration = $request->session()->get('registration', []);
+
+        if (($registration['email'] ?? null) !== $email) {
+            throw ValidationException::withMessages([
+                'email' => 'Спочатку запросіть код для цього email.',
+            ]);
+        }
+
+        $verification = DB::table('email_verifications')->where('email', $email)->first();
+
+        if (! $verification || Carbon::parse($verification->expires_at)->isPast()) {
+            throw ValidationException::withMessages([
+                'code' => 'Код недійсний або його термін дії закінчився. Запросіть новий.',
+            ]);
+        }
+
+        if ($verification->attempts >= 5) {
+            throw ValidationException::withMessages([
+                'code' => 'Забагато невдалих спроб. Запросіть новий код.',
+            ]);
+        }
+
+        if (! Hash::check($data['code'], $verification->code_hash)) {
+            DB::table('email_verifications')->where('email', $email)->increment('attempts');
+
+            throw ValidationException::withMessages([
+                'code' => 'Неправильний код підтвердження.',
+            ]);
+        }
+
+        DB::table('email_verifications')->where('email', $email)->delete();
+        $request->session()->put('registration', [
+            'email' => $email,
+            'code_sent' => true,
+            'verified' => true,
+        ]);
+
+        return redirect()->route('register')->with('verification_success', true);
+    }
+
+    public function resetRegistration(Request $request): RedirectResponse
+    {
+        $request->session()->forget('registration');
+
+        return redirect()->route('register');
+    }
+
     public function register(Request $request): RedirectResponse
     {
         $data = $request->validate([
             'name' => ['nullable', 'string', 'max:120'],
-            'email' => ['required', 'email:rfc', 'max:255', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ], [
-            'email.unique' => 'Цей email уже зареєстрований. Увійдіть у профіль.',
             'password.min' => 'Пароль має містити щонайменше 8 символів.',
             'password.confirmed' => 'Паролі не збігаються.',
         ]);
 
-        $email = mb_strtolower(trim($data['email']));
+        $registration = $request->session()->get('registration', []);
+        $email = (string) ($registration['email'] ?? '');
+
+        if ($email === '' || ! ($registration['verified'] ?? false)) {
+            throw ValidationException::withMessages([
+                'email' => 'Спочатку підтвердіть email кодом.',
+            ]);
+        }
+
+        if (User::query()->whereRaw('LOWER(email) = ?', [$email])->exists()) {
+            throw ValidationException::withMessages([
+                'email' => 'Цей email уже зареєстрований. Увійдіть у профіль.',
+            ]);
+        }
+
         $name = trim((string) ($data['name'] ?? '')) ?: Str::before($email, '@');
 
         $user = User::query()->create([
@@ -47,6 +192,7 @@ class AuthController extends Controller
             'password' => Hash::make($data['password']),
         ]);
         $user->forceFill(['email_verified_at' => now()])->save();
+        $request->session()->forget('registration');
 
         Auth::login($user, true);
         $request->session()->regenerate();

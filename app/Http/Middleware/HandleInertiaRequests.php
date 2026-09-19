@@ -40,6 +40,15 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user()?->only('id', 'name', 'email', 'avatar', 'created_at'),
             ],
+            'flash' => [
+                'verification_sent' => $request->session()->get('verification_sent'),
+                'verification_success' => $request->session()->get('verification_success'),
+            ],
+            'registration' => [
+                'email' => $request->session()->get('registration.email'),
+                'code_sent' => (bool) $request->session()->get('registration.code_sent'),
+                'verified' => (bool) $request->session()->get('registration.verified'),
+            ],
         ];
     }
 }
