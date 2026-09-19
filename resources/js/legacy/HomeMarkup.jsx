@@ -13,7 +13,6 @@ export default function HomeMarkup() {
         <span className="logo-text">I&amp;I<span className="logo-sub">Studio</span></span>
       </a>
       <nav className="nav-menu" id="navMenu">
-        <a href="#hero" className="nav-link active" data-i18n="nav_home">Home</a>
         <a href="#solutions" className="nav-link" data-i18n="nav_solutions">Solutions</a>
         <a href="#services" className="nav-link" data-i18n="nav_services">Services</a>
         <a href="#cases" className="nav-link" data-i18n="nav_cases">Cases</a>

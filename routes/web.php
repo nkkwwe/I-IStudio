@@ -14,7 +14,7 @@ Route::get('/inquiry', function () {
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::get('/register', fn () => redirect()->route('login'))->name('register');
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
     Route::post('/register/request-code', [AuthController::class, 'requestRegistrationCode'])->middleware('throttle:user-email-code')->name('register.request-code');
     Route::post('/register/verify-code', [AuthController::class, 'verifyRegistrationCode'])->middleware('throttle:user-email-verify')->name('register.verify-code');

@@ -63,9 +63,9 @@ export default function Account() {
         <header className="account-topbar">
           <Link href="/" className="auth-brand">I&amp;I <span>Studio</span></Link>
           <div className="account-topbar-actions">
-            <button type="button" className="account-theme-toggle" onClick={toggleTheme} aria-label={isDark ? 'Enable light theme' : 'Enable dark theme'}>
-              <span aria-hidden="true">{isDark ? '☼' : '◐'}</span>
-              {isDark ? 'Light' : 'Dark'}
+            <button type="button" className="theme-toggle account-theme-toggle" onClick={toggleTheme} aria-label={isDark ? 'Enable light theme' : 'Enable dark theme'}>
+              <svg className="theme-icon theme-icon-sun" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx={12} cy={12} r="3.5" /><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" /></svg>
+              <svg className="theme-icon theme-icon-moon" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z" /></svg>
             </button>
             <button type="button" className="account-logout" onClick={logout}>Sign out</button>
           </div>
@@ -152,7 +152,6 @@ export default function Account() {
             )}
           </article>
         </section>
-        <Link href="/" className="account-back">← Back to website</Link>
       </div>
     </main>
   );

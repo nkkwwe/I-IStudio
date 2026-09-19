@@ -321,14 +321,19 @@ p {
 }
 
 .auth-shell {
-  display: grid;
+  position: relative;
+  display: flex;
   min-height: 100vh;
-  place-items: center;
-  gap: 24px;
-  padding-top: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 96px 0 64px;
 }
 
 .auth-brand {
+  position: absolute;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
   color: var(--text-primary);
   font-family: var(--font-display);
   font-size: 1.3rem;
@@ -404,7 +409,7 @@ p {
   font-size: 0.88rem;
   font-weight: 700;
   text-decoration: none;
-  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .auth-google-button {
@@ -416,7 +421,6 @@ p {
 .auth-google-button:hover {
   border-color: var(--text-primary);
   background: var(--bg-panel);
-  transform: translateY(-1px);
 }
 
 .auth-google-note {
@@ -657,7 +661,7 @@ p {
 
 .account-theme-toggle,
 .account-logout {
-  min-height: 38px;
+  min-height: 36px;
   padding: 0 14px;
   border: 1px solid var(--border-light);
   border-radius: var(--radius-pill);
@@ -665,13 +669,13 @@ p {
   color: var(--text-secondary);
   cursor: pointer;
   font: 600 0.78rem var(--font-sans);
-  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
 .account-theme-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 0;
 }
 
 .account-theme-toggle:hover,
@@ -679,7 +683,6 @@ p {
   border-color: var(--border-strong);
   background: var(--bg-panel);
   color: var(--text-primary);
-  transform: translateY(-1px);
 }
 
 .account-logout {
@@ -826,7 +829,7 @@ p {
   border-radius: var(--radius-pill);
   cursor: pointer;
   font: 700 0.76rem var(--font-sans);
-  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
 .account-edit-button,
@@ -845,7 +848,6 @@ p {
   background: var(--bg-panel);
   border-color: var(--border-strong);
   color: var(--text-primary);
-  transform: translateY(-1px);
 }
 
 .account-profile-form {
@@ -931,7 +933,6 @@ p {
   background: #c43d3d;
   border-color: #c43d3d;
   color: #fff;
-  transform: translateY(-1px);
 }
 
 .account-delete-confirm {
@@ -4107,7 +4108,11 @@ html[data-theme="dark"] .inquiry-form-card {
 @media (max-width: 480px) {
   .auth-shell {
     width: min(100% - 20px, 470px);
-    padding-top: 30px;
+    padding-top: 80px;
+  }
+
+  .auth-brand {
+    top: 30px;
   }
 
   .auth-card {
