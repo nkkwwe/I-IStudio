@@ -974,6 +974,163 @@ p {
   margin-top: 28px;
 }
 
+.account-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(9, 9, 11, 0.64);
+  backdrop-filter: blur(8px);
+  animation: account-modal-backdrop-in 0.2s ease both;
+}
+
+.account-modal {
+  width: min(100%, 440px);
+  padding: 27px;
+  border: 1px solid var(--border-light);
+  border-radius: 22px;
+  background: var(--bg-surface);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.26);
+  animation: account-modal-in 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.account-modal-danger {
+  border-color: rgba(196, 61, 61, 0.38);
+}
+
+.account-modal-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.account-modal-heading h2 {
+  margin: 12px 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 5vw, 2.15rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.account-modal-close {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--border-light);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-modal-close:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-subtle);
+}
+
+.account-modal-body {
+  margin-top: 22px;
+}
+
+.account-modal-copy {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.65;
+}
+
+.account-modal-field {
+  margin-top: 21px;
+}
+
+.account-modal-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 24px;
+}
+
+.account-modal-button {
+  min-height: 40px;
+  padding: 0 15px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font: 700 0.76rem var(--font-sans);
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-modal-button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.account-modal-button-primary {
+  border-color: var(--accent-black);
+  background: var(--accent-black);
+  color: var(--text-inverse);
+}
+
+.account-modal-button-primary:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+.account-modal-button-danger {
+  border-color: rgba(196, 61, 61, 0.55);
+  background: rgba(196, 61, 61, 0.1);
+  color: #b53636;
+}
+
+.account-modal-button-danger:hover:not(:disabled) {
+  border-color: #c43d3d;
+  background: #c43d3d;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(196, 61, 61, 0.1);
+}
+
+.account-modal-button-secondary {
+  border-color: var(--border-light);
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.account-modal-button-secondary:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+@keyframes account-modal-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes account-modal-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .account-modal-backdrop,
+  .account-modal {
+    animation: none;
+  }
+}
+
 .language-switcher {
   position: relative;
   display: inline-flex;
