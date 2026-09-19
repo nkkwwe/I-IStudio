@@ -1290,7 +1290,11 @@ p {
   flex-basis: 44px;
 }
 
-.header-actions .theme-toggle svg,
+.header-actions .theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
 .account-logout svg {
   width: 20px;
   height: 20px;
