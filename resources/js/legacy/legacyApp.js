@@ -245,7 +245,7 @@ function initScrollSpy() {
     }
 
     const threshold = headerHeight + 80;
-    let activeItem = sectionsWithLinks[0];
+    let activeItem = null;
 
     for (let i = sectionsWithLinks.length - 1; i >= 0; i--) {
       const item = sectionsWithLinks[i];
@@ -256,7 +256,11 @@ function initScrollSpy() {
       }
     }
 
-    setActiveLink(activeItem.link);
+    if (activeItem) {
+      setActiveLink(activeItem.link);
+    } else {
+      sectionsWithLinks.forEach(({ link }) => link.classList.remove('active'));
+    }
   };
 
   const endClickScroll = () => {

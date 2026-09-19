@@ -285,28 +285,47 @@ p {
   gap: 12px;
 }
 
-.account-header-link {
+.header-actions .btn-sm,
+.account-header-link,
+.theme-toggle,
+.language-trigger {
+  min-height: 38px;
+  height: 38px;
+}
+
+.header-actions .btn-sm {
+  display: inline-flex;
+  align-items: center;
+  padding-block: 0;
+}
+
+.account-header-link,
+.theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 36px;
-  height: 36px;
   flex-shrink: 0;
   padding: 0;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border);
   border-radius: 50%;
-  color: var(--text-secondary);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  cursor: pointer;
   transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
 }
 
-.account-header-link:hover {
+.account-header-link:hover,
+.theme-toggle:hover {
   border-color: var(--border-strong);
   background: var(--bg-panel);
   color: var(--text-primary);
   box-shadow: var(--shadow-subtle);
 }
 
-.account-header-link:focus-visible {
+.account-header-link:focus-visible,
+.theme-toggle:focus-visible {
   outline: 2px solid var(--text-primary);
   outline-offset: 3px;
 }
@@ -1151,7 +1170,6 @@ p {
 
 .language-trigger {
   min-width: 58px;
-  height: 38px;
   padding: 0 7px;
   display: inline-flex;
   align-items: center;
@@ -1253,29 +1271,6 @@ p {
 
 .theme-toggle {
   width: 36px;
-  height: 36px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  padding: 0;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  background: var(--bg-surface);
-  color: var(--text-primary);
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
-}
-
-.theme-toggle:hover {
-  background: var(--bg-panel);
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-subtle);
-}
-
-.theme-toggle:focus-visible {
-  outline: 2px solid var(--text-primary);
-  outline-offset: 3px;
 }
 
 .theme-icon {
@@ -3357,6 +3352,19 @@ p {
   .theme-toggle {
     width: 30px;
     height: 30px;
+    min-height: 30px;
+  }
+
+  .account-header-link {
+    width: 30px;
+    height: 30px;
+    min-height: 30px;
+  }
+
+  .language-trigger {
+    min-width: 40px;
+    height: 30px;
+    min-height: 30px;
   }
 
   .theme-toggle svg {
