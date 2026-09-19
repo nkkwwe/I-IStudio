@@ -16,7 +16,7 @@ The public I&I Studio website, rebuilt on a future-ready Laravel and React found
 - Google sign-in uses Laravel Socialite and does not require a password.
 - User records are stored in the Laravel `users` table, so with the Render PostgreSQL connection they are stored in the connected Supabase database.
 - For Render, set `DB_CONNECTION=pgsql`, the Supabase `DB_URL` (or the matching `DB_HOST`/`DB_PORT`/`DB_DATABASE`/`DB_USERNAME`/`DB_PASSWORD` values), and `DB_SSLMODE=require`; the container runs pending migrations on startup.
-- To deliver confirmation codes, configure a real SMTP mailer in Render with `MAIL_MAILER=smtp`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS`, and `MAIL_FROM_NAME`.
+- To deliver confirmation codes, configure `RESEND_API_KEY` in Render (recommended on Render Free), or configure a real SMTP mailer with `MAIL_MAILER=smtp`, `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD`, `MAIL_FROM_ADDRESS`, and `MAIL_FROM_NAME`.
 - Configure `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, and `GOOGLE_REDIRECT_URI` in Render. The production callback URL is `https://your-domain.example/auth/google/callback`.
 
 ## Local development

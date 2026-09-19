@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Services\EmailCodeSender;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -30,7 +29,7 @@ class AuthController extends Controller
         return Inertia::render('Auth', ['mode' => 'register']);
     }
 
-    public function requestRegistrationCode(Request $request): RedirectResponse
+    public function requestRegistrationCode(Request $request, EmailCodeSender $sender): RedirectResponse
     {
         $data = $request->validate([
             'email' => ['required', 'email:rfc', 'max:255'],
@@ -46,20 +45,12 @@ class AuthController extends Controller
             ]);
         }
 
-        $rateLimitKey = 'registration-code:'.$email;
-        if (RateLimiter::tooManyAttempts($rateLimitKey, 3)) {
-            throw ValidationException::withMessages([
-                'email' => 'Код уже відправлявся кілька разів. Спробуйте ще раз трохи пізніше.',
-            ]);
-        }
-
-        if (config('mail.default') === 'log') {
+        if (! $sender->configured()) {
             throw ValidationException::withMessages([
                 'email' => 'Відправка кодів на email ще не налаштована на сервері.',
             ]);
         }
 
-        RateLimiter::hit($rateLimitKey, 600);
         $code = (string) random_int(100000, 999999);
         $now = now();
 
@@ -75,14 +66,7 @@ class AuthController extends Controller
         );
 
         try {
-            Mail::raw(
-                "Ваш код подтверждения I&I Studio: {$code}\n\nКод действителен 10 минут.",
-                function ($message) use ($email): void {
-                    $message
-                        ->to($email)
-                        ->subject('Код подтверждения I&I Studio');
-                },
-            );
+            $sender->send($email, $code);
         } catch (Throwable $exception) {
             report($exception);
             DB::table('email_verifications')->where('email', $email)->delete();
