@@ -289,8 +289,8 @@ p {
 .account-header-link,
 .theme-toggle,
 .language-trigger {
-  min-height: 38px;
-  height: 38px;
+  min-height: 44px;
+  height: 44px;
 }
 
 .header-actions .btn-sm {
@@ -304,8 +304,9 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  flex-shrink: 0;
+  width: 44px;
+  min-width: 44px;
+  flex: 0 0 44px;
   padding: 0;
   border: 1px solid var(--border);
   border-radius: 50%;
@@ -720,8 +721,11 @@ p {
 
 .account-logout {
   display: inline-flex;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  flex: 0 0 44px;
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -1007,7 +1011,7 @@ p {
 .account-modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 100;
+  z-index: 1100;
   display: grid;
   place-items: center;
   padding: 20px;
@@ -1270,7 +1274,9 @@ p {
 }
 
 .theme-toggle {
-  width: 36px;
+  width: 44px;
+  min-width: 44px;
+  flex-basis: 44px;
 }
 
 .theme-icon {
@@ -3350,21 +3356,26 @@ p {
   }
 
   .theme-toggle {
-    width: 30px;
-    height: 30px;
-    min-height: 30px;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    min-width: 44px;
+    flex-basis: 44px;
   }
 
   .account-header-link {
-    width: 30px;
-    height: 30px;
-    min-height: 30px;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    min-width: 44px;
+    flex-basis: 44px;
   }
 
   .language-trigger {
-    min-width: 40px;
-    height: 30px;
-    min-height: 30px;
+    min-width: 44px;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
   }
 
   .theme-toggle svg {
@@ -3373,9 +3384,9 @@ p {
   }
 
   .language-trigger {
-    min-width: 40px;
-    width: 40px;
-    height: 30px;
+    min-width: 44px;
+    width: 44px;
+    height: 44px;
     padding-inline: 0;
     font-size: 0.68rem;
   }
@@ -4272,8 +4283,11 @@ html[data-theme="dark"] .inquiry-form-card {
 
 @media (max-width: 720px) {
   .account-header-link {
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    min-width: 44px;
+    flex-basis: 44px;
   }
 
   .account-topbar {
