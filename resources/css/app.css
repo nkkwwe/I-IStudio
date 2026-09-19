@@ -852,6 +852,118 @@ p {
   transform: translateX(4px);
 }
 
+.account-admin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 16px;
+  padding: 9px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.account-admin-link span {
+  color: var(--text-muted);
+  font-size: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.account-admin-link:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+.account-admin-link:hover span {
+  transform: translate(2px, -2px);
+}
+
+.admin-page .account-shell {
+  padding-top: clamp(48px, 8vw, 96px);
+}
+
+.admin-topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.admin-topbar h1 {
+  margin: 10px 0 8px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.admin-topbar p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.admin-topbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.admin-back-link {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  padding: 0 13px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.admin-back-link:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+.admin-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.admin-overview-card {
+  min-height: 210px;
+}
+
+.admin-card-value {
+  display: block;
+  margin-top: 30px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2.25rem);
+  letter-spacing: -0.045em;
+}
+
+.admin-overview-card p {
+  margin-top: 14px;
+  font-size: 0.82rem;
+}
+
 .account-details {
   display: grid;
   gap: 15px;
@@ -4368,6 +4480,19 @@ html[data-theme="dark"] .inquiry-form-card {
   }
 
   .account-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-topbar-actions {
+    justify-content: flex-start;
+  }
+
+  .admin-overview-grid {
     grid-template-columns: 1fr;
   }
 }

@@ -32,3 +32,9 @@ Route::middleware('auth')->group(function (): void {
     Route::delete('/account', [AuthController::class, 'deleteAccount'])->name('account.delete');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function (): void {
+    Route::get('/', function () {
+        return Inertia::render('Admin/Index');
+    })->name('admin.index');
+});

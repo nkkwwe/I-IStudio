@@ -7,6 +7,7 @@ type User = {
   email: string;
   avatar?: string | null;
   created_at?: string;
+  is_admin: boolean;
 };
 
 type PageProps = {
@@ -250,6 +251,11 @@ export default function Account() {
             <h2>Your workspace is ready.</h2>
             <p>Use this space to keep your project brief, conversations and next steps connected to your account.</p>
             <Link href="/inquiry" className="account-primary-link">Start a project brief <span>→</span></Link>
+            {user.is_admin && (
+              <Link href="/admin" className="account-admin-link">
+                Open admin panel <span>↗</span>
+              </Link>
+            )}
           </article>
 
           <article className="account-panel">
