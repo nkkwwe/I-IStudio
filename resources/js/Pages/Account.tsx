@@ -263,19 +263,19 @@ export default function Account() {
             <button type="button" className="account-edit-button" onClick={openNameModal}>Edit name</button>
           </article>
 
-          <article className="account-panel account-panel-danger">
-            <span className="account-panel-label">ACCOUNT CONTROL</span>
-            <h2>Leave I&amp;I Studio</h2>
-            <p>Sign out on this device or permanently remove your workspace and account data.</p>
-            <button type="button" className="account-delete-button" onClick={openDeleteModal}>Delete account</button>
-          </article>
-
           {user.is_admin && (
             <article className="account-panel account-admin-panel">
               <Link href="/admin" className="account-admin-button">Admin panel</Link>
               <p className="account-admin-description">Manage the studio workspace and upcoming administrative tools from here.</p>
             </article>
           )}
+
+          <article className="account-panel account-panel-danger">
+            <span className="account-panel-label">ACCOUNT CONTROL</span>
+            <h2>Leave I&amp;I Studio</h2>
+            <p>Sign out on this device or permanently remove your workspace and account data.</p>
+            <button type="button" className="account-delete-button" onClick={openDeleteModal}>Delete account</button>
+          </article>
         </section>
 
         {nameModalOpen && (
