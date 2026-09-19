@@ -28,5 +28,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/account', function () {
         return Inertia::render('Account');
     })->name('account');
+    Route::patch('/account/profile', [AuthController::class, 'updateProfile'])->name('account.profile.update');
+    Route::delete('/account', [AuthController::class, 'deleteAccount'])->name('account.delete');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });

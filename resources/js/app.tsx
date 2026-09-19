@@ -4,6 +4,11 @@ import { createRoot } from 'react-dom/client';
 import '../css/app.css';
 import './content/translations';
 
+const savedTheme = window.localStorage.getItem('ii_studio_theme');
+if (savedTheme === 'dark') {
+  document.documentElement.dataset.theme = 'dark';
+}
+
 const pages = import.meta.glob<{ default: ComponentType }>('./Pages/**/*.tsx');
 
 createInertiaApp({

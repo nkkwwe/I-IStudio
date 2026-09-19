@@ -219,6 +219,39 @@ class AuthController extends Controller
         return redirect()->route('home');
     }
 
+    public function updateProfile(Request $request): RedirectResponse
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:120'],
+        ], [
+            'name.required' => 'Введите имя.',
+            'name.max' => 'Имя не должно быть длиннее 120 символов.',
+        ]);
+
+        $name = trim($data['name']);
+        if ($name === '') {
+            throw ValidationException::withMessages([
+                'name' => 'Введите имя.',
+            ]);
+        }
+
+        $request->user()->forceFill(['name' => $name])->save();
+
+        return back()->with('profile_updated', true);
+    }
+
+    public function deleteAccount(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        $user->delete();
+
+        return redirect()->route('home')->with('account_deleted', true);
+    }
+
     public function googleRedirect(): RedirectResponse
     {
         if (! config('services.google.client_id') || ! config('services.google.client_secret')) {

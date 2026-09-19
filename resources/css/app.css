@@ -419,6 +419,21 @@ p {
   transform: translateY(-1px);
 }
 
+.auth-google-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 18px;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+.auth-google-note span {
+  color: var(--text-primary);
+  font-size: 0.9rem;
+}
+
 .google-mark {
   display: grid;
   width: 22px;
@@ -634,6 +649,13 @@ p {
   padding-bottom: 68px;
 }
 
+.account-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.account-theme-toggle,
 .account-logout {
   min-height: 38px;
   padding: 0 14px;
@@ -643,13 +665,28 @@ p {
   color: var(--text-secondary);
   cursor: pointer;
   font: 600 0.78rem var(--font-sans);
-  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
 }
 
+.account-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.account-theme-toggle:hover,
 .account-logout:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.account-logout {
   border-color: #c43d3d;
   background: rgba(196, 61, 61, 0.06);
   color: #c43d3d;
+  transform: none;
 }
 
 .account-hero {
@@ -669,7 +706,7 @@ p {
   overflow: hidden;
   border-radius: 50%;
   background: var(--accent-black);
-  color: #fff;
+  color: var(--text-inverse);
   font-family: var(--font-display);
   font-size: 1.8rem;
   font-weight: 700;
@@ -721,6 +758,17 @@ p {
   max-width: 520px;
 }
 
+.account-flash {
+  margin-top: 24px;
+  padding: 12px 14px;
+  border: 1px solid rgba(44, 138, 89, 0.25);
+  border-radius: var(--radius-inner);
+  background: rgba(44, 138, 89, 0.08);
+  color: #287c50;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
 .account-primary-link {
   display: inline-flex;
   align-items: center;
@@ -767,6 +815,140 @@ p {
   font-weight: 700;
   text-align: right;
   overflow-wrap: anywhere;
+}
+
+.account-edit-button,
+.account-save-button,
+.account-cancel-button,
+.account-delete-button {
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font: 700 0.76rem var(--font-sans);
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.account-edit-button,
+.account-save-button {
+  border: 1px solid var(--accent-black);
+  background: var(--accent-black);
+  color: var(--text-inverse);
+}
+
+.account-edit-button {
+  margin-top: 24px;
+}
+
+.account-edit-button:hover,
+.account-save-button:hover:not(:disabled) {
+  background: var(--bg-panel);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
+  transform: translateY(-1px);
+}
+
+.account-profile-form {
+  margin-top: 23px;
+}
+
+.account-field {
+  display: grid;
+  gap: 8px;
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.account-field input,
+.account-delete-confirm input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-inner);
+  outline: none;
+  background: var(--bg-subtle);
+  color: var(--text-primary);
+  font: 500 0.84rem var(--font-sans);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.account-field input:focus,
+.account-delete-confirm input:focus {
+  border-color: var(--text-primary);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 4px var(--bg-panel);
+}
+
+.account-form-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.account-cancel-button {
+  border: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.account-cancel-button:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+.account-inline-error {
+  display: block;
+  margin-top: 8px;
+  color: #c43d3d;
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.account-panel-danger {
+  grid-column: 1 / -1;
+  min-height: 0;
+  border-color: rgba(196, 61, 61, 0.25);
+}
+
+.account-panel-danger h2 {
+  margin-top: 18px;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.account-delete-button {
+  margin-top: 24px;
+  border: 1px solid rgba(196, 61, 61, 0.55);
+  background: rgba(196, 61, 61, 0.08);
+  color: #b53636;
+}
+
+.account-delete-button:hover:not(:disabled) {
+  background: #c43d3d;
+  border-color: #c43d3d;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.account-delete-confirm {
+  display: grid;
+  max-width: 420px;
+  margin-top: 22px;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.account-delete-confirm strong {
+  color: #b53636;
+}
+
+.account-delete-confirm .account-delete-button {
+  margin-top: 0;
 }
 
 .account-back {
@@ -3302,6 +3484,47 @@ html[data-theme="dark"] {
 
 html[data-theme="dark"] body {
   background-color: var(--bg-body);
+}
+
+html[data-theme="dark"] .auth-page,
+html[data-theme="dark"] .account-page {
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .auth-card,
+html[data-theme="dark"] .account-panel {
+  background-color: var(--bg-surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+html[data-theme="dark"] .auth-google-button,
+html[data-theme="dark"] .account-theme-toggle,
+html[data-theme="dark"] .account-logout,
+html[data-theme="dark"] .account-cancel-button {
+  border-color: var(--border-strong);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] .auth-google-button:hover,
+html[data-theme="dark"] .account-theme-toggle:hover,
+html[data-theme="dark"] .account-cancel-button:hover {
+  background-color: var(--bg-panel);
+}
+
+html[data-theme="dark"] .account-logout {
+  border-color: rgba(248, 113, 113, 0.35);
+  background: rgba(196, 61, 61, 0.08);
+  color: #fca5a5;
+}
+
+html[data-theme="dark"] .account-field input,
+html[data-theme="dark"] .account-delete-confirm input {
+  background-color: var(--bg-panel);
+  border-color: var(--border-strong);
+  color: var(--text-primary);
 }
 
 html[data-theme="dark"] .site-header {

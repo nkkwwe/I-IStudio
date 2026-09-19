@@ -43,6 +43,8 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'verification_sent' => $request->session()->get('verification_sent'),
                 'verification_success' => $request->session()->get('verification_success'),
+                'profile_updated' => $request->session()->get('profile_updated'),
+                'account_deleted' => $request->session()->get('account_deleted'),
             ],
             'registration' => [
                 'email' => $request->session()->get('registration.email'),
