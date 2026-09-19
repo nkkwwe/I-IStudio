@@ -43,8 +43,6 @@ COPY --from=frontend /app/public/build ./public/build
 RUN cp .env.example .env \
     && php artisan key:generate --force \
     && php artisan package:discover --ansi \
-    && php artisan config:cache \
-    && php artisan route:cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
 EXPOSE 10000
