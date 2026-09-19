@@ -47,5 +47,7 @@ RUN cp .env.example .env \
 
 EXPOSE 10000
 
+CMD ["sh", "-c", "php artisan migrate --force && exec apache2-foreground"]
+
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD php -r "exit(@file_get_contents('http://127.0.0.1:10000/up') === false ? 1 : 0);"
