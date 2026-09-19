@@ -412,14 +412,14 @@ window.preselectService = function(serviceKey, openModal = true) {
   const serviceInput = document.getElementById('serviceTypeInput');
   const homepageInquiry = document.getElementById('inquiry');
 
-  if (!serviceInput && openModal) {
-    if (homepageInquiry) {
-      const pills = homepageInquiry.querySelectorAll('.action-service-pill');
-      pills.forEach(pill => pill.classList.toggle('active', pill.dataset.service === serviceKey));
-      homepageInquiry.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      return;
-    }
+  if (homepageInquiry && !document.querySelector('.inquiry-page') && openModal) {
+    const pills = homepageInquiry.querySelectorAll('.action-service-pill');
+    pills.forEach(pill => pill.classList.toggle('active', pill.dataset.service === serviceKey));
+    homepageInquiry.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
 
+  if (!serviceInput && openModal) {
     window.location.href = `/inquiry?service=${encodeURIComponent(serviceKey)}`;
     return;
   }
