@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
@@ -10,3 +11,19 @@ Route::get('/', function () {
 Route::get('/inquiry', function () {
     return Inertia::render('Inquiry');
 })->name('inquiry');
+
+Route::middleware('guest')->group(function (): void {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.store');
+    Route::get('/auth/google', [AuthController::class, 'googleRedirect'])->name('auth.google');
+    Route::get('/auth/google/callback', [AuthController::class, 'googleCallback'])->name('auth.google.callback');
+});
+
+Route::middleware('auth')->group(function (): void {
+    Route::get('/account', function () {
+        return Inertia::render('Account');
+    })->name('account');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+});

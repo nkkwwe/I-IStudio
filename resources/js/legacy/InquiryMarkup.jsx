@@ -16,6 +16,7 @@ export default function InquiryMarkup({ activeService, onServiceChange }) {
         <a href="/#contact" className="nav-link" data-i18n="nav_contact">Contact</a>
       </nav>
       <div className="header-actions">
+        <a href="/account" className="account-header-link">Account</a>
         <button type="button" id="themeToggle" className="theme-toggle" aria-label="Toggle theme"><svg className="theme-icon theme-icon-sun" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx={12} cy={12} r="3.5" /><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" /></svg><svg className="theme-icon theme-icon-moon" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z" /></svg></button>
         <div className="language-switcher" aria-label="Language selection">
           <button type="button" className="language-trigger" aria-haspopup="listbox" aria-expanded="false"><span className="language-current">EN</span><svg className="language-chevron" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg></button>

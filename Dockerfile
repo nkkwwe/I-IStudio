@@ -26,8 +26,8 @@ RUN composer install \
 FROM php:8.4-apache-bookworm
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libsqlite3-dev \
-    && docker-php-ext-install opcache pdo_sqlite \
+    && apt-get install -y --no-install-recommends libpq-dev libsqlite3-dev \
+    && docker-php-ext-install opcache pdo_pgsql pdo_sqlite \
     && rm -rf /var/lib/apt/lists/* \
     && a2enmod rewrite headers expires \
     && sed -ri 's!Listen 80!Listen 10000!g' /etc/apache2/ports.conf \
