@@ -240,7 +240,7 @@ function initScrollSpy() {
     }
 
     if (window.scrollY < 80) {
-      setActiveLink(sectionsWithLinks[0].link);
+      sectionsWithLinks.forEach(({ link }) => link.classList.remove('active'));
       return;
     }
 
@@ -278,8 +278,7 @@ function initScrollSpy() {
   const logo = document.querySelector('.site-header .logo');
   if (logo) {
     logo.addEventListener('click', () => {
-      const heroLink = document.querySelector('.nav-menu .nav-link[href="#hero"]');
-      if (heroLink) setActiveLink(heroLink);
+      sectionsWithLinks.forEach(({ link }) => link.classList.remove('active'));
       isClickScrolling = true;
       clearTimeout(scrollEndTimer);
       scrollEndTimer = setTimeout(endClickScroll, 1200);
@@ -411,8 +410,16 @@ window.preselectService = function(serviceKey, openModal = true) {
   const tabs = document.querySelectorAll('#serviceTabs .tab-btn');
   const targetTab = document.querySelector(`#serviceTabs .tab-btn[data-service="${serviceKey}"]`);
   const serviceInput = document.getElementById('serviceTypeInput');
+  const homepageInquiry = document.getElementById('inquiry');
 
   if (!serviceInput && openModal) {
+    if (homepageInquiry) {
+      const pills = homepageInquiry.querySelectorAll('.action-service-pill');
+      pills.forEach(pill => pill.classList.toggle('active', pill.dataset.service === serviceKey));
+      homepageInquiry.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+
     window.location.href = `/inquiry?service=${encodeURIComponent(serviceKey)}`;
     return;
   }
@@ -434,7 +441,8 @@ window.preselectService = function(serviceKey, openModal = true) {
 function initSmartForm() {
   const form = document.getElementById('projectForm');
   const inquiryPage = document.querySelector('.inquiry-page');
-  const openInquiryBtns = document.querySelectorAll('#openInquiryPageBtn, [data-open-page="inquiry"], .action-service-pill');
+  const openInquiryBtns = document.querySelectorAll('#openInquiryPageBtn, [data-open-page="inquiry"], .action-service-pill, [data-scroll-to-inquiry]');
+  const homepageInquiry = document.getElementById('inquiry');
   const overlay = document.getElementById('feedbackOverlay');
   const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
   const ticketDisplay = document.getElementById('ticketNumberDisplay');
@@ -449,7 +457,11 @@ function initSmartForm() {
     openInquiryBtns.forEach(btn => {
       btn.addEventListener('click', (event) => {
         event.preventDefault();
-        window.openInquiryPage(btn.dataset.service || 'landing');
+        if (homepageInquiry) {
+          window.preselectService(btn.dataset.service || 'landing');
+        } else {
+          window.openInquiryPage(btn.dataset.service || 'landing');
+        }
       });
     });
     return;

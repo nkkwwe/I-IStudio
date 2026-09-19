@@ -288,21 +288,32 @@ p {
 .account-header-link {
   display: inline-flex;
   align-items: center;
-  min-height: 38px;
-  padding: 0 13px;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  padding: 0;
   border: 1px solid var(--border-light);
-  border-radius: var(--radius-pill);
+  border-radius: 50%;
   color: var(--text-secondary);
-  font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 600;
-  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .account-header-link:hover {
   border-color: var(--border-strong);
   background: var(--bg-panel);
   color: var(--text-primary);
+  box-shadow: var(--shadow-subtle);
+}
+
+.account-header-link:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+.account-header-link svg {
+  width: 17px;
+  height: 17px;
 }
 
 /* Authentication and account */
@@ -4253,9 +4264,8 @@ html[data-theme="dark"] .inquiry-form-card {
 
 @media (max-width: 720px) {
   .account-header-link {
-    min-height: 34px;
-    padding: 0 10px;
-    font-size: 0.7rem;
+    width: 34px;
+    height: 34px;
   }
 
   .account-topbar {

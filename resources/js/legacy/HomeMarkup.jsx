@@ -25,7 +25,9 @@ export default function HomeMarkup() {
           <span data-i18n="btn_discuss">Discuss Project</span>
           <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1={5} y1={12} x2={19} y2={12} /><polyline points="12 5 19 12 12 19" /></svg>
         </a>
-        <a href="/account" className="account-header-link">Account</a>
+        <a href="/account" className="account-header-link" aria-label="Account" title="Account">
+          <svg width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx={12} cy={8} r="3.2" /><path d="M5.5 20c.8-3.2 3.1-5 6.5-5s5.7 1.8 6.5 5" /></svg>
+        </a>
         <button type="button" id="themeToggle" className="theme-toggle" aria-label="Toggle theme">
           <svg className="theme-icon theme-icon-sun" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx={12} cy={12} r="3.5" /><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" /></svg>
           <svg className="theme-icon theme-icon-moon" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z" /></svg>
@@ -190,7 +192,7 @@ export default function HomeMarkup() {
               <span className="chip" data-i18n="bento_1_chip_3">✓ Tracking Pixels</span>
             </div>
           </div>
-          <a href="/inquiry?service=landing" className="bento-link">
+          <a href="#inquiry" className="bento-link" data-scroll-to-inquiry data-service="landing">
             <span data-i18n="bento_1_link">Configure Landing Page Form</span>
             <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1={5} y1={12} x2={19} y2={12} /><polyline points="12 5 19 12 12 19" /></svg>
           </a>
@@ -219,7 +221,7 @@ export default function HomeMarkup() {
               <span className="channel-pill" data-i18n="bento_2_ch_3">Meta Ads</span>
             </div>
           </div>
-          <a href="/inquiry?service=ads" className="bento-link">
+          <a href="#inquiry" className="bento-link" data-scroll-to-inquiry data-service="ads">
             <span data-i18n="bento_2_link">Configure Advertising Form</span>
             <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1={5} y1={12} x2={19} y2={12} /><polyline points="12 5 19 12 12 19" /></svg>
           </a>
@@ -249,7 +251,7 @@ export default function HomeMarkup() {
               <span className="chip" data-i18n="bento_3_chip_2">✓ Preserved Google SEO</span>
             </div>
           </div>
-          <a href="/inquiry?service=redesign" className="bento-link">
+          <a href="#inquiry" className="bento-link" data-scroll-to-inquiry data-service="redesign">
             <span data-i18n="bento_3_link">Configure Redesign Form</span>
             <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1={5} y1={12} x2={19} y2={12} /><polyline points="12 5 19 12 12 19" /></svg>
           </a>
@@ -274,7 +276,7 @@ export default function HomeMarkup() {
               <div className="pill-item"><svg className="inline-svg" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><circle cx={12} cy={12} r={3} /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg> <span data-i18n="bento_4_pill_4">Easy-to-Manage Admin CMS</span></div>
             </div>
           </div>
-          <a href="/inquiry?service=corporate" className="bento-link">
+          <a href="#inquiry" className="bento-link" data-scroll-to-inquiry data-service="corporate">
             <span data-i18n="bento_4_link">Configure Business Website Form</span>
             <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1={5} y1={12} x2={19} y2={12} /><polyline points="12 5 19 12 12 19" /></svg>
           </a>
@@ -351,7 +353,7 @@ export default function HomeMarkup() {
                 <span className="metric-label" data-i18n="case_1_lbl_3">Lead Notification</span>
               </div>
             </div>
-            <a href="/inquiry?service=landing" className="btn btn-secondary btn-block">
+            <a href="#inquiry" className="btn btn-secondary btn-block" data-scroll-to-inquiry data-service="landing">
               <span data-i18n="case_btn_similar">I Want Similar Results</span>
             </a>
           </div>
@@ -424,7 +426,7 @@ export default function HomeMarkup() {
                 <span className="metric-label" data-i18n="case_2_lbl_3">Mobile Engagement</span>
               </div>
             </div>
-            <a href="/inquiry?service=redesign" className="btn btn-secondary btn-block">
+            <a href="#inquiry" className="btn btn-secondary btn-block" data-scroll-to-inquiry data-service="redesign">
               <span data-i18n="case_btn_similar">I Want Similar Results</span>
             </a>
           </div>
@@ -493,7 +495,7 @@ export default function HomeMarkup() {
                 <span className="metric-label" data-i18n="case_3_lbl_3">Missed Inquiries</span>
               </div>
             </div>
-            <a href="/inquiry?service=corporate" className="btn btn-secondary btn-block">
+            <a href="#inquiry" className="btn btn-secondary btn-block" data-scroll-to-inquiry data-service="corporate">
               <span data-i18n="case_btn_similar">I Want Similar Results</span>
             </a>
           </div>
@@ -753,7 +755,7 @@ export default function HomeMarkup() {
             </div>
           </div>
           <div className="inquiry-action-main">
-            <a href="/inquiry" className="btn btn-primary btn-lg btn-block btn-open-page" id="openInquiryPageBtn">
+            <a href="#inquiry" className="btn btn-primary btn-lg btn-block btn-open-page" id="openInquiryPageBtn" data-scroll-to-inquiry>
               <span data-i18n="inq_cta_btn">Open Project Brief</span>
               <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1={5} y1={12} x2={19} y2={12} /><polyline points="12 5 19 12 12 19" /></svg>
             </a>
