@@ -852,35 +852,45 @@ p {
   transform: translateX(4px);
 }
 
-.account-admin-link {
-  display: inline-flex;
+.account-admin-panel {
+  display: flex;
+  min-height: 94px;
   align-items: center;
-  gap: 9px;
-  margin-top: 16px;
-  padding: 9px 12px;
-  border: 1px solid var(--border-light);
+  justify-content: space-between;
+  gap: 28px;
+  padding-block: 20px;
+}
+
+.account-admin-button {
+  display: inline-flex;
+  min-height: 40px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  border: 1px solid var(--accent-black);
   border-radius: var(--radius-pill);
-  color: var(--text-secondary);
-  font-size: 0.76rem;
+  background: var(--accent-black);
+  color: var(--text-inverse);
+  font-size: 0.78rem;
   font-weight: 700;
   text-decoration: none;
   transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
-.account-admin-link span {
-  color: var(--text-muted);
-  font-size: 1rem;
-  transition: transform 0.2s ease;
-}
-
-.account-admin-link:hover {
+.account-admin-button:hover {
   border-color: var(--border-strong);
   background: var(--bg-panel);
   color: var(--text-primary);
 }
 
-.account-admin-link:hover span {
-  transform: translate(2px, -2px);
+.account-admin-description {
+  max-width: 560px;
+  margin: 0 !important;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  text-align: right;
 }
 
 .admin-page .account-shell {
@@ -4494,6 +4504,17 @@ html[data-theme="dark"] .inquiry-form-card {
 
   .admin-overview-grid {
     grid-template-columns: 1fr;
+  }
+
+  .account-admin-panel {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .account-admin-description {
+    max-width: none;
+    text-align: left;
   }
 }
 
