@@ -4974,7 +4974,7 @@ html[data-theme="dark"] .inquiry-form-card {
 .inquiry-chat-modal {
   display: flex;
   width: min(100%, 760px);
-  height: min(780px, calc(100vh - 40px));
+  min-height: 0;
   max-height: calc(100vh - 40px);
   flex-direction: column;
   overflow: hidden;
@@ -5034,8 +5034,8 @@ html[data-theme="dark"] .inquiry-form-card {
 
 .inquiry-chat-messages {
   display: flex;
-  min-height: 380px;
-  max-height: 540px;
+  min-height: 180px;
+  max-height: 460px;
   flex: 1;
   flex-direction: column;
   gap: 10px;
@@ -5441,7 +5441,7 @@ html[data-theme="dark"] .inquiry-form-card {
   }
 
   .inquiry-chat-messages {
-    min-height: 260px;
+    min-height: 180px;
     max-height: none;
   }
 
