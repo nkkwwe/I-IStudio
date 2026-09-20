@@ -7,6 +7,8 @@ use App\Models\ProjectInquiryMessage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class InquiryChatController extends Controller
 {
@@ -24,19 +26,36 @@ class InquiryChatController extends Controller
         $this->ensureCanAccess($request, $inquiry);
 
         $data = $request->validate([
-            'body' => ['required', 'string', 'max:5000'],
+            'body' => ['nullable', 'string', 'max:5000'],
+            'attachment' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
         ], [
-            'body.required' => 'Write a message first.',
             'body.max' => 'The message cannot be longer than 5000 characters.',
+            'attachment.image' => 'The attachment must be an image.',
+            'attachment.mimes' => 'Please use a JPG, PNG, GIF, or WEBP image.',
+            'attachment.max' => 'The image cannot be larger than 5 MB.',
         ]);
 
+        $body = trim((string) ($data['body'] ?? ''));
+        $attachment = $request->file('attachment');
+
+        if ($body === '' && !$attachment) {
+            throw ValidationException::withMessages([
+                'body' => 'Write a message or attach an image first.',
+            ]);
+        }
+
         $user = $request->user();
+        $attachmentPath = $attachment?->store('inquiry-chat/'.$inquiry->id, 'local');
         $message = ProjectInquiryMessage::query()->create([
             'project_inquiry_id' => $inquiry->id,
             'sender_id' => $user->id,
             'sender_role' => $user->isAdmin() ? 'admin' : 'user',
             'sender_name' => trim((string) $user->name) ?: $user->email,
-            'body' => trim($data['body']),
+            'body' => $body,
+            'attachment_path' => $attachmentPath,
+            'attachment_name' => $attachment?->getClientOriginalName(),
+            'attachment_mime' => $attachment?->getMimeType(),
+            'attachment_size' => $attachment?->getSize(),
         ]);
 
         if ($request->header('X-Inertia')) {
@@ -46,6 +65,22 @@ class InquiryChatController extends Controller
         return response()->json([
             'message' => $this->serializeMessage($message),
         ], 201);
+    }
+
+    public function attachment(Request $request, ProjectInquiryMessage $message)
+    {
+        $inquiry = $message->inquiry;
+        abort_unless($inquiry, 404);
+        $this->ensureCanAccess($request, $inquiry);
+        abort_unless($message->attachment_path, 404);
+
+        $disk = Storage::disk('local');
+        abort_unless($disk->exists($message->attachment_path), 404);
+
+        return response()->file($disk->path($message->attachment_path), [
+            'Content-Type' => $message->attachment_mime ?: 'application/octet-stream',
+            'X-Content-Type-Options' => 'nosniff',
+        ]);
     }
 
     private function ensureCanAccess(Request $request, ProjectInquiry $inquiry): void
@@ -74,6 +109,10 @@ class InquiryChatController extends Controller
             'sender_name' => $message->sender_name,
             'body' => $message->body,
             'created_at' => $message->created_at?->toISOString(),
+            'attachment_url' => $message->attachment_path
+                ? route('project-inquiry-messages.attachment', ['message' => $message->id])
+                : null,
+            'attachment_name' => $message->attachment_name,
         ];
     }
 }

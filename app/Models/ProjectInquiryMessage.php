@@ -16,6 +16,10 @@ class ProjectInquiryMessage extends Model
         'sender_role',
         'sender_name',
         'body',
+        'attachment_path',
+        'attachment_name',
+        'attachment_mime',
+        'attachment_size',
     ];
 
     public function inquiry(): BelongsTo

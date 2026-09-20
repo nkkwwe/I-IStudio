@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/account/project-briefs', [InquiryController::class, 'mine'])->name('account.project-briefs');
     Route::get('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'index'])->name('account.project-briefs.messages');
     Route::post('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'store'])->name('account.project-briefs.messages.store');
+    Route::get('/project-inquiry-messages/{message}/attachment', [InquiryChatController::class, 'attachment'])->name('project-inquiry-messages.attachment');
     Route::patch('/account/profile', [AuthController::class, 'updateProfile'])->name('account.profile.update');
     Route::delete('/account', [AuthController::class, 'deleteAccount'])->name('account.delete');
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

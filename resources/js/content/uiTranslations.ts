@@ -44,6 +44,10 @@ type ChatCopy = {
   loading: string;
   loadError: string;
   placeholder: string;
+  addImage: string;
+  removeImage: string;
+  imageAlt: string;
+  imageError: string;
   send: string;
   close: string;
 };
@@ -102,6 +106,10 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       loading: 'Loading conversation…',
       loadError: 'We couldn’t load this conversation.',
       placeholder: 'Write a message…',
+      addImage: 'Add image',
+      removeImage: 'Remove image',
+      imageAlt: 'Attached image',
+      imageError: 'Choose a JPG, PNG, GIF, or WEBP image up to 5 MB.',
       send: 'Send',
       close: 'Close',
     },
@@ -160,6 +168,10 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       loading: 'Завантаження чату…',
       loadError: 'Не вдалося завантажити цей чат.',
       placeholder: 'Напишіть повідомлення…',
+      addImage: 'Додати зображення',
+      removeImage: 'Видалити зображення',
+      imageAlt: 'Прикріплене зображення',
+      imageError: 'Оберіть зображення JPG, PNG, GIF або WEBP розміром до 5 МБ.',
       send: 'Надіслати',
       close: 'Закрити',
     },
@@ -218,6 +230,10 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       loading: 'Se încarcă conversația…',
       loadError: 'Conversația nu a putut fi încărcată.',
       placeholder: 'Scrie un mesaj…',
+      addImage: 'Adaugă o imagine',
+      removeImage: 'Elimină imaginea',
+      imageAlt: 'Imagine atașată',
+      imageError: 'Alege o imagine JPG, PNG, GIF sau WEBP de maximum 5 MB.',
       send: 'Trimite',
       close: 'Închide',
     },
