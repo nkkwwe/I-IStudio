@@ -12,19 +12,36 @@ use Illuminate\Validation\ValidationException;
 
 class InquiryChatController extends Controller
 {
-    public function index(Request $request, ProjectInquiry $inquiry): JsonResponse
+    public function indexForUser(Request $request, ProjectInquiry $inquiry): JsonResponse
     {
-        $this->ensureCanAccess($request, $inquiry);
+        $this->ensureOwnInquiry($request, $inquiry);
 
-        return response()->json([
-            'messages' => $this->serializeMessages($request, $inquiry),
-        ]);
+        return $this->messagesResponse($inquiry);
     }
 
-    public function store(Request $request, ProjectInquiry $inquiry): JsonResponse|RedirectResponse
+    public function indexForAdmin(Request $request, ProjectInquiry $inquiry): JsonResponse
     {
         $this->ensureCanAccess($request, $inquiry);
 
+        return $this->messagesResponse($inquiry);
+    }
+
+    public function storeForUser(Request $request, ProjectInquiry $inquiry): JsonResponse|RedirectResponse
+    {
+        $this->ensureOwnInquiry($request, $inquiry);
+
+        return $this->storeMessage($request, $inquiry, 'user');
+    }
+
+    public function storeForAdmin(Request $request, ProjectInquiry $inquiry): JsonResponse|RedirectResponse
+    {
+        $this->ensureCanAccess($request, $inquiry);
+
+        return $this->storeMessage($request, $inquiry, 'admin');
+    }
+
+    private function storeMessage(Request $request, ProjectInquiry $inquiry, string $senderRole): JsonResponse|RedirectResponse
+    {
         $data = $request->validate([
             'body' => ['nullable', 'string', 'max:5000'],
             'attachment' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
@@ -46,7 +63,6 @@ class InquiryChatController extends Controller
 
         $user = $request->user();
         $attachmentPath = $attachment?->store('inquiry-chat/'.$inquiry->id, 'local');
-        $senderRole = $request->routeIs('admin.project-briefs.messages.store') ? 'admin' : 'user';
         $message = ProjectInquiryMessage::query()->create([
             'project_inquiry_id' => $inquiry->id,
             'sender_id' => $user->id,
@@ -91,34 +107,35 @@ class InquiryChatController extends Controller
         abort_unless($user && ($user->isAdmin() || (int) $inquiry->user_id === (int) $user->id), 403);
     }
 
-    private function serializeMessages(Request $request, ProjectInquiry $inquiry): array
+    private function ensureOwnInquiry(Request $request, ProjectInquiry $inquiry): void
+    {
+        $user = $request->user();
+
+        abort_unless($user && (int) $inquiry->user_id === (int) $user->id, 403);
+    }
+
+    private function messagesResponse(ProjectInquiry $inquiry): JsonResponse
+    {
+        return response()->json([
+            'messages' => $this->serializeMessages($inquiry),
+        ]);
+    }
+
+    private function serializeMessages(ProjectInquiry $inquiry): array
     {
         return $inquiry->messages()
-            ->with('sender:id,name,email')
             ->oldest('created_at')
             ->get()
-            ->map(function (ProjectInquiryMessage $message) use ($request, $inquiry): array {
-                $senderRole = $message->sender_role;
-
-                if (
-                    $request->routeIs('account.project-briefs.messages')
-                    && $senderRole === 'admin'
-                    && (int) $message->sender_id === (int) $inquiry->user_id
-                ) {
-                    $senderRole = 'user';
-                }
-
-                return $this->serializeMessage($message, $senderRole);
-            })
+            ->map(fn (ProjectInquiryMessage $message): array => $this->serializeMessage($message))
             ->values()
             ->all();
     }
 
-    private function serializeMessage(ProjectInquiryMessage $message, ?string $senderRole = null): array
+    private function serializeMessage(ProjectInquiryMessage $message): array
     {
         return [
             'id' => $message->id,
-            'sender_role' => $senderRole ?? $message->sender_role,
+            'sender_role' => $message->sender_role,
             'sender_name' => $message->sender_name,
             'body' => $message->body,
             'created_at' => $message->created_at?->toISOString(),

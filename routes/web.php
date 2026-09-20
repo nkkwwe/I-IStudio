@@ -31,8 +31,8 @@ Route::middleware('auth')->group(function (): void {
         return Inertia::render('Account');
     })->name('account');
     Route::get('/account/project-briefs', [InquiryController::class, 'mine'])->name('account.project-briefs');
-    Route::get('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'index'])->name('account.project-briefs.messages');
-    Route::post('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'store'])->name('account.project-briefs.messages.store');
+    Route::get('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'indexForUser'])->name('account.project-briefs.messages');
+    Route::post('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'storeForUser'])->name('account.project-briefs.messages.store');
     Route::get('/project-inquiry-messages/{message}/attachment', [InquiryChatController::class, 'attachment'])->name('project-inquiry-messages.attachment');
     Route::patch('/account/profile', [AuthController::class, 'updateProfile'])->name('account.profile.update');
     Route::delete('/account', [AuthController::class, 'deleteAccount'])->name('account.delete');
@@ -43,7 +43,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function (): void {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/project-briefs', [AdminController::class, 'projectBriefs'])->name('admin.project-briefs');
     Route::patch('/project-briefs/{inquiry}/status', [AdminController::class, 'updateInquiryStatus'])->name('admin.project-briefs.status');
-    Route::get('/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'index'])->name('admin.project-briefs.messages');
-    Route::post('/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'store'])->name('admin.project-briefs.messages.store');
+    Route::get('/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'indexForAdmin'])->name('admin.project-briefs.messages');
+    Route::post('/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'storeForAdmin'])->name('admin.project-briefs.messages.store');
     Route::get('/registered-users', [AdminController::class, 'registeredUsers'])->name('admin.registered-users');
 });
