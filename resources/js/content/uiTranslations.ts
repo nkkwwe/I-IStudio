@@ -36,9 +36,22 @@ type AccountCopy = {
   noProjectBriefsDescription: string;
 };
 
+type ChatCopy = {
+  title: string;
+  openChat: string;
+  studio: string;
+  empty: string;
+  loading: string;
+  loadError: string;
+  placeholder: string;
+  send: string;
+  close: string;
+};
+
 type UiCopy = {
   admin: AdminCopy;
   account: AccountCopy;
+  chat: ChatCopy;
   services: Record<string, string>;
 };
 
@@ -80,6 +93,17 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       startNewBrief: 'Start new brief',
       noProjectBriefs: 'No project briefs yet',
       noProjectBriefsDescription: 'Your submitted tasks will appear here after you send the project form.',
+    },
+    chat: {
+      title: 'Project chat',
+      openChat: 'Open chat',
+      studio: 'I&I Studio',
+      empty: 'No messages yet. Start the conversation.',
+      loading: 'Loading conversation…',
+      loadError: 'We couldn’t load this conversation.',
+      placeholder: 'Write a message…',
+      send: 'Send',
+      close: 'Close',
     },
     services: {
       landing: 'Landing Page',
@@ -128,6 +152,17 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       noProjectBriefs: 'Завдань поки немає',
       noProjectBriefsDescription: 'Надіслані завдання зʼявляться тут після відправки форми.',
     },
+    chat: {
+      title: 'Чат проєкту',
+      openChat: 'Відкрити чат',
+      studio: 'I&I Studio',
+      empty: 'Повідомлень ще немає. Почніть розмову.',
+      loading: 'Завантаження чату…',
+      loadError: 'Не вдалося завантажити цей чат.',
+      placeholder: 'Напишіть повідомлення…',
+      send: 'Надіслати',
+      close: 'Закрити',
+    },
     services: {
       landing: 'Лендінг',
       corporate: 'Бізнес-сайт',
@@ -174,6 +209,17 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       startNewBrief: 'Solicitare nouă',
       noProjectBriefs: 'Nu există solicitări încă',
       noProjectBriefsDescription: 'Solicitările trimise vor apărea aici după expedierea formularului.',
+    },
+    chat: {
+      title: 'Chatul proiectului',
+      openChat: 'Deschide chatul',
+      studio: 'I&I Studio',
+      empty: 'Nu există mesaje. Începe conversația.',
+      loading: 'Se încarcă conversația…',
+      loadError: 'Conversația nu a putut fi încărcată.',
+      placeholder: 'Scrie un mesaj…',
+      send: 'Trimite',
+      close: 'Închide',
     },
     services: {
       landing: 'Landing page',
