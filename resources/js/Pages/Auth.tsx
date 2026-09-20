@@ -1,4 +1,5 @@
 import { Head, Link, usePage } from '@inertiajs/react';
+import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 
 type PageProps = {
   errors?: Record<string, string>;
@@ -10,10 +11,11 @@ type PageProps = {
 export default function Auth() {
   const { errors = {}, flash = {} } = usePage<PageProps>().props;
   const needsAccount = Boolean(flash.inquiry_requires_auth);
+  const copy = getUiCopy(useSiteLanguage());
 
   return (
     <main className="auth-page">
-      <Head title={needsAccount ? 'Create account' : 'Sign in'} />
+      <Head title={needsAccount ? copy.auth.pageCreateAccount : copy.auth.pageSignIn} />
 
       <div className="auth-shell">
         <Link href="/" className="auth-brand">
@@ -22,26 +24,26 @@ export default function Auth() {
 
         <section className="auth-card" aria-labelledby="auth-title">
           <div className="auth-card-heading">
-            <span className="auth-eyebrow">PRIVATE WORKSPACE</span>
-            <h1 id="auth-title">{needsAccount ? 'Create your account' : 'Welcome back'}</h1>
-            <p>{needsAccount ? 'Register with Google to send your project brief and access your workspace.' : 'Sign in with Google to access your personal workspace.'}</p>
+            <span className="auth-eyebrow">{copy.auth.privateWorkspace}</span>
+            <h1 id="auth-title">{needsAccount ? copy.auth.createYourAccount : copy.auth.welcomeBack}</h1>
+            <p>{needsAccount ? copy.auth.createAccountDescription : copy.auth.signInDescription}</p>
           </div>
 
           {errors.google && <div className="auth-alert">{errors.google}</div>}
           {flash.inquiry_requires_auth && (
             <div className="auth-success">
-              Create or sign in to your account first. Your project brief will be ready when you return.
+              {copy.auth.inquiryRequiresAuth}
             </div>
           )}
 
           <a className="auth-google-button" href="/auth/google">
             <span className="google-mark" aria-hidden="true">G</span>
-            Continue with Google
+            {copy.auth.continueWithGoogle}
           </a>
 
           <div className="auth-google-note">
             <span aria-hidden="true">✦</span>
-            No password required. A new Google account is registered automatically.
+            {copy.auth.noPasswordNote}
           </div>
         </section>
       </div>

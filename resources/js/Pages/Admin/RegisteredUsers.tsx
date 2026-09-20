@@ -1,5 +1,5 @@
 import { usePage } from '@inertiajs/react';
-import { getUiCopy } from '../../content/uiTranslations';
+import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import AdminShell, { formatDate, getInitials, type AdminUser } from './AdminShell';
 
 type PageProps = {
@@ -8,7 +8,8 @@ type PageProps = {
 
 export default function RegisteredUsers() {
   const { users } = usePage<PageProps>().props;
-  const copy = getUiCopy();
+  const language = useSiteLanguage();
+  const copy = getUiCopy(language);
 
   return (
     <AdminShell
@@ -32,11 +33,11 @@ export default function RegisteredUsers() {
                     {user.avatar ? <img src={user.avatar} alt="" /> : getInitials(user)}
                   </span>
                   <span>
-                    <strong>{user.name || 'Unnamed user'}</strong>
+                    <strong>{user.name || copy.admin.unnamedUser}</strong>
                     <small>{user.email}</small>
                   </span>
                 </div>
-                      <span className="admin-user-date">{copy.admin.registered} {formatDate(user.created_at)}</span>
+                      <span className="admin-user-date">{copy.admin.registered} {formatDate(user.created_at, language)}</span>
               </div>
             ))}
           </div>

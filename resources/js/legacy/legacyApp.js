@@ -48,8 +48,9 @@ function initThemeSwitcher() {
     const isDark = theme === 'dark';
     document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
     toggle.setAttribute('aria-pressed', String(isDark));
-    toggle.setAttribute('aria-label', isDark ? 'Enable light theme' : 'Enable dark theme');
-    toggle.setAttribute('title', isDark ? 'Light theme' : 'Dark theme');
+    const t = window.translations?.[currentLanguage] || window.translations?.en || {};
+    toggle.setAttribute('aria-label', isDark ? (t.theme_light || 'Enable light theme') : (t.theme_dark || 'Enable dark theme'));
+    toggle.setAttribute('title', isDark ? (t.theme_light || 'Light theme') : (t.theme_dark || 'Dark theme'));
     localStorage.setItem('ii_studio_theme', isDark ? 'dark' : 'light');
   };
 
@@ -80,6 +81,7 @@ function initLanguageSwitcher() {
     }
     if (!supportedLanguages.includes(lang)) lang = 'en';
     currentLanguage = lang;
+    const t = window.translations[lang] || window.translations.en || {};
 
     switchers.forEach(switcher => {
       const trigger = switcher.querySelector('.language-trigger');
@@ -92,7 +94,7 @@ function initLanguageSwitcher() {
       });
 
       if (currentLabel) currentLabel.textContent = languageLabels[lang];
-      trigger?.setAttribute('aria-label', `Language: ${languageLabels[lang]}`);
+      trigger?.setAttribute('aria-label', `${t.aria_languages || 'Language selection'}: ${languageLabels[lang]}`);
       closeSwitcher(switcher);
     });
 
@@ -100,8 +102,22 @@ function initLanguageSwitcher() {
     document.documentElement.lang = lang;
     localStorage.setItem('ii_studio_language', lang);
 
-    const t = window.translations[lang];
-    if (!t) return;
+    document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
+      const key = el.getAttribute('data-i18n-aria-label');
+      if (t[key] !== undefined) el.setAttribute('aria-label', t[key]);
+    });
+
+    document.querySelectorAll('[data-i18n-title]').forEach(el => {
+      const key = el.getAttribute('data-i18n-title');
+      if (t[key] !== undefined) el.setAttribute('title', t[key]);
+    });
+
+    const themeToggle = document.getElementById('themeToggle');
+    if (themeToggle) {
+      const isDark = document.documentElement.dataset.theme === 'dark';
+      themeToggle.setAttribute('aria-label', isDark ? (t.theme_light || 'Enable light theme') : (t.theme_dark || 'Enable dark theme'));
+      themeToggle.setAttribute('title', isDark ? (t.theme_light || 'Light theme') : (t.theme_dark || 'Dark theme'));
+    }
 
     // Update document title
     if (t.page_title) {

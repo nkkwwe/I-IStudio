@@ -2,6 +2,7 @@ import { Head, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import InquiryMarkup from '../legacy/InquiryMarkup';
 import { initLegacyApp } from '../legacy/legacyApp';
+import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 
 const serviceKeys = ['landing', 'corporate', 'redesign', 'ads', 'consultation', 'other'] as const;
 
@@ -17,15 +18,6 @@ type PageProps = {
   };
 };
 
-const serviceLabels: Record<ServiceKey, string> = {
-  landing: 'Landing Page',
-  corporate: 'Business Website',
-  redesign: 'Website Redesign',
-  ads: 'Advertising',
-  consultation: 'Consultation',
-  other: 'Other',
-};
-
 function getInitialService(): ServiceKey {
   const requestedService = new URLSearchParams(window.location.search).get('service');
 
@@ -36,6 +28,8 @@ function getInitialService(): ServiceKey {
 
 export default function Inquiry() {
   const { auth, flash = {} } = usePage<PageProps>().props;
+  const language = useSiteLanguage();
+  const copy = getUiCopy(language);
   const [activeService, setActiveService] = useState<ServiceKey>(getInitialService);
 
   useEffect(() => {
@@ -49,8 +43,8 @@ export default function Inquiry() {
 
   return (
     <>
-      <Head title="Project Brief">
-        <meta name="description" content="Tell I&I Studio about your project." />
+      <Head title={copy.common.projectBrief}>
+        <meta name="description" content={copy.common.projectBriefDescription} />
       </Head>
       <InquiryMarkup
         activeService={activeService}
@@ -58,7 +52,7 @@ export default function Inquiry() {
         isAuthenticated={Boolean(auth?.user)}
         inquirySubmitted={Boolean(flash.inquiry_submitted)}
         inquiryTicket={flash.inquiry_ticket ?? ''}
-        inquiryServiceLabel={flash.inquiry_service ? serviceLabels[flash.inquiry_service] : ''}
+         inquiryServiceLabel={flash.inquiry_service ? copy.services[flash.inquiry_service] : ''}
         inquiryBudget={flash.inquiry_budget ?? ''}
       />
     </>

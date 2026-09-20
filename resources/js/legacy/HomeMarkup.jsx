@@ -19,12 +19,12 @@ export default function HomeMarkup() {
         <a href="#process" className="nav-link" data-i18n="nav_process">How We Work</a>
         <a href="#advantages" className="nav-link" data-i18n="nav_about">About</a>
         <a href="#contact" className="nav-link" data-i18n="nav_contact">Contact</a>
-        <div className="language-switcher mobile-language-switcher" aria-label="Language selection">
+        <div className="language-switcher mobile-language-switcher" data-i18n-aria-label="aria_languages" aria-label="Language selection">
           <button type="button" className="language-trigger" aria-haspopup="listbox" aria-expanded="false">
             <span className="language-current">EN</span>
             <svg className="language-chevron" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
           </button>
-          <div className="language-menu" role="listbox" aria-label="Available languages">
+          <div className="language-menu" role="listbox" data-i18n-aria-label="aria_languages" aria-label="Available languages">
             <button type="button" className="language-option active" data-language="en" role="option" aria-selected="true">English <span>EN</span></button>
             <button type="button" className="language-option" data-language="uk" role="option" aria-selected="false">Українська <span>UK</span></button>
             <button type="button" className="language-option" data-language="ro" role="option" aria-selected="false">Română <span>RO</span></button>
@@ -36,25 +36,25 @@ export default function HomeMarkup() {
           <span data-i18n="btn_discuss">Discuss Project</span>
           <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><line x1={5} y1={12} x2={19} y2={12} /><polyline points="12 5 19 12 12 19" /></svg>
         </a>
-        <a href="/account" className="account-header-link" aria-label="Account" title="Account">
+        <a href="/account" className="account-header-link" data-i18n-aria-label="aria_account" data-i18n-title="aria_account" aria-label="Account" title="Account">
           <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx={12} cy={8} r="3.2" /><path d="M5.5 20c.8-3.2 3.1-5 6.5-5s5.7 1.8 6.5 5" /></svg>
         </a>
-        <button type="button" id="themeToggle" className="theme-toggle" aria-label="Toggle theme">
+        <button type="button" id="themeToggle" className="theme-toggle" data-i18n-aria-label="aria_theme" aria-label="Toggle theme">
           <svg className="theme-icon theme-icon-sun" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx={12} cy={12} r="3.5" /><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" /></svg>
           <svg className="theme-icon theme-icon-moon" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z" /></svg>
         </button>
-        <div className="language-switcher" aria-label="Language selection">
+        <div className="language-switcher" data-i18n-aria-label="aria_languages" aria-label="Language selection">
           <button type="button" className="language-trigger" aria-haspopup="listbox" aria-expanded="false">
             <span className="language-current">EN</span>
             <svg className="language-chevron" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
           </button>
-          <div className="language-menu" role="listbox" aria-label="Available languages">
+          <div className="language-menu" role="listbox" data-i18n-aria-label="aria_languages" aria-label="Available languages">
             <button type="button" className="language-option active" data-language="en" role="option" aria-selected="true">English <span>EN</span></button>
             <button type="button" className="language-option" data-language="uk" role="option" aria-selected="false">Українська <span>UK</span></button>
             <button type="button" className="language-option" data-language="ro" role="option" aria-selected="false">Română <span>RO</span></button>
           </div>
         </div>
-        <button className="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">
+        <button className="mobile-toggle" id="mobileToggle" data-i18n-aria-label="aria_menu" aria-label="Toggle menu">
           <span />
           <span />
           <span />
@@ -191,7 +191,7 @@ export default function HomeMarkup() {
                 <span /><span /><span />
               </div>
               <div className="browser-address">iistudio.dev/preview/landing</div>
-              <div className="live-status-pill"><span className="live-dot" /> Live</div>
+              <div className="live-status-pill"><span className="live-dot" /> <span data-i18n="mock_live">Live</span></div>
             </div>
             <div className="bento-panel-stat">
               <span className="stat-number">4.8% – 9.2%</span>
@@ -322,15 +322,15 @@ export default function HomeMarkup() {
                 </div>
                 <div className="screen-content mockup-landing">
                   <div className="mockup-hero-banner">
-                    <span className="m-hero-badge"><svg className="inline-svg" width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> Turnkey Reno</span>
-                    <h5>Apartment Renovation in 30 Days</h5>
-                    <div className="m-hero-btn">Calculate Quote</div>
+                     <span className="m-hero-badge"><svg className="inline-svg" width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> <span data-i18n="mock_turnkey">Turnkey Reno</span></span>
+                     <h5 data-i18n="mock_reno_title">Apartment Renovation in 30 Days</h5>
+                     <div className="m-hero-btn" data-i18n="mock_calculate">Calculate Quote</div>
                   </div>
                   <div className="mockup-lead-bubble">
                     <span className="bubble-icon"><svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg></span>
                     <div className="bubble-info">
-                      <strong>New Lead: +1 555...</strong>
-                      <span>2-Bed Apt Reno • $8.20 CAC</span>
+                       <strong data-i18n="mock_new_lead">New Lead: +1 555...</strong>
+                       <span data-i18n="mock_reno_detail">2-Bed Apt Reno • $8.20 CAC</span>
                     </div>
                   </div>
                 </div>
@@ -389,10 +389,10 @@ export default function HomeMarkup() {
                       <div className="m-nav-lines"><span /><span /><span /></div>
                     </div>
                     <div className="mockup-b2b-content">
-                      <span className="b2b-title">Strategic Advisory</span>
+                       <span className="b2b-title" data-i18n="mock_strategic">Strategic Advisory</span>
                       <div className="b2b-grid">
-                        <div className="b2b-card-mini">Financial</div>
-                        <div className="b2b-card-mini">Operations</div>
+                         <div className="b2b-card-mini" data-i18n="mock_financial">Financial</div>
+                         <div className="b2b-card-mini" data-i18n="mock_operations">Operations</div>
                       </div>
                     </div>
                   </div>
@@ -404,8 +404,8 @@ export default function HomeMarkup() {
                 <div className="phone-screen">
                   <div className="phone-badge"><svg className="inline-svg" width={9} height={9} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> 98/100</div>
                   <div className="phone-card">
-                    <span>Mobile Ready</span>
-                    <div className="phone-btn">Consult</div>
+                     <span data-i18n="mock_mobile_ready">Mobile Ready</span>
+                     <div className="phone-btn" data-i18n="mock_consult">Consult</div>
                   </div>
                 </div>
               </div>
@@ -461,9 +461,9 @@ export default function HomeMarkup() {
                 </div>
                 <div className="screen-content mockup-catalog">
                   <div className="mockup-catalog-pills">
-                    <span className="cat-pill active">Excavators</span>
-                    <span className="cat-pill">Cranes</span>
-                    <span className="cat-pill">Dumpers</span>
+                     <span className="cat-pill active" data-i18n="mock_excavators">Excavators</span>
+                     <span className="cat-pill" data-i18n="mock_cranes">Cranes</span>
+                     <span className="cat-pill" data-i18n="mock_dumpers">Dumpers</span>
                   </div>
                   <div className="mockup-catalog-cards">
                     <div className="m-cat-card">
@@ -795,7 +795,7 @@ export default function HomeMarkup() {
   <template id="legacyInquiryForm">
       <div className="modal-backdrop" id="inquiryModal" role="dialog" aria-modal="true" aria-labelledby="modalInquiryTitle" aria-hidden="true">
         <div className="modal-card">
-          <button type="button" className="modal-close-btn" id="closeModalBtn" aria-label="Close modal">
+          <button type="button" className="modal-close-btn" id="closeModalBtn" data-i18n-aria-label="aria_close_modal" aria-label="Close modal">
             <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><line x1={18} y1={6} x2={6} y2={18} /><line x1={6} y1={6} x2={18} y2={18} /></svg>
           </button>
           <div className="modal-header">

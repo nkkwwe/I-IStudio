@@ -1,6 +1,6 @@
 import { useForm } from '@inertiajs/react';
 import { useCallback, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
-import { getSiteLanguage, getUiCopy } from '../content/uiTranslations';
+import { getSiteLanguage, getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 
 type ChatMessage = {
   id: number;
@@ -44,7 +44,7 @@ function formatMessageTime(value?: string | null): string {
 }
 
 export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, currentRole, onClose }: InquiryChatModalProps) {
-  const copy = getUiCopy();
+  const copy = getUiCopy(useSiteLanguage());
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');

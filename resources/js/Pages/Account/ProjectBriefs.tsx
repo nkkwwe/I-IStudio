@@ -1,6 +1,6 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import { getUiCopy } from '../../content/uiTranslations';
+import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import InquiryChatModal from '../../Components/InquiryChatModal';
 import { formatDate, type Inquiry } from '../Admin/AdminShell';
 
@@ -10,12 +10,13 @@ type PageProps = {
 
 export default function AccountProjectBriefs() {
   const { inquiries } = usePage<PageProps>().props;
-  const copy = getUiCopy();
+  const language = useSiteLanguage();
+  const copy = getUiCopy(language);
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
 
   return (
     <>
-      <Head title="My project briefs" />
+      <Head title={copy.account.myProjectBriefs} />
       <main className="account-page account-history-page">
         <div className="account-shell">
           <div className="account-history-topbar">
@@ -36,7 +37,7 @@ export default function AccountProjectBriefs() {
                 <span className="account-panel-label">{copy.account.projectHistory}</span>
                 <h2 id="account-briefs-title">{copy.account.submittedBriefs}</h2>
               </div>
-              <span className="admin-section-count">{inquiries.length} total</span>
+              <span className="admin-section-count">{inquiries.length} {copy.admin.total}</span>
             </div>
 
             {inquiries.length === 0 ? (
@@ -57,7 +58,7 @@ export default function AccountProjectBriefs() {
                     </div>
                     <div className="admin-inquiry-meta">
                       <span>{inquiry.email}</span>
-                      <span>{formatDate(inquiry.created_at)}</span>
+                      <span>{formatDate(inquiry.created_at, language)}</span>
                     </div>
                     <p className="admin-inquiry-comment">{inquiry.comment}</p>
                     {(inquiry.contact || inquiry.budget) && (

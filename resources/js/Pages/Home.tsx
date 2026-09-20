@@ -2,8 +2,11 @@ import { Head } from '@inertiajs/react';
 import { useEffect } from 'react';
 import HomeMarkup from '../legacy/HomeMarkup';
 import { initLegacyApp } from '../legacy/legacyApp';
+import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 
 export default function Home() {
+  const copy = getUiCopy(useSiteLanguage());
+
   useEffect(() => {
     document.body.className = '';
     initLegacyApp();
@@ -14,7 +17,7 @@ export default function Home() {
       <Head title="">
         <meta
           name="description"
-          content="We build high-converting landing pages, functional business websites, modern website redesigns, and high-ROI ad campaigns."
+          content={copy.common.homeMetaDescription}
         />
       </Head>
       <HomeMarkup />

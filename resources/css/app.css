@@ -1386,6 +1386,8 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .inquiry-chat-backdrop,
+  .inquiry-chat-modal,
   .account-modal-backdrop,
   .account-modal {
     animation: none;
@@ -4969,6 +4971,7 @@ html[data-theme="dark"] .inquiry-form-card {
   padding: 20px;
   background: rgba(9, 9, 11, 0.76);
   backdrop-filter: blur(10px);
+  animation: account-modal-backdrop-in 0.2s ease both;
 }
 
 .inquiry-chat-modal {
@@ -4982,6 +4985,7 @@ html[data-theme="dark"] .inquiry-form-card {
   border-radius: 24px;
   background: var(--bg-surface);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
+  animation: account-modal-in 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .inquiry-chat-header {

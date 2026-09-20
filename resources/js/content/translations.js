@@ -217,7 +217,28 @@ window.translations = {
     "footer_hours": "Mon - Sat: 09:00 - 20:00",
     "footer_copy": "&copy; 2026 I&amp;I Studio. Designed to bring real clients to your business.",
     "footer_consult": "Quick Consultation",
-    "footer_discuss": "Discuss Project"
+    "footer_discuss": "Discuss Project",
+    "aria_languages": "Language selection",
+    "aria_account": "Account",
+    "aria_theme": "Toggle theme",
+    "theme_light": "Enable light theme",
+    "theme_dark": "Enable dark theme",
+    "aria_menu": "Toggle menu",
+    "aria_close_modal": "Close modal",
+    "mock_live": "Live",
+    "mock_turnkey": "Turnkey Reno",
+    "mock_reno_title": "Apartment Renovation in 30 Days",
+    "mock_calculate": "Calculate Quote",
+    "mock_new_lead": "New Lead: +1 555...",
+    "mock_reno_detail": "2-Bed Apt Reno • $8.20 CAC",
+    "mock_strategic": "Strategic Advisory",
+    "mock_financial": "Financial",
+    "mock_operations": "Operations",
+    "mock_mobile_ready": "Mobile Ready",
+    "mock_consult": "Consult",
+    "mock_excavators": "Excavators",
+    "mock_cranes": "Cranes",
+    "mock_dumpers": "Dumpers"
   },
   "ru": {
     "page_title": "I&I Studio",
@@ -849,6 +870,16 @@ Object.assign(window.translations.ro, {
   inq_tag: '[ 06 / DISCUTĂ PROIECTUL ]', inq_title: 'Hai să discutăm proiectul tău.', inq_desc: 'Spune-ne ce vrei să creezi sau să îmbunătățești. Vom analiza cerința și vom reveni cu idei, structură și o estimare transparentă.', inq_guar_1: 'Răspuns rapid în 1–2 ore', inq_guar_2: 'Ofertă transparentă, fără obligații', inq_guar_3: 'Ajutor cu domeniul, hostingul și lansarea', inq_direct_title: 'Preferi mesajele directe?', inq_direct_desc: 'Trimite-ne un mesaj direct:', inq_cta_badge: 'Brief online • 2 min', inq_cta_card_title: 'Calculează costul sau discută proiectul', inq_cta_card_desc: 'Deschide brief-ul interactiv, alege direcția serviciului și descrie ideea. Răspundem în 1–2 ore cu o estimare și un plan.', inq_cta_btn: 'Deschide brief-ul proiectului', inq_cta_hint: 'Fără spam și apeluri insistente • Consultație gratuită', inq_feat_1: 'Răspuns în 1–2 ore', inq_feat_2: 'Estimare transparentă fixă', inq_feat_3: 'Contact direct cu creatorii',
   form_title: 'Ia legătura cu I&amp;I Studio', form_desc: 'Lasă datele tale și descrie ce ai în minte.', form_tab_label: 'Direcția serviciului (opțional):', tab_landing: 'Landing page', tab_corporate: 'Site pentru afaceri', tab_redesign: 'Redesign site', tab_ads: 'Publicitate', tab_consultation: 'Consultație', tab_other: 'Altele', form_name_label: 'Numele tău <span class="req">*</span>', form_name_ph: 'Alex', form_contact_label: 'Instagramul afacerii sau alte rețele sociale (opțional)', form_contact_ph: 'Instagram, Telegram sau cont social', form_budget_label: 'Buget / sumă propusă (opțional)', form_budget_ph: 'de ex. $500, $1.000, 20.000 ₴ sau oferta ta', form_comment_label: 'Spune-ne despre proiect sau sarcină <span class="req">*</span>', form_comment_ph: 'Scrie cu propriile cuvinte ce face compania, ce vrei să obții, linkuri de referință, întrebări sau bugetul aproximativ. Vom reveni rapid cu o propunere concretă.', form_btn_submit: 'Trimite cererea', feedback_title: 'Mulțumim! Cererea a fost primită.', feedback_msg: 'Am înregistrat solicitarea și te vom contacta în curând.', feedback_ticket_lbl: 'ID solicitare', feedback_step_1: 'Categorie:', feedback_budget_lbl: 'Buget:', feedback_step_2: 'Notificarea instant a fost trimisă managerului', feedback_step_3: 'Răspuns estimat: în 1–2 ore', feedback_note: 'Vom analiza cerințele și îți vom scrie cu o estimare și recomandări.', feedback_btn_close: 'Închide',
   footer_tagline: 'Creăm landing pages moderne, site-uri funcționale pentru afaceri, redesignuri curate și campanii de publicitate cu impact.', footer_col_nav: 'Navigare', footer_col_services: 'Servicii', footer_col_contact: 'Contact direct', footer_hours: 'Lun — Sâm: 09:00 — 20:00', footer_copy: '&copy; 2026 I&amp;I Studio. Creat pentru a aduce clienți reali afacerii tale.', footer_consult: 'Consultație rapidă', footer_discuss: 'Discută proiectul'
+});
+
+Object.assign(window.translations.uk, {
+  aria_languages: 'Вибір мови', aria_account: 'Акаунт', aria_theme: 'Змінити тему', theme_light: 'Увімкнути світлу тему', theme_dark: 'Увімкнути темну тему', aria_menu: 'Відкрити меню', aria_close_modal: 'Закрити модальне вікно',
+  mock_live: 'Онлайн', mock_turnkey: 'Ремонт під ключ', mock_reno_title: 'Ремонт квартири за 30 днів', mock_calculate: 'Розрахувати вартість', mock_new_lead: 'Новий лід: +1 555...', mock_reno_detail: 'Ремонт 2-кімн. квартири • $8.20 CAC', mock_strategic: 'Стратегічний консалтинг', mock_financial: 'Фінанси', mock_operations: 'Операції', mock_mobile_ready: 'Готово для мобільних', mock_consult: 'Консультація', mock_excavators: 'Екскаватори', mock_cranes: 'Крани', mock_dumpers: 'Самоскиди'
+});
+
+Object.assign(window.translations.ro, {
+  aria_languages: 'Selectarea limbii', aria_account: 'Cont', aria_theme: 'Comută tema', theme_light: 'Activează tema luminoasă', theme_dark: 'Activează tema întunecată', aria_menu: 'Deschide meniul', aria_close_modal: 'Închide fereastra',
+  mock_live: 'Live', mock_turnkey: 'Renovare la cheie', mock_reno_title: 'Renovarea apartamentului în 30 de zile', mock_calculate: 'Calculează oferta', mock_new_lead: 'Lead nou: +1 555...', mock_reno_detail: 'Renovare apartament cu 2 camere • $8.20 CAC', mock_strategic: 'Consultanță strategică', mock_financial: 'Financiar', mock_operations: 'Operațiuni', mock_mobile_ready: 'Pregătit pentru mobil', mock_consult: 'Consultă', mock_excavators: 'Excavatoare', mock_cranes: 'Macarale', mock_dumpers: 'Basculante'
 });
 
 window.solutionsData.uk = {

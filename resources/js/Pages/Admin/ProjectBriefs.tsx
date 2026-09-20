@@ -1,6 +1,6 @@
 import { router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import { getUiCopy } from '../../content/uiTranslations';
+import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import InquiryChatModal from '../../Components/InquiryChatModal';
 import AdminShell, { formatDate, type Inquiry } from './AdminShell';
 import AdminStatusSelect from './AdminStatusSelect';
@@ -13,7 +13,8 @@ export default function ProjectBriefs() {
   const { inquiries } = usePage<PageProps>().props;
   const [updatingInquiryId, setUpdatingInquiryId] = useState<number | null>(null);
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
-  const copy = getUiCopy();
+  const language = useSiteLanguage();
+  const copy = getUiCopy(language);
 
   const updateStatus = (inquiry: Inquiry, status: string) => {
     setUpdatingInquiryId(inquiry.id);
@@ -55,7 +56,7 @@ export default function ProjectBriefs() {
               </div>
               <div className="admin-inquiry-meta">
                 <span><strong>{inquiry.name}</strong> · {inquiry.email}</span>
-                <span>{formatDate(inquiry.created_at)}</span>
+                <span>{formatDate(inquiry.created_at, language)}</span>
               </div>
               <p className="admin-inquiry-comment">{inquiry.comment}</p>
               {(inquiry.contact || inquiry.budget) && (

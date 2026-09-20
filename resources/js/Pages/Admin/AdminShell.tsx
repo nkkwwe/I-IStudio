@@ -1,6 +1,6 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import type { ReactNode } from 'react';
-import { getUiCopy } from '../../content/uiTranslations';
+import { getUiCopy, useSiteLanguage, type SiteLanguage } from '../../content/uiTranslations';
 
 export type AdminUser = {
   id: number;
@@ -40,10 +40,12 @@ type AdminShellProps = {
   children: ReactNode;
 };
 
-export function formatDate(value?: string | null): string {
+export function formatDate(value?: string | null, language: SiteLanguage = 'en'): string {
   if (!value) return '—';
 
-  return new Intl.DateTimeFormat('en-GB', {
+  const locale = language === 'uk' ? 'uk-UA' : language === 'ro' ? 'ro-RO' : 'en-GB';
+
+  return new Intl.DateTimeFormat(locale, {
     day: '2-digit',
     month: 'short',
     year: 'numeric',
@@ -56,7 +58,8 @@ export function getInitials(user: AdminUser): string {
 
 export default function AdminShell({ title, eyebrow, heading, count, activeSection, children }: AdminShellProps) {
   const { auth } = usePage<AdminPageProps>().props;
-  const copy = getUiCopy();
+  const language = useSiteLanguage();
+  const copy = getUiCopy(language);
 
   return (
     <>
@@ -75,7 +78,7 @@ export default function AdminShell({ title, eyebrow, heading, count, activeSecti
             </div>
           </div>
 
-          <nav className="admin-section-nav" aria-label="Admin sections">
+          <nav className="admin-section-nav" aria-label={copy.admin.sections}>
             <Link href="/admin/project-briefs" className={`admin-section-nav-link${activeSection === 'briefs' ? ' active' : ''}`}>
               {copy.admin.projectBriefs}
             </Link>

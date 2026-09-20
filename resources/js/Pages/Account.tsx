@@ -19,6 +19,7 @@ type PageProps = {
 type AccountModalProps = {
   eyebrow: string;
   title: string;
+  closeLabel: string;
   children: React.ReactNode;
   danger?: boolean;
   onClose: () => void;
@@ -33,11 +34,11 @@ type AccountSiteHeaderProps = {
 function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: AccountSiteHeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [languageOpen, setLanguageOpen] = useState(false);
-  const [language, setLanguage] = useState(() => window.localStorage.getItem('ii_studio_language') || 'en');
-  const languageLabels: Record<string, string> = { en: 'EN', uk: 'UK', ro: 'RO' };
+  const language = useSiteLanguage();
+  const copy = getUiCopy(language);
+  const languageLabels = { en: 'EN', uk: 'UK', ro: 'RO' } as const;
 
   const selectLanguage = (nextLanguage: string) => {
-    setLanguage(nextLanguage);
     setLanguageOpen(false);
     window.localStorage.setItem('ii_studio_language', nextLanguage);
     document.documentElement.lang = nextLanguage;
@@ -60,21 +61,21 @@ function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: AccountSiteHeade
 
         <nav className={`nav-menu${mobileMenuOpen ? ' open' : ''}`} id="accountNavMenu">
           {[
-            ['Solutions', '/#solutions'],
-            ['Services', '/#services'],
-            ['Cases', '/#cases'],
-            ['How We Work', '/#process'],
-            ['About', '/#advantages'],
-            ['Contact', '/#contact'],
+            [copy.common.nav.solutions, '/#solutions'],
+            [copy.common.nav.services, '/#services'],
+            [copy.common.nav.cases, '/#cases'],
+            [copy.common.nav.process, '/#process'],
+            [copy.common.nav.about, '/#advantages'],
+            [copy.common.nav.contact, '/#contact'],
           ].map(([label, href]) => (
             <a key={href} href={href} className="nav-link" onClick={() => setMobileMenuOpen(false)}>{label}</a>
           ))}
           <div className={`language-switcher mobile-language-switcher${languageOpen ? ' open' : ''}`}>
-            <button type="button" className="language-trigger" onClick={() => setLanguageOpen((open) => !open)} aria-haspopup="listbox" aria-expanded={languageOpen} aria-label={`Language: ${languageLabels[language]}`}>
+            <button type="button" className="language-trigger" onClick={() => setLanguageOpen((open) => !open)} aria-haspopup="listbox" aria-expanded={languageOpen} aria-label={`${copy.common.availableLanguages}: ${languageLabels[language]}`}>
               <span className="language-current">{languageLabels[language]}</span>
               <svg className="language-chevron" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
             </button>
-            <div className="language-menu" role="listbox" aria-label="Available languages">
+            <div className="language-menu" role="listbox" aria-label={copy.common.availableLanguages}>
               <button type="button" className={`language-option${language === 'en' ? ' active' : ''}`} onClick={() => selectLanguage('en')} role="option" aria-selected={language === 'en'}>English <span>EN</span></button>
               <button type="button" className={`language-option${language === 'uk' ? ' active' : ''}`} onClick={() => selectLanguage('uk')} role="option" aria-selected={language === 'uk'}>Українська <span>UK</span></button>
               <button type="button" className={`language-option${language === 'ro' ? ' active' : ''}`} onClick={() => selectLanguage('ro')} role="option" aria-selected={language === 'ro'}>Română <span>RO</span></button>
@@ -84,28 +85,28 @@ function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: AccountSiteHeade
 
         <div className="header-actions">
           <Link href="/inquiry" className="btn btn-primary btn-sm">
-            <span>Discuss Project</span>
+            <span>{copy.common.discussProject}</span>
             <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1={5} y1={12} x2={19} y2={12} /><polyline points="12 5 19 12 12 19" /></svg>
           </Link>
-          <button type="button" className="theme-toggle" onClick={onToggleTheme} aria-label={isDark ? 'Enable light theme' : 'Enable dark theme'}>
+          <button type="button" className="theme-toggle" onClick={onToggleTheme} aria-label={isDark ? copy.common.enableLightTheme : copy.common.enableDarkTheme}>
             <svg className="theme-icon theme-icon-sun" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx={12} cy={12} r="3.5" /><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" /></svg>
             <svg className="theme-icon theme-icon-moon" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z" /></svg>
           </button>
-          <button type="button" className="account-logout" onClick={onLogout} aria-label="Sign out" title="Sign out">
+          <button type="button" className="account-logout" onClick={onLogout} aria-label={copy.common.signOut} title={copy.common.signOut}>
             <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 5H6.75A1.75 1.75 0 0 0 5 6.75v10.5A1.75 1.75 0 0 0 6.75 19H10" /><path d="M13 12h7" /><path d="m17 8 4 4-4 4" /></svg>
           </button>
           <div className={`language-switcher${languageOpen ? ' open' : ''}`}>
-            <button type="button" className="language-trigger" onClick={() => setLanguageOpen((open) => !open)} aria-haspopup="listbox" aria-expanded={languageOpen} aria-label={`Language: ${languageLabels[language]}`}>
+            <button type="button" className="language-trigger" onClick={() => setLanguageOpen((open) => !open)} aria-haspopup="listbox" aria-expanded={languageOpen} aria-label={`${copy.common.availableLanguages}: ${languageLabels[language]}`}>
               <span className="language-current">{languageLabels[language]}</span>
               <svg className="language-chevron" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
             </button>
-            <div className="language-menu" role="listbox" aria-label="Available languages">
+            <div className="language-menu" role="listbox" aria-label={copy.common.availableLanguages}>
               <button type="button" className={`language-option${language === 'en' ? ' active' : ''}`} onClick={() => selectLanguage('en')} role="option" aria-selected={language === 'en'}>English <span>EN</span></button>
               <button type="button" className={`language-option${language === 'uk' ? ' active' : ''}`} onClick={() => selectLanguage('uk')} role="option" aria-selected={language === 'uk'}>Українська <span>UK</span></button>
               <button type="button" className={`language-option${language === 'ro' ? ' active' : ''}`} onClick={() => selectLanguage('ro')} role="option" aria-selected={language === 'ro'}>Română <span>RO</span></button>
             </div>
           </div>
-          <button type="button" className="mobile-toggle" onClick={() => setMobileMenuOpen((open) => !open)} aria-label="Toggle menu" aria-expanded={mobileMenuOpen}>
+          <button type="button" className="mobile-toggle" onClick={() => setMobileMenuOpen((open) => !open)} aria-label={copy.common.toggleMenu} aria-expanded={mobileMenuOpen}>
             <span /><span /><span />
           </button>
         </div>
@@ -114,7 +115,7 @@ function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: AccountSiteHeade
   );
 }
 
-function AccountModal({ eyebrow, title, children, danger = false, onClose }: AccountModalProps) {
+function AccountModal({ eyebrow, title, closeLabel, children, danger = false, onClose }: AccountModalProps) {
   const handleBackdropMouseDown = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -129,7 +130,7 @@ function AccountModal({ eyebrow, title, children, danger = false, onClose }: Acc
             <span className="account-panel-label">{eyebrow}</span>
             <h2 id="account-modal-title">{title}</h2>
           </div>
-          <button type="button" className="account-modal-close" onClick={onClose} aria-label="Close dialog">
+          <button type="button" className="account-modal-close" onClick={onClose} aria-label={closeLabel}>
             <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
               <path d="m6 6 12 12M18 6 6 18" />
             </svg>
@@ -145,6 +146,8 @@ export default function Account() {
   const { auth, flash = {} } = usePage<PageProps>().props;
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
+  const common = copy.common;
+  const accountCopy = copy.account;
   const user = auth.user;
   const initial = user.name?.trim().charAt(0).toUpperCase() || user.email.charAt(0).toUpperCase();
   const [nameModalOpen, setNameModalOpen] = useState(false);
@@ -219,7 +222,7 @@ export default function Account() {
 
   const deleteAccount = () => {
     if (deleteForm.data.confirmation !== 'DELETE') {
-      deleteForm.setError('confirmation', 'Type DELETE to confirm.');
+      deleteForm.setError('confirmation', accountCopy.deleteConfirmationError);
       return;
     }
 
@@ -234,43 +237,43 @@ export default function Account() {
 
   return (
     <>
-      <Head title="Account" />
+      <Head title={accountCopy.pageTitle} />
       <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => setLogoutModalOpen(true)} />
       <main className="account-page">
       <div className="account-shell">
         <section className="account-hero">
           <div className="account-avatar">{user.avatar ? <img src={user.avatar} alt="" /> : initial}</div>
           <div>
-            <span className="auth-eyebrow">PERSONAL WORKSPACE</span>
+            <span className="auth-eyebrow">{accountCopy.personalWorkspace}</span>
             <h1>{user.name}</h1>
             <p>{user.email}</p>
           </div>
         </section>
 
-        {flash.profile_updated && <div className="account-flash">Profile name updated.</div>}
+        {flash.profile_updated && <div className="account-flash">{accountCopy.profileUpdated}</div>}
 
         <section className="account-grid">
           <article className="account-panel account-panel-wide">
-            <span className="account-panel-label">ACCOUNT</span>
-            <h2>Your workspace is ready.</h2>
-            <p>Use this space to keep your project brief, conversations and next steps connected to your account.</p>
-            <Link href="/inquiry" className="account-primary-link">Start a project brief <span>→</span></Link>
+            <span className="account-panel-label">{accountCopy.accountLabel}</span>
+            <h2>{accountCopy.workspaceTitle}</h2>
+            <p>{accountCopy.workspaceDescription}</p>
+            <Link href="/inquiry" className="account-primary-link">{accountCopy.startNewBrief} <span>→</span></Link>
           </article>
 
           <article className="account-panel">
-            <span className="account-panel-label">PROFILE</span>
+            <span className="account-panel-label">{accountCopy.profileLabel}</span>
             <dl className="account-details">
-              <div><dt>Name</dt><dd>{user.name}</dd></div>
-              <div><dt>Email</dt><dd>{user.email}</dd></div>
-              <div><dt>Sign-in</dt><dd>Google</dd></div>
+              <div><dt>{accountCopy.name}</dt><dd>{user.name}</dd></div>
+              <div><dt>{accountCopy.email}</dt><dd>{user.email}</dd></div>
+              <div><dt>{accountCopy.signIn}</dt><dd>{accountCopy.google}</dd></div>
             </dl>
-            <button type="button" className="account-edit-button" onClick={openNameModal}>Edit name</button>
+            <button type="button" className="account-edit-button" onClick={openNameModal}>{accountCopy.editName}</button>
           </article>
 
           {user.is_admin && (
             <article className="account-panel account-admin-panel">
-              <Link href="/admin" className="account-admin-button">Admin panel</Link>
-              <p className="account-admin-description">Manage the studio workspace and upcoming administrative tools from here.</p>
+              <Link href="/admin" className="account-admin-button">{accountCopy.adminPanel}</Link>
+              <p className="account-admin-description">{accountCopy.adminPanelDescription}</p>
             </article>
           )}
 
@@ -284,18 +287,18 @@ export default function Account() {
           </article>
 
           <article className="account-panel account-panel-danger">
-            <span className="account-panel-label">ACCOUNT CONTROL</span>
-            <h2>Leave I&amp;I Studio</h2>
-            <p>Sign out on this device or permanently remove your workspace and account data.</p>
-            <button type="button" className="account-delete-button" onClick={openDeleteModal}>Delete account</button>
+            <span className="account-panel-label">{accountCopy.accountControl}</span>
+            <h2>{accountCopy.leaveStudio}</h2>
+            <p>{accountCopy.leaveStudioDescription}</p>
+            <button type="button" className="account-delete-button" onClick={openDeleteModal}>{common.deleteAccount}</button>
           </article>
         </section>
 
         {nameModalOpen && (
-          <AccountModal eyebrow="PROFILE" title="Change your name" onClose={closeNameModal}>
-            <p className="account-modal-copy">Choose the name that should appear in your personal workspace.</p>
+          <AccountModal eyebrow={accountCopy.profileLabel} title={accountCopy.changeName} closeLabel={common.closeDialog} onClose={closeNameModal}>
+            <p className="account-modal-copy">{accountCopy.changeNameDescription}</p>
             <label className="account-field account-modal-field">
-              <span>Name</span>
+              <span>{accountCopy.name}</span>
               <input
                 type="text"
                 value={nameForm.data.name}
@@ -307,35 +310,35 @@ export default function Account() {
             {nameForm.errors.name && <small className="account-inline-error">{nameForm.errors.name}</small>}
             <div className="account-modal-actions">
               <button type="button" className="account-modal-button account-modal-button-primary" onClick={saveName} disabled={nameForm.processing}>
-                {nameForm.processing ? 'Saving…' : 'Save name'}
+                {nameForm.processing ? common.saving : common.saveName}
               </button>
-              <button type="button" className="account-modal-button account-modal-button-secondary" onClick={closeNameModal}>Cancel</button>
+              <button type="button" className="account-modal-button account-modal-button-secondary" onClick={closeNameModal}>{common.cancel}</button>
             </div>
           </AccountModal>
         )}
 
         {logoutModalOpen && (
-          <AccountModal eyebrow="ACCOUNT" title="Sign out?" onClose={closeModals}>
-            <p className="account-modal-copy">You can sign in again with Google whenever you want to return to your workspace.</p>
+          <AccountModal eyebrow={accountCopy.accountLabel} title={accountCopy.signOutTitle} closeLabel={common.closeDialog} onClose={closeModals}>
+            <p className="account-modal-copy">{accountCopy.signOutDescription}</p>
             <div className="account-modal-actions">
               <button type="button" className="account-modal-button account-modal-button-danger" onClick={confirmLogout} disabled={logoutForm.processing}>
-                {logoutForm.processing ? 'Signing out…' : 'Sign out'}
+                {logoutForm.processing ? accountCopy.signingOut : common.signOut}
               </button>
-              <button type="button" className="account-modal-button account-modal-button-secondary" onClick={closeModals}>Cancel</button>
+              <button type="button" className="account-modal-button account-modal-button-secondary" onClick={closeModals}>{common.cancel}</button>
             </div>
           </AccountModal>
         )}
 
         {deleteModalOpen && (
-          <AccountModal eyebrow="ACCOUNT CONTROL" title="Delete account?" danger onClose={closeModals}>
-            <p className="account-modal-copy">This permanently removes your workspace and account data. This action cannot be undone.</p>
+          <AccountModal eyebrow={accountCopy.accountControl} title={accountCopy.deleteTitle} closeLabel={common.closeDialog} danger onClose={closeModals}>
+            <p className="account-modal-copy">{accountCopy.deleteDescription}</p>
             <label className="account-field account-modal-field">
-              <span>Type DELETE to confirm</span>
+              <span>{accountCopy.deleteConfirmationLabel}</span>
               <input
                 type="text"
                 value={deleteForm.data.confirmation}
                 onChange={(event) => deleteForm.setData('confirmation', event.target.value)}
-                placeholder="DELETE"
+                placeholder={accountCopy.deleteConfirmationPlaceholder}
                 autoComplete="off"
                 autoFocus
               />
@@ -343,9 +346,9 @@ export default function Account() {
             {deleteForm.errors.confirmation && <small className="account-inline-error">{deleteForm.errors.confirmation}</small>}
             <div className="account-modal-actions">
               <button type="button" className="account-modal-button account-modal-button-danger" onClick={deleteAccount} disabled={deleteForm.processing}>
-                {deleteForm.processing ? 'Deleting…' : 'Delete permanently'}
+                {deleteForm.processing ? common.deleting : common.deletePermanently}
               </button>
-              <button type="button" className="account-modal-button account-modal-button-secondary" onClick={closeModals}>Cancel</button>
+              <button type="button" className="account-modal-button account-modal-button-secondary" onClick={closeModals}>{common.cancel}</button>
             </div>
           </AccountModal>
         )}
