@@ -950,6 +950,34 @@ p {
   color: var(--text-primary);
 }
 
+.admin-section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.admin-section-nav-link {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  padding: 0 14px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.admin-section-nav-link:hover,
+.admin-section-nav-link.active {
+  border-color: var(--text-primary);
+  background: var(--text-primary);
+  color: var(--text-inverse);
+}
+
 .admin-overview-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

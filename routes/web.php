@@ -36,4 +36,6 @@ Route::middleware('auth')->group(function (): void {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function (): void {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/project-briefs', [AdminController::class, 'projectBriefs'])->name('admin.project-briefs');
+    Route::get('/registered-users', [AdminController::class, 'registeredUsers'])->name('admin.registered-users');
 });

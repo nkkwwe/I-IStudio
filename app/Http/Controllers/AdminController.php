@@ -4,12 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\ProjectInquiry;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class AdminController extends Controller
 {
-    public function index(): Response
+    public function index(): RedirectResponse
+    {
+        return redirect()->route('admin.project-briefs');
+    }
+
+    public function projectBriefs(): Response
+    {
+        return Inertia::render('Admin/ProjectBriefs', [
+            'inquiries' => $this->getInquiries(),
+        ]);
+    }
+
+    public function registeredUsers(): Response
+    {
+        return Inertia::render('Admin/RegisteredUsers', [
+            'users' => $this->getUsers(),
+        ]);
+    }
+
+    private function getUsers()
     {
         $users = User::query()
             ->latest('created_at')
@@ -23,6 +43,11 @@ class AdminController extends Controller
             ])
             ->values();
 
+        return $users;
+    }
+
+    private function getInquiries()
+    {
         $inquiries = ProjectInquiry::query()
             ->with('user:id,name,email')
             ->latest('created_at')
@@ -46,9 +71,6 @@ class AdminController extends Controller
             ])
             ->values();
 
-        return Inertia::render('Admin/Index', [
-            'users' => $users,
-            'inquiries' => $inquiries,
-        ]);
+        return $inquiries;
     }
 }
