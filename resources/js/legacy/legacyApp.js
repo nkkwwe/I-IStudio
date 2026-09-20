@@ -467,7 +467,6 @@ window.preselectService = function(serviceKey, openModal = true) {
    ========================================================================== */
 function initSmartForm() {
   const form = document.getElementById('projectForm');
-  const inquiryPage = document.querySelector('.inquiry-page');
   const openInquiryBtns = document.querySelectorAll('#openInquiryPageBtn, [data-open-page="inquiry"], .action-service-pill, [data-scroll-to-inquiry]');
   const overlay = document.getElementById('feedbackOverlay');
   const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
@@ -477,7 +476,7 @@ function initSmartForm() {
     window.location.href = `/inquiry?service=${encodeURIComponent(serviceKey)}`;
   };
 
-  if (!form || !inquiryPage) {
+  if (!form) {
     openInquiryBtns.forEach(btn => {
       btn.addEventListener('click', (event) => {
         event.preventDefault();
