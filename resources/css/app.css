@@ -324,6 +324,7 @@ p {
 .account-header-link,
 .theme-toggle,
 .header-actions .account-logout {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -361,6 +362,34 @@ p {
   width: 20px;
   height: 20px;
   display: block;
+}
+
+.chat-unread-badge {
+  display: inline-flex;
+  min-width: 19px;
+  height: 19px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: #dc3f4f;
+  color: #ffffff;
+  font: 800 0.64rem/1 var(--font-mono);
+  letter-spacing: -0.02em;
+  box-shadow: 0 4px 12px rgba(220, 63, 79, 0.32);
+  animation: chat-unread-badge-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.account-header-link .chat-unread-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  border: 2px solid var(--bg-surface);
+}
+
+@keyframes chat-unread-badge-in {
+  from { opacity: 0; transform: scale(0.72); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 /* Authentication and account */
@@ -924,6 +953,7 @@ p {
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   padding: 0 16px;
   border: 1px solid var(--accent-black);
   border-radius: var(--radius-pill);
@@ -1450,6 +1480,7 @@ p {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .chat-unread-badge,
   .inquiry-chat-backdrop,
   .inquiry-chat-modal,
   .account-modal-backdrop,

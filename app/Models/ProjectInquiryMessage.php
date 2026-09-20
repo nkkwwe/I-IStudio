@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ProjectInquiryMessage extends Model
 {
@@ -20,7 +20,15 @@ class ProjectInquiryMessage extends Model
         'attachment_name',
         'attachment_mime',
         'attachment_size',
+        'read_at',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'read_at' => 'datetime',
+        ];
+    }
 
     public function inquiry(): BelongsTo
     {

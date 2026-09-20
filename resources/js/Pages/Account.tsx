@@ -1,6 +1,7 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
+import ChatUnreadBadge, { useChatUnreadCount } from '../Components/ChatUnreadBadge';
 
 type User = {
   id: number;
@@ -12,7 +13,10 @@ type User = {
 };
 
 type PageProps = {
-  auth: { user: User };
+  auth: {
+    user: User;
+    unread_chat_count?: number;
+  };
   flash?: { profile_updated?: boolean };
 };
 
@@ -149,6 +153,7 @@ export default function Account() {
   const common = copy.common;
   const accountCopy = copy.account;
   const user = auth.user;
+  const unreadChatCount = useChatUnreadCount(auth.unread_chat_count ?? 0);
   const initial = user.name?.trim().charAt(0).toUpperCase() || user.email.charAt(0).toUpperCase();
   const [nameModalOpen, setNameModalOpen] = useState(false);
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
@@ -278,7 +283,10 @@ export default function Account() {
           )}
 
           <article className="account-panel account-history-panel">
-            <Link href="/account/project-briefs" className="account-admin-button">{copy.account.viewAllBriefs}</Link>
+            <Link href="/account/project-briefs" className="account-admin-button">
+              <span>{copy.account.viewAllBriefs}</span>
+              <ChatUnreadBadge count={unreadChatCount} />
+            </Link>
             <div className="account-history-content">
               <span className="account-panel-label">{copy.account.projectHistory}</span>
               <h2>{copy.account.myProjectBriefs}</h2>

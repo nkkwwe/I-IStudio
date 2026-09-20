@@ -1,4 +1,6 @@
-export default function HomeMarkup() {
+import ChatUnreadBadge from '../Components/ChatUnreadBadge';
+
+export default function HomeMarkup({ unreadChatCount = 0 }) {
   return (
 <div className="react-page-root"><header className="site-header">
     <div className="container header-container">
@@ -38,6 +40,7 @@ export default function HomeMarkup() {
         </a>
         <a href="/account" className="account-header-link" data-i18n-aria-label="aria_account" data-i18n-title="aria_account" aria-label="Account" title="Account">
           <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx={12} cy={8} r="3.2" /><path d="M5.5 20c.8-3.2 3.1-5 6.5-5s5.7 1.8 6.5 5" /></svg>
+          <ChatUnreadBadge count={unreadChatCount} />
         </a>
         <button type="button" id="themeToggle" className="theme-toggle" data-i18n-aria-label="aria_theme" aria-label="Toggle theme">
           <svg className="theme-icon theme-icon-sun" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx={12} cy={12} r="3.5" /><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" /></svg>

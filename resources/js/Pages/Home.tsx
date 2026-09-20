@@ -1,11 +1,21 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { useEffect } from 'react';
 import HomeMarkup from '../legacy/HomeMarkup';
 import { initLegacyApp } from '../legacy/legacyApp';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
+import { useChatUnreadCount } from '../Components/ChatUnreadBadge';
+
+type PageProps = {
+  auth?: {
+    user?: { id: number } | null;
+    unread_chat_count?: number;
+  };
+};
 
 export default function Home() {
+  const { auth } = usePage<PageProps>().props;
   const copy = getUiCopy(useSiteLanguage());
+  const unreadChatCount = useChatUnreadCount(auth?.unread_chat_count ?? 0, Boolean(auth?.user));
 
   useEffect(() => {
     document.body.className = '';
@@ -20,7 +30,7 @@ export default function Home() {
           content={copy.common.homeMetaDescription}
         />
       </Head>
-      <HomeMarkup />
+      <HomeMarkup unreadChatCount={unreadChatCount} />
     </>
   );
 }

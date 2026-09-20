@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProjectInquiry;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -19,6 +20,11 @@ class InquiryController extends Controller
     {
         $inquiries = ProjectInquiry::query()
             ->where('user_id', $request->user()->id)
+            ->withCount([
+                'messages as unread_count' => fn ($query) => $query
+                    ->where('sender_role', 'admin')
+                    ->whereNull('read_at'),
+            ])
             ->latest('created_at')
             ->get()
             ->map(fn (ProjectInquiry $inquiry): array => [
@@ -32,11 +38,34 @@ class InquiryController extends Controller
                 'comment' => $inquiry->project_comment,
                 'status' => $inquiry->status,
                 'created_at' => $inquiry->created_at?->toISOString(),
+                'unread_count' => (int) $inquiry->unread_count,
             ])
             ->values();
 
         return Inertia::render('Account/ProjectBriefs', [
             'inquiries' => $inquiries,
+        ]);
+    }
+
+    public function unreadCounts(Request $request): JsonResponse
+    {
+        $counts = ProjectInquiry::query()
+            ->where('user_id', $request->user()->id)
+            ->withCount([
+                'messages as unread_count' => fn ($query) => $query
+                    ->where('sender_role', 'admin')
+                    ->whereNull('read_at'),
+            ])
+            ->get(['id'])
+            ->map(fn (ProjectInquiry $inquiry): array => [
+                'id' => $inquiry->id,
+                'unread_count' => (int) $inquiry->unread_count,
+            ])
+            ->values();
+
+        return response()->json([
+            'unread_count' => $counts->sum('unread_count'),
+            'inquiries' => $counts,
         ]);
     }
 

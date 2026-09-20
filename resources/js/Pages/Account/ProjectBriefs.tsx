@@ -1,6 +1,7 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
+import ChatUnreadBadge, { fetchChatUnreadCounts } from '../../Components/ChatUnreadBadge';
 import InquiryChatModal from '../../Components/InquiryChatModal';
 import { formatDate, type Inquiry } from '../Admin/AdminShell';
 
@@ -9,10 +10,55 @@ type PageProps = {
 };
 
 export default function AccountProjectBriefs() {
-  const { inquiries } = usePage<PageProps>().props;
+  const { inquiries: initialInquiries } = usePage<PageProps>().props;
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
+  const [inquiries, setInquiries] = useState(initialInquiries);
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
+
+  useEffect(() => {
+    setInquiries(initialInquiries);
+  }, [initialInquiries]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const refreshUnreadCounts = async () => {
+      if (document.visibilityState === 'hidden') return;
+
+      try {
+        const payload = await fetchChatUnreadCounts();
+        if (cancelled) return;
+
+        const unreadByInquiry = new Map(
+          (payload.inquiries ?? []).map((inquiry) => [inquiry.id, inquiry.unread_count]),
+        );
+
+        setInquiries((current) => current.map((inquiry) => ({
+          ...inquiry,
+          unread_count: unreadByInquiry.get(inquiry.id) ?? 0,
+        })));
+      } catch {
+        // Keep the server-rendered counts during a temporary network failure.
+      }
+    };
+
+    const handleFocus = () => void refreshUnreadCounts();
+    const timer = window.setInterval(() => void refreshUnreadCounts(), 15000);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, []);
+
+  const markInquiryRead = (inquiryId: number) => {
+    setInquiries((current) => current.map((inquiry) => (
+      inquiry.id === inquiryId ? { ...inquiry, unread_count: 0 } : inquiry
+    )));
+  };
 
   return (
     <>
@@ -74,6 +120,7 @@ export default function AccountProjectBriefs() {
                           <path d="M8.5 12h.01M12 12h.01M15.5 12h.01" />
                         </svg>
                         <span>{copy.chat.openChat}</span>
+                        <ChatUnreadBadge count={inquiry.unread_count ?? 0} />
                       </button>
                     </div>
                   </article>
@@ -87,6 +134,7 @@ export default function AccountProjectBriefs() {
                 title={copy.services[activeChatInquiry.service_type] ?? activeChatInquiry.service_type}
                 endpoint={`/account/project-briefs/${activeChatInquiry.id}/messages`}
                 currentRole="user"
+                onRead={() => markInquiryRead(activeChatInquiry.id)}
                 onClose={() => setActiveChatInquiry(null)}
               />
             )}

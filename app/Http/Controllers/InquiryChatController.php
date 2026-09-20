@@ -16,14 +16,14 @@ class InquiryChatController extends Controller
     {
         $this->ensureOwnInquiry($request, $inquiry);
 
-        return $this->messagesResponse($inquiry);
+        return $this->messagesResponse($inquiry, 'user');
     }
 
     public function indexForAdmin(Request $request, ProjectInquiry $inquiry): JsonResponse
     {
         $this->ensureCanAccess($request, $inquiry);
 
-        return $this->messagesResponse($inquiry);
+        return $this->messagesResponse($inquiry, 'admin');
     }
 
     public function storeForUser(Request $request, ProjectInquiry $inquiry): JsonResponse|RedirectResponse
@@ -55,7 +55,7 @@ class InquiryChatController extends Controller
         $body = trim((string) ($data['body'] ?? ''));
         $attachment = $request->file('attachment');
 
-        if ($body === '' && !$attachment) {
+        if ($body === '' && ! $attachment) {
             throw ValidationException::withMessages([
                 'body' => 'Write a message or attach an image first.',
             ]);
@@ -114,21 +114,30 @@ class InquiryChatController extends Controller
         abort_unless($user && (int) $inquiry->user_id === (int) $user->id, 403);
     }
 
-    private function messagesResponse(ProjectInquiry $inquiry): JsonResponse
+    private function messagesResponse(ProjectInquiry $inquiry, string $viewerRole): JsonResponse
     {
-        return response()->json([
-            'messages' => $this->serializeMessages($inquiry),
-        ]);
-    }
-
-    private function serializeMessages(ProjectInquiry $inquiry): array
-    {
-        return $inquiry->messages()
+        $messages = $inquiry->messages()
             ->oldest('created_at')
-            ->get()
-            ->map(fn (ProjectInquiryMessage $message): array => $this->serializeMessage($message))
-            ->values()
-            ->all();
+            ->get();
+
+        $unreadMessageIds = $messages
+            ->where('sender_role', '!=', $viewerRole)
+            ->whereNull('read_at')
+            ->pluck('id');
+
+        if ($unreadMessageIds->isNotEmpty()) {
+            ProjectInquiryMessage::query()
+                ->whereIn('id', $unreadMessageIds)
+                ->update(['read_at' => now()]);
+        }
+
+        return response()->json([
+            'messages' => $messages
+                ->map(fn (ProjectInquiryMessage $message): array => $this->serializeMessage($message))
+                ->values()
+                ->all(),
+            'unread_count' => 0,
+        ]);
     }
 
     private function serializeMessage(ProjectInquiryMessage $message): array

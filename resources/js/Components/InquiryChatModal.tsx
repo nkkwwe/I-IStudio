@@ -19,6 +19,7 @@ type InquiryChatModalProps = {
   endpoint: string;
   currentRole: 'admin' | 'user';
   onClose: () => void;
+  onRead?: () => void;
 };
 
 type ImagePreview = {
@@ -43,7 +44,7 @@ function formatMessageTime(value?: string | null): string {
   }).format(new Date(value));
 }
 
-export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, currentRole, onClose }: InquiryChatModalProps) {
+export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, currentRole, onClose, onRead }: InquiryChatModalProps) {
   const copy = getUiCopy(useSiteLanguage());
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(true);
@@ -55,12 +56,17 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const attachmentInputRef = useRef<HTMLInputElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
   const onCloseRef = useRef(onClose);
+  const onReadRef = useRef(onRead);
   const imagePreviewRef = useRef<ImagePreview | null>(null);
   const form = useForm<{ body: string; attachment: File | null }>({ body: '', attachment: null });
 
   useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
+
+  useEffect(() => {
+    onReadRef.current = onRead;
+  }, [onRead]);
 
   useEffect(() => {
     imagePreviewRef.current = imagePreview;
@@ -95,6 +101,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
 
       const payload = await response.json() as { messages?: ChatMessage[] };
       setMessages(payload.messages ?? []);
+      onReadRef.current?.();
     } catch {
       setLoadError(copy.chat.loadError);
     } finally {

@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function (): void {
         return Inertia::render('Account');
     })->name('account');
     Route::get('/account/project-briefs', [InquiryController::class, 'mine'])->name('account.project-briefs');
+    Route::get('/account/project-briefs/unread-counts', [InquiryController::class, 'unreadCounts'])->name('account.project-briefs.unread-counts');
     Route::get('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'indexForUser'])->name('account.project-briefs.messages');
     Route::post('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'storeForUser'])->name('account.project-briefs.messages.store');
     Route::get('/project-inquiry-messages/{message}/attachment', [InquiryChatController::class, 'attachment'])->name('project-inquiry-messages.attachment');

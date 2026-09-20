@@ -21,6 +21,7 @@ export type Inquiry = {
   comment: string;
   status: string;
   created_at?: string | null;
+  unread_count?: number;
 };
 
 type AdminPageProps = {

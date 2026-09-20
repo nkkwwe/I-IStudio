@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\ProjectInquiryMessage;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -36,10 +37,18 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $user = $request->user();
+        $unreadChatCount = $user
+            ? ProjectInquiryMessage::query()
+                ->where('sender_role', 'admin')
+                ->whereNull('read_at')
+                ->whereHas('inquiry', fn ($query) => $query->where('user_id', $user->id))
+                ->count()
+            : 0;
 
         return [
             ...parent::share($request),
             'auth' => [
+                'unread_chat_count' => $unreadChatCount,
                 'user' => $user
                     ? [
                         ...$user->only('id', 'name', 'email', 'avatar', 'created_at'),

@@ -3,13 +3,17 @@ import { useEffect, useState } from 'react';
 import InquiryMarkup from '../legacy/InquiryMarkup';
 import { initLegacyApp } from '../legacy/legacyApp';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
+import { useChatUnreadCount } from '../Components/ChatUnreadBadge';
 
 const serviceKeys = ['landing', 'corporate', 'redesign', 'ads', 'consultation', 'other'] as const;
 
 type ServiceKey = (typeof serviceKeys)[number];
 
 type PageProps = {
-  auth?: { user?: { id: number } | null } | null;
+  auth?: {
+    user?: { id: number } | null;
+    unread_chat_count?: number;
+  } | null;
   flash?: {
     inquiry_submitted?: boolean;
     inquiry_ticket?: string;
@@ -30,6 +34,7 @@ export default function Inquiry() {
   const { auth, flash = {} } = usePage<PageProps>().props;
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
+  const unreadChatCount = useChatUnreadCount(auth?.unread_chat_count ?? 0, Boolean(auth?.user));
   const [activeService, setActiveService] = useState<ServiceKey>(getInitialService);
 
   useEffect(() => {
@@ -54,6 +59,7 @@ export default function Inquiry() {
         inquiryTicket={flash.inquiry_ticket ?? ''}
          inquiryServiceLabel={flash.inquiry_service ? copy.services[flash.inquiry_service] : ''}
         inquiryBudget={flash.inquiry_budget ?? ''}
+        unreadChatCount={unreadChatCount}
       />
     </>
   );
