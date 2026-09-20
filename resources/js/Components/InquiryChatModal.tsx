@@ -265,7 +265,12 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
             </div>
           )}
           <div className="inquiry-chat-composer-row">
-            <label className="inquiry-chat-attach" htmlFor={'inquiry-chat-attachment-' + inquiryId}>
+            <label
+              className="inquiry-chat-attach"
+              htmlFor={'inquiry-chat-attachment-' + inquiryId}
+              aria-label={copy.chat.addImage}
+              title={copy.chat.addImage}
+            >
               <input
                 ref={attachmentInputRef}
                 id={'inquiry-chat-attachment-' + inquiryId}
@@ -273,13 +278,13 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
                 accept="image/jpeg,image/png,image/gif,image/webp"
                 onChange={selectImage}
                 disabled={form.processing}
+                aria-label={copy.chat.addImage}
               />
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="3" y="3" width="18" height="18" rx="3" />
                 <circle cx="8.5" cy="8.5" r="1.5" />
                 <path d="m21 15-4.5-4.5L7 20" />
               </svg>
-              <span>{copy.chat.addImage}</span>
             </label>
             <textarea
               value={form.data.body}
