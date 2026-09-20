@@ -5111,9 +5111,12 @@ html[data-theme="dark"] .inquiry-form-card {
   display: block;
   width: min(100%, 360px);
   margin-bottom: 8px;
+  padding: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 12px;
+  background: transparent;
+  cursor: zoom-in;
 }
 
 .inquiry-chat-image-link:last-child {
@@ -5124,6 +5127,48 @@ html[data-theme="dark"] .inquiry-form-card {
   width: 100%;
   max-height: 280px;
   object-fit: cover;
+}
+
+.inquiry-chat-lightbox {
+  position: fixed;
+  z-index: 1300;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 48px;
+  background: rgba(7, 7, 8, 0.94);
+  backdrop-filter: blur(14px);
+}
+
+.inquiry-chat-lightbox > img {
+  max-width: min(1200px, 100%);
+  max-height: calc(100vh - 96px);
+  object-fit: contain;
+  border-radius: 16px;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.55);
+}
+
+.inquiry-chat-lightbox-close {
+  position: fixed;
+  z-index: 1;
+  top: 24px;
+  right: 24px;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: rgba(23, 24, 27, 0.86);
+  color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.inquiry-chat-lightbox-close:hover,
+.inquiry-chat-lightbox-close:focus-visible {
+  border-color: #fff;
+  background: rgba(35, 38, 43, 0.96);
 }
 
 .inquiry-chat-composer {
@@ -5453,5 +5498,19 @@ html[data-theme="dark"] .inquiry-form-card {
   .inquiry-chat-attach,
   .inquiry-chat-send {
     justify-content: center;
+  }
+
+  .inquiry-chat-lightbox {
+    padding: 54px 12px 20px;
+  }
+
+  .inquiry-chat-lightbox > img {
+    max-height: calc(100vh - 74px);
+    border-radius: 12px;
+  }
+
+  .inquiry-chat-lightbox-close {
+    top: 14px;
+    right: 14px;
   }
 }

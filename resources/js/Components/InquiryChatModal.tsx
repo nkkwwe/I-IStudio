@@ -21,6 +21,11 @@ type InquiryChatModalProps = {
   onClose: () => void;
 };
 
+type ImagePreview = {
+  url: string;
+  name: string;
+};
+
 function formatMessageTime(value?: string | null): string {
   if (!value) return '';
 
@@ -46,14 +51,20 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState('');
   const [attachmentError, setAttachmentError] = useState('');
+  const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
   const attachmentInputRef = useRef<HTMLInputElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
   const onCloseRef = useRef(onClose);
+  const imagePreviewRef = useRef<ImagePreview | null>(null);
   const form = useForm<{ body: string; attachment: File | null }>({ body: '', attachment: null });
 
   useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
+
+  useEffect(() => {
+    imagePreviewRef.current = imagePreview;
+  }, [imagePreview]);
 
   useEffect(() => {
     if (!selectedImage) {
@@ -98,7 +109,14 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     document.body.style.overflow = 'hidden';
 
     const handleEscape = (event: globalThis.KeyboardEvent) => {
-      if (event.key === 'Escape') onCloseRef.current();
+      if (event.key !== 'Escape') return;
+
+      if (imagePreviewRef.current) {
+        setImagePreview(null);
+        return;
+      }
+
+      onCloseRef.current();
     };
 
     document.addEventListener('keydown', handleEscape);
@@ -211,9 +229,17 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
                       <span>{formatMessageTime(message.created_at)}</span>
                     </div>
                     {message.attachment_url && (
-                      <a className="inquiry-chat-image-link" href={message.attachment_url} target="_blank" rel="noreferrer">
+                      <button
+                        type="button"
+                        className="inquiry-chat-image-link"
+                        onClick={() => setImagePreview({
+                          url: message.attachment_url as string,
+                          name: message.attachment_name || copy.chat.imageAlt,
+                        })}
+                        aria-label={message.attachment_name || copy.chat.imageAlt}
+                      >
                         <img src={message.attachment_url} alt={message.attachment_name || copy.chat.imageAlt} />
-                      </a>
+                      </button>
                     )}
                     {message.body && <p>{message.body}</p>}
                   </div>
@@ -278,6 +304,25 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
           )}
         </form>
       </section>
+
+      {imagePreview && (
+        <div
+          className="inquiry-chat-lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={imagePreview.name}
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setImagePreview(null);
+          }}
+        >
+          <button type="button" className="inquiry-chat-lightbox-close" onClick={() => setImagePreview(null)} aria-label={copy.chat.close}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+          <img src={imagePreview.url} alt={imagePreview.name} />
+        </div>
+      )}
     </div>
   );
 }
