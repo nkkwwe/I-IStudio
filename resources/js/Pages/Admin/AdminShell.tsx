@@ -1,5 +1,6 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import type { ReactNode } from 'react';
+import { getUiCopy } from '../../content/uiTranslations';
 
 export type AdminUser = {
   id: number;
@@ -39,29 +40,6 @@ type AdminShellProps = {
   children: ReactNode;
 };
 
-export const serviceLabels: Record<string, string> = {
-  landing: 'Landing Page',
-  corporate: 'Business Website',
-  redesign: 'Website Redesign',
-  ads: 'Advertising',
-  consultation: 'Consultation',
-  other: 'Other',
-};
-
-export const inquiryStatusLabels: Record<string, string> = {
-  new: 'Awaiting review',
-  ready_to_start: 'Ready to start',
-  in_progress: 'In progress',
-  completed: 'Completed',
-};
-
-export const inquiryStatusOptions = [
-  { value: 'new', label: 'Awaiting review' },
-  { value: 'ready_to_start', label: 'Ready to start' },
-  { value: 'in_progress', label: 'In progress' },
-  { value: 'completed', label: 'Completed' },
-] as const;
-
 export function formatDate(value?: string | null): string {
   if (!value) return '—';
 
@@ -78,6 +56,7 @@ export function getInitials(user: AdminUser): string {
 
 export default function AdminShell({ title, eyebrow, heading, count, activeSection, children }: AdminShellProps) {
   const { auth } = usePage<AdminPageProps>().props;
+  const copy = getUiCopy();
 
   return (
     <>
@@ -86,22 +65,22 @@ export default function AdminShell({ title, eyebrow, heading, count, activeSecti
         <div className="account-shell">
           <div className="admin-topbar">
             <div>
-              <span className="auth-eyebrow">ADMIN AREA</span>
-              <h1>Workspace control</h1>
-              <p>Admin access is active for {auth.user.email}.</p>
+              <span className="auth-eyebrow">{copy.admin.area}</span>
+              <h1>{copy.admin.workspace}</h1>
+              <p>{copy.admin.accessPrefix} {auth.user.email}.</p>
             </div>
             <div className="admin-topbar-actions">
-              <Link href="/account" className="admin-back-link">Profile</Link>
-              <Link href="/" className="admin-back-link">Open site</Link>
+              <Link href="/account" className="admin-back-link">{copy.admin.profile}</Link>
+              <Link href="/" className="admin-back-link">{copy.admin.openSite}</Link>
             </div>
           </div>
 
           <nav className="admin-section-nav" aria-label="Admin sections">
             <Link href="/admin/project-briefs" className={`admin-section-nav-link${activeSection === 'briefs' ? ' active' : ''}`}>
-              Project briefs
+              {copy.admin.projectBriefs}
             </Link>
             <Link href="/admin/registered-users" className={`admin-section-nav-link${activeSection === 'users' ? ' active' : ''}`}>
-              Registered users
+              {copy.admin.registeredUsers}
             </Link>
           </nav>
 
@@ -111,7 +90,7 @@ export default function AdminShell({ title, eyebrow, heading, count, activeSecti
                 <span className="account-panel-label">{eyebrow}</span>
                 <h2 id="admin-section-title">{heading}</h2>
               </div>
-              <span className="admin-section-count">{count} total</span>
+              <span className="admin-section-count">{count} {copy.admin.total}</span>
             </div>
             {children}
           </section>

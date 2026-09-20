@@ -1,5 +1,6 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { useEffect, useState, type MouseEvent } from 'react';
+import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 
 type User = {
   id: number;
@@ -40,6 +41,7 @@ function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: AccountSiteHeade
     setLanguageOpen(false);
     window.localStorage.setItem('ii_studio_language', nextLanguage);
     document.documentElement.lang = nextLanguage;
+    window.dispatchEvent(new CustomEvent('ii_studio_language_change', { detail: nextLanguage }));
   };
 
   return (
@@ -141,6 +143,8 @@ function AccountModal({ eyebrow, title, children, danger = false, onClose }: Acc
 
 export default function Account() {
   const { auth, flash = {} } = usePage<PageProps>().props;
+  const language = useSiteLanguage();
+  const copy = getUiCopy(language);
   const user = auth.user;
   const initial = user.name?.trim().charAt(0).toUpperCase() || user.email.charAt(0).toUpperCase();
   const [nameModalOpen, setNameModalOpen] = useState(false);
@@ -271,11 +275,11 @@ export default function Account() {
           )}
 
           <article className="account-panel account-history-panel">
-            <Link href="/account/project-briefs" className="account-admin-button">View all briefs</Link>
+            <Link href="/account/project-briefs" className="account-admin-button">{copy.account.viewAllBriefs}</Link>
             <div className="account-history-content">
-              <span className="account-panel-label">PROJECT HISTORY</span>
-              <h2>My project briefs</h2>
-              <p>Open every task you have sent to I&amp;I Studio from this account.</p>
+              <span className="account-panel-label">{copy.account.projectHistory}</span>
+              <h2>{copy.account.myProjectBriefs}</h2>
+              <p>{copy.account.openEveryTask}</p>
             </div>
           </article>
 

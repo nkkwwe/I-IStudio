@@ -4739,9 +4739,19 @@ html[data-theme="dark"] .inquiry-form-card {
   text-transform: uppercase;
 }
 
+.admin-status-control {
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
+}
+
 .admin-status-select {
+  display: inline-flex;
   min-height: 32px;
-  padding: 0 11px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 10px 0 12px;
   border: 1px solid rgba(44, 138, 89, 0.28);
   border-radius: var(--radius-pill);
   outline: 0;
@@ -4755,7 +4765,8 @@ html[data-theme="dark"] .inquiry-form-card {
 }
 
 .admin-status-select:hover,
-.admin-status-select:focus-visible {
+.admin-status-select:focus-visible,
+.admin-status-select.open {
   border-color: currentColor;
   background: var(--bg-panel);
 }
@@ -4763,6 +4774,84 @@ html[data-theme="dark"] .inquiry-form-card {
 .admin-status-select:disabled {
   cursor: wait;
   opacity: 0.6;
+}
+
+.admin-status-select-chevron {
+  flex: 0 0 auto;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+.admin-status-select.open .admin-status-select-chevron {
+  transform: rotate(180deg);
+}
+
+.admin-status-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  min-width: 190px;
+  padding: 6px;
+  overflow: hidden;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.admin-status-option {
+  display: flex;
+  width: 100%;
+  min-height: 36px;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font: 600 0.75rem var(--font-sans);
+  text-align: left;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.admin-status-option:hover,
+.admin-status-option.active {
+  background: var(--bg-panel);
+  color: var(--text-primary);
+}
+
+.admin-status-option-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 7px;
+  border: 0 !important;
+  border-radius: 50%;
+  background: currentColor !important;
+}
+
+.admin-status-option-dot.admin-status-new {
+  color: #b37321;
+}
+
+.admin-status-option-dot.admin-status-ready_to_start {
+  color: #4b83bd;
+}
+
+.admin-status-option-dot.admin-status-in_progress {
+  color: #8058b3;
+}
+
+.admin-status-option-dot.admin-status-completed {
+  color: #278252;
+}
+
+/* Status colors are shared by the custom admin control and account badges. */
+.admin-status-select {
+  min-height: 32px;
+  box-sizing: border-box;
 }
 
 .admin-status-new {

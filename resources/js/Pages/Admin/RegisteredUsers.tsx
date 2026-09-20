@@ -1,4 +1,5 @@
 import { usePage } from '@inertiajs/react';
+import { getUiCopy } from '../../content/uiTranslations';
 import AdminShell, { formatDate, getInitials, type AdminUser } from './AdminShell';
 
 type PageProps = {
@@ -7,19 +8,20 @@ type PageProps = {
 
 export default function RegisteredUsers() {
   const { users } = usePage<PageProps>().props;
+  const copy = getUiCopy();
 
   return (
     <AdminShell
-      title="Registered users"
-      eyebrow="PEOPLE"
-      heading="Registered users"
+      title={copy.admin.registeredUsers}
+      eyebrow={copy.admin.people}
+      heading={copy.admin.registeredUsers}
       count={users.length}
       activeSection="users"
     >
       <div className="account-panel admin-users-panel">
         {users.length === 0 ? (
           <div className="admin-empty-state admin-empty-state-inline">
-            <strong>No users registered yet</strong>
+            <strong>{copy.admin.noUsers}</strong>
           </div>
         ) : (
           <div className="admin-users-list">
@@ -34,7 +36,7 @@ export default function RegisteredUsers() {
                     <small>{user.email}</small>
                   </span>
                 </div>
-                <span className="admin-user-date">Registered {formatDate(user.created_at)}</span>
+                      <span className="admin-user-date">{copy.admin.registered} {formatDate(user.created_at)}</span>
               </div>
             ))}
           </div>

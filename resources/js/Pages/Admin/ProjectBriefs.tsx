@@ -1,6 +1,8 @@
 import { router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
-import AdminShell, { formatDate, inquiryStatusOptions, serviceLabels, type Inquiry } from './AdminShell';
+import { getUiCopy } from '../../content/uiTranslations';
+import AdminShell, { formatDate, type Inquiry } from './AdminShell';
+import AdminStatusSelect from './AdminStatusSelect';
 
 type PageProps = {
   inquiries: Inquiry[];
@@ -9,6 +11,7 @@ type PageProps = {
 export default function ProjectBriefs() {
   const { inquiries } = usePage<PageProps>().props;
   const [updatingInquiryId, setUpdatingInquiryId] = useState<number | null>(null);
+  const copy = getUiCopy();
 
   const updateStatus = (inquiry: Inquiry, status: string) => {
     setUpdatingInquiryId(inquiry.id);
@@ -20,16 +23,16 @@ export default function ProjectBriefs() {
 
   return (
     <AdminShell
-      title="Project briefs"
-      eyebrow="WORK QUEUE"
-      heading="Project briefs"
+      title={copy.admin.projectBriefs}
+      eyebrow={copy.admin.workQueue}
+      heading={copy.admin.projectBriefs}
       count={inquiries.length}
       activeSection="briefs"
     >
       {inquiries.length === 0 ? (
         <div className="account-panel admin-empty-state">
-          <strong>No project briefs yet</strong>
-          <p>New tasks sent through the project form will appear here.</p>
+          <strong>{copy.admin.noProjectBriefs}</strong>
+          <p>{copy.admin.newTasks}</p>
         </div>
       ) : (
         <div className="admin-inquiry-list">
@@ -38,19 +41,15 @@ export default function ProjectBriefs() {
               <div className="admin-inquiry-head">
                 <div>
                   <span className="admin-inquiry-ticket">{inquiry.ticket}</span>
-                  <h3>{serviceLabels[inquiry.service_type] ?? inquiry.service_type}</h3>
+                  <h3>{copy.services[inquiry.service_type] ?? inquiry.service_type}</h3>
                 </div>
-                <select
-                  className={`admin-status-select admin-status-${inquiry.status}`}
+                <AdminStatusSelect
                   value={inquiry.status}
-                  onChange={(event) => updateStatus(inquiry, event.target.value)}
+                  options={Object.entries(copy.admin.statuses).map(([value, label]) => ({ value, label }))}
+                  onChange={(status) => updateStatus(inquiry, status)}
                   disabled={updatingInquiryId === inquiry.id}
-                  aria-label={`Status for ${inquiry.ticket}`}
-                >
-                  {inquiryStatusOptions.map((option) => (
-                    <option value={option.value} key={option.value}>{option.label}</option>
-                  ))}
-                </select>
+                  ariaLabel={`${copy.admin.projectBriefs}: ${inquiry.ticket}`}
+                />
               </div>
               <div className="admin-inquiry-meta">
                 <span><strong>{inquiry.name}</strong> · {inquiry.email}</span>
@@ -59,8 +58,8 @@ export default function ProjectBriefs() {
               <p className="admin-inquiry-comment">{inquiry.comment}</p>
               {(inquiry.contact || inquiry.budget) && (
                 <div className="admin-inquiry-details">
-                  {inquiry.contact && <span><b>Contact</b>{inquiry.contact}</span>}
-                  {inquiry.budget && <span><b>Budget</b>{inquiry.budget}</span>}
+                  {inquiry.contact && <span><b>{copy.admin.contact}</b>{inquiry.contact}</span>}
+                  {inquiry.budget && <span><b>{copy.admin.budget}</b>{inquiry.budget}</span>}
                 </div>
               )}
             </article>
