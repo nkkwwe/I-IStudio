@@ -394,7 +394,7 @@ function initSolutionsByGoal() {
             ${data.tags.map(tag => `<span class="sol-tag">✓ ${tag}</span>`).join('')}
           </div>
 
-          <a href="#inquiry" class="btn btn-primary" onclick="preselectService('${data.serviceKey}')">
+          <a href="#inquiry" class="btn btn-primary solution-calc-btn" onclick="preselectService('${data.serviceKey}')">
             <span>${t.sol_calc_btn}</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
