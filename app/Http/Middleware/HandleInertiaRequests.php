@@ -52,6 +52,11 @@ class HandleInertiaRequests extends Middleware
                 'verification_success' => $request->session()->get('verification_success'),
                 'profile_updated' => $request->session()->get('profile_updated'),
                 'account_deleted' => $request->session()->get('account_deleted'),
+                'inquiry_requires_auth' => $request->session()->get('inquiry_requires_auth'),
+                'inquiry_submitted' => $request->session()->get('inquiry_submitted'),
+                'inquiry_ticket' => $request->session()->get('inquiry_ticket'),
+                'inquiry_service' => $request->session()->get('inquiry_service'),
+                'inquiry_budget' => $request->session()->get('inquiry_budget'),
             ],
             'registration' => [
                 'email' => $request->session()->get('registration.email'),

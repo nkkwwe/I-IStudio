@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InquiryController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 
@@ -8,9 +10,8 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
-Route::get('/inquiry', function () {
-    return Inertia::render('Inquiry');
-})->name('inquiry');
+Route::get('/inquiry', [InquiryController::class, 'show'])->name('inquiry');
+Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.store');
 
 Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -34,7 +35,5 @@ Route::middleware('auth')->group(function (): void {
 });
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function (): void {
-    Route::get('/', function () {
-        return Inertia::render('Admin/Index');
-    })->name('admin.index');
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
 });

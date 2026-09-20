@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable(['name', 'email', 'password', 'google_id', 'avatar'])]
 #[Hidden(['password', 'remember_token'])]
@@ -26,6 +27,11 @@ class User extends Authenticatable
         }
 
         return in_array($userEmail, config('admin.emails', []), true);
+    }
+
+    public function inquiries(): HasMany
+    {
+        return $this->hasMany(ProjectInquiry::class);
     }
 
     /**

@@ -19,8 +19,14 @@ use Throwable;
 
 class AuthController extends Controller
 {
-    public function showLogin(): Response
+    public function showLogin(Request $request): Response
     {
+        $returnTo = trim((string) $request->query('return_to', ''));
+
+        if ($returnTo !== '' && str_starts_with($returnTo, '/') && ! str_starts_with($returnTo, '//')) {
+            $request->session()->put('url.intended', $returnTo);
+        }
+
         return Inertia::render('Auth', ['mode' => 'login']);
     }
 

@@ -2,6 +2,8 @@
  * I&I Studio - Frontend Interactivity & Language Switcher
  */
 
+import { router } from '@inertiajs/react';
+
 let currentLanguage = 'en';
 let activeGoalKey = 'landing';
 
@@ -469,8 +471,6 @@ function initSmartForm() {
   const openInquiryBtns = document.querySelectorAll('#openInquiryPageBtn, [data-open-page="inquiry"], .action-service-pill, [data-scroll-to-inquiry]');
   const overlay = document.getElementById('feedbackOverlay');
   const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
-  const ticketDisplay = document.getElementById('ticketNumberDisplay');
-  const assignedService = document.getElementById('assignedService');
   const serviceInput = document.getElementById('serviceTypeInput');
 
   window.openInquiryPage = function(serviceKey = 'landing') {
@@ -500,48 +500,58 @@ function initSmartForm() {
     if (requestedTab) requestedTab.click();
   }
 
-  // Form submission & Ticket generation
+  // Form submission & Ticket confirmation
   if (form && overlay) {
+    restoreInquiryDraft(form);
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const activeServiceTab = document.querySelector('#serviceTabs .tab-btn.active');
-      const serviceType = activeServiceTab?.dataset.service || serviceInput?.value || 'landing';
-      const mapObj = window.serviceManagerMap ? window.serviceManagerMap[currentLanguage] : null;
-      const mapping = mapObj ? (mapObj[serviceType] || mapObj['landing']) : { serviceName: 'Landing Page' };
+      const payload = Object.fromEntries(new FormData(form).entries());
 
-      // Generate random ticket number for I&I Studio
-      const randomTicketNum = Math.floor(1000 + Math.random() * 9000);
-      const ticketId = `#II-${randomTicketNum}`;
-
-      if (ticketDisplay) ticketDisplay.textContent = ticketId;
-      if (assignedService) assignedService.textContent = mapping.serviceName;
-
-      // Handle budget if provided
-      const clientBudgetInput = document.getElementById('clientBudget');
-      const budgetRow = document.getElementById('feedbackBudgetRow');
-      const assignedBudget = document.getElementById('assignedBudget');
-      if (clientBudgetInput && budgetRow && assignedBudget) {
-        const val = clientBudgetInput.value.trim();
-        if (val) {
-          assignedBudget.textContent = val;
-          budgetRow.style.display = 'flex';
-        } else {
-          budgetRow.style.display = 'none';
-        }
+      if (form.dataset.authenticated !== 'true') {
+        localStorage.setItem('ii_studio_inquiry_draft', JSON.stringify(payload));
       }
 
-      overlay.classList.add('active');
+      router.post('/inquiry', payload, {
+        preserveScroll: true,
+        onSuccess: (page) => {
+          if (page.component === 'Inquiry' && page.props?.flash?.inquiry_submitted) {
+            localStorage.removeItem('ii_studio_inquiry_draft');
+          }
+        },
+      });
     });
 
     if (closeFeedbackBtn) {
       closeFeedbackBtn.addEventListener('click', () => {
         overlay.classList.remove('active');
         form.reset();
+        localStorage.removeItem('ii_studio_inquiry_draft');
         const budgetRow = document.getElementById('feedbackBudgetRow');
         if (budgetRow) budgetRow.style.display = 'none';
         window.preselectService('landing', false);
       });
     }
   }
+}
+
+function restoreInquiryDraft(form) {
+  let draft = null;
+
+  try {
+    draft = JSON.parse(localStorage.getItem('ii_studio_inquiry_draft') || 'null');
+  } catch {
+    localStorage.removeItem('ii_studio_inquiry_draft');
+  }
+
+  if (!draft || typeof draft !== 'object') return;
+
+  Object.entries(draft).forEach(([name, value]) => {
+    const field = form.elements.namedItem(name);
+    if (field && typeof value === 'string') field.value = value;
+  });
+
+  const serviceTab = document.querySelector(`#serviceTabs .tab-btn[data-service="${draft.service_type}"]`);
+  serviceTab?.click();
 }
