@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProjectInquiry;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -27,6 +28,17 @@ class AdminController extends Controller
         return Inertia::render('Admin/RegisteredUsers', [
             'users' => $this->getUsers(),
         ]);
+    }
+
+    public function updateInquiryStatus(Request $request, ProjectInquiry $inquiry): RedirectResponse
+    {
+        $data = $request->validate([
+            'status' => ['required', 'string', 'in:new,ready_to_start,in_progress,completed'],
+        ]);
+
+        $inquiry->forceFill(['status' => $data['status']])->save();
+
+        return back();
     }
 
     private function getUsers()

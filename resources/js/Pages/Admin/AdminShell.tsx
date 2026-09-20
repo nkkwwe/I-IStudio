@@ -48,6 +48,20 @@ export const serviceLabels: Record<string, string> = {
   other: 'Other',
 };
 
+export const inquiryStatusLabels: Record<string, string> = {
+  new: 'Awaiting review',
+  ready_to_start: 'Ready to start',
+  in_progress: 'In progress',
+  completed: 'Completed',
+};
+
+export const inquiryStatusOptions = [
+  { value: 'new', label: 'Awaiting review' },
+  { value: 'ready_to_start', label: 'Ready to start' },
+  { value: 'in_progress', label: 'In progress' },
+  { value: 'completed', label: 'Completed' },
+] as const;
+
 export function formatDate(value?: string | null): string {
   if (!value) return '—';
 

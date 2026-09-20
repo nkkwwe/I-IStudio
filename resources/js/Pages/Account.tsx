@@ -271,12 +271,12 @@ export default function Account() {
           )}
 
           <article className="account-panel account-history-panel">
+            <Link href="/account/project-briefs" className="account-admin-button">View all briefs</Link>
             <div className="account-history-content">
               <span className="account-panel-label">PROJECT HISTORY</span>
               <h2>My project briefs</h2>
               <p>Open every task you have sent to I&amp;I Studio from this account.</p>
             </div>
-            <Link href="/account/project-briefs" className="account-admin-button">View all briefs</Link>
           </article>
 
           <article className="account-panel account-panel-danger">

@@ -1,5 +1,5 @@
 import { Head, Link, usePage } from '@inertiajs/react';
-import { formatDate, serviceLabels, type Inquiry } from '../Admin/AdminShell';
+import { formatDate, inquiryStatusLabels, serviceLabels, type Inquiry } from '../Admin/AdminShell';
 
 type PageProps = {
   inquiries: Inquiry[];
@@ -48,7 +48,7 @@ export default function AccountProjectBriefs() {
                         <span className="admin-inquiry-ticket">{inquiry.ticket}</span>
                         <h3>{serviceLabels[inquiry.service_type] ?? inquiry.service_type}</h3>
                       </div>
-                      <span className={`admin-status admin-status-${inquiry.status}`}>{inquiry.status}</span>
+                      <span className={`admin-status admin-status-${inquiry.status}`}>{inquiryStatusLabels[inquiry.status] ?? inquiry.status}</span>
                     </div>
                     <div className="admin-inquiry-meta">
                       <span>{inquiry.email}</span>

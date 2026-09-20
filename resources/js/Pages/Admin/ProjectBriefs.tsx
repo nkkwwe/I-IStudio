@@ -1,5 +1,6 @@
-import AdminShell, { formatDate, serviceLabels, type Inquiry } from './AdminShell';
-import { usePage } from '@inertiajs/react';
+import { router, usePage } from '@inertiajs/react';
+import { useState } from 'react';
+import AdminShell, { formatDate, inquiryStatusOptions, serviceLabels, type Inquiry } from './AdminShell';
 
 type PageProps = {
   inquiries: Inquiry[];
@@ -7,6 +8,15 @@ type PageProps = {
 
 export default function ProjectBriefs() {
   const { inquiries } = usePage<PageProps>().props;
+  const [updatingInquiryId, setUpdatingInquiryId] = useState<number | null>(null);
+
+  const updateStatus = (inquiry: Inquiry, status: string) => {
+    setUpdatingInquiryId(inquiry.id);
+    router.patch(`/admin/project-briefs/${inquiry.id}/status`, { status }, {
+      preserveScroll: true,
+      onFinish: () => setUpdatingInquiryId(null),
+    });
+  };
 
   return (
     <AdminShell
@@ -30,7 +40,17 @@ export default function ProjectBriefs() {
                   <span className="admin-inquiry-ticket">{inquiry.ticket}</span>
                   <h3>{serviceLabels[inquiry.service_type] ?? inquiry.service_type}</h3>
                 </div>
-                <span className={`admin-status admin-status-${inquiry.status}`}>{inquiry.status}</span>
+                <select
+                  className={`admin-status-select admin-status-${inquiry.status}`}
+                  value={inquiry.status}
+                  onChange={(event) => updateStatus(inquiry, event.target.value)}
+                  disabled={updatingInquiryId === inquiry.id}
+                  aria-label={`Status for ${inquiry.ticket}`}
+                >
+                  {inquiryStatusOptions.map((option) => (
+                    <option value={option.value} key={option.value}>{option.label}</option>
+                  ))}
+                </select>
               </div>
               <div className="admin-inquiry-meta">
                 <span><strong>{inquiry.name}</strong> · {inquiry.email}</span>

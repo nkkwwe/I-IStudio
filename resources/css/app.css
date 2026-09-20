@@ -4739,6 +4739,56 @@ html[data-theme="dark"] .inquiry-form-card {
   text-transform: uppercase;
 }
 
+.admin-status-select {
+  min-height: 32px;
+  padding: 0 11px;
+  border: 1px solid rgba(44, 138, 89, 0.28);
+  border-radius: var(--radius-pill);
+  outline: 0;
+  background: rgba(44, 138, 89, 0.08);
+  color: #278252;
+  cursor: pointer;
+  font: 700 0.66rem var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: border-color 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.admin-status-select:hover,
+.admin-status-select:focus-visible {
+  border-color: currentColor;
+  background: var(--bg-panel);
+}
+
+.admin-status-select:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.admin-status-new {
+  border-color: rgba(194, 127, 35, 0.34);
+  background: rgba(194, 127, 35, 0.1);
+  color: #b37321;
+}
+
+.admin-status-ready_to_start {
+  border-color: rgba(68, 126, 190, 0.34);
+  background: rgba(68, 126, 190, 0.1);
+  color: #4b83bd;
+}
+
+.admin-status-in_progress {
+  border-color: rgba(126, 88, 180, 0.34);
+  background: rgba(126, 88, 180, 0.1);
+  color: #8058b3;
+}
+
+.admin-status-completed {
+  border-color: rgba(44, 138, 89, 0.28);
+  background: rgba(44, 138, 89, 0.08);
+  color: #278252;
+}
+
 .admin-inquiry-meta {
   align-items: center;
   margin-top: 20px;
