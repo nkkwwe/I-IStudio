@@ -84,7 +84,7 @@ export default function ChatUnreadBadge({ count }: { count: number }) {
   if (normalizedCount === 0) return null;
 
   return (
-    <span className="chat-unread-badge" aria-hidden="true">
+    <span className={`chat-unread-badge${normalizedCount > 9 ? ' is-wide' : ''}`} aria-hidden="true">
       {normalizedCount > 99 ? '99+' : normalizedCount}
     </span>
   );

@@ -365,19 +365,25 @@ p {
 }
 
 .chat-unread-badge {
-  display: inline-flex;
-  min-width: 19px;
-  height: 19px;
-  align-items: center;
-  justify-content: center;
-  padding: 0 5px;
+  display: inline-grid;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  place-items: center;
+  padding: 0;
   border-radius: var(--radius-pill);
   background: #dc3f4f;
   color: #ffffff;
-  font: 800 0.64rem/1 var(--font-mono);
-  letter-spacing: -0.02em;
+  font: 800 0.68rem/1 var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
   box-shadow: 0 4px 12px rgba(220, 63, 79, 0.32);
   animation: chat-unread-badge-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.chat-unread-badge.is-wide {
+  width: auto;
+  padding-inline: 5px;
 }
 
 .account-header-link .chat-unread-badge {
