@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/react';
-import { useCallback, useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { getSiteLanguage, getUiCopy } from '../content/uiTranslations';
 
 type ChatMessage = {
@@ -97,7 +97,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 
-    const handleEscape = (event: KeyboardEvent) => {
+    const handleEscape = (event: globalThis.KeyboardEvent) => {
       if (event.key === 'Escape') onCloseRef.current();
     };
 
@@ -115,9 +115,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     if (messagesRef.current) messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
   }, [messages, loading]);
 
-  const submitMessage = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const sendMessage = () => {
     if ((!form.data.body.trim() && !form.data.attachment) || form.processing) return;
 
     form.post(endpoint, {
@@ -132,6 +130,18 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
         void loadMessages();
       },
     });
+  };
+
+  const submitMessage = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    sendMessage();
+  };
+
+  const handleMessageKeyDown = (event: ReactKeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key !== 'Enter' || event.shiftKey || event.nativeEvent.isComposing) return;
+
+    event.preventDefault();
+    sendMessage();
   };
 
   const selectImage = (event: ChangeEvent<HTMLInputElement>) => {
@@ -253,6 +263,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               maxLength={5000}
               aria-label={copy.chat.placeholder}
               disabled={form.processing}
+              onKeyDown={handleMessageKeyDown}
             />
             <button type="submit" className="inquiry-chat-send" disabled={form.processing || (!form.data.body.trim() && !form.data.attachment)}>
               <span>{copy.chat.send}</span>

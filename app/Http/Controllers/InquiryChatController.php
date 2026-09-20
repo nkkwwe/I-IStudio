@@ -17,7 +17,7 @@ class InquiryChatController extends Controller
         $this->ensureCanAccess($request, $inquiry);
 
         return response()->json([
-            'messages' => $this->serializeMessages($inquiry),
+            'messages' => $this->serializeMessages($request, $inquiry),
         ]);
     }
 
@@ -46,10 +46,11 @@ class InquiryChatController extends Controller
 
         $user = $request->user();
         $attachmentPath = $attachment?->store('inquiry-chat/'.$inquiry->id, 'local');
+        $senderRole = $request->routeIs('admin.project-briefs.messages.store') ? 'admin' : 'user';
         $message = ProjectInquiryMessage::query()->create([
             'project_inquiry_id' => $inquiry->id,
             'sender_id' => $user->id,
-            'sender_role' => $user->isAdmin() ? 'admin' : 'user',
+            'sender_role' => $senderRole,
             'sender_name' => trim((string) $user->name) ?: $user->email,
             'body' => $body,
             'attachment_path' => $attachmentPath,
@@ -90,22 +91,34 @@ class InquiryChatController extends Controller
         abort_unless($user && ($user->isAdmin() || (int) $inquiry->user_id === (int) $user->id), 403);
     }
 
-    private function serializeMessages(ProjectInquiry $inquiry): array
+    private function serializeMessages(Request $request, ProjectInquiry $inquiry): array
     {
         return $inquiry->messages()
             ->with('sender:id,name,email')
             ->oldest('created_at')
             ->get()
-            ->map(fn (ProjectInquiryMessage $message): array => $this->serializeMessage($message))
+            ->map(function (ProjectInquiryMessage $message) use ($request, $inquiry): array {
+                $senderRole = $message->sender_role;
+
+                if (
+                    $request->routeIs('account.project-briefs.messages')
+                    && $senderRole === 'admin'
+                    && (int) $message->sender_id === (int) $inquiry->user_id
+                ) {
+                    $senderRole = 'user';
+                }
+
+                return $this->serializeMessage($message, $senderRole);
+            })
             ->values()
             ->all();
     }
 
-    private function serializeMessage(ProjectInquiryMessage $message): array
+    private function serializeMessage(ProjectInquiryMessage $message, ?string $senderRole = null): array
     {
         return [
             'id' => $message->id,
-            'sender_role' => $message->sender_role,
+            'sender_role' => $senderRole ?? $message->sender_role,
             'sender_name' => $message->sender_name,
             'body' => $message->body,
             'created_at' => $message->created_at?->toISOString(),
