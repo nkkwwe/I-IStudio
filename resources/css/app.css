@@ -4276,8 +4276,8 @@ html[data-theme="dark"] {
   --btn-primary-bg: var(--accent-black);
   --btn-primary-border: var(--accent-black);
   --btn-primary-text: var(--text-inverse);
-  --btn-primary-hover-bg: #e4e4e7;
-  --btn-primary-hover-border: #e4e4e7;
+  --btn-primary-hover-bg: #c4c7cd;
+  --btn-primary-hover-border: #c4c7cd;
   --btn-primary-hover-text: var(--text-inverse);
 
   --btn-secondary-bg: var(--bg-panel);
