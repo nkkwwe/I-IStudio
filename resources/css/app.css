@@ -43,6 +43,21 @@
   --shadow-hover: 0 12px 32px -4px rgba(0, 0, 0, 0.08);
 
   --transition: all 0.2s ease;
+
+  /* Standard Button Tokens & Hover Presets (Light Theme - Based on Hero Buttons 1 & 2) */
+  --btn-primary-bg: var(--accent-black);
+  --btn-primary-border: var(--accent-black);
+  --btn-primary-text: var(--text-inverse);
+  --btn-primary-hover-bg: #27272a;
+  --btn-primary-hover-border: #27272a;
+  --btn-primary-hover-text: var(--text-inverse);
+
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-border: var(--border);
+  --btn-secondary-text: var(--text-primary);
+  --btn-secondary-hover-bg: var(--bg-panel);
+  --btn-secondary-hover-border: var(--border-strong);
+  --btn-secondary-hover-text: var(--text-primary);
 }
 
 /* Base & Reset */
@@ -168,25 +183,44 @@ p {
 }
 
 .btn-primary {
-  background-color: var(--accent-black);
-  color: var(--text-inverse);
-  border-color: var(--accent-black);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  border-color: var(--btn-primary-border);
 }
 
-.btn-primary:hover {
-  background-color: #27272a;
-  border-color: #27272a;
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background-color: var(--btn-primary-hover-bg);
+  border-color: var(--btn-primary-hover-border);
+  color: var(--btn-primary-hover-text);
 }
 
 .btn-secondary {
-  background-color: #ffffff;
-  color: var(--text-primary);
-  border-color: var(--border);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  border-color: var(--btn-secondary-border);
 }
 
-.btn-secondary:hover {
-  background-color: var(--bg-panel);
-  border-color: var(--border-strong);
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+  background-color: var(--btn-secondary-hover-bg);
+  border-color: var(--btn-secondary-hover-border);
+  color: var(--btn-secondary-hover-text);
+}
+
+/* Reusable Button Hover Presets for Future Buttons (Light Theme) */
+.btn-hover-primary:hover,
+.btn-hover-primary:focus-visible {
+  background-color: var(--btn-primary-hover-bg) !important;
+  border-color: var(--btn-primary-hover-border) !important;
+  color: var(--btn-primary-hover-text) !important;
+}
+
+.btn-hover-secondary:hover,
+.btn-hover-secondary:focus-visible {
+  background-color: var(--btn-secondary-hover-bg) !important;
+  border-color: var(--btn-secondary-hover-border) !important;
+  color: var(--btn-secondary-hover-text) !important;
 }
 
 .btn-sm {
@@ -520,8 +554,9 @@ p {
 }
 
 .auth-google-button:hover {
-  border-color: var(--text-primary);
-  background: var(--bg-panel);
+  border-color: var(--btn-secondary-hover-border);
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
 }
 
 .auth-google-note {
@@ -651,8 +686,11 @@ p {
 }
 
 .auth-submit:hover:not(:disabled) {
-  box-shadow: 0 10px 22px rgba(9, 9, 11, 0.15);
-  transform: translateY(-1px);
+  background-color: var(--btn-primary-hover-bg);
+  border-color: var(--btn-primary-hover-border);
+  color: var(--btn-primary-hover-text);
+  transform: none !important;
+  box-shadow: none;
 }
 
 .auth-submit:disabled {
@@ -972,9 +1010,9 @@ p {
 }
 
 .account-admin-button:hover {
-  border-color: var(--border-strong);
-  background: var(--bg-panel);
-  color: var(--text-primary);
+  border-color: var(--btn-primary-hover-border);
+  background-color: var(--btn-primary-hover-bg);
+  color: var(--btn-primary-hover-text);
 }
 
 .account-admin-description {
@@ -1100,9 +1138,9 @@ p {
 }
 
 .admin-back-link:hover {
-  border-color: var(--border-strong);
-  background: var(--bg-panel);
-  color: var(--text-primary);
+  border-color: var(--btn-secondary-hover-border);
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
 }
 
 .admin-section-nav {
@@ -1212,9 +1250,9 @@ p {
 
 .account-edit-button:hover,
 .account-save-button:hover:not(:disabled) {
-  background: var(--bg-panel);
-  border-color: var(--border-strong);
-  color: var(--text-primary);
+  background-color: var(--btn-primary-hover-bg);
+  border-color: var(--btn-primary-hover-border);
+  color: var(--btn-primary-hover-text);
 }
 
 .account-profile-form {
@@ -1265,9 +1303,9 @@ p {
 }
 
 .account-cancel-button:hover {
-  border-color: var(--border-strong);
-  background: var(--bg-panel);
-  color: var(--text-primary);
+  border-color: var(--btn-secondary-hover-border);
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
 }
 
 .account-inline-error {
@@ -1445,9 +1483,9 @@ p {
 }
 
 .account-modal-button-primary:hover:not(:disabled) {
-  border-color: var(--border-strong);
-  background: var(--bg-panel);
-  color: var(--text-primary);
+  border-color: var(--btn-primary-hover-border);
+  background-color: var(--btn-primary-hover-bg);
+  color: var(--btn-primary-hover-text);
 }
 
 .account-modal-button-danger {
@@ -1470,9 +1508,9 @@ p {
 }
 
 .account-modal-button-secondary:hover:not(:disabled) {
-  border-color: var(--border-strong);
-  background: var(--bg-panel);
-  color: var(--text-primary);
+  border-color: var(--btn-secondary-hover-border);
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
 }
 
 @keyframes account-modal-backdrop-in {
@@ -5251,9 +5289,10 @@ html[data-theme="dark"] .inquiry-form-card {
 
 .admin-chat-button:hover,
 .admin-chat-button:focus-visible {
-  border-color: var(--text-primary);
-  background: var(--bg-surface);
-  transform: translateY(-1px);
+  border-color: var(--btn-secondary-hover-border);
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
+  transform: none !important;
 }
 
 .admin-chat-button:focus-visible,
