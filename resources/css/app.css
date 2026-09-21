@@ -5353,7 +5353,8 @@ html[data-theme="dark"] .inquiry-form-card {
   justify-content: space-between;
   gap: 18px;
   padding: 20px 22px 18px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
 }
 
 .inquiry-chat-header > div:first-child {
@@ -5556,8 +5557,8 @@ html[data-theme="dark"] .inquiry-form-card {
   flex-direction: column;
   gap: 9px;
   padding: 14px 16px 16px;
-  border-top: 1px solid var(--border-light);
-  background: var(--bg-surface);
+  border-top: 1px solid var(--border);
+  background: var(--bg-subtle);
 }
 
 .inquiry-chat-composer-row {
@@ -5578,11 +5579,12 @@ html[data-theme="dark"] .inquiry-form-card {
   padding: 0;
   border: 1px solid var(--border-strong);
   border-radius: 14px;
-  background: var(--bg-panel);
+  background: var(--bg-surface);
   color: var(--text-secondary);
   cursor: pointer;
   font-size: 0.76rem;
   font-weight: 700;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
@@ -5612,11 +5614,12 @@ html[data-theme="dark"] .inquiry-form-card {
   border: 1px solid var(--border-strong);
   border-radius: 14px;
   outline: 0;
-  background: var(--bg-panel);
+  background: var(--bg-surface);
   color: var(--text-primary);
   font: inherit;
   font-size: 0.84rem;
   line-height: 1.4;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
 }
 
