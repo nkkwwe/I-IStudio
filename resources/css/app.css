@@ -555,9 +555,9 @@ p {
 }
 
 .auth-google-button {
-  border: 1px solid var(--border-strong);
-  background: var(--bg-surface);
-  color: var(--text-primary);
+  border: 1px solid var(--btn-secondary-border);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
 }
 
 .auth-google-button:hover {
@@ -686,9 +686,9 @@ p {
 
 .auth-submit {
   margin-top: 4px;
-  border: 1px solid var(--accent-black);
-  background: var(--accent-black);
-  color: #fff;
+  border: 1px solid var(--btn-primary-border);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
   cursor: pointer;
 }
 
@@ -1006,10 +1006,10 @@ p {
   justify-content: center;
   gap: 8px;
   padding: 0 16px;
-  border: 1px solid var(--accent-black);
+  border: 1px solid var(--btn-primary-border);
   border-radius: var(--radius-pill);
-  background: var(--accent-black);
-  color: var(--text-inverse);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
   font-size: 0.78rem;
   font-weight: 700;
   text-decoration: none;
@@ -1248,9 +1248,9 @@ p {
 
 .account-edit-button,
 .account-save-button {
-  border: 1px solid var(--accent-black);
-  background: var(--accent-black);
-  color: var(--text-inverse);
+  border: 1px solid var(--btn-primary-border);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
 }
 
 .account-edit-button {
@@ -1494,9 +1494,9 @@ p {
 }
 
 .account-modal-button-primary {
-  border-color: var(--accent-black);
-  background: var(--accent-black);
-  color: var(--text-inverse);
+  border-color: var(--btn-primary-border);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
 }
 
 .account-modal-button-primary:hover:not(:disabled) {
@@ -4271,6 +4271,21 @@ html[data-theme="dark"] {
   --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.28), 0 8px 24px -8px rgba(0, 0, 0, 0.45);
   --shadow-card: 0 2px 10px -2px rgba(0, 0, 0, 0.35), 0 12px 28px -8px rgba(0, 0, 0, 0.4);
   --shadow-hover: 0 16px 36px -10px rgba(0, 0, 0, 0.55);
+
+  /* Standard Button Tokens & Hover Presets (Dark Theme - Based on Hero Buttons 1 & 2) */
+  --btn-primary-bg: var(--accent-black);
+  --btn-primary-border: var(--accent-black);
+  --btn-primary-text: var(--text-inverse);
+  --btn-primary-hover-bg: #e4e4e7;
+  --btn-primary-hover-border: #e4e4e7;
+  --btn-primary-hover-text: var(--text-inverse);
+
+  --btn-secondary-bg: var(--bg-panel);
+  --btn-secondary-border: var(--border-strong);
+  --btn-secondary-text: var(--text-primary);
+  --btn-secondary-hover-bg: var(--bg-subtle);
+  --btn-secondary-hover-border: var(--border-strong);
+  --btn-secondary-hover-text: var(--text-primary);
 }
 
 html[data-theme="dark"] body {
@@ -4291,17 +4306,28 @@ html[data-theme="dark"] .account-panel {
 }
 
 html[data-theme="dark"] .auth-google-button,
-html[data-theme="dark"] .account-theme-toggle,
-html[data-theme="dark"] .account-logout,
 html[data-theme="dark"] .account-cancel-button {
+  border-color: var(--btn-secondary-border);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+}
+
+html[data-theme="dark"] .auth-google-button:hover,
+html[data-theme="dark"] .auth-google-button:focus-visible,
+html[data-theme="dark"] .account-cancel-button:hover,
+html[data-theme="dark"] .account-cancel-button:focus-visible {
+  border-color: var(--btn-secondary-hover-border);
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
+}
+
+html[data-theme="dark"] .account-theme-toggle {
   border-color: var(--border-strong);
   background-color: var(--bg-surface);
   color: var(--text-primary);
 }
 
-html[data-theme="dark"] .auth-google-button:hover,
-html[data-theme="dark"] .account-theme-toggle:hover,
-html[data-theme="dark"] .account-cancel-button:hover {
+html[data-theme="dark"] .account-theme-toggle:hover {
   background-color: var(--bg-panel);
 }
 
@@ -4431,9 +4457,11 @@ html[data-theme="dark"] .form-group textarea {
   color: var(--text-primary);
 }
 
-html[data-theme="dark"] .btn-secondary:hover {
-  background-color: var(--bg-subtle);
-  border-color: var(--border-strong);
+html[data-theme="dark"] .btn-secondary:hover,
+html[data-theme="dark"] .btn-secondary:focus-visible {
+  background-color: var(--btn-secondary-hover-bg);
+  border-color: var(--btn-secondary-hover-border);
+  color: var(--btn-secondary-hover-text);
 }
 
 html[data-theme="dark"] .form-group input::placeholder,
@@ -4517,10 +4545,10 @@ html[data-theme="dark"] .phone-btn {
 }
 html[data-theme="dark"] .btn-primary:hover,
 html[data-theme="dark"] .btn-primary:focus-visible {
-  background-color: var(--bg-panel);
-  border-color: var(--border-strong);
-  color: var(--text-primary);
-  box-shadow: var(--shadow-subtle);
+  background-color: var(--btn-primary-hover-bg);
+  border-color: var(--btn-primary-hover-border);
+  color: var(--btn-primary-hover-text);
+  box-shadow: none;
 }
 html[data-theme="dark"] .nav-link {
   color: var(--text-muted);
