@@ -1649,14 +1649,25 @@ p {
   letter-spacing: 0.08em;
 }
 
-.language-option:hover,
-.language-option.active {
+.language-option:hover {
   background: var(--bg-panel);
   color: var(--text-primary);
 }
 
 .language-option.active {
-  box-shadow: inset 2px 0 0 var(--accent-black);
+  background: var(--accent-black);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.language-option.active:hover {
+  background: #27272a;
+  color: #ffffff;
+}
+
+.language-option.active span {
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .theme-toggle {
