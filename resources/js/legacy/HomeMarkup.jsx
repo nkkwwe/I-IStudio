@@ -312,34 +312,14 @@ export default function HomeMarkup({ unreadChatCount = 0 }) {
               <span className="case-category" data-i18n="case_1_cat">Landing Page + Meta Ads</span>
               <span className="case-badge-metric" data-i18n="case_1_metric">-38% Lead Cost</span>
             </div>
-            <div className="device-mockup laptop-frame">
-              <div className="laptop-camera" />
-              <div className="laptop-screen">
-                <div className="screen-browser-nav">
-                  <div className="nav-dots">
-                    <span className="nav-dot red" />
-                    <span className="nav-dot yellow" />
-                    <span className="nav-dot green" />
-                  </div>
-                  <span className="nav-url">renovations-pro.com</span>
-                </div>
-                <div className="screen-content mockup-landing">
-                  <div className="mockup-hero-banner">
-                     <span className="m-hero-badge"><svg className="inline-svg" width={10} height={10} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> <span data-i18n="mock_turnkey">Turnkey Reno</span></span>
-                     <h5 data-i18n="mock_reno_title">Apartment Renovation in 30 Days</h5>
-                     <div className="m-hero-btn" data-i18n="mock_calculate">Calculate Quote</div>
-                  </div>
-                  <div className="mockup-lead-bubble">
-                    <span className="bubble-icon"><svg width={13} height={13} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg></span>
-                    <div className="bubble-info">
-                       <strong data-i18n="mock_new_lead">New Lead: +1 555...</strong>
-                       <span data-i18n="mock_reno_detail">2-Bed Apt Reno • $8.20 CAC</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="laptop-base" />
-            </div>
+            <img
+              className="case-preview-image"
+              src="/images/case-studies/renovation-leads.webp"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <div className="case-body">
             <div className="case-meta" data-i18n-html="case_1_meta">
@@ -378,41 +358,14 @@ export default function HomeMarkup({ unreadChatCount = 0 }) {
               <span className="case-category" data-i18n="case_2_cat">Website Redesign</span>
               <span className="case-badge-metric" data-i18n="case_2_metric">+160% Conversions</span>
             </div>
-            <div className="dual-devices-wrapper">
-              <div className="device-mockup laptop-frame mini-laptop">
-                <div className="laptop-camera" />
-                <div className="laptop-screen">
-                  <div className="screen-browser-nav">
-                    <div className="nav-dots"><span /><span /><span /></div>
-                    <span className="nav-url">apex-consulting.com</span>
-                  </div>
-                  <div className="screen-content mockup-b2b">
-                    <div className="mockup-b2b-header">
-                      <span className="m-logo">APEX.</span>
-                      <div className="m-nav-lines"><span /><span /><span /></div>
-                    </div>
-                    <div className="mockup-b2b-content">
-                       <span className="b2b-title" data-i18n="mock_strategic">Strategic Advisory</span>
-                      <div className="b2b-grid">
-                         <div className="b2b-card-mini" data-i18n="mock_financial">Financial</div>
-                         <div className="b2b-card-mini" data-i18n="mock_operations">Operations</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="laptop-base" />
-              </div>
-              <div className="device-mockup phone-frame">
-                <div className="phone-notch" />
-                <div className="phone-screen">
-                  <div className="phone-badge"><svg className="inline-svg" width={9} height={9} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg> 98/100</div>
-                  <div className="phone-card">
-                     <span data-i18n="mock_mobile_ready">Mobile Ready</span>
-                     <div className="phone-btn" data-i18n="mock_consult">Consult</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <img
+              className="case-preview-image"
+              src="/images/case-studies/consulting-redesign.webp"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <div className="case-body">
             <div className="case-meta" data-i18n-html="case_2_meta">
@@ -451,37 +404,14 @@ export default function HomeMarkup({ unreadChatCount = 0 }) {
               <span className="case-category" data-i18n="case_3_cat">Business Site + Google Ads</span>
               <span className="case-badge-metric" data-i18n="case_3_metric">3.9x ROAS</span>
             </div>
-            <div className="device-mockup laptop-frame">
-              <div className="laptop-camera" />
-              <div className="laptop-screen">
-                <div className="screen-browser-nav">
-                  <div className="nav-dots">
-                    <span className="nav-dot red" />
-                    <span className="nav-dot yellow" />
-                    <span className="nav-dot green" />
-                  </div>
-                  <span className="nav-url">machinery-fleet.com/catalog</span>
-                </div>
-                <div className="screen-content mockup-catalog">
-                  <div className="mockup-catalog-pills">
-                     <span className="cat-pill active" data-i18n="mock_excavators">Excavators</span>
-                     <span className="cat-pill" data-i18n="mock_cranes">Cranes</span>
-                     <span className="cat-pill" data-i18n="mock_dumpers">Dumpers</span>
-                  </div>
-                  <div className="mockup-catalog-cards">
-                    <div className="m-cat-card">
-                      <div className="m-cat-tag">CAT 320D</div>
-                      <span className="m-cat-price">$240 / day</span>
-                    </div>
-                    <div className="m-cat-card">
-                      <div className="m-cat-tag">Liebherr 50T</div>
-                      <span className="m-cat-price">$450 / day</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="laptop-base" />
-            </div>
+            <img
+              className="case-preview-image"
+              src="/images/case-studies/equipment-catalog.webp"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+            />
           </div>
           <div className="case-body">
             <div className="case-meta" data-i18n-html="case_3_meta">

@@ -2376,6 +2376,20 @@ p {
   align-items: center;
 }
 
+.case-preview-image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+  margin-top: 28px;
+  border: 1px solid rgba(9, 9, 11, 0.14);
+  border-radius: 14px;
+  background: #15171a;
+  box-shadow: 0 18px 28px -22px rgba(0, 0, 0, 0.72);
+}
+
 .case-badge-overlay {
   position: absolute;
   top: 14px;
@@ -4509,6 +4523,11 @@ html[data-theme="dark"] .case-badge-metric {
   background-color: var(--bg-panel);
   border: 1px solid var(--border);
   color: var(--text-primary);
+}
+
+html[data-theme="dark"] .case-preview-image {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 18px 28px -22px rgba(0, 0, 0, 0.95);
 }
 
 html[data-theme="dark"] .laptop-screen,
