@@ -433,10 +433,15 @@ p {
 }
 
 /* Authentication and account */
-.auth-page,
-.account-page {
+.auth-page {
   min-height: 100vh;
   background: var(--bg-body);
+  color: var(--text-primary);
+}
+
+.account-page {
+  min-height: 100vh;
+  background: var(--bg-subtle);
   color: var(--text-primary);
 }
 
@@ -926,10 +931,10 @@ p {
 .account-panel {
   min-height: 240px;
   padding: 26px;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border);
   border-radius: 20px;
   background: var(--bg-surface);
-  box-shadow: var(--shadow-subtle);
+  box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.04), 0 8px 24px -4px rgba(0, 0, 0, 0.04);
 }
 
 .account-panel-wide {
@@ -1060,7 +1065,7 @@ p {
   justify-content: space-between;
   gap: 28px;
   padding-bottom: 34px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border);
 }
 
 .account-history-topbar h1 {
@@ -1097,7 +1102,7 @@ p {
   justify-content: space-between;
   gap: 28px;
   padding-bottom: 34px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border);
 }
 
 .admin-topbar h1 {
@@ -1127,14 +1132,16 @@ p {
   display: inline-flex;
   min-height: 38px;
   align-items: center;
-  padding: 0 13px;
-  border: 1px solid var(--border-light);
+  padding: 0 16px;
+  border: 1px solid var(--btn-secondary-border);
   border-radius: var(--radius-pill);
-  color: var(--text-secondary);
-  font-size: 0.76rem;
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  font-size: 0.78rem;
   font-weight: 700;
   text-decoration: none;
-  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .admin-back-link:hover {
@@ -1208,7 +1215,7 @@ p {
   flex-wrap: wrap;
   gap: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border);
 }
 
 .account-details dt {
@@ -1297,9 +1304,10 @@ p {
 }
 
 .account-cancel-button {
-  border: 1px solid var(--border-light);
-  background: transparent;
-  color: var(--text-secondary);
+  border: 1px solid var(--btn-secondary-border);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .account-cancel-button:hover {
@@ -1417,24 +1425,25 @@ p {
 
 .account-modal-close {
   display: inline-flex;
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
   align-items: center;
   justify-content: center;
   padding: 0;
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--btn-secondary-border);
   border-radius: 50%;
-  background: transparent;
-  color: var(--text-muted);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
   cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .account-modal-close:hover {
-  border-color: var(--border-strong);
-  background: var(--bg-panel);
-  color: var(--text-primary);
+  border-color: var(--btn-secondary-hover-border);
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
   box-shadow: var(--shadow-subtle);
 }
 
@@ -1502,9 +1511,10 @@ p {
 }
 
 .account-modal-button-secondary {
-  border-color: var(--border-light);
-  background: transparent;
-  color: var(--text-secondary);
+  border: 1px solid var(--btn-secondary-border);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 .account-modal-button-secondary:hover:not(:disabled) {
@@ -3223,24 +3233,25 @@ p {
   position: absolute;
   top: 18px;
   right: 18px;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--bg-surface);
-  color: var(--text-secondary);
+  border: 1px solid var(--btn-secondary-border);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   z-index: 12;
 }
 
 .modal-close-btn:hover {
-  background: var(--bg-panel);
-  color: var(--text-primary);
-  border-color: var(--border-strong);
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
+  border-color: var(--btn-secondary-hover-border);
 }
 
 .modal-header {
@@ -5269,7 +5280,7 @@ html[data-theme="dark"] .inquiry-form-card {
   justify-content: flex-end;
   margin-top: 20px;
   padding-top: 16px;
-  border-top: 1px solid var(--border-light);
+  border-top: 1px solid var(--border);
 }
 
 .admin-chat-button {
@@ -5277,14 +5288,15 @@ html[data-theme="dark"] .inquiry-form-card {
   min-height: 38px;
   align-items: center;
   gap: 8px;
-  padding: 0 14px;
-  border: 1px solid var(--border-strong);
+  padding: 0 16px;
+  border: 1px solid var(--btn-secondary-border);
   border-radius: var(--radius-pill);
-  background: var(--bg-panel);
-  color: var(--text-primary);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
   cursor: pointer;
   font: 700 0.75rem var(--font-sans);
-  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .admin-chat-button:hover,
@@ -5367,18 +5379,19 @@ html[data-theme="dark"] .inquiry-form-card {
   height: 38px;
   flex: 0 0 38px;
   place-items: center;
-  border: 1px solid var(--border-strong);
+  border: 1px solid var(--btn-secondary-border);
   border-radius: 50%;
-  background: var(--bg-panel);
-  color: var(--text-secondary);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
   cursor: pointer;
-  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .inquiry-chat-close:hover {
-  border-color: var(--text-primary);
-  background: var(--bg-surface);
-  color: var(--text-primary);
+  border-color: var(--btn-secondary-hover-border);
+  background-color: var(--btn-secondary-hover-bg);
+  color: var(--btn-secondary-hover-text);
 }
 
 .inquiry-chat-messages {
@@ -5723,7 +5736,7 @@ html[data-theme="dark"] .inquiry-form-card {
 .admin-user-row {
   align-items: center;
   padding: 17px 0;
-  border-bottom: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border);
 }
 
 .admin-user-row:last-child {
