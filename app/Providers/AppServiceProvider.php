@@ -22,6 +22,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        RateLimiter::for('login', function (Request $request): array {
+            $email = mb_strtolower(trim((string) $request->input('email'))) ?: 'missing';
+
+            return [
+                Limit::perMinute(30)->by('login-ip:'.$request->ip()),
+                Limit::perMinute(10)->by('login-email:'.$email),
+            ];
+        });
+
         RateLimiter::for('user-email-code', function (Request $request): array {
             $email = mb_strtolower(trim((string) $request->input('email'))) ?: 'missing';
 
