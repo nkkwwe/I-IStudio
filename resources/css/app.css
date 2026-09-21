@@ -4628,6 +4628,11 @@ html[data-theme="dark"] .form-group textarea:focus {
   box-shadow: 0 0 0 3px rgba(244, 244, 245, 0.1);
 }
 
+html[data-theme="dark"] .inquiry-chat-error,
+html[data-theme="dark"] .inquiry-chat-form-error {
+  color: #f28b8b;
+}
+
 html[data-theme="dark"] .nav-menu {
   background-color: var(--bg-surface);
   border-bottom-color: var(--border);
@@ -5668,7 +5673,7 @@ html[data-theme="dark"] .inquiry-form-card {
   padding: 10px 14px 11px;
   border: 1px solid var(--border-strong);
   border-radius: 17px 17px 17px 5px;
-  background: #f0f1f3;
+  background: var(--bg-panel);
   color: var(--text-primary);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
@@ -5720,7 +5725,7 @@ html[data-theme="dark"] .inquiry-form-card {
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: #ffffff;
+  background: var(--bg-surface);
   cursor: zoom-in;
 }
 
