@@ -4947,16 +4947,11 @@ html[data-theme="dark"] .inquiry-form-card {
     grid-template-columns: 1fr;
   }
 
-  .account-admin-panel {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 12px;
-  }
-
+  .account-admin-panel,
   .account-history-panel {
     align-items: flex-start;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
   }
 
   .account-history-topbar {

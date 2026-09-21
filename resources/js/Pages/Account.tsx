@@ -287,11 +287,7 @@ export default function Account() {
               <span>{copy.account.viewAllBriefs}</span>
               <ChatUnreadBadge count={unreadChatCount} />
             </Link>
-            <div className="account-history-content">
-              <span className="account-panel-label">{copy.account.projectHistory}</span>
-              <h2>{copy.account.myProjectBriefs}</h2>
-              <p>{copy.account.openEveryTask}</p>
-            </div>
+            <p className="account-admin-description">{copy.account.openEveryTask}</p>
           </article>
 
           <article className="account-panel account-panel-danger">
