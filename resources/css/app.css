@@ -6023,25 +6023,29 @@ html[data-theme="dark"] .account-brief-status-row {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-html[data-theme="dark"] .account-brief-status-new {
+html[data-theme="dark"] .account-brief-status-new,
+html[data-theme="dark"] .admin-status-new {
   border-color: rgba(224, 163, 74, 0.34);
   background: rgba(224, 163, 74, 0.1);
   color: #e0a34a;
 }
 
-html[data-theme="dark"] .account-brief-status-ready_to_start {
+html[data-theme="dark"] .account-brief-status-ready_to_start,
+html[data-theme="dark"] .admin-status-ready_to_start {
   border-color: rgba(126, 166, 215, 0.32);
   background: rgba(126, 166, 215, 0.1);
   color: #8eb8e7;
 }
 
-html[data-theme="dark"] .account-brief-status-in_progress {
+html[data-theme="dark"] .account-brief-status-in_progress,
+html[data-theme="dark"] .admin-status-in_progress {
   border-color: rgba(171, 135, 218, 0.32);
   background: rgba(171, 135, 218, 0.1);
   color: #b391df;
 }
 
-html[data-theme="dark"] .account-brief-status-completed {
+html[data-theme="dark"] .account-brief-status-completed,
+html[data-theme="dark"] .admin-status-completed {
   border-color: rgba(102, 194, 143, 0.3);
   background: rgba(102, 194, 143, 0.1);
   color: #79d39d;
@@ -6375,16 +6379,23 @@ html[data-theme="dark"] .account-delete-button {
 .admin-status {
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
-  padding: 0 10px;
+  justify-content: center;
+  min-height: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  padding: 1px 12px 0;
   border: 1px solid rgba(44, 138, 89, 0.28);
   border-radius: var(--radius-pill);
   background: rgba(44, 138, 89, 0.08);
   color: #278252;
   font-family: var(--font-mono);
   font-size: 0.66rem;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-align: center;
   text-transform: uppercase;
+  box-sizing: border-box;
 }
 
 .admin-status-control {
