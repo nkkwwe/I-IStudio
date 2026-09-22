@@ -5589,6 +5589,124 @@ html[data-theme="dark"] .inquiry-form-card {
   }
 }
 
+/* Dark theme: dim case mockups so the visuals sit inside the page palette. */
+html[data-theme="dark"] .case-card-compact h3 {
+  color: #dfe3e9;
+}
+
+html[data-theme="dark"] .case-card-compact .case-summary,
+html[data-theme="dark"] .case-card-compact .case-meta,
+html[data-theme="dark"] .case-card-compact .case-metric span {
+  color: #8f97a3;
+}
+
+html[data-theme="dark"] .case-card-compact .case-summary strong,
+html[data-theme="dark"] .case-card-compact .case-metric strong,
+html[data-theme="dark"] .case-card-compact .case-link {
+  color: #cbd2dc;
+}
+
+html[data-theme="dark"] .case-metric-overlay strong {
+  color: #d3d9e2;
+  opacity: 0.92;
+}
+
+html[data-theme="dark"] .case-metric-overlay span {
+  color: #8993a0;
+}
+
+html[data-theme="dark"] .case-visual-ecommerce {
+  background: linear-gradient(135deg, #18212c 0%, #202b39 100%);
+}
+
+html[data-theme="dark"] .case-visual-business {
+  background: linear-gradient(135deg, #201f2e 0%, #2b293b 100%);
+}
+
+html[data-theme="dark"] .case-visual-ads {
+  background: linear-gradient(135deg, #182926 0%, #213832 100%);
+}
+
+html[data-theme="dark"] .case-visual-window {
+  border-color: #3b4552;
+  background: #1b2027;
+  box-shadow: 0 18px 30px -20px rgba(0, 0, 0, 0.92);
+}
+
+html[data-theme="dark"] .case-window-bar {
+  background: #252b33;
+}
+
+html[data-theme="dark"] .case-window-bar span {
+  background: #737d8b;
+}
+
+html[data-theme="dark"] .case-window-line {
+  background: #697587;
+}
+
+html[data-theme="dark"] .case-window-line-long {
+  background: #b3bdca;
+}
+
+html[data-theme="dark"] .case-window-blocks span {
+  background: #3a4654;
+}
+
+html[data-theme="dark"] .case-window-blocks span:nth-child(2) {
+  background: #4a6383;
+}
+
+html[data-theme="dark"] .case-window-blocks span:nth-child(3) {
+  background: #3f665a;
+}
+
+html[data-theme="dark"] .case-window-chart {
+  border-bottom-color: #3b4552;
+}
+
+html[data-theme="dark"] .case-window-chart i,
+html[data-theme="dark"] .case-window-chart i:nth-child(2),
+html[data-theme="dark"] .case-window-chart i:nth-child(3),
+html[data-theme="dark"] .case-window-chart i:nth-child(4),
+html[data-theme="dark"] .case-window-chart i:nth-child(5) {
+  background: #6276ad;
+}
+
+html[data-theme="dark"] .case-window-chart i:nth-child(2) {
+  background: #5c709f;
+}
+
+html[data-theme="dark"] .case-window-chart i:nth-child(3) {
+  background: #536895;
+}
+
+html[data-theme="dark"] .case-window-chart i:nth-child(4) {
+  background: #4b6090;
+}
+
+html[data-theme="dark"] .case-window-chart i:nth-child(5) {
+  background: #435787;
+}
+
+html[data-theme="dark"] .case-device-2 {
+  border-color: #101319;
+  background: #15191f;
+  box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.95);
+}
+
+html[data-theme="dark"] .case-device-2::before {
+  background: #697383;
+}
+
+html[data-theme="dark"] .case-device-2::after {
+  background: #596473;
+}
+
+html[data-theme="dark"] .case-device-base {
+  background: #56606d;
+}
+
 /* Form-only route: no site navigation or duplicated landing-page content. */
 .inquiry-form-only {
   width: min(100%, 960px);
