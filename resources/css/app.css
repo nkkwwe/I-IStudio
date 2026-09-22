@@ -1745,10 +1745,10 @@ p {
   transition-delay: 0.03s;
 }
 
-/* DROPDOWN MENU: emerges after the button expands with delightful animation */
+/* DROPDOWN MENU: smooth and simple transition as before */
 .language-switcher:not(.mobile-language-switcher) .language-menu {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 8px);
   right: 0;
   min-width: 174px;
   padding: 6px;
@@ -1757,65 +1757,20 @@ p {
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--bg-surface);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-card);
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-8px) scale(0.94);
+  transform: translateY(-6px) scale(0.98);
   transform-origin: top right;
   pointer-events: none;
-  transition: opacity 0.15s ease, transform 0.16s ease, visibility 0.15s;
+  transition: opacity 0.2s ease, transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
 }
 
 .language-switcher:not(.mobile-language-switcher).open .language-menu {
   opacity: 1;
   visibility: visible;
+  transform: translateY(0) scale(1);
   pointer-events: auto;
-  animation: headerLanguageMenuPop 0.26s cubic-bezier(0.16, 1, 0.3, 1) 0.11s both;
-}
-
-@keyframes headerLanguageMenuPop {
-  0% {
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px) scale(0.92);
-  }
-  1% {
-    visibility: visible;
-  }
-  65% {
-    opacity: 1;
-    transform: translateY(2px) scale(1.01);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    visibility: visible;
-  }
-}
-
-.language-switcher:not(.mobile-language-switcher).open .language-option {
-  animation: headerLanguageOptionIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.language-switcher:not(.mobile-language-switcher).open .language-option:nth-child(1) {
-  animation-delay: 0.13s;
-}
-.language-switcher:not(.mobile-language-switcher).open .language-option:nth-child(2) {
-  animation-delay: 0.17s;
-}
-.language-switcher:not(.mobile-language-switcher).open .language-option:nth-child(3) {
-  animation-delay: 0.21s;
-}
-
-@keyframes headerLanguageOptionIn {
-  from {
-    opacity: 0;
-    transform: translateY(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* Fallback base styles for trigger/chevron in mobile drawer */
