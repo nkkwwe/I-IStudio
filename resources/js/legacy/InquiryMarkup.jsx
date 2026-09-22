@@ -20,7 +20,6 @@ export default function InquiryMarkup({
       </a>
       <nav className="nav-menu" id="navMenu">
         <a href="/#hero" className="nav-link" data-i18n="nav_home">Home</a>
-        <a href="/#solutions" className="nav-link" data-i18n="nav_solutions">Solutions</a>
         <a href="/#services" className="nav-link" data-i18n="nav_services">Services</a>
         <a href="/#cases" className="nav-link" data-i18n="nav_cases">Cases</a>
         <a href="/#process" className="nav-link" data-i18n="nav_process">How We Work</a>
