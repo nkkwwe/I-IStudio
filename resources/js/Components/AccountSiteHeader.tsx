@@ -4,7 +4,7 @@ import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 type AccountSiteHeaderProps = {
   isDark: boolean;
   onToggleTheme: () => void;
-  onLogout: () => void;
+  onLogout?: () => void;
 };
 
 export default function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: AccountSiteHeaderProps) {
@@ -43,6 +43,9 @@ export default function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: A
     window.localStorage.setItem('ii_studio_language', nextLanguage);
     document.documentElement.lang = nextLanguage;
     window.dispatchEvent(new CustomEvent('ii_studio_language_change', { detail: nextLanguage }));
+    if (typeof (window as any).setLanguage === 'function') {
+      (window as any).setLanguage(nextLanguage);
+    }
   };
 
   return (
@@ -77,9 +80,11 @@ export default function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: A
             </div>
           </div>
 
-          <button type="button" className="account-logout" onClick={onLogout} aria-label={copy.common.signOut} title={copy.common.signOut}>
-            <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 5H6.75A1.75 1.75 0 0 0 5 6.75v10.5A1.75 1.75 0 0 0 6.75 19H10" /><path d="M13 12h7" /><path d="m17 8 4 4-4 4" /></svg>
-          </button>
+          {onLogout && (
+            <button type="button" className="account-logout" onClick={onLogout} aria-label={copy.common.signOut} title={copy.common.signOut}>
+              <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 5H6.75A1.75 1.75 0 0 0 5 6.75v10.5A1.75 1.75 0 0 0 6.75 19H10" /><path d="M13 12h7" /><path d="m17 8 4 4-4 4" /></svg>
+            </button>
+          )}
         </div>
       </div>
     </header>

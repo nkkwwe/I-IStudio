@@ -36,6 +36,18 @@ export default function Inquiry() {
   const copy = getUiCopy(language);
   const unreadChatCount = useChatUnreadCount(auth?.unread_chat_count ?? 0, Boolean(auth?.user));
   const [activeService, setActiveService] = useState<ServiceKey>(getInitialService);
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    setIsDark(document.documentElement.dataset.theme === 'dark');
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = isDark ? 'light' : 'dark';
+    document.documentElement.dataset.theme = nextTheme;
+    window.localStorage.setItem('ii_studio_theme', nextTheme);
+    setIsDark(nextTheme === 'dark');
+  };
 
   useEffect(() => {
     document.body.className = 'inquiry-page-body inquiry-form-only-body';
@@ -58,9 +70,11 @@ export default function Inquiry() {
         signInLabel={copy.auth.pageSignIn}
         inquirySubmitted={Boolean(flash.inquiry_submitted)}
         inquiryTicket={flash.inquiry_ticket ?? ''}
-         inquiryServiceLabel={flash.inquiry_service ? copy.services[flash.inquiry_service] : ''}
+        inquiryServiceLabel={flash.inquiry_service ? copy.services[flash.inquiry_service] : ''}
         inquiryBudget={flash.inquiry_budget ?? ''}
         unreadChatCount={unreadChatCount}
+        isDark={isDark}
+        onToggleTheme={toggleTheme}
       />
     </>
   );

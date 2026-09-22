@@ -29,6 +29,7 @@ export function initLegacyApp() {
    1. Theme Switcher
    ========================================================================== */
 function initThemeSwitcher() {
+  if (document.querySelector('.account-site-header')) return;
   const languageSwitcher = document.querySelector('.language-switcher');
   if (!languageSwitcher) return;
 
@@ -62,10 +63,8 @@ function initThemeSwitcher() {
   applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
 }
 function initLanguageSwitcher() {
-  const options = document.querySelectorAll('.language-option');
-  const switchers = Array.from(document.querySelectorAll('.language-switcher'));
-  if (!options.length || !switchers.length) return;
-
+  const options = document.querySelectorAll('.site-header:not(.account-site-header) .language-option');
+  const switchers = Array.from(document.querySelectorAll('.site-header:not(.account-site-header) .language-switcher'));
   const supportedLanguages = ['en', 'uk', 'ro'];
   const languageLabels = { en: 'EN', uk: 'UK', ro: 'RO' };
   const savedLanguage = localStorage.getItem('ii_studio_language');
