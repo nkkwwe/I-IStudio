@@ -1248,9 +1248,9 @@ p {
 
 @media (hover: hover) and (pointer: fine) {
   .admin-section-nav-link:hover {
-    border-color: var(--text-primary);
-    background: var(--text-primary);
-    color: var(--text-inverse);
+    border-color: var(--border-strong);
+    background: var(--bg-subtle);
+    color: var(--text-primary);
   }
 }
 .admin-section-nav-link.active {
