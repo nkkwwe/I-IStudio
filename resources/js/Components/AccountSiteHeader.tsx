@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 
 type AccountSiteHeaderProps = {
@@ -12,6 +12,31 @@ export default function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: A
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
   const languageLabels = { en: 'EN', uk: 'UK', ro: 'RO' } as const;
+  const switcherRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!languageOpen) return;
+
+    const handleClickOutside = (event: MouseEvent) => {
+      if (switcherRef.current && !switcherRef.current.contains(event.target as Node)) {
+        setLanguageOpen(false);
+      }
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setLanguageOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [languageOpen]);
 
   const selectLanguage = (nextLanguage: string) => {
     setLanguageOpen(false);
@@ -40,7 +65,7 @@ export default function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: A
             <svg className="theme-icon theme-icon-moon" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z" /></svg>
           </button>
 
-          <div className={`language-switcher account-language-switcher${languageOpen ? ' open' : ''}`}>
+          <div ref={switcherRef} className={`language-switcher account-language-switcher${languageOpen ? ' open' : ''}`}>
             <button type="button" className="language-trigger" onClick={() => setLanguageOpen((open) => !open)} aria-haspopup="listbox" aria-expanded={languageOpen} aria-label={`${copy.common.availableLanguages}: ${languageLabels[language]}`}>
               <span className="language-current">{languageLabels[language]}</span>
               <svg className="language-chevron" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
