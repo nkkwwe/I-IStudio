@@ -37,12 +37,12 @@ export default function Auth() {
           )}
 
           <a className="auth-google-button" href="/auth/google">
-            <span className="google-mark" aria-hidden="true">G</span>
+            <img className="google-mark" src="/images/google.svg" alt="" aria-hidden="true" />
             {copy.auth.continueWithGoogle}
           </a>
 
           <div className="auth-google-note">
-            <span aria-hidden="true">✦</span>
+            <img className="google-note-mark" src="/images/google.svg" alt="" aria-hidden="true" />
             {copy.auth.noPasswordNote}
           </div>
         </section>

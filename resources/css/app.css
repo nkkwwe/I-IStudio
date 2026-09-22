@@ -476,6 +476,8 @@ p {
 
 /* Authentication and account */
 .auth-page {
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
   background: var(--bg-body);
   color: var(--text-primary);
@@ -502,17 +504,27 @@ p {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
-  padding: 48px 0;
+  gap: 26px;
+  padding: 56px 0;
 }
 
 .auth-brand {
+  display: inline-flex;
+  align-items: baseline;
   color: var(--text-primary);
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: -0.04em;
   text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .auth-brand:hover {
+    opacity: 0.82;
+    transform: translateY(-1px);
+  }
 }
 
 .auth-brand span {
@@ -532,10 +544,11 @@ p {
 }
 
 .auth-card {
+  position: relative;
   width: min(100%, 470px);
   min-width: 0;
   padding: clamp(28px, 5vw, 48px);
-  border: 1px solid var(--border-light);
+  border: 1px solid var(--border);
   border-radius: 26px;
   background: var(--bg-surface);
   box-shadow: var(--shadow-card);
@@ -591,7 +604,7 @@ p {
   font-size: 0.88rem;
   font-weight: 700;
   text-decoration: none;
-  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .auth-google-button {
@@ -605,7 +618,14 @@ p {
     border-color: var(--btn-secondary-hover-border);
     background-color: var(--btn-secondary-hover-bg);
     color: var(--btn-secondary-hover-text);
+    box-shadow: var(--shadow-subtle);
+    transform: translateY(-1px);
   }
+}
+
+.auth-google-button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent-blue) 30%, transparent);
+  outline-offset: 3px;
 }
 
 .auth-google-note {
@@ -618,23 +638,19 @@ p {
   line-height: 1.5;
 }
 
-.auth-google-note span {
-  color: var(--text-primary);
-  font-size: 0.9rem;
+.google-mark {
+  height: 22px;
+  width: 22px;
+  flex: 0 0 22px;
+  object-fit: contain;
 }
 
-.google-mark {
-  display: grid;
-  width: 22px;
-  height: 22px;
-  place-items: center;
-  border-radius: 50%;
-  background: #fff;
-  color: #4285f4;
-  font-family: Arial, sans-serif;
-  font-size: 0.95rem;
-  font-weight: 800;
-  box-shadow: 0 0 0 1px var(--border-light);
+.google-note-mark {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  margin-top: 2px;
+  object-fit: contain;
 }
 
 .auth-divider {
