@@ -1671,9 +1671,13 @@ p {
 .language-switcher:not(.mobile-language-switcher) .language-trigger {
   width: 44px;
   min-width: 44px;
+  flex: 0 0 auto;
   height: 44px;
   min-height: 44px;
-  padding: 0;
+  padding: 0 0 0 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
   gap: 0;
   border: 1px solid var(--border);
   border-radius: 9999px;
@@ -1687,62 +1691,62 @@ p {
   cursor: pointer;
   overflow: hidden;
   box-sizing: border-box;
-  transform: scale(1);
-  transition: width 0.26s cubic-bezier(0.16, 1, 0.3, 1),
-              min-width 0.26s cubic-bezier(0.16, 1, 0.3, 1),
-              padding 0.26s cubic-bezier(0.16, 1, 0.3, 1),
+  -webkit-font-smoothing: antialiased;
+  transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
               gap 0.2s ease,
-              transform 0.28s cubic-bezier(0.34, 1.25, 0.64, 1),
               border-color 0.2s ease,
               background-color 0.2s ease,
-              box-shadow 0.22s ease,
+              box-shadow 0.2s ease,
               color 0.2s ease;
 }
 
 .language-switcher:not(.mobile-language-switcher) .language-current {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  min-width: 18px;
   line-height: 1;
+  text-align: center;
   text-transform: uppercase;
   flex-shrink: 0;
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
 }
 
 /* Chevron hidden in closed state */
 .language-switcher:not(.mobile-language-switcher) .language-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 0;
   height: 13px;
   opacity: 0;
-  margin-left: 0;
+  margin: 0;
   pointer-events: none;
   flex-shrink: 0;
   color: var(--text-muted);
-  transform: translateX(-5px) scale(0.4) rotate(-90deg);
+  transform: translateX(-4px) rotate(0deg);
   transition: opacity 0.18s ease,
-              transform 0.26s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
               width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
-              margin-left 0.22s cubic-bezier(0.16, 1, 0.3, 1),
               color 0.2s ease;
 }
 
-/* OPEN ANIMATION: button smoothly slightly expands & scales, arrow appears */
+/* OPEN ANIMATION: button smoothly expands into capsule, arrow appears */
 .language-switcher:not(.mobile-language-switcher).open .language-trigger {
   width: 62px;
   min-width: 62px;
-  padding: 0 9px 0 12px;
   gap: 4px;
   border-color: var(--border-strong);
   background: var(--bg-panel);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12), var(--shadow-subtle);
-  transform: scale(1.05);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), var(--shadow-subtle);
 }
 
 .language-switcher:not(.mobile-language-switcher).open .language-chevron {
   width: 13px;
   opacity: 1;
-  margin-left: 2px;
   color: var(--text-secondary);
-  transform: translateX(0) scale(1) rotate(180deg);
-  transition-delay: 0.03s;
+  transform: translateX(0) rotate(180deg);
 }
 
 /* DROPDOWN MENU: smooth and simple transition as before */
@@ -4197,17 +4201,26 @@ p {
     font-size: 0.7rem;
   }
 
-  .language-trigger {
+  .language-switcher:not(.mobile-language-switcher) .language-trigger {
     min-width: 40px;
     width: 40px;
     height: 40px;
     min-height: 40px;
-    padding-inline: 0;
+    padding: 0 0 0 11px;
     font-size: 0.68rem;
+  }
+
+  .language-switcher:not(.mobile-language-switcher).open .language-trigger {
+    width: 58px;
+    min-width: 58px;
   }
 
   .language-chevron {
     display: none;
+  }
+
+  .language-switcher:not(.mobile-language-switcher).open .language-chevron {
+    display: inline-flex;
   }
 
   .mobile-toggle {
