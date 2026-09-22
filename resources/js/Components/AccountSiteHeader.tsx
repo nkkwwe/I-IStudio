@@ -1,13 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
+import ChatUnreadBadge from './ChatUnreadBadge';
 
 type AccountSiteHeaderProps = {
   isDark: boolean;
   onToggleTheme: () => void;
   onLogout?: () => void;
+  showProfile?: boolean;
+  isAuthenticated?: boolean;
+  unreadChatCount?: number;
 };
 
-export default function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: AccountSiteHeaderProps) {
+export default function AccountSiteHeader({
+  isDark,
+  onToggleTheme,
+  onLogout,
+  showProfile = false,
+  isAuthenticated = false,
+  unreadChatCount = 0,
+}: AccountSiteHeaderProps) {
   const [languageOpen, setLanguageOpen] = useState(false);
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
@@ -63,6 +74,23 @@ export default function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: A
         </a>
 
         <div className="header-actions">
+          {showProfile && (
+            <a
+              href={isAuthenticated ? '/account' : '/login'}
+              className="account-header-link"
+              aria-label={isAuthenticated ? copy.common.account : copy.auth.pageSignIn}
+              title={isAuthenticated ? copy.common.account : copy.auth.pageSignIn}
+            >
+              <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx={12} cy={8} r="3.2" />
+                <path d="M5.5 20c.8-3.2 3.1-5 6.5-5s5.7 1.8 6.5 5" />
+              </svg>
+              {Boolean(unreadChatCount && unreadChatCount > 0) && (
+                <ChatUnreadBadge count={unreadChatCount} />
+              )}
+            </a>
+          )}
+
           <button type="button" className="theme-toggle" onClick={onToggleTheme} aria-label={isDark ? copy.common.enableLightTheme : copy.common.enableDarkTheme}>
             <svg className="theme-icon theme-icon-sun" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx={12} cy={12} r="3.5" /><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" /></svg>
             <svg className="theme-icon theme-icon-moon" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z" /></svg>

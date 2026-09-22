@@ -15,7 +15,13 @@ export default function InquiryMarkup({
 }) {
   return (
     <div className="react-page-root">
-      <AccountSiteHeader isDark={isDark} onToggleTheme={onToggleTheme} />
+      <AccountSiteHeader
+        isDark={isDark}
+        onToggleTheme={onToggleTheme}
+        showProfile={true}
+        isAuthenticated={isAuthenticated}
+        unreadChatCount={unreadChatCount}
+      />
       <main className="inquiry-form-only">
     <section className="inquiry-form-card inquiry-form-only-card" aria-labelledby="inquiryPageTitle">
       <div className="inquiry-form-header">
