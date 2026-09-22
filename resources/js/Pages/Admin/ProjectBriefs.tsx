@@ -2,7 +2,7 @@ import { router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import InquiryChatModal from '../../Components/InquiryChatModal';
-import AdminShell, { formatDate, type Inquiry } from './AdminShell';
+import AdminShell, { formatDate, formatBudget, type Inquiry } from './AdminShell';
 import AdminStatusSelect from './AdminStatusSelect';
 
 type PageProps = {
@@ -62,7 +62,7 @@ export default function ProjectBriefs() {
               {(inquiry.contact || inquiry.budget) && (
                 <div className="admin-inquiry-details">
                   {inquiry.contact && <span><b>{copy.admin.contact}</b>{inquiry.contact}</span>}
-                  {inquiry.budget && <span><b>{copy.admin.budget}</b>{inquiry.budget}</span>}
+                  {inquiry.budget && <span><b>{copy.admin.budget}</b>{formatBudget(inquiry.budget)}</span>}
                 </div>
               )}
               <div className="admin-inquiry-actions">

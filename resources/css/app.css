@@ -6549,6 +6549,7 @@ html[data-theme="dark"] .account-delete-button {
 .admin-inquiry-meta {
   align-items: center;
   flex-wrap: wrap;
+  gap: 12px 20px;
   margin-top: 20px;
   padding-top: 15px;
   border-top: 1px solid var(--border-light);
@@ -6558,6 +6559,51 @@ html[data-theme="dark"] .account-delete-button {
 
 .admin-inquiry-meta strong {
   color: var(--text-primary);
+}
+
+.admin-inquiry-meta-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  min-width: 0;
+}
+
+.admin-inquiry-meta-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.admin-inquiry-meta-divider {
+  color: var(--border-strong);
+  margin-right: 6px;
+  font-weight: 300;
+  user-select: none;
+}
+
+.admin-inquiry-meta-label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.admin-inquiry-meta-value {
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.admin-inquiry-date {
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .admin-inquiry-comment {
