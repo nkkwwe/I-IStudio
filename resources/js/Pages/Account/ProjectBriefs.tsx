@@ -1,8 +1,9 @@
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import ChatUnreadBadge, { fetchChatUnreadCounts } from '../../Components/ChatUnreadBadge';
 import InquiryChatModal from '../../Components/InquiryChatModal';
+import AccountSiteHeader from '../../Components/AccountSiteHeader';
 import { formatDate, type Inquiry } from '../Admin/AdminShell';
 
 type PageProps = {
@@ -15,6 +16,19 @@ export default function AccountProjectBriefs() {
   const copy = getUiCopy(language);
   const [inquiries, setInquiries] = useState(initialInquiries);
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
+  const [isDark, setIsDark] = useState(false);
+  const logoutForm = useForm({});
+
+  useEffect(() => {
+    setIsDark(document.documentElement.dataset.theme === 'dark');
+  }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = isDark ? 'light' : 'dark';
+    document.documentElement.dataset.theme = nextTheme;
+    window.localStorage.setItem('ii_studio_theme', nextTheme);
+    setIsDark(nextTheme === 'dark');
+  };
 
   useEffect(() => {
     setInquiries(initialInquiries);
@@ -63,6 +77,7 @@ export default function AccountProjectBriefs() {
   return (
     <>
       <Head title={copy.account.myProjectBriefs} />
+      <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => logoutForm.post('/logout')} />
       <main className="account-page account-history-page">
         <div className="account-shell">
           <div className="account-history-topbar">

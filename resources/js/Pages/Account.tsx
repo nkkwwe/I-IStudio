@@ -2,6 +2,7 @@ import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import ChatUnreadBadge, { useChatUnreadCount } from '../Components/ChatUnreadBadge';
+import AccountSiteHeader from '../Components/AccountSiteHeader';
 
 type User = {
   id: number;
@@ -17,7 +18,16 @@ type PageProps = {
     user: User;
     unread_chat_count?: number;
   };
+  inquiries?: AccountBrief[];
   flash?: { profile_updated?: boolean };
+};
+
+type AccountBrief = {
+  id: number;
+  ticket: string;
+  service_type: string;
+  status: string;
+  created_at?: string | null;
 };
 
 type AccountModalProps = {
@@ -28,96 +38,6 @@ type AccountModalProps = {
   danger?: boolean;
   onClose: () => void;
 };
-
-type AccountSiteHeaderProps = {
-  isDark: boolean;
-  onToggleTheme: () => void;
-  onLogout: () => void;
-};
-
-function AccountSiteHeader({ isDark, onToggleTheme, onLogout }: AccountSiteHeaderProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [languageOpen, setLanguageOpen] = useState(false);
-  const language = useSiteLanguage();
-  const copy = getUiCopy(language);
-  const languageLabels = { en: 'EN', uk: 'UK', ro: 'RO' } as const;
-
-  const selectLanguage = (nextLanguage: string) => {
-    setLanguageOpen(false);
-    window.localStorage.setItem('ii_studio_language', nextLanguage);
-    document.documentElement.lang = nextLanguage;
-    window.dispatchEvent(new CustomEvent('ii_studio_language_change', { detail: nextLanguage }));
-  };
-
-  return (
-    <header className="site-header account-site-header">
-      <div className="container header-container">
-        <a href="/#hero" className="logo" onClick={() => setMobileMenuOpen(false)}>
-          <span className="logo-symbol">
-            <svg width={24} height={24} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x={2} y={2} width={20} height={20} rx={6} fill="#09090b" />
-              <path d="M7 7V17M17 7V17M10.5 13.5C11.2 12.8 12.8 11.2 13.5 10.5" stroke="#ffffff" strokeWidth={2} strokeLinecap="round" />
-              <circle cx={12} cy={12} r="1.5" fill="#ffffff" />
-            </svg>
-          </span>
-          <span className="logo-text">I&amp;I<span className="logo-sub">Studio</span></span>
-        </a>
-
-        <nav className={`nav-menu${mobileMenuOpen ? ' open' : ''}`} id="accountNavMenu">
-          {[
-            [copy.common.nav.solutions, '/#solutions'],
-            [copy.common.nav.services, '/#services'],
-            [copy.common.nav.cases, '/#cases'],
-            [copy.common.nav.process, '/#process'],
-            [copy.common.nav.about, '/#advantages'],
-            [copy.common.nav.contact, '/#contact'],
-          ].map(([label, href]) => (
-            <a key={href} href={href} className="nav-link" onClick={() => setMobileMenuOpen(false)}>{label}</a>
-          ))}
-          <div className={`language-switcher mobile-language-switcher${languageOpen ? ' open' : ''}`}>
-            <button type="button" className="language-trigger" onClick={() => setLanguageOpen((open) => !open)} aria-haspopup="listbox" aria-expanded={languageOpen} aria-label={`${copy.common.availableLanguages}: ${languageLabels[language]}`}>
-              <span className="language-current">{languageLabels[language]}</span>
-              <svg className="language-chevron" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-            </button>
-            <div className="language-menu" role="listbox" aria-label={copy.common.availableLanguages}>
-              <button type="button" className={`language-option${language === 'en' ? ' active' : ''}`} onClick={() => selectLanguage('en')} role="option" aria-selected={language === 'en'}>English <span>EN</span></button>
-              <button type="button" className={`language-option${language === 'uk' ? ' active' : ''}`} onClick={() => selectLanguage('uk')} role="option" aria-selected={language === 'uk'}>Українська <span>UK</span></button>
-              <button type="button" className={`language-option${language === 'ro' ? ' active' : ''}`} onClick={() => selectLanguage('ro')} role="option" aria-selected={language === 'ro'}>Română <span>RO</span></button>
-            </div>
-          </div>
-        </nav>
-
-        <div className="header-actions">
-          <Link href="/inquiry" className="btn btn-primary btn-sm">
-            <span>{copy.common.discussProject}</span>
-            <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><line x1={5} y1={12} x2={19} y2={12} /><polyline points="12 5 19 12 12 19" /></svg>
-          </Link>
-          <button type="button" className="theme-toggle" onClick={onToggleTheme} aria-label={isDark ? copy.common.enableLightTheme : copy.common.enableDarkTheme}>
-            <svg className="theme-icon theme-icon-sun" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx={12} cy={12} r="3.5" /><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" /></svg>
-            <svg className="theme-icon theme-icon-moon" width={17} height={17} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z" /></svg>
-          </button>
-          <button type="button" className="account-logout" onClick={onLogout} aria-label={copy.common.signOut} title={copy.common.signOut}>
-            <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 5H6.75A1.75 1.75 0 0 0 5 6.75v10.5A1.75 1.75 0 0 0 6.75 19H10" /><path d="M13 12h7" /><path d="m17 8 4 4-4 4" /></svg>
-          </button>
-          <div className={`language-switcher${languageOpen ? ' open' : ''}`}>
-            <button type="button" className="language-trigger" onClick={() => setLanguageOpen((open) => !open)} aria-haspopup="listbox" aria-expanded={languageOpen} aria-label={`${copy.common.availableLanguages}: ${languageLabels[language]}`}>
-              <span className="language-current">{languageLabels[language]}</span>
-              <svg className="language-chevron" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
-            </button>
-            <div className="language-menu" role="listbox" aria-label={copy.common.availableLanguages}>
-              <button type="button" className={`language-option${language === 'en' ? ' active' : ''}`} onClick={() => selectLanguage('en')} role="option" aria-selected={language === 'en'}>English <span>EN</span></button>
-              <button type="button" className={`language-option${language === 'uk' ? ' active' : ''}`} onClick={() => selectLanguage('uk')} role="option" aria-selected={language === 'uk'}>Українська <span>UK</span></button>
-              <button type="button" className={`language-option${language === 'ro' ? ' active' : ''}`} onClick={() => selectLanguage('ro')} role="option" aria-selected={language === 'ro'}>Română <span>RO</span></button>
-            </div>
-          </div>
-          <button type="button" className="mobile-toggle" onClick={() => setMobileMenuOpen((open) => !open)} aria-label={copy.common.toggleMenu} aria-expanded={mobileMenuOpen}>
-            <span /><span /><span />
-          </button>
-        </div>
-      </div>
-    </header>
-  );
-}
 
 function AccountModal({ eyebrow, title, closeLabel, children, danger = false, onClose }: AccountModalProps) {
   const handleBackdropMouseDown = (event: MouseEvent<HTMLDivElement>) => {
@@ -147,12 +67,13 @@ function AccountModal({ eyebrow, title, closeLabel, children, danger = false, on
 }
 
 export default function Account() {
-  const { auth, flash = {} } = usePage<PageProps>().props;
+  const { auth, flash = {}, inquiries = [] } = usePage<PageProps>().props;
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
   const common = copy.common;
   const accountCopy = copy.account;
   const user = auth.user;
+  const submittedBriefs = inquiries.slice(0, 3);
   const unreadChatCount = useChatUnreadCount(auth.unread_chat_count ?? 0);
   const initial = user.name?.trim().charAt(0).toUpperCase() || user.email.charAt(0).toUpperCase();
   const [nameModalOpen, setNameModalOpen] = useState(false);
@@ -259,9 +180,26 @@ export default function Account() {
 
         <section className="account-grid">
           <article className="account-panel account-panel-wide">
-            <span className="account-panel-label">{accountCopy.accountLabel}</span>
-            <h2>{accountCopy.workspaceTitle}</h2>
-            <p>{accountCopy.workspaceDescription}</p>
+            <div className="account-workspace-content">
+              <span className="account-panel-label">{accountCopy.accountLabel}</span>
+              <h2>{accountCopy.workspaceTitle}</h2>
+              <p>{accountCopy.workspaceDescription}</p>
+              {submittedBriefs.length > 0 && (
+                <div className="account-brief-status-list" aria-label={accountCopy.submittedBriefs}>
+                  {submittedBriefs.map((brief) => (
+                    <div className="account-brief-status-row" key={brief.id}>
+                      <div>
+                        <span className="account-brief-ticket">{brief.ticket}</span>
+                        <strong>{copy.services[brief.service_type] ?? brief.service_type}</strong>
+                      </div>
+                      <span className={`account-brief-status account-brief-status-${brief.status}`}>
+                        {copy.admin.statuses[brief.status] ?? brief.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
             <Link href="/inquiry" className="account-primary-link">{accountCopy.startNewBrief} <span>→</span></Link>
           </article>
 
@@ -276,18 +214,28 @@ export default function Account() {
           </article>
 
           {user.is_admin && (
-            <article className="account-panel account-admin-panel">
-              <Link href="/admin" className="account-admin-button">{accountCopy.adminPanel}</Link>
-              <p className="account-admin-description">{accountCopy.adminPanelDescription}</p>
+            <article className="account-panel account-action-card">
+              <Link href="/admin" className="account-action-card-link">
+                <div className="account-action-card-content">
+                  <h2>{accountCopy.adminPanel}</h2>
+                  <p>{accountCopy.adminPanelDescription}</p>
+                </div>
+                <span className="account-action-card-arrow" aria-hidden="true">→</span>
+              </Link>
             </article>
           )}
 
-          <article className="account-panel account-history-panel">
-            <Link href="/account/project-briefs" className="account-admin-button">
-              <span>{copy.account.viewAllBriefs}</span>
-              <ChatUnreadBadge count={unreadChatCount} />
+          <article className="account-panel account-action-card">
+            <Link href="/account/project-briefs" className="account-action-card-link">
+              <div className="account-action-card-content">
+                <h2>{copy.account.viewAllBriefs}</h2>
+                <p>{copy.account.openEveryTask}</p>
+              </div>
+              <span className="account-action-card-arrow">
+                <ChatUnreadBadge count={unreadChatCount} />
+                <span aria-hidden="true">→</span>
+              </span>
             </Link>
-            <p className="account-admin-description">{copy.account.openEveryTask}</p>
           </article>
 
           <article className="account-panel account-panel-danger">

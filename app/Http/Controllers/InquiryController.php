@@ -16,6 +16,27 @@ class InquiryController extends Controller
         return Inertia::render('Inquiry');
     }
 
+    public function account(Request $request): Response
+    {
+        $inquiries = ProjectInquiry::query()
+            ->where('user_id', $request->user()->id)
+            ->latest('created_at')
+            ->limit(3)
+            ->get(['id', 'service_type', 'status', 'created_at'])
+            ->map(fn (ProjectInquiry $inquiry): array => [
+                'id' => $inquiry->id,
+                'ticket' => sprintf('#II-%04d', $inquiry->id),
+                'service_type' => $inquiry->service_type,
+                'status' => $inquiry->status,
+                'created_at' => $inquiry->created_at?->toISOString(),
+            ])
+            ->values();
+
+        return Inertia::render('Account', [
+            'inquiries' => $inquiries,
+        ]);
+    }
+
     public function mine(Request $request): Response
     {
         $inquiries = ProjectInquiry::query()
