@@ -73,7 +73,7 @@ export default function Account() {
   const common = copy.common;
   const accountCopy = copy.account;
   const user = auth.user;
-  const submittedBriefs = inquiries.slice(0, 3);
+  const submittedBriefs = inquiries.slice(0, 1);
   const unreadChatCount = useChatUnreadCount(auth.unread_chat_count ?? 0);
   const initial = user.name?.trim().charAt(0).toUpperCase() || user.email.charAt(0).toUpperCase();
   const [nameModalOpen, setNameModalOpen] = useState(false);
@@ -192,9 +192,7 @@ export default function Account() {
                         <span className="account-brief-ticket">{brief.ticket}</span>
                         <strong>{copy.services[brief.service_type] ?? brief.service_type}</strong>
                       </div>
-                      <span className={`account-brief-status account-brief-status-${brief.status}`}>
-                        {copy.admin.statuses[brief.status] ?? brief.status}
-                      </span>
+                      <span className={`account-brief-status account-brief-status-${brief.status}`}>{copy.admin.statuses[brief.status] ?? brief.status}</span>
                     </div>
                   ))}
                 </div>

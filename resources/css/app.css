@@ -5853,14 +5853,6 @@ html[data-theme="dark"] .case-device-base {
   border-radius: var(--radius-inner);
   background: var(--bg-panel);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .account-brief-status-row:hover {
-    border-color: var(--border-strong);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
-  }
 }
 
 .account-brief-status-row > div {
@@ -5884,17 +5876,24 @@ html[data-theme="dark"] .case-device-base {
 
 .account-brief-status {
   display: inline-flex;
-  min-height: 28px;
-  flex: 0 0 auto;
   align-items: center;
-  padding: 0 11px;
+  justify-content: center;
+  min-height: 26px;
+  height: 26px;
+  flex: 0 0 auto;
+  padding: 1px 12px 0;
   border: 1px solid rgba(68, 126, 190, 0.3);
   border-radius: var(--radius-pill);
   background: rgba(68, 126, 190, 0.08);
   color: #4b83bd;
-  font: 700 0.66rem var(--font-mono);
-  letter-spacing: 0.05em;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-align: center;
   text-transform: uppercase;
+  box-sizing: border-box;
 }
 
 .account-brief-status-new {
@@ -6022,14 +6021,6 @@ html[data-theme="dark"] .account-brief-status-row {
   background: var(--bg-subtle);
   border-color: var(--border);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  html[data-theme="dark"] .account-brief-status-row:hover {
-    border-color: var(--border-strong);
-    background: var(--bg-panel);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
-  }
 }
 
 html[data-theme="dark"] .account-brief-status-new {
