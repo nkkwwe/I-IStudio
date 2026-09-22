@@ -1740,6 +1740,12 @@ p {
   border-color: var(--border-strong);
   background: var(--bg-panel);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), var(--shadow-subtle);
+  transition: width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+              gap 0.26s ease,
+              border-color 0.24s ease,
+              background-color 0.24s ease,
+              box-shadow 0.28s ease,
+              color 0.24s ease;
 }
 
 .language-switcher:not(.mobile-language-switcher).open .language-chevron {
@@ -1747,6 +1753,10 @@ p {
   opacity: 1;
   color: var(--text-secondary);
   transform: translateX(0) rotate(180deg);
+  transition: opacity 0.26s ease,
+              transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+              width 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+              color 0.24s ease;
 }
 
 /* DROPDOWN MENU: smooth and simple transition as before */
@@ -1767,7 +1777,7 @@ p {
   transform: translateY(-6px) scale(0.98);
   transform-origin: top right;
   pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.2s;
+  transition: opacity 0.2s ease, transform 0.22s ease, visibility 0.2s;
 }
 
 .language-switcher:not(.mobile-language-switcher).open .language-menu {
@@ -1775,6 +1785,10 @@ p {
   visibility: visible;
   transform: translateY(0) scale(1);
   pointer-events: auto;
+  transition: opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+              visibility 0.28s;
+  transition-delay: 0.03s;
 }
 
 /* Fallback base styles for trigger/chevron in mobile drawer */
