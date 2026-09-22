@@ -5838,7 +5838,7 @@ html[data-theme="dark"] .case-device-base {
 .account-brief-status-list {
   display: grid;
   max-width: 620px;
-  gap: 8px;
+  gap: 10px;
   margin-top: 22px;
 }
 
@@ -5848,41 +5848,51 @@ html[data-theme="dark"] .case-device-base {
   justify-content: space-between;
   gap: 16px;
   min-width: 0;
-  padding: 11px 13px;
-  border: 1px solid var(--border-light);
+  padding: 14px 18px;
+  border: 1px solid var(--border);
   border-radius: var(--radius-inner);
-  background: var(--bg-subtle);
+  background: var(--bg-panel);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .account-brief-status-row:hover {
+    border-color: var(--border-strong);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  }
 }
 
 .account-brief-status-row > div {
   display: grid;
   min-width: 0;
-  gap: 3px;
+  gap: 4px;
 }
 
 .account-brief-ticket {
   color: var(--text-muted);
-  font: 700 0.66rem var(--font-mono);
+  font: 700 0.68rem var(--font-mono);
   letter-spacing: 0.08em;
 }
 
 .account-brief-status-row strong {
   overflow-wrap: anywhere;
   color: var(--text-primary);
-  font-size: 0.78rem;
+  font-size: 0.85rem;
+  font-weight: 700;
 }
 
 .account-brief-status {
   display: inline-flex;
-  min-height: 26px;
+  min-height: 28px;
   flex: 0 0 auto;
   align-items: center;
-  padding: 0 9px;
+  padding: 0 11px;
   border: 1px solid rgba(68, 126, 190, 0.3);
   border-radius: var(--radius-pill);
   background: rgba(68, 126, 190, 0.08);
   color: #4b83bd;
-  font: 700 0.64rem var(--font-mono);
+  font: 700 0.66rem var(--font-mono);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -6005,6 +6015,20 @@ html[data-theme="dark"] .case-device-base {
     background: rgba(196, 61, 61, 0.1);
     color: #a52e2e;
     box-shadow: none;
+  }
+}
+
+html[data-theme="dark"] .account-brief-status-row {
+  background: var(--bg-subtle);
+  border-color: var(--border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="dark"] .account-brief-status-row:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-panel);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
   }
 }
 
