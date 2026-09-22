@@ -162,7 +162,7 @@ function ServicesAndSolutions() {
         </div>
         <div className="goals-pills-wrapper" id="goalSelector">
           {serviceGoals.map((goal) => (
-            <button type="button" className={'goal-pill' + (goal.key === 'landing' ? ' active' : '')} data-goal={goal.key} key={goal.key}>
+            <button type="button" className={'goal-pill' + (goal.key === 'landing' ? ' active' : '')} data-goal={goal.key} aria-pressed={goal.key === 'landing'} key={goal.key}>
               <span className="goal-pill-number">{goal.number}</span>
               <span data-i18n={goal.label}>Landing Page</span>
               <Icon name="arrow" size={16} />
@@ -180,9 +180,9 @@ function CaseVisual({ item }) {
     <div className={'visual-mockup-wrap ' + item.className}>
       <div className="case-metric-overlay">
         <strong>{item.metric}</strong>
-        <span data-i18n={item.metricKey}>Lead Cost</span>
+        <span data-i18n={item.metricKey + '_label'}>Lead Cost</span>
       </div>
-      <div className="case-visual-window">
+      <div className={'case-visual-window case-device-' + item.key}>
         <div className="case-window-bar"><span /><span /><span /></div>
         <div className="case-window-content">
           <div className="case-window-line case-window-line-long" />
@@ -191,6 +191,7 @@ function CaseVisual({ item }) {
           <div className="case-window-chart"><i /><i /><i /><i /><i /></div>
         </div>
       </div>
+      {item.key === '1' && <span className="case-device-base" aria-hidden="true" />}
     </div>
   );
 }
@@ -211,12 +212,12 @@ function CaseStudies() {
               <div className="case-body">
                 <div className="case-meta">
                   <span data-i18n={'case_' + item.key + '_cat'}>E-commerce</span>
-                  <span data-i18n={'case_' + item.key + '_meta'}>Website / 2024</span>
+                  <span data-i18n-html={'case_' + item.key + '_meta'}>Website / 2024</span>
                 </div>
                 <h3 data-i18n-html={'case_' + item.key + '_title'}>Performance-led digital experience</h3>
                 <p className="case-summary" data-i18n-html={'case_' + item.key + '_obj'}>A focused redesign aligned the experience with the customer journey and made the next step obvious.</p>
                 <div className="case-metrics-row">
-                  <div className="case-metric"><strong>{item.metric}</strong><span data-i18n={item.metricKey}>Lead Cost</span></div>
+                  <div className="case-metric"><strong>{item.metric}</strong><span data-i18n={item.metricKey + '_label'}>Lead Cost</span></div>
                   <div className="case-metric"><strong data-i18n={'case_' + item.key + '_metric2_val'}>+42%</strong><span data-i18n={'case_' + item.key + '_metric2'}>Conversion Rate</span></div>
                 </div>
                 <a href="#inquiry" className="case-link" data-scroll-to-inquiry><span data-i18n="case_btn_similar">Discuss a similar project</span><Icon name="arrow" size={16} /></a>
@@ -297,10 +298,10 @@ function Inquiry() {
           <h3 data-i18n="inq_cta_card_title">Let’s make it clear.</h3>
           <p data-i18n="inq_cta_card_desc">Choose a direction and send a short brief. No long forms, no pressure.</p>
           <div className="action-service-pills" id="serviceTabs">
-            <button type="button" className="action-service-pill active" data-service="landing" data-i18n="tab_landing">Landing Page</button>
-            <button type="button" className="action-service-pill" data-service="corporate" data-i18n="tab_corporate">Business Website</button>
-            <button type="button" className="action-service-pill" data-service="redesign" data-i18n="tab_redesign">Website Redesign</button>
-            <button type="button" className="action-service-pill" data-service="ads" data-i18n="tab_ads">Advertising</button>
+            <button type="button" className="action-service-pill active" data-service="landing" aria-pressed="true" data-i18n="tab_landing">Landing Page</button>
+            <button type="button" className="action-service-pill" data-service="corporate" aria-pressed="false" data-i18n="tab_corporate">Business Website</button>
+            <button type="button" className="action-service-pill" data-service="redesign" aria-pressed="false" data-i18n="tab_redesign">Website Redesign</button>
+            <button type="button" className="action-service-pill" data-service="ads" aria-pressed="false" data-i18n="tab_ads">Advertising</button>
           </div>
           <button type="button" className="btn btn-primary btn-block" id="openInquiryPageBtn"><span data-i18n="inq_cta_btn">Start a conversation</span><Icon name="arrow" size={18} /></button>
         </div>

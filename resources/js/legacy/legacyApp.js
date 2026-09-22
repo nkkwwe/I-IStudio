@@ -366,8 +366,12 @@ function initSolutionsByGoal() {
 
   pills.forEach(pill => {
     pill.addEventListener('click', () => {
-      pills.forEach(p => p.classList.remove('active'));
+      pills.forEach(p => {
+        p.classList.remove('active');
+        p.setAttribute('aria-pressed', 'false');
+      });
       pill.classList.add('active');
+      pill.setAttribute('aria-pressed', 'true');
 
       activeGoalKey = pill.getAttribute('data-goal');
       renderSolution(activeGoalKey);
@@ -394,7 +398,7 @@ function initSolutionsByGoal() {
             ${data.tags.map(tag => `<span class="sol-tag">✓ ${tag}</span>`).join('')}
           </div>
 
-          <a href="#inquiry" class="btn btn-primary solution-calc-btn" onclick="preselectService('${data.serviceKey}')">
+          <a href="#inquiry" class="btn btn-primary solution-calc-btn" data-service="${data.serviceKey}" onclick="preselectService('${data.serviceKey}'); return false;">
             <span>${t.sol_calc_btn}</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
           </a>
@@ -450,14 +454,23 @@ function initServiceTabs() {
 
 // Global preselect helper for buttons and pills across page
 window.preselectService = function(serviceKey, openModal = true) {
+  const serviceAliases = {
+    'functional-site': 'corporate',
+    'full-pack': 'landing',
+  };
+  const inquiryServiceKey = serviceAliases[serviceKey] || serviceKey;
   const tabs = document.querySelectorAll('#serviceTabs .tab-btn');
-  const targetTab = document.querySelector(`#serviceTabs .tab-btn[data-service="${serviceKey}"]`);
+  const targetTab = document.querySelector(`#serviceTabs .tab-btn[data-service="${inquiryServiceKey}"]`);
   const serviceInput = document.getElementById('serviceTypeInput');
   const homepageInquiry = document.getElementById('inquiry');
 
   if (homepageInquiry && !document.querySelector('.inquiry-page') && openModal) {
     const pills = homepageInquiry.querySelectorAll('.action-service-pill');
-    pills.forEach(pill => pill.classList.toggle('active', pill.dataset.service === serviceKey));
+    pills.forEach(pill => {
+      const isSelected = pill.dataset.service === inquiryServiceKey;
+      pill.classList.toggle('active', isSelected);
+      pill.setAttribute('aria-pressed', String(isSelected));
+    });
     homepageInquiry.scrollIntoView({ behavior: 'smooth', block: 'start' });
     return;
   }
@@ -471,10 +484,10 @@ window.preselectService = function(serviceKey, openModal = true) {
     tabs.forEach(t => t.classList.remove('active'));
     targetTab.classList.add('active');
   }
-  if (serviceInput) serviceInput.value = serviceKey;
+  if (serviceInput) serviceInput.value = inquiryServiceKey;
 
   if (openModal && window.openInquiryPage) {
-    window.openInquiryPage(serviceKey);
+    window.openInquiryPage(inquiryServiceKey);
   }
 };
 
