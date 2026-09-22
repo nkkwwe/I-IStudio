@@ -137,7 +137,7 @@ function Hero() {
         <h1 className="hero-title" data-i18n-html="hero_title">Digital systems that <span className="text-gradient">move business forward.</span></h1>
         <p className="hero-subtitle" data-i18n="hero_subtitle">We build focused websites and acquisition systems for companies ready to grow.</p>
         <div className="hero-cta-group">
-          <a href="#inquiry" className="btn btn-primary" data-scroll-to-inquiry><span data-i18n="hero_btn_discuss">Discuss Project</span><Icon name="arrow" size={18} /></a>
+          <a href="/inquiry?service=landing" className="btn btn-primary" data-route-to-inquiry="true" data-service="landing"><span data-i18n="hero_btn_discuss">Discuss Project</span><Icon name="arrow" size={18} /></a>
           <a href="#services" className="btn btn-secondary"><span data-i18n="hero_btn_explore">Explore Services</span><Icon name="arrow" size={18} /></a>
         </div>
         <div className="hero-trust-bar">
@@ -303,7 +303,7 @@ function Inquiry() {
             <button type="button" className="action-service-pill" data-service="redesign" aria-pressed="false" data-i18n="tab_redesign">Website Redesign</button>
             <button type="button" className="action-service-pill" data-service="ads" aria-pressed="false" data-i18n="tab_ads">Advertising</button>
           </div>
-          <button type="button" className="btn btn-primary btn-block" id="openInquiryPageBtn"><span data-i18n="inq_cta_btn">Start a conversation</span><Icon name="arrow" size={18} /></button>
+          <button type="button" className="btn btn-primary btn-block" id="openInquiryPageBtn" data-route-to-inquiry="true" data-service="landing"><span data-i18n="inq_cta_btn">Start a conversation</span><Icon name="arrow" size={18} /></button>
         </div>
       </div>
     </section>
@@ -314,9 +314,9 @@ function Footer() {
   return (
     <footer className="site-footer" id="contact">
       <div className="container footer-container">
-        <div className="footer-top"><Logo /><p data-i18n="footer_desc">Focused digital systems for modern businesses.</p></div>
+        <div className="footer-top"><Logo /><p data-i18n="footer_tagline">Focused digital systems for modern businesses.</p></div>
         <div className="footer-bottom">
-          <span data-i18n="footer_copy">© 2024 I&amp;I Studio. All rights reserved.</span>
+          <span data-i18n-html="footer_copy">© 2024 I&amp;I Studio. All rights reserved.</span>
           <nav className="footer-nav">
             <a href="#hero" data-i18n="nav_home">Main</a>
             <a href="#services" data-i18n="nav_services">Services</a>

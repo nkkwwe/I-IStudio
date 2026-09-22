@@ -471,6 +471,8 @@ window.preselectService = function(serviceKey, openModal = true) {
       pill.classList.toggle('active', isSelected);
       pill.setAttribute('aria-pressed', String(isSelected));
     });
+    const openBriefButton = document.getElementById('openInquiryPageBtn');
+    if (openBriefButton) openBriefButton.dataset.service = inquiryServiceKey;
     homepageInquiry.scrollIntoView({ behavior: 'smooth', block: 'start' });
     return;
   }
@@ -496,7 +498,7 @@ window.preselectService = function(serviceKey, openModal = true) {
    ========================================================================== */
 function initSmartForm() {
   const form = document.getElementById('projectForm');
-  const openInquiryBtns = document.querySelectorAll('#openInquiryPageBtn, [data-open-page="inquiry"], .action-service-pill, [data-scroll-to-inquiry]');
+  const openInquiryBtns = document.querySelectorAll('#openInquiryPageBtn, [data-open-page="inquiry"], .action-service-pill, [data-scroll-to-inquiry], [data-route-to-inquiry]');
   const overlay = document.getElementById('feedbackOverlay');
   const closeFeedbackBtn = document.getElementById('closeFeedbackBtn');
   const serviceInput = document.getElementById('serviceTypeInput');
@@ -509,6 +511,10 @@ function initSmartForm() {
     openInquiryBtns.forEach(btn => {
       btn.addEventListener('click', (event) => {
         event.preventDefault();
+        if (btn.hasAttribute('data-route-to-inquiry')) {
+          window.openInquiryPage(btn.dataset.service || 'landing');
+          return;
+        }
         window.preselectService(btn.dataset.service || 'landing');
       });
     });

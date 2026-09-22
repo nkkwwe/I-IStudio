@@ -6771,3 +6771,72 @@ html[data-theme="dark"] .inquiry-form-card {
     right: 14px;
   }
 }
+
+/* Homepage footer: the current two-row markup should not inherit the legacy four-column grid. */
+.site-footer .footer-container {
+  display: block;
+  margin-bottom: 0;
+}
+
+.site-footer .footer-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+.site-footer .footer-top .logo {
+  flex-shrink: 0;
+}
+
+.site-footer .footer-top p {
+  max-width: 420px;
+  margin: 5px 0 0 auto;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  text-align: right;
+}
+
+.site-footer .footer-bottom {
+  gap: 24px;
+}
+
+.site-footer .footer-nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.site-footer .footer-nav a {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  transition: color 0.15s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-footer .footer-nav a:hover {
+    color: var(--text-primary);
+  }
+}
+
+@media (max-width: 640px) {
+  .site-footer .footer-top {
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+
+  .site-footer .footer-top p {
+    max-width: 320px;
+    margin: 0;
+    text-align: left;
+  }
+
+  .site-footer .footer-nav {
+    justify-content: center;
+  }
+}
