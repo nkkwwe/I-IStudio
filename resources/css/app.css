@@ -433,6 +433,18 @@ p {
   outline-offset: 3px;
 }
 
+.account-header-link.account-sign-in-link {
+  width: auto;
+  min-width: 0;
+  flex: 0 1 auto;
+  padding-inline: 16px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
 .account-header-link svg,
 .header-actions .account-logout svg {
   width: 20px;
@@ -3992,6 +4004,11 @@ p {
     gap: 8px;
   }
 
+  .account-header-link.account-sign-in-link {
+    padding-inline: 12px;
+    font-size: 0.74rem;
+  }
+
   .header-actions .btn-sm {
     padding: 6px 12px;
     font-size: 0.78rem;
@@ -4091,6 +4108,16 @@ p {
     min-height: 40px;
     min-width: 40px;
     flex-basis: 40px;
+  }
+
+  .account-header-link.account-sign-in-link {
+    width: auto;
+    min-width: 0;
+    flex-basis: auto;
+    height: 40px;
+    min-height: 40px;
+    padding-inline: 10px;
+    font-size: 0.7rem;
   }
 
   .language-trigger {

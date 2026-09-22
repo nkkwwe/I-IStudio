@@ -30,7 +30,11 @@ export default function Home() {
           content={copy.common.homeMetaDescription}
         />
       </Head>
-      <HomeMarkup unreadChatCount={unreadChatCount} />
+      <HomeMarkup
+        isAuthenticated={Boolean(auth?.user)}
+        signInLabel={copy.auth.pageSignIn}
+        unreadChatCount={unreadChatCount}
+      />
     </>
   );
 }

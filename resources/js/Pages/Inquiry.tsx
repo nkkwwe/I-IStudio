@@ -55,6 +55,7 @@ export default function Inquiry() {
         activeService={activeService}
         onServiceChange={setActiveService}
         isAuthenticated={Boolean(auth?.user)}
+        signInLabel={copy.auth.pageSignIn}
         inquirySubmitted={Boolean(flash.inquiry_submitted)}
         inquiryTicket={flash.inquiry_ticket ?? ''}
          inquiryServiceLabel={flash.inquiry_service ? copy.services[flash.inquiry_service] : ''}
