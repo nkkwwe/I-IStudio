@@ -2,6 +2,7 @@ import { router, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import InquiryChatModal from '../../Components/InquiryChatModal';
+import InquiryDetailModal from '../../Components/InquiryDetailModal';
 import AdminShell, { formatDate, formatBudget, type Inquiry } from './AdminShell';
 import AdminStatusSelect from './AdminStatusSelect';
 
@@ -12,6 +13,7 @@ type PageProps = {
 export default function ProjectBriefs() {
   const { inquiries } = usePage<PageProps>().props;
   const [updatingInquiryId, setUpdatingInquiryId] = useState<number | null>(null);
+  const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
@@ -40,43 +42,73 @@ export default function ProjectBriefs() {
       ) : (
         <div className="admin-inquiry-list">
           {inquiries.map((inquiry) => (
-            <article className="account-panel admin-inquiry-card" key={inquiry.id}>
+            <article
+              className="account-panel admin-inquiry-card"
+              key={inquiry.id}
+              tabIndex={0}
+              role="button"
+              onClick={() => setSelectedInquiry(inquiry)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setSelectedInquiry(inquiry);
+                }
+              }}
+            >
               <div className="admin-inquiry-head">
                 <div>
                   <span className="admin-inquiry-ticket">{inquiry.ticket}</span>
                   <h3>{copy.services[inquiry.service_type] ?? inquiry.service_type}</h3>
                 </div>
-                <AdminStatusSelect
-                  value={inquiry.status}
-                  options={Object.entries(copy.admin.statuses).map(([value, label]) => ({ value, label }))}
-                  onChange={(status) => updateStatus(inquiry, status)}
-                  disabled={updatingInquiryId === inquiry.id}
-                  ariaLabel={`${copy.admin.projectBriefs}: ${inquiry.ticket}`}
-                />
+                <div onClick={(e) => e.stopPropagation()}>
+                  <AdminStatusSelect
+                    value={inquiry.status}
+                    options={Object.entries(copy.admin.statuses).map(([value, label]) => ({ value, label }))}
+                    onChange={(status) => updateStatus(inquiry, status)}
+                    disabled={updatingInquiryId === inquiry.id}
+                    ariaLabel={`${copy.admin.projectBriefs}: ${inquiry.ticket}`}
+                  />
+                </div>
               </div>
               <div className="admin-inquiry-meta">
                 <span><strong>{inquiry.name}</strong> · {inquiry.email}</span>
                 <span>{formatDate(inquiry.created_at, language)}</span>
               </div>
-              <p className="admin-inquiry-comment">{inquiry.comment}</p>
               {(inquiry.contact || inquiry.budget) && (
                 <div className="admin-inquiry-details">
                   {inquiry.contact && <span><b>{copy.admin.contact}</b>{inquiry.contact}</span>}
                   {inquiry.budget && <span><b>{copy.admin.budget}</b>{formatBudget(inquiry.budget)}</span>}
                 </div>
               )}
-              <div className="admin-inquiry-actions">
-                <button type="button" className="admin-chat-button" onClick={() => setActiveChatInquiry(inquiry)}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8.8 8.8 0 0 1-3.7-.8L4 20l1.8-3.6A7.4 7.4 0 0 1 4.5 12 7.5 7.5 0 0 1 12 4.5a7.5 7.5 0 0 1 8 7Z" />
-                    <path d="M8.5 12h.01M12 12h.01M15.5 12h.01" />
-                  </svg>
-                  <span>{copy.chat.openChat}</span>
-                </button>
-              </div>
             </article>
           ))}
         </div>
+      )}
+      {selectedInquiry && (
+        <InquiryDetailModal
+          inquiry={selectedInquiry}
+          currentRole="admin"
+          onClose={() => setSelectedInquiry(null)}
+          onOpenChat={() => {
+            const inq = selectedInquiry;
+            setSelectedInquiry(null);
+            setActiveChatInquiry(inq);
+          }}
+          statusSlot={
+            <div onClick={(e) => e.stopPropagation()}>
+              <AdminStatusSelect
+                value={selectedInquiry.status}
+                options={Object.entries(copy.admin.statuses).map(([value, label]) => ({ value, label }))}
+                onChange={(status) => {
+                  updateStatus(selectedInquiry, status);
+                  setSelectedInquiry((prev) => prev ? { ...prev, status } : null);
+                }}
+                disabled={updatingInquiryId === selectedInquiry.id}
+                ariaLabel={`${copy.admin.projectBriefs}: ${selectedInquiry.ticket}`}
+              />
+            </div>
+          }
+        />
       )}
       {activeChatInquiry && (
         <InquiryChatModal

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import ChatUnreadBadge, { fetchChatUnreadCounts } from '../../Components/ChatUnreadBadge';
 import InquiryChatModal from '../../Components/InquiryChatModal';
+import InquiryDetailModal from '../../Components/InquiryDetailModal';
 import AccountSiteHeader from '../../Components/AccountSiteHeader';
 import { formatDate, formatBudget, type Inquiry } from '../Admin/AdminShell';
 
@@ -15,6 +16,7 @@ export default function AccountProjectBriefs() {
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
   const [inquiries, setInquiries] = useState(initialInquiries);
+  const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
   const [isDark, setIsDark] = useState(false);
   const logoutForm = useForm({});
@@ -136,7 +138,19 @@ export default function AccountProjectBriefs() {
                   }
 
                   return (
-                    <article className="account-panel admin-inquiry-card" key={inquiry.id}>
+                    <article
+                      className="account-panel admin-inquiry-card"
+                      key={inquiry.id}
+                      tabIndex={0}
+                      role="button"
+                      onClick={() => setSelectedInquiry(inquiry)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          setSelectedInquiry(inquiry);
+                        }
+                      }}
+                    >
                       <div className="admin-inquiry-head">
                         <div>
                           <span className="admin-inquiry-ticket">{inquiry.ticket}</span>
@@ -154,23 +168,29 @@ export default function AccountProjectBriefs() {
                             </span>
                           ))}
                         </div>
-                        <span className="admin-inquiry-date">{formatDate(inquiry.created_at, language)}</span>
-                      </div>
-                      {inquiry.comment && <p className="admin-inquiry-comment">{inquiry.comment}</p>}
-                        <div className="admin-inquiry-actions">
-                          <button type="button" className="admin-chat-button" onClick={() => setActiveChatInquiry(inquiry)}>
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                              <path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8.8 8.8 0 0 1-3.7-.8L4 20l1.8-3.6A7.4 7.4 0 0 1 4.5 12 7.5 7.5 0 0 1 12 4.5a7.5 7.5 0 0 1 8 7Z" />
-                              <path d="M8.5 12h.01M12 12h.01M15.5 12h.01" />
-                            </svg>
-                            <span>{copy.chat.openChat}</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          {Boolean(inquiry.unread_count && inquiry.unread_count > 0) && (
                             <ChatUnreadBadge count={inquiry.unread_count ?? 0} />
-                          </button>
+                          )}
+                          <span className="admin-inquiry-date">{formatDate(inquiry.created_at, language)}</span>
                         </div>
-                      </article>
-                    );
-                  })}
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
+            )}
+            {selectedInquiry && (
+              <InquiryDetailModal
+                inquiry={selectedInquiry}
+                currentRole="user"
+                onClose={() => setSelectedInquiry(null)}
+                onOpenChat={() => {
+                  const inq = selectedInquiry;
+                  setSelectedInquiry(null);
+                  setActiveChatInquiry(inq);
+                }}
+              />
             )}
             {activeChatInquiry && (
               <InquiryChatModal

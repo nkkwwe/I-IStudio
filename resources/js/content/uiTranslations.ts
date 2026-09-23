@@ -60,6 +60,11 @@ type AdminCopy = {
   newTasks: string;
   contact: string;
   budget: string;
+  client: string;
+  date: string;
+  description: string;
+  briefDetails: string;
+  noDescription: string;
   noUsers: string;
   unnamedUser: string;
   registered: string;
@@ -180,8 +185,13 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       total: 'total',
       noProjectBriefs: 'No project briefs yet',
       newTasks: 'New tasks sent through the project form will appear here.',
-      contact: 'Contact',
+      contact: 'Social networks',
       budget: 'Budget',
+      client: 'Client',
+      date: 'Date',
+      description: 'Description',
+      briefDetails: 'Project brief details',
+      noDescription: 'No description provided.',
       noUsers: 'No users registered yet',
       unnamedUser: 'Unnamed user',
       registered: 'Registered',
@@ -303,8 +313,13 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       total: 'всього',
       noProjectBriefs: 'Завдань поки немає',
       newTasks: 'Нові завдання з форми проєкту зʼявляться тут.',
-      contact: 'Контакт',
+      contact: 'Соцмережі',
       budget: 'Бюджет',
+      client: 'Клієнт',
+      date: 'Дата',
+      description: 'Опис',
+      briefDetails: 'Деталі завдання',
+      noDescription: 'Опис відсутній.',
       noUsers: 'Зареєстрованих користувачів поки немає',
       unnamedUser: 'Користувач без імені',
       registered: 'Зареєстровано',
@@ -426,8 +441,13 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       total: 'în total',
       noProjectBriefs: 'Nu există solicitări încă',
       newTasks: 'Solicitările noi trimise prin formular vor apărea aici.',
-      contact: 'Contact',
+      contact: 'Rețele sociale',
       budget: 'Buget',
+      client: 'Client',
+      date: 'Data',
+      description: 'Descriere',
+      briefDetails: 'Detalii solicitare',
+      noDescription: 'Nu a fost furnizată nicio descriere.',
       noUsers: 'Nu există utilizatori înregistrați încă',
       unnamedUser: 'Utilizator fără nume',
       registered: 'Înregistrat',

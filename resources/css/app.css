@@ -6373,6 +6373,22 @@ html[data-theme="dark"] .account-delete-button {
 .admin-inquiry-card {
   min-height: 0;
   padding: 24px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .admin-inquiry-card:hover {
+    border-color: var(--border-strong);
+    background-color: var(--bg-subtle);
+    box-shadow: var(--shadow-hover);
+  }
+}
+
+.admin-inquiry-card:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 3px;
+  border-color: var(--border-strong);
 }
 
 .admin-inquiry-head,
@@ -6715,6 +6731,178 @@ html[data-theme="dark"] .account-delete-button {
 .admin-chat-button:focus-visible,
 .inquiry-chat-close:focus-visible,
 .inquiry-chat-send:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   Project Brief Detail Modal
+   ========================================================================== */
+.inquiry-detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(9, 9, 11, 0.64);
+  backdrop-filter: blur(8px);
+  animation: account-modal-backdrop-in 0.2s ease both;
+}
+
+.inquiry-detail-modal {
+  width: min(100%, 580px);
+  max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  padding: 28px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-modal);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-modal);
+  animation: account-modal-in 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.inquiry-detail-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.inquiry-detail-heading > div:first-child {
+  min-width: 0;
+}
+
+.inquiry-detail-ticket {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.inquiry-detail-heading h2 {
+  margin: 6px 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.inquiry-detail-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.inquiry-detail-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-inner);
+  background: var(--bg-subtle);
+}
+
+.inquiry-detail-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.inquiry-detail-meta-label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.inquiry-detail-meta-value {
+  color: var(--text-primary);
+  font-size: 0.86rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.inquiry-detail-subtext {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.inquiry-detail-comment-section {
+  margin-top: 20px;
+}
+
+.inquiry-detail-comment-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.inquiry-detail-comment-box {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-inner);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.inquiry-detail-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-light);
+}
+
+.inquiry-detail-chat-btn {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  border: 1px solid var(--btn-primary-border);
+  border-radius: var(--radius-pill);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inquiry-detail-chat-btn:hover {
+    background-color: var(--btn-primary-hover-bg);
+    border-color: var(--btn-primary-hover-border);
+    color: var(--btn-primary-hover-text);
+  }
+}
+
+.inquiry-detail-chat-btn:focus-visible {
   outline: 2px solid var(--accent-blue);
   outline-offset: 3px;
 }
