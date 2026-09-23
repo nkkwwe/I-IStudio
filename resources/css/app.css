@@ -1693,6 +1693,7 @@ p {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
               gap 0.2s ease,
               border-color 0.2s ease,
               background-color 0.2s ease,
@@ -1740,10 +1741,11 @@ p {
   border-color: var(--border-strong);
   background: var(--bg-panel);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), var(--shadow-subtle);
-  transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-              gap 0.36s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.28s ease,
-              background-color 0.28s ease,
+  transition: width 0.58s cubic-bezier(0.35, 0, 0.25, 1),
+              min-width 0.58s cubic-bezier(0.35, 0, 0.25, 1),
+              gap 0.45s cubic-bezier(0.35, 0, 0.25, 1),
+              border-color 0.3s ease,
+              background-color 0.3s ease,
               box-shadow 0.36s ease,
               color 0.24s ease;
 }
@@ -1753,9 +1755,9 @@ p {
   opacity: 1;
   color: var(--text-secondary);
   transform: translateX(0) rotate(180deg);
-  transition: opacity 0.32s ease,
-              transform 0.45s cubic-bezier(0.4, 0, 0.2, 1),
-              width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+  transition: opacity 0.35s ease,
+              transform 0.58s cubic-bezier(0.35, 0, 0.25, 1),
+              width 0.58s cubic-bezier(0.35, 0, 0.25, 1),
               color 0.24s ease;
 }
 
@@ -1785,10 +1787,10 @@ p {
   visibility: visible;
   transform: translateY(0) scale(1);
   pointer-events: auto;
-  transition: opacity 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
-              visibility 0.35s;
-  transition-delay: 0.04s;
+  transition: opacity 0.42s cubic-bezier(0.35, 0, 0.25, 1),
+              transform 0.5s cubic-bezier(0.35, 0, 0.25, 1),
+              visibility 0.42s;
+  transition-delay: 0.05s;
 }
 
 /* Fallback base styles for trigger/chevron in mobile drawer */
