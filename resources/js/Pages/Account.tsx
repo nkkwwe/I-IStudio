@@ -1,6 +1,7 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
+import { localizedUrl } from '../content/siteLanguage';
 import ChatUnreadBadge, { useChatUnreadCount } from '../Components/ChatUnreadBadge';
 import AccountSiteHeader from '../Components/AccountSiteHeader';
 
@@ -124,7 +125,7 @@ export default function Account() {
   };
 
   const confirmLogout = () => {
-    logoutForm.post('/logout');
+    logoutForm.post(localizedUrl('/logout'));
   };
 
   const openNameModal = () => {
@@ -140,7 +141,7 @@ export default function Account() {
   };
 
   const saveName = () => {
-    nameForm.patch('/account/profile', {
+    nameForm.patch(localizedUrl('/account/profile'), {
       preserveScroll: true,
       onSuccess: () => setNameModalOpen(false),
     });
@@ -152,7 +153,7 @@ export default function Account() {
       return;
     }
 
-    deleteForm.delete('/account');
+    deleteForm.delete(localizedUrl('/account'));
   };
 
   const openDeleteModal = () => {
@@ -198,7 +199,7 @@ export default function Account() {
                 </div>
               )}
             </div>
-            <Link href="/inquiry" className="account-primary-link">{accountCopy.startNewBrief} <span>→</span></Link>
+            <Link href={localizedUrl('/inquiry')} className="account-primary-link">{accountCopy.startNewBrief} <span>→</span></Link>
           </article>
 
           <article className="account-panel">
@@ -224,7 +225,7 @@ export default function Account() {
           )}
 
           <article className="account-panel account-action-card">
-            <Link href="/account/project-briefs" className="account-action-card-link">
+              <Link href={localizedUrl('/account/project-briefs')} className="account-action-card-link">
               <div className="account-action-card-content">
                 <h2>{copy.account.viewAllBriefs}</h2>
                 <p>{copy.account.openEveryTask}</p>

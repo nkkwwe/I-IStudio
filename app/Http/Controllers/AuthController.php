@@ -88,7 +88,7 @@ class AuthController extends Controller
             'verified' => false,
         ]);
 
-        return redirect()->route('register')->with('verification_sent', true);
+        return redirect($this->localizedRoute($request, 'register.localized'))->with('verification_sent', true);
     }
 
     public function verifyRegistrationCode(Request $request): RedirectResponse
@@ -139,14 +139,14 @@ class AuthController extends Controller
             'verified' => true,
         ]);
 
-        return redirect()->route('register')->with('verification_success', true);
+        return redirect($this->localizedRoute($request, 'register.localized'))->with('verification_success', true);
     }
 
     public function resetRegistration(Request $request): RedirectResponse
     {
         $request->session()->forget('registration');
 
-        return redirect()->route('register');
+        return redirect($this->localizedRoute($request, 'register.localized'));
     }
 
     public function register(Request $request): RedirectResponse
@@ -187,7 +187,7 @@ class AuthController extends Controller
         Auth::login($user, true);
         $request->session()->regenerate();
 
-        return redirect()->intended(route('account'));
+        return redirect()->intended($this->localizedRoute($request, 'account.localized'));
     }
 
     public function login(Request $request): RedirectResponse
@@ -213,7 +213,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('account'));
+        return redirect()->intended($this->localizedRoute($request, 'account.localized'));
     }
 
     public function logout(Request $request): RedirectResponse
@@ -222,7 +222,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home');
+        return redirect($this->localizedRoute($request, 'home.localized'));
     }
 
     public function updateProfile(Request $request): RedirectResponse
@@ -255,13 +255,15 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
         $user->delete();
 
-        return redirect()->route('home')->with('account_deleted', true);
+        return redirect($this->localizedRoute($request, 'home.localized'))->with('account_deleted', true);
     }
 
-    public function googleRedirect(): RedirectResponse
+    public function googleRedirect(Request $request): RedirectResponse
     {
+        $request->session()->put('site_language', $this->siteLanguage($request));
+
         if (! config('services.google.client_id') || ! config('services.google.client_secret')) {
-            return redirect()->route('login')->withErrors([
+            return redirect($this->localizedRoute($request, 'login.localized'))->withErrors([
                 'google' => 'Вхід через Google ще не налаштований у змінних Render.',
             ]);
         }
@@ -276,7 +278,7 @@ class AuthController extends Controller
         } catch (Throwable $exception) {
             report($exception);
 
-            return redirect()->route('login')->withErrors([
+            return redirect($this->localizedRoute($request, 'login.localized'))->withErrors([
                 'google' => 'Не вдалося завершити вхід через Google. Спробуйте ще раз.',
             ]);
         }
@@ -285,7 +287,7 @@ class AuthController extends Controller
         $googleId = trim((string) $googleUser->getId());
 
         if ($email === '' || $googleId === '') {
-            return redirect()->route('login')->withErrors([
+            return redirect($this->localizedRoute($request, 'login.localized'))->withErrors([
                 'google' => 'Google не повернув необхідні дані для входу.',
             ]);
         }
@@ -294,13 +296,13 @@ class AuthController extends Controller
         $userByEmail = User::query()->whereRaw('LOWER(email) = ?', [$email])->first();
 
         if ($userByGoogle && $userByEmail && ! $userByGoogle->is($userByEmail)) {
-            return redirect()->route('login')->withErrors([
+            return redirect($this->localizedRoute($request, 'login.localized'))->withErrors([
                 'google' => 'Цей Google-профіль і email прив’язані до різних акаунтів.',
             ]);
         }
 
         if ($userByEmail?->google_id && $userByEmail->google_id !== $googleId) {
-            return redirect()->route('login')->withErrors([
+            return redirect($this->localizedRoute($request, 'login.localized'))->withErrors([
                 'google' => 'Цей email уже прив’язаний до іншого Google-профілю.',
             ]);
         }
@@ -324,6 +326,26 @@ class AuthController extends Controller
         Auth::login($user, true);
         $request->session()->regenerate();
 
-        return redirect()->intended(route('account'));
+        return redirect()->intended($this->localizedRoute($request, 'account.localized'));
+    }
+
+    private function siteLanguage(Request $request): string
+    {
+        $routeLocale = $request->route('locale');
+
+        return match ($routeLocale) {
+            'ua' => 'uk',
+            'ro' => 'ro',
+            'en' => 'en',
+            default => $request->session()->get('site_language', 'en'),
+        };
+    }
+
+    private function localizedRoute(Request $request, string $routeName): string
+    {
+        $siteLanguage = $this->siteLanguage($request);
+        $urlLocale = $siteLanguage === 'uk' ? 'ua' : $siteLanguage;
+
+        return route($routeName, ['locale' => $urlLocale]);
     }
 }

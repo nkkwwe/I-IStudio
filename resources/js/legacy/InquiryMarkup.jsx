@@ -1,4 +1,5 @@
 import AccountSiteHeader from '../Components/AccountSiteHeader';
+import { localizedUrl } from '../content/siteLanguage';
 
 export default function InquiryMarkup({
   activeService,
@@ -39,7 +40,7 @@ export default function InquiryMarkup({
         <button type="button" className={activeService === 'consultation' ? 'tab-btn active' : 'tab-btn'} data-service="consultation" data-i18n="tab_consultation" onClick={() => onServiceChange('consultation')}>Consultation</button>
         <button type="button" className={activeService === 'other' ? 'tab-btn active' : 'tab-btn'} data-service="other" data-i18n="tab_other" onClick={() => onServiceChange('other')}>Other</button>
       </div>
-      <form id="projectForm" className="smart-form" action="/inquiry" method="post" data-authenticated={isAuthenticated ? 'true' : 'false'}>
+      <form id="projectForm" className="smart-form" action={localizedUrl('/inquiry')} method="post" data-authenticated={isAuthenticated ? 'true' : 'false'}>
         <input type="hidden" name="service_type" id="serviceTypeInput" defaultValue={activeService} />
         <div className="form-grid-2 inquiry-form-grid">
           <div className="form-group"><label htmlFor="clientName" data-i18n-html="form_name_label">Your Name <span className="req">*</span></label><input type="text" id="clientName" name="client_name" placeholder="Alex" data-i18n-placeholder="form_name_ph" required /></div>

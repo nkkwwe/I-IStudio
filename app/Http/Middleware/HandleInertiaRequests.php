@@ -3,8 +3,10 @@
 namespace App\Http\Middleware;
 
 use App\Models\ProjectInquiryMessage;
+use Closure;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Symfony\Component\HttpFoundation\Response;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -16,6 +18,22 @@ class HandleInertiaRequests extends Middleware
      * @var string
      */
     protected $rootView = 'app';
+
+    public function handle(Request $request, Closure $next): Response
+    {
+        $routeLocale = $request->route('locale');
+        $siteLanguage = match ($routeLocale) {
+            'ua' => 'uk',
+            'ro' => 'ro',
+            'en' => 'en',
+            default => $request->session()->get('site_language', 'en'),
+        };
+
+        app()->setLocale($siteLanguage);
+        $request->session()->put('site_language', $siteLanguage);
+
+        return parent::handle($request, $next);
+    }
 
     /**
      * Determines the current asset version.
@@ -47,6 +65,7 @@ class HandleInertiaRequests extends Middleware
 
         return [
             ...parent::share($request),
+            'site_language' => app()->getLocale(),
             'auth' => [
                 'unread_chat_count' => $unreadChatCount,
                 'user' => $user

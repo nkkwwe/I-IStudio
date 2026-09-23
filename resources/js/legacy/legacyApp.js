@@ -3,8 +3,9 @@
  */
 
 import { router } from '@inertiajs/react';
+import { getSiteLanguageFromDocument, localizedCurrentUrl, localizedUrl } from '../content/siteLanguage';
 
-let currentLanguage = 'en';
+let currentLanguage = getSiteLanguageFromDocument();
 let activeGoalKey = 'landing';
 
 const savedTheme = localStorage.getItem('ii_studio_theme');
@@ -66,8 +67,7 @@ function initLanguageSwitcher() {
   const options = document.querySelectorAll('.site-header:not(.account-site-header) .language-option');
   const switchers = Array.from(document.querySelectorAll('.site-header:not(.account-site-header) .language-switcher'));
   const supportedLanguages = ['en', 'uk', 'ro'];
-  const languageLabels = { en: 'EN', uk: 'UK', ro: 'RO' };
-  const savedLanguage = localStorage.getItem('ii_studio_language');
+  const languageLabels = { en: 'EN', uk: 'UA', ro: 'RO' };
   const closeSwitcher = (switcher) => {
     const trigger = switcher.querySelector('.language-trigger');
     switcher.classList.remove('open');
@@ -99,8 +99,6 @@ function initLanguageSwitcher() {
 
     // Update html attributes
     document.documentElement.lang = lang;
-    localStorage.setItem('ii_studio_language', lang);
-
     document.querySelectorAll('[data-i18n-aria-label]').forEach(el => {
       const key = el.getAttribute('data-i18n-aria-label');
       if (t[key] !== undefined) el.setAttribute('aria-label', t[key]);
@@ -157,7 +155,7 @@ function initLanguageSwitcher() {
     option.addEventListener('click', () => {
       const targetLang = option.dataset.language;
       if (targetLang && targetLang !== currentLanguage) {
-        window.setLanguage(targetLang);
+        window.location.assign(localizedCurrentUrl(targetLang));
       } else {
         const parentSwitcher = option.closest('.language-switcher');
         if (parentSwitcher) closeSwitcher(parentSwitcher);
@@ -193,7 +191,7 @@ function initLanguageSwitcher() {
   });
 
   // Apply initially
-  window.setLanguage(supportedLanguages.includes(savedLanguage) ? savedLanguage : 'en');
+  window.setLanguage(supportedLanguages.includes(currentLanguage) ? currentLanguage : 'en');
 }
 
 /* ==========================================================================
@@ -477,7 +475,7 @@ window.preselectService = function(serviceKey, openModal = true) {
   }
 
   if (!serviceInput && openModal) {
-    window.location.href = `/inquiry?service=${encodeURIComponent(serviceKey)}`;
+    window.location.href = localizedUrl(`/inquiry?service=${encodeURIComponent(serviceKey)}`);
     return;
   }
 
@@ -503,7 +501,7 @@ function initSmartForm() {
   const serviceInput = document.getElementById('serviceTypeInput');
 
   window.openInquiryPage = function(serviceKey = 'landing') {
-    window.location.href = `/inquiry?service=${encodeURIComponent(serviceKey)}`;
+    window.location.href = localizedUrl(`/inquiry?service=${encodeURIComponent(serviceKey)}`);
   };
 
   if (!form) {
@@ -546,7 +544,7 @@ function initSmartForm() {
         localStorage.setItem('ii_studio_inquiry_draft', JSON.stringify(payload));
       }
 
-      router.post('/inquiry', payload, {
+      router.post(localizedUrl('/inquiry'), payload, {
         preserveScroll: true,
         onSuccess: (page) => {
           if (page.component === 'Inquiry' && page.props?.flash?.inquiry_submitted) {

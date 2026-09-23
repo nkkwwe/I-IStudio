@@ -1,4 +1,5 @@
 import ChatUnreadBadge from '../Components/ChatUnreadBadge';
+import { localizedUrl } from '../content/siteLanguage';
 
 const serviceGoals = [
   { key: 'landing', label: 'goal_landing', number: '01' },
@@ -87,7 +88,7 @@ function LanguageSwitcher({ mobile = false }) {
       </button>
       <div className="language-menu" role="listbox" data-i18n-aria-label="aria_languages" aria-label="Available languages">
         <button type="button" className="language-option active" data-language="en" role="option" aria-selected="true">English <span>EN</span></button>
-        <button type="button" className="language-option" data-language="uk" role="option" aria-selected="false">Українська <span>UK</span></button>
+        <button type="button" className="language-option" data-language="uk" role="option" aria-selected="false">Українська <span>UA</span></button>
         <button type="button" className="language-option" data-language="ro" role="option" aria-selected="false">Română <span>RO</span></button>
       </div>
     </div>
@@ -110,12 +111,12 @@ function Header({ isAuthenticated, signInLabel, unreadChatCount }) {
         </nav>
         <div className="header-actions">
           {isAuthenticated ? (
-            <a href="/account" className="account-header-link" data-i18n-aria-label="aria_account" data-i18n-title="aria_account" aria-label="Account" title="Account">
+            <a href={localizedUrl('/account')} className="account-header-link" data-i18n-aria-label="aria_account" data-i18n-title="aria_account" aria-label="Account" title="Account">
               <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx={12} cy={8} r="3.2" /><path d="M5.5 20c.8-3.2 3.1-5 6.5-5s5.7 1.8 6.5 5" /></svg>
               <ChatUnreadBadge count={unreadChatCount} />
             </a>
           ) : (
-            <a href="/login" className="account-header-link account-sign-in-link" aria-label={signInLabel} title={signInLabel}>{signInLabel}</a>
+            <a href={localizedUrl('/login')} className="account-header-link account-sign-in-link" aria-label={signInLabel} title={signInLabel}>{signInLabel}</a>
           )}
           <button type="button" id="themeToggle" className="theme-toggle" data-i18n-aria-label="aria_theme" aria-label="Toggle theme">
             <svg className="theme-icon theme-icon-sun" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><circle cx={12} cy={12} r="3.5" /><path d="M12 2.5v2M12 19.5v2M4.4 4.4l1.4 1.4M18.2 18.2l1.4 1.4M2.5 12h2M19.5 12h2M4.4 19.6l1.4-1.4M18.2 5.8l1.4-1.4" /></svg>
@@ -137,7 +138,7 @@ function Hero() {
         <h1 className="hero-title" data-i18n-html="hero_title">Digital systems that <span className="text-gradient">move business forward.</span></h1>
         <p className="hero-subtitle" data-i18n="hero_subtitle">We build focused websites and acquisition systems for companies ready to grow.</p>
         <div className="hero-cta-group">
-          <a href="/inquiry?service=landing" className="btn btn-primary" data-route-to-inquiry="true" data-service="landing"><span data-i18n="hero_btn_discuss">Discuss Project</span><Icon name="arrow" size={18} /></a>
+          <a href={localizedUrl('/inquiry?service=landing')} className="btn btn-primary" data-route-to-inquiry="true" data-service="landing"><span data-i18n="hero_btn_discuss">Discuss Project</span><Icon name="arrow" size={18} /></a>
           <a href="#services" className="btn btn-secondary"><span data-i18n="hero_btn_explore">Explore Services</span><Icon name="arrow" size={18} /></a>
         </div>
         <div className="hero-trust-bar">

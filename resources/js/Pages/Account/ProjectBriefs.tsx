@@ -1,6 +1,7 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
+import { localizedUrl } from '../../content/siteLanguage';
 import ChatUnreadBadge, { fetchChatUnreadCounts } from '../../Components/ChatUnreadBadge';
 import InquiryChatModal from '../../Components/InquiryChatModal';
 import InquiryDetailModal from '../../Components/InquiryDetailModal';
@@ -79,7 +80,7 @@ export default function AccountProjectBriefs() {
   return (
     <>
       <Head title={copy.account.myProjectBriefs} />
-      <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => logoutForm.post('/logout')} />
+      <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => logoutForm.post(localizedUrl('/logout'))} />
       <main className="account-page account-history-page">
         <div className="account-shell">
           <div className="account-history-topbar">
@@ -89,8 +90,8 @@ export default function AccountProjectBriefs() {
               <p>{copy.account.allTasks}</p>
             </div>
             <div className="account-history-actions">
-              <Link href="/account" className="admin-back-link">{copy.account.backToAccount}</Link>
-              <Link href="/inquiry" className="account-admin-button">{copy.account.startNewBrief}</Link>
+              <Link href={localizedUrl('/account')} className="admin-back-link">{copy.account.backToAccount}</Link>
+              <Link href={localizedUrl('/inquiry')} className="account-admin-button">{copy.account.startNewBrief}</Link>
             </div>
           </div>
 

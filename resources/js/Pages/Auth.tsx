@@ -1,5 +1,6 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
+import { localizedUrl } from '../content/siteLanguage';
 
 type PageProps = {
   errors?: Record<string, string>;
@@ -18,7 +19,7 @@ export default function Auth() {
       <Head title={needsAccount ? copy.auth.pageCreateAccount : copy.auth.pageSignIn} />
 
       <div className="auth-shell">
-        <Link href="/" className="auth-brand">
+        <Link href={localizedUrl('/')} className="auth-brand">
           I&amp;I <span>Studio</span>
         </Link>
 
@@ -36,7 +37,7 @@ export default function Auth() {
             </div>
           )}
 
-          <a className="auth-google-button" href="/auth/google">
+          <a className="auth-google-button" href={localizedUrl('/auth/google')}>
             <img className="google-mark" src="/images/google.svg" alt="" aria-hidden="true" />
             {copy.auth.continueWithGoogle}
           </a>

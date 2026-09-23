@@ -1,6 +1,7 @@
 import { Head, Link, usePage } from '@inertiajs/react';
 import type { ReactNode } from 'react';
 import { getUiCopy, useSiteLanguage, type SiteLanguage } from '../../content/uiTranslations';
+import { localizedUrl } from '../../content/siteLanguage';
 
 export type AdminUser = {
   id: number;
@@ -124,8 +125,8 @@ export default function AdminShell({ title, eyebrow, heading, count, activeSecti
               <p>{copy.admin.accessPrefix} {auth.user.email}.</p>
             </div>
             <div className="admin-topbar-actions">
-              <Link href="/account" className="admin-back-link">{copy.admin.profile}</Link>
-              <Link href="/" className="admin-back-link">{copy.admin.openSite}</Link>
+              <Link href={localizedUrl('/account')} className="admin-back-link">{copy.admin.profile}</Link>
+              <Link href={localizedUrl('/')} className="admin-back-link">{copy.admin.openSite}</Link>
             </div>
           </div>
 

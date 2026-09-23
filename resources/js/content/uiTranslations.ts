@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
+import { getSiteLanguageFromDocument, isSiteLanguage, type SiteLanguage } from './siteLanguage';
 
-export type SiteLanguage = 'en' | 'uk' | 'ro';
+export type { SiteLanguage } from './siteLanguage';
 
 type CommonCopy = {
   nav: {
@@ -523,16 +524,8 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
   },
 } as const;
 
-function isSiteLanguage(value: string | null): value is SiteLanguage {
-  return value === 'en' || value === 'uk' || value === 'ro';
-}
-
 export function getSiteLanguage(): SiteLanguage {
-  if (typeof window !== 'undefined' && isSiteLanguage(window.localStorage.getItem('ii_studio_language'))) {
-    return window.localStorage.getItem('ii_studio_language') as SiteLanguage;
-  }
-
-  return 'en';
+  return getSiteLanguageFromDocument();
 }
 
 export function getUiCopy(language: SiteLanguage = getSiteLanguage()) {

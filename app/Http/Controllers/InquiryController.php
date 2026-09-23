@@ -105,9 +105,9 @@ class InquiryController extends Controller
 
         if (! $request->user()) {
             $request->session()->put('pending_inquiry', $data);
-            $request->session()->put('url.intended', route('inquiry'));
+            $request->session()->put('url.intended', $this->localizedRoute($request, 'inquiry.localized'));
 
-            return redirect()->route('login')->with('inquiry_requires_auth', true);
+            return redirect($this->localizedRoute($request, 'login.localized'))->with('inquiry_requires_auth', true);
         }
 
         $inquiry = ProjectInquiry::query()->create([
@@ -119,11 +119,19 @@ class InquiryController extends Controller
 
         $request->session()->forget('pending_inquiry');
 
-        return redirect()->route('inquiry')->with([
+        return redirect($this->localizedRoute($request, 'inquiry.localized'))->with([
             'inquiry_submitted' => true,
             'inquiry_ticket' => sprintf('#II-%04d', $inquiry->id),
             'inquiry_service' => $inquiry->service_type,
             'inquiry_budget' => $inquiry->client_budget,
         ]);
+    }
+
+    private function localizedRoute(Request $request, string $routeName): string
+    {
+        $locale = $request->route('locale') ?: $request->session()->get('site_language', 'en');
+        $urlLocale = $locale === 'uk' ? 'ua' : $locale;
+
+        return route($routeName, ['locale' => $urlLocale]);
     }
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
+import { localizedCurrentUrl, localizedUrl } from '../content/siteLanguage';
 import ChatUnreadBadge from './ChatUnreadBadge';
 
 type AccountSiteHeaderProps = {
@@ -22,7 +23,7 @@ export default function AccountSiteHeader({
   const [languageOpen, setLanguageOpen] = useState(false);
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
-  const languageLabels = { en: 'EN', uk: 'UK', ro: 'RO' } as const;
+  const languageLabels = { en: 'EN', uk: 'UA', ro: 'RO' } as const;
   const switcherRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -51,18 +52,15 @@ export default function AccountSiteHeader({
 
   const selectLanguage = (nextLanguage: string) => {
     setLanguageOpen(false);
-    window.localStorage.setItem('ii_studio_language', nextLanguage);
-    document.documentElement.lang = nextLanguage;
-    window.dispatchEvent(new CustomEvent('ii_studio_language_change', { detail: nextLanguage }));
-    if (typeof (window as any).setLanguage === 'function') {
-      (window as any).setLanguage(nextLanguage);
+    if (nextLanguage === 'en' || nextLanguage === 'uk' || nextLanguage === 'ro') {
+      window.location.assign(localizedCurrentUrl(nextLanguage));
     }
   };
 
   return (
     <header className="site-header account-site-header">
       <div className="container header-container">
-        <a href="/#hero" className="logo">
+        <a href={localizedUrl('/#hero')} className="logo">
           <span className="logo-symbol">
             <svg width={24} height={24} viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <rect x={2} y={2} width={20} height={20} rx={6} fill="#09090b" />
@@ -76,7 +74,7 @@ export default function AccountSiteHeader({
         <div className="header-actions">
           {showProfile && (
             <a
-              href={isAuthenticated ? '/account' : '/login'}
+              href={localizedUrl(isAuthenticated ? '/account' : '/login')}
               className="account-header-link"
               aria-label={isAuthenticated ? copy.common.account : copy.auth.pageSignIn}
               title={isAuthenticated ? copy.common.account : copy.auth.pageSignIn}
@@ -103,7 +101,7 @@ export default function AccountSiteHeader({
             </button>
             <div className="language-menu" role="listbox" aria-label={copy.common.availableLanguages}>
               <button type="button" className={`language-option${language === 'en' ? ' active' : ''}`} onClick={() => selectLanguage('en')} role="option" aria-selected={language === 'en'}>English <span>EN</span></button>
-              <button type="button" className={`language-option${language === 'uk' ? ' active' : ''}`} onClick={() => selectLanguage('uk')} role="option" aria-selected={language === 'uk'}>Українська <span>UK</span></button>
+              <button type="button" className={`language-option${language === 'uk' ? ' active' : ''}`} onClick={() => selectLanguage('uk')} role="option" aria-selected={language === 'uk'}>Українська <span>UA</span></button>
               <button type="button" className={`language-option${language === 'ro' ? ' active' : ''}`} onClick={() => selectLanguage('ro')} role="option" aria-selected={language === 'ro'}>Română <span>RO</span></button>
             </div>
           </div>
