@@ -65,7 +65,7 @@ export default function InquiryDetailModal({
               statusSlot
             ) : (
               <span className={`admin-status admin-status-${inquiry.status}`}>
-                {copy.admin.statuses[inquiry.status] ?? inquiry.status}
+                <span>{copy.admin.statuses[inquiry.status] ?? inquiry.status}</span>
               </span>
             )}
             <button

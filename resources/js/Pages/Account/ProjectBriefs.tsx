@@ -156,7 +156,9 @@ export default function AccountProjectBriefs() {
                           <span className="admin-inquiry-ticket">{inquiry.ticket}</span>
                           <h3>{copy.services[inquiry.service_type] ?? inquiry.service_type}</h3>
                         </div>
-                        <span className={`admin-status admin-status-${inquiry.status}`}>{copy.admin.statuses[inquiry.status] ?? inquiry.status}</span>
+                        <span className={`admin-status admin-status-${inquiry.status}`}>
+                          <span>{copy.admin.statuses[inquiry.status] ?? inquiry.status}</span>
+                        </span>
                       </div>
                       <div className="admin-inquiry-meta">
                         <div className="admin-inquiry-meta-group">
