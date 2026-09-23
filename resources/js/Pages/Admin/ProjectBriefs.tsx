@@ -60,15 +60,9 @@ export default function ProjectBriefs() {
                   <span className="admin-inquiry-ticket">{inquiry.ticket}</span>
                   <h3>{copy.services[inquiry.service_type] ?? inquiry.service_type}</h3>
                 </div>
-                <div onClick={(e) => e.stopPropagation()}>
-                  <AdminStatusSelect
-                    value={inquiry.status}
-                    options={Object.entries(copy.admin.statuses).map(([value, label]) => ({ value, label }))}
-                    onChange={(status) => updateStatus(inquiry, status)}
-                    disabled={updatingInquiryId === inquiry.id}
-                    ariaLabel={`${copy.admin.projectBriefs}: ${inquiry.ticket}`}
-                  />
-                </div>
+                <span className={`admin-status admin-status-${inquiry.status}`}>
+                  {copy.admin.statuses[inquiry.status] ?? inquiry.status}
+                </span>
               </div>
               <div className="admin-inquiry-meta">
                 <span><strong>{inquiry.name}</strong> · {inquiry.email}</span>

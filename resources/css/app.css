@@ -6435,10 +6435,10 @@ html[data-theme="dark"] .account-delete-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 26px;
-  height: 26px;
+  min-height: 28px;
+  height: 28px;
   flex: 0 0 auto;
-  padding: 1px 12px 0;
+  padding: 0 12px;
   border: 1px solid rgba(44, 138, 89, 0.28);
   border-radius: var(--radius-pill);
   background: rgba(44, 138, 89, 0.08);
@@ -6451,6 +6451,8 @@ html[data-theme="dark"] .account-delete-button {
   text-align: center;
   text-transform: uppercase;
   box-sizing: border-box;
+  pointer-events: none;
+  user-select: none;
 }
 
 .admin-status-control {
