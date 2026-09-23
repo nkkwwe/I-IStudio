@@ -128,9 +128,6 @@ export default function InquiryDetailModal({
               <ChatUnreadBadge count={inquiry.unread_count ?? 0} />
             )}
           </button>
-          <button type="button" className="account-modal-button account-modal-button-secondary" onClick={onClose}>
-            {copy.common.close}
-          </button>
         </div>
       </section>
     </div>
