@@ -6704,6 +6704,81 @@ html[data-theme="dark"] .account-delete-button {
   }
 }
 
+/* Inquiry form: keep the builder readable before the phone breakpoint. */
+@media (max-width: 780px) {
+  .inquiry-form-only {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .inquiry-form-only-card {
+    margin-top: 46px;
+  }
+
+  .inquiry-form-grid,
+  .ads-brief-form .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-panel-header {
+    display: grid;
+    gap: 14px;
+  }
+
+  .calculator-total {
+    text-align: left;
+  }
+
+  .calculator-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-summary {
+    position: static;
+  }
+
+  .calculator-options-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .inquiry-form-only {
+    padding: 16px 12px 40px;
+  }
+
+  .inquiry-form-only-card {
+    margin-top: 24px;
+    padding: 22px 14px 18px;
+  }
+
+  .inquiry-form-card .service-selector-tabs {
+    flex-wrap: nowrap;
+    gap: 7px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+
+  .inquiry-form-card .service-selector-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .inquiry-form-card .tab-btn {
+    flex: 0 0 auto;
+  }
+
+  .calculator-options-grid,
+  .ads-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ads-brief-section {
+    padding: 14px 12px;
+  }
+}
+
 @media (max-width: 720px) {
   .account-header-link,
   .header-actions .account-logout {
