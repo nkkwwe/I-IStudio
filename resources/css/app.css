@@ -5393,8 +5393,13 @@ html[data-theme="dark"] .language-switcher:not(.mobile-language-switcher).open .
 }
 
 .ads-brief-section legend {
+  display: table;
   max-width: 100%;
-  padding: 0 8px 0 0;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0 10px;
+  background: var(--bg-subtle);
   color: var(--text-primary);
   font-family: var(--font-display);
   font-size: 1.05rem;
