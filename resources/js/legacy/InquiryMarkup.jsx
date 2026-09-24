@@ -1,6 +1,7 @@
 import AccountSiteHeader from '../Components/AccountSiteHeader';
 import GoogleAdsBrief from '../Components/GoogleAdsBrief';
 import { localizedUrl } from '../content/siteLanguage';
+import { createPortal } from 'react-dom';
 import { useEffect, useMemo, useState } from 'react';
 
 const calculatorCopy = {
@@ -12,6 +13,10 @@ const calculatorCopy = {
     stepExtras: 'Add-ons',
     next: 'Continue',
     back: 'Back',
+    openCalculator: 'Open calculator',
+    closeCalculator: 'Close calculator',
+    applyCalculator: 'Apply selection',
+    configured: 'Configured',
     structureTitle: 'What are we building?',
     structureDescription: 'Start with the format that is closest to your idea.',
     onePage: 'One-page landing',
@@ -49,6 +54,10 @@ const calculatorCopy = {
     stepExtras: 'Додатково',
     next: 'Далі',
     back: 'Назад',
+    openCalculator: 'Відкрити калькулятор',
+    closeCalculator: 'Закрити калькулятор',
+    applyCalculator: 'Застосувати вибір',
+    configured: 'Налаштовано',
     structureTitle: 'Що створюємо?',
     structureDescription: 'Почніть із формату, найближчого до вашої ідеї.',
     onePage: 'Односторінковий лендинг',
@@ -86,6 +95,10 @@ const calculatorCopy = {
     stepExtras: 'Extra',
     next: 'Continuă',
     back: 'Înapoi',
+    openCalculator: 'Deschide calculatorul',
+    closeCalculator: 'Închide calculatorul',
+    applyCalculator: 'Aplică selecția',
+    configured: 'Configurat',
     structureTitle: 'Ce construim?',
     structureDescription: 'Începe cu formatul cel mai apropiat de ideea ta.',
     onePage: 'Landing page cu o pagină',
@@ -156,15 +169,33 @@ export default function InquiryMarkup({
   onToggleTheme,
 }) {
   const copy = calculatorCopy[language] || calculatorCopy.en;
+  const [calculatorOpen, setCalculatorOpen] = useState(false);
   const [calculatorStep, setCalculatorStep] = useState(1);
   const [format, setFormat] = useState(activeService === 'corporate' ? 'multi-page' : 'one-page');
   const [extras, setExtras] = useState({ admin: false, content: false, products: false, account: false });
 
   useEffect(() => {
+    setCalculatorOpen(false);
     setCalculatorStep(1);
     setFormat(activeService === 'corporate' ? 'multi-page' : 'one-page');
     setExtras({ admin: false, content: false, products: false, account: false });
   }, [activeService]);
+
+  useEffect(() => {
+    if (!calculatorOpen) return undefined;
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') setCalculatorOpen(false);
+    };
+
+    document.body.classList.add('calculator-modal-open');
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.body.classList.remove('calculator-modal-open');
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [calculatorOpen]);
 
   const formatOptions = [
     { value: 'one-page', label: copy.onePage, description: copy.onePageDescription, price: 0 },
@@ -238,55 +269,25 @@ export default function InquiryMarkup({
           <GoogleAdsBrief language={language} />
         ) : (
           <>
-      <section className="calculator-panel" aria-labelledby="calculatorTitle">
-        <div className="calculator-panel-header">
-          <div>
-            <span className="calculator-kicker">{copy.kicker}</span>
-            <h2 id="calculatorTitle">{copy.title}</h2>
-            <p>{copy.description}</p>
-          </div>
+      <section className="calculator-launcher" aria-labelledby="calculatorLauncherTitle">
+        <div className="calculator-launcher-copy">
+          <span className="calculator-kicker">{copy.kicker}</span>
+          <h2 id="calculatorLauncherTitle">{copy.title}</h2>
+          <p>{copy.description}</p>
+        </div>
+        <div className="calculator-launcher-actions">
           <div className="calculator-total" aria-live="polite">
             <span>{copy.estimate}</span>
             <strong>{formatPrice(total, language)}</strong>
             <small>{copy.finalNote}</small>
           </div>
+          <button type="button" className="btn btn-primary calculator-open-button" onClick={() => setCalculatorOpen(true)}>{copy.openCalculator}<span aria-hidden="true">→</span></button>
         </div>
-        <div className="calculator-layout">
-          <div className="calculator-builder">
-            <div className="calculator-steps" aria-label={copy.title}>
-              <button type="button" className={calculatorStep === 1 ? 'calculator-step active' : 'calculator-step'} onClick={() => setCalculatorStep(1)}><span>01</span>{copy.stepStructure}</button>
-              <button type="button" className={calculatorStep === 2 ? 'calculator-step active' : 'calculator-step'} onClick={() => setCalculatorStep(2)}><span>02</span>{copy.stepExtras}</button>
-            </div>
-            {calculatorStep === 1 ? (
-              <div className="calculator-step-content">
-                <div className="calculator-section-heading"><h3>{copy.structureTitle}</h3><p>{copy.structureDescription}</p></div>
-                <div className="calculator-options-grid">
-                  {formatOptions.map((option) => (
-                    <OptionCard key={option.value} checked={format === option.value} name="calculator_format" value={option.value} label={option.label} description={option.description} price={option.price} included={copy.included} onChange={() => setFormat(option.value)} />
-                  ))}
-                </div>
-                <button type="button" className="btn btn-primary calculator-next" onClick={() => setCalculatorStep(2)}>{copy.next}<span aria-hidden="true">→</span></button>
-              </div>
-            ) : (
-              <div className="calculator-step-content">
-                <div className="calculator-section-heading"><h3>{copy.extrasTitle}</h3><p>{copy.extrasDescription}</p></div>
-                <div className="calculator-options-list">
-                  {extraOptions.map((option) => (
-                    <OptionCard key={option.value} checked={Boolean(extras[option.value])} name={`calculator_${option.value}`} value="yes" label={option.label} description={option.description} price={option.price} included={copy.included} type="checkbox" onChange={() => toggleExtra(option.value)} />
-                  ))}
-                </div>
-                <button type="button" className="btn btn-secondary calculator-back" onClick={() => setCalculatorStep(1)}><span aria-hidden="true">←</span>{copy.back}</button>
-              </div>
-            )}
-          </div>
-          <aside className="calculator-summary" aria-label={copy.selected}>
-            <div className="calculator-summary-head"><span>{copy.selected}</span><strong>{formatPrice(total, language)}</strong></div>
-            <div className="calculator-summary-list">
-              {selectedOptions.map((option, index) => (
-                <div className="calculator-summary-row" key={`${option.label}-${index}`}><span>{option.label}</span><strong>{option.price ? `+ ${formatPrice(option.price, language)}` : copy.included}</strong></div>
-              ))}
-            </div>
-          </aside>
+        <div className="calculator-selection-preview" aria-label={copy.selected}>
+          <span className="calculator-selection-label">{copy.configured}</span>
+          {selectedOptions.slice(1).map((option, index) => (
+            <span className="calculator-selection-chip" key={`${option.label}-${index}`}>{option.label}</span>
+          ))}
         </div>
       </section>
         <input type="hidden" name="calculator_summary" value={calculatorSummary} readOnly />
@@ -301,6 +302,70 @@ export default function InquiryMarkup({
         <p className="inquiry-form-note" data-i18n="inquiry_form_note">We usually reply within 1–2 hours during working hours.</p>
         <button type="submit" className="btn btn-primary btn-block btn-submit" id="submitBtn"><span data-i18n="form_btn_submit">Send Request</span><svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1={22} y1={2} x2={11} y2={13} /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg></button>
       </form>
+      {calculatorOpen && typeof document !== 'undefined' && createPortal(
+        <div className="calculator-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setCalculatorOpen(false); }}>
+          <section className="calculator-modal" role="dialog" aria-modal="true" aria-labelledby="calculatorModalTitle">
+            <header className="calculator-modal-header">
+              <div className="calculator-modal-heading">
+                <span className="calculator-kicker">{copy.kicker}</span>
+                <h2 id="calculatorModalTitle">{copy.title}</h2>
+                <p>{copy.description}</p>
+              </div>
+              <div className="calculator-modal-header-actions">
+                <div className="calculator-total" aria-live="polite">
+                  <span>{copy.estimate}</span>
+                  <strong>{formatPrice(total, language)}</strong>
+                </div>
+                <button type="button" className="calculator-modal-close" aria-label={copy.closeCalculator} onClick={() => setCalculatorOpen(false)}>×</button>
+              </div>
+            </header>
+            <div className="calculator-modal-body">
+              <div className="calculator-layout">
+                <div className="calculator-builder">
+                  <div className="calculator-steps" aria-label={copy.title}>
+                    <button type="button" className={calculatorStep === 1 ? 'calculator-step active' : 'calculator-step'} onClick={() => setCalculatorStep(1)}><span>01</span>{copy.stepStructure}</button>
+                    <button type="button" className={calculatorStep === 2 ? 'calculator-step active' : 'calculator-step'} onClick={() => setCalculatorStep(2)}><span>02</span>{copy.stepExtras}</button>
+                  </div>
+                  {calculatorStep === 1 ? (
+                    <div className="calculator-step-content">
+                      <div className="calculator-section-heading"><h3>{copy.structureTitle}</h3><p>{copy.structureDescription}</p></div>
+                      <div className="calculator-options-grid">
+                        {formatOptions.map((option) => (
+                          <OptionCard key={option.value} checked={format === option.value} name="calculator_format" value={option.value} label={option.label} description={option.description} price={option.price} included={copy.included} onChange={() => setFormat(option.value)} />
+                        ))}
+                      </div>
+                      <button type="button" className="btn btn-primary calculator-next" onClick={() => setCalculatorStep(2)}>{copy.next}<span aria-hidden="true">→</span></button>
+                    </div>
+                  ) : (
+                    <div className="calculator-step-content">
+                      <div className="calculator-section-heading"><h3>{copy.extrasTitle}</h3><p>{copy.extrasDescription}</p></div>
+                      <div className="calculator-options-list">
+                        {extraOptions.map((option) => (
+                          <OptionCard key={option.value} checked={Boolean(extras[option.value])} name={`calculator_${option.value}`} value="yes" label={option.label} description={option.description} price={option.price} included={copy.included} type="checkbox" onChange={() => toggleExtra(option.value)} />
+                        ))}
+                      </div>
+                      <button type="button" className="btn btn-secondary calculator-back" onClick={() => setCalculatorStep(1)}><span aria-hidden="true">←</span>{copy.back}</button>
+                    </div>
+                  )}
+                </div>
+                <aside className="calculator-summary" aria-label={copy.selected}>
+                  <div className="calculator-summary-head"><span>{copy.selected}</span><strong>{formatPrice(total, language)}</strong></div>
+                  <div className="calculator-summary-list">
+                    {selectedOptions.map((option, index) => (
+                      <div className="calculator-summary-row" key={`${option.label}-${index}`}><span>{option.label}</span><strong>{option.price ? `+ ${formatPrice(option.price, language)}` : copy.included}</strong></div>
+                    ))}
+                  </div>
+                </aside>
+              </div>
+            </div>
+            <footer className="calculator-modal-footer">
+              <span>{copy.finalNote}</span>
+              <button type="button" className="btn btn-primary" onClick={() => setCalculatorOpen(false)}>{copy.applyCalculator}<span aria-hidden="true">✓</span></button>
+            </footer>
+          </section>
+        </div>,
+        document.body,
+      )}
       <div className={`form-feedback-overlay${inquirySubmitted ? ' active' : ''}`} id="feedbackOverlay">
         <div className="feedback-card">
           <div className="feedback-icon"><svg width={48} height={48} viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg></div>
