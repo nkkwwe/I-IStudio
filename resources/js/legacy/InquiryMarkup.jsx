@@ -11,8 +11,6 @@ const calculatorCopy = {
     description: 'Choose the structure and add-ons. The estimate updates automatically.',
     stepStructure: 'Structure',
     stepExtras: 'Add-ons',
-    next: 'Continue',
-    back: 'Back',
     openCalculator: 'Open calculator',
     closeCalculator: 'Close calculator',
     applyCalculator: 'Apply selection',
@@ -52,8 +50,6 @@ const calculatorCopy = {
     description: 'Оберіть структуру та додаткові функції. Оцінка оновлюється автоматично.',
     stepStructure: 'Структура',
     stepExtras: 'Додатково',
-    next: 'Далі',
-    back: 'Назад',
     openCalculator: 'Відкрити калькулятор',
     closeCalculator: 'Закрити калькулятор',
     applyCalculator: 'Застосувати вибір',
@@ -93,8 +89,6 @@ const calculatorCopy = {
     description: 'Alege structura și funcțiile suplimentare. Estimarea se actualizează automat.',
     stepStructure: 'Structură',
     stepExtras: 'Extra',
-    next: 'Continuă',
-    back: 'Înapoi',
     openCalculator: 'Deschide calculatorul',
     closeCalculator: 'Închide calculatorul',
     applyCalculator: 'Aplică selecția',
@@ -334,7 +328,6 @@ export default function InquiryMarkup({
                           <OptionCard key={option.value} checked={format === option.value} name="calculator_format" value={option.value} label={option.label} description={option.description} price={option.price} included={copy.included} onChange={() => setFormat(option.value)} />
                         ))}
                       </div>
-                      <button type="button" className="btn btn-primary calculator-next" onClick={() => setCalculatorStep(2)}>{copy.next}<span aria-hidden="true">→</span></button>
                     </div>
                   ) : (
                     <div className="calculator-step-content">
@@ -344,7 +337,6 @@ export default function InquiryMarkup({
                           <OptionCard key={option.value} checked={Boolean(extras[option.value])} name={`calculator_${option.value}`} value="yes" label={option.label} description={option.description} price={option.price} included={copy.included} type="checkbox" onChange={() => toggleExtra(option.value)} />
                         ))}
                       </div>
-                      <button type="button" className="btn btn-secondary calculator-back" onClick={() => setCalculatorStep(1)}><span aria-hidden="true">←</span>{copy.back}</button>
                     </div>
                   )}
                 </div>
