@@ -98,10 +98,21 @@ class InquiryController extends Controller
             'client_contact' => ['nullable', 'string', 'max:255'],
             'client_budget' => ['nullable', 'string', 'max:120'],
             'project_comment' => ['required', 'string', 'max:10000'],
+            'calculator_summary' => ['nullable', 'string', 'max:10000'],
         ], [
             'client_name.required' => 'Please enter your name.',
             'project_comment.required' => 'Please describe your project or task.',
         ]);
+
+        $calculatorSummary = trim((string) ($data['calculator_summary'] ?? ''));
+        $projectComment = trim($data['project_comment']);
+
+        if ($calculatorSummary !== '') {
+            $projectComment .= "\n\n--- Price calculator example ---\n".$calculatorSummary;
+        }
+
+        $data['project_comment'] = $projectComment;
+        unset($data['calculator_summary']);
 
         if (! $request->user()) {
             $request->session()->put('pending_inquiry', $data);

@@ -579,6 +579,8 @@ function restoreInquiryDraft(form) {
   if (!draft || typeof draft !== 'object') return;
 
   Object.entries(draft).forEach(([name, value]) => {
+    if (name === 'calculator_summary') return;
+
     const field = form.elements.namedItem(name);
     if (field && typeof value === 'string') field.value = value;
   });

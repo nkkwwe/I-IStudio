@@ -5080,6 +5080,285 @@ html[data-theme="dark"] .language-switcher:not(.mobile-language-switcher).open .
   margin-bottom: 30px;
 }
 
+.calculator-panel {
+  margin: 0 0 30px;
+  padding: 20px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+}
+
+.calculator-panel-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 22px;
+}
+
+.calculator-kicker {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+}
+
+.calculator-panel-header h2,
+.calculator-section-heading h3 {
+  margin: 0 0 6px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  letter-spacing: -0.035em;
+}
+
+.calculator-panel-header h2 {
+  font-size: 1.45rem;
+}
+
+.calculator-panel-header p,
+.calculator-section-heading p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.calculator-total {
+  min-width: 155px;
+  padding: 12px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-align: right;
+}
+
+.calculator-total span,
+.calculator-summary-head span {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.calculator-total strong {
+  display: block;
+  margin: 2px 0 4px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+}
+
+.calculator-total small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.67rem;
+  line-height: 1.35;
+}
+
+.calculator-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 0.35fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.calculator-builder,
+.calculator-summary {
+  min-width: 0;
+  padding: 16px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.calculator-steps {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.calculator-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: -1px;
+  padding: 0 4px 10px;
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.calculator-step span {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.calculator-step.active {
+  border-bottom-color: var(--accent-black);
+  color: var(--text-primary);
+}
+
+.calculator-section-heading {
+  margin-bottom: 12px;
+}
+
+.calculator-section-heading h3 {
+  font-size: 1.08rem;
+}
+
+.calculator-options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.calculator-options-list {
+  display: grid;
+  gap: 8px;
+}
+
+.calculator-option {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  gap: 9px;
+  align-items: start;
+  min-width: 0;
+  padding: 11px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.calculator-option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.calculator-option-mark {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  color: var(--text-inverse);
+  font-size: 0.68rem;
+  line-height: 1;
+}
+
+.calculator-option:has(input[type="checkbox"]) .calculator-option-mark {
+  border-radius: 4px;
+}
+
+.calculator-option.selected {
+  background: var(--bg-subtle);
+  border-color: var(--accent-black);
+}
+
+.calculator-option.selected .calculator-option-mark {
+  background: var(--accent-black);
+  border-color: var(--accent-black);
+}
+
+.calculator-option-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.calculator-option-copy strong {
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  line-height: 1.25;
+}
+
+.calculator-option-copy span {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.calculator-option-price {
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.calculator-next,
+.calculator-back {
+  min-height: 38px;
+  margin-top: 14px;
+  padding: 8px 13px;
+  font-size: 0.78rem;
+}
+
+.calculator-next,
+.calculator-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.calculator-summary {
+  position: sticky;
+  top: 18px;
+  background: var(--bg-surface);
+}
+
+.calculator-summary-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: end;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.calculator-summary-head strong {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+}
+
+.calculator-summary-list {
+  display: grid;
+  gap: 10px;
+  padding-top: 12px;
+}
+
+.calculator-summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 0.73rem;
+  line-height: 1.35;
+}
+
+.calculator-summary-row strong {
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
 .inquiry-form-grid {
   gap: 18px;
 }
@@ -5167,6 +5446,31 @@ html[data-theme="dark"] .inquiry-form-card {
 
   .inquiry-form-card .form-group textarea {
     min-height: 290px;
+  }
+
+  .calculator-panel {
+    padding: 14px;
+  }
+
+  .calculator-panel-header {
+    display: grid;
+    gap: 14px;
+  }
+
+  .calculator-total {
+    text-align: left;
+  }
+
+  .calculator-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-summary {
+    position: static;
+  }
+
+  .calculator-options-grid {
+    grid-template-columns: 1fr;
   }
 
   .inquiry-page-footer .footer-bottom {

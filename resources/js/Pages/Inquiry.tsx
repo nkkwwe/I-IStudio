@@ -66,6 +66,7 @@ export default function Inquiry() {
       <InquiryMarkup
         activeService={activeService}
         onServiceChange={setActiveService}
+        language={language}
         isAuthenticated={Boolean(auth?.user)}
         signInLabel={copy.auth.pageSignIn}
         inquirySubmitted={Boolean(flash.inquiry_submitted)}
