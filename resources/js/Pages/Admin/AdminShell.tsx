@@ -20,6 +20,9 @@ export type Inquiry = {
   budget?: string | null;
   service_type: string;
   comment: string;
+  brief_data?: Record<string, unknown> | null;
+  lead_context?: Record<string, unknown> | null;
+  site_audit?: Record<string, unknown> | null;
   status: string;
   created_at?: string | null;
   unread_count?: number;

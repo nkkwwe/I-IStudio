@@ -480,8 +480,7 @@ window.preselectService = function(serviceKey, openModal = true) {
   }
 
   if (targetTab) {
-    tabs.forEach(t => t.classList.remove('active'));
-    targetTab.classList.add('active');
+    targetTab.click();
   }
   if (serviceInput) serviceInput.value = inquiryServiceKey;
 
@@ -533,7 +532,9 @@ function initSmartForm() {
 
   // Form submission & Ticket confirmation
   if (form && overlay) {
-    restoreInquiryDraft(form);
+    if (form.dataset.briefMode !== 'google-ads') {
+      restoreInquiryDraft(form);
+    }
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();

@@ -19,8 +19,20 @@ class ProjectInquiry extends Model
         'client_budget',
         'service_type',
         'project_comment',
+        'brief_data',
+        'lead_context',
+        'site_audit',
         'status',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'brief_data' => 'array',
+            'lead_context' => 'array',
+            'site_audit' => 'array',
+        ];
+    }
 
     public function user(): BelongsTo
     {

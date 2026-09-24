@@ -57,6 +57,9 @@ class InquiryController extends Controller
                 'budget' => $inquiry->client_budget,
                 'service_type' => $inquiry->service_type,
                 'comment' => $inquiry->project_comment,
+                'brief_data' => $inquiry->brief_data,
+                'lead_context' => $inquiry->lead_context,
+                'site_audit' => $inquiry->site_audit,
                 'status' => $inquiry->status,
                 'created_at' => $inquiry->created_at?->toISOString(),
                 'unread_count' => (int) $inquiry->unread_count,
@@ -95,10 +98,14 @@ class InquiryController extends Controller
         $data = $request->validate([
             'service_type' => ['required', 'string', 'in:landing,corporate,redesign,ads,consultation,other'],
             'client_name' => ['required', 'string', 'max:120'],
+            'client_email' => ['required_if:service_type,ads', 'nullable', 'email', 'max:255'],
             'client_contact' => ['nullable', 'string', 'max:255'],
             'client_budget' => ['nullable', 'string', 'max:120'],
             'project_comment' => ['required', 'string', 'max:10000'],
             'calculator_summary' => ['nullable', 'string', 'max:10000'],
+            'brief_data' => ['nullable', 'json', 'max:40000'],
+            'lead_context' => ['nullable', 'json', 'max:10000'],
+            'ads_consent' => ['required_if:service_type,ads', 'accepted'],
         ], [
             'client_name.required' => 'Please enter your name.',
             'project_comment.required' => 'Please describe your project or task.',
@@ -114,7 +121,15 @@ class InquiryController extends Controller
         $data['project_comment'] = $projectComment;
         unset($data['calculator_summary']);
 
-        if (! $request->user()) {
+        $briefData = $this->decodeJson($data['brief_data'] ?? null);
+        $leadContext = $this->decodeJson($data['lead_context'] ?? null);
+        $websiteUrl = trim((string) ($briefData['website_url'] ?? ''));
+        $isAdsBrief = $data['service_type'] === 'ads';
+        $clientEmail = trim((string) ($data['client_email'] ?? ''));
+
+        unset($data['client_email'], $data['brief_data'], $data['lead_context'], $data['ads_consent']);
+
+        if (! $request->user() && ! $isAdsBrief) {
             $request->session()->put('pending_inquiry', $data);
             $request->session()->put('url.intended', $this->localizedRoute($request, 'inquiry.localized'));
 
@@ -123,8 +138,14 @@ class InquiryController extends Controller
 
         $inquiry = ProjectInquiry::query()->create([
             ...$data,
-            'user_id' => $request->user()->id,
-            'client_email' => $request->user()->email,
+            'user_id' => $request->user()?->id,
+            'client_email' => $request->user()?->email ?: $clientEmail,
+            'brief_data' => $briefData,
+            'lead_context' => $leadContext,
+            'site_audit' => $isAdsBrief && $websiteUrl !== '' ? [
+                'status' => 'pending',
+                'url' => $websiteUrl,
+            ] : null,
             'status' => 'new',
         ]);
 
@@ -144,5 +165,14 @@ class InquiryController extends Controller
         $urlLocale = $locale === 'uk' ? 'ua' : $locale;
 
         return route($routeName, ['locale' => $urlLocale]);
+    }
+
+    private function decodeJson(?string $value): ?array
+    {
+        if (! $value) return null;
+
+        $decoded = json_decode($value, true);
+
+        return is_array($decoded) ? $decoded : null;
     }
 }

@@ -3,6 +3,20 @@ import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import ChatUnreadBadge from './ChatUnreadBadge';
 import { formatDate, formatBudget, type Inquiry } from '../Pages/Admin/AdminShell';
 
+function formatBriefKey(key: string): string {
+  return key
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function formatBriefValue(value: unknown): string {
+  if (Array.isArray(value)) return value.join(', ');
+  if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+  if (value === null || value === undefined || value === '') return '';
+
+  return String(value);
+}
+
 type InquiryDetailModalProps = {
   inquiry: Inquiry;
   currentRole: 'admin' | 'user';
@@ -46,6 +60,11 @@ export default function InquiryDetailModal({
 
   const serviceTitle = copy.services[inquiry.service_type] ?? inquiry.service_type;
   const formattedBudget = formatBudget(inquiry.budget);
+  const briefRows = inquiry.brief_data
+    ? Object.entries(inquiry.brief_data)
+      .filter(([key, value]) => key !== 'consent' && formatBriefValue(value) !== '')
+      .map(([key, value]) => ({ label: formatBriefKey(key), value: formatBriefValue(value) }))
+    : [];
 
   return (
     <div className="inquiry-detail-backdrop" onMouseDown={handleBackdropMouseDown}>
@@ -116,6 +135,27 @@ export default function InquiryDetailModal({
             {inquiry.comment ? inquiry.comment : <em>{copy.admin.noDescription}</em>}
           </div>
         </div>
+
+        {briefRows.length > 0 && (
+          <div className="inquiry-detail-brief-section">
+            <span className="inquiry-detail-comment-label">Google Ads brief</span>
+            <div className="inquiry-detail-brief-grid">
+              {briefRows.map((row) => (
+                <div className="inquiry-detail-brief-row" key={row.label}>
+                  <span>{row.label}</span>
+                  <strong>{row.value}</strong>
+                </div>
+              ))}
+            </div>
+            {inquiry.lead_context && (
+              <div className="inquiry-detail-context">
+                <span>Source: {formatBriefValue(inquiry.lead_context.source)}</span>
+                <span>Device: {formatBriefValue(inquiry.lead_context.device)}</span>
+                {inquiry.site_audit && <span>Site audit: {formatBriefValue(inquiry.site_audit.status)}</span>}
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="inquiry-detail-footer">
           <button type="button" className="inquiry-detail-chat-btn" onClick={onOpenChat}>

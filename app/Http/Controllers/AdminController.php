@@ -73,6 +73,9 @@ class AdminController extends Controller
                 'budget' => $inquiry->client_budget,
                 'service_type' => $inquiry->service_type,
                 'comment' => $inquiry->project_comment,
+                'brief_data' => $inquiry->brief_data,
+                'lead_context' => $inquiry->lead_context,
+                'site_audit' => $inquiry->site_audit,
                 'status' => $inquiry->status,
                 'created_at' => $inquiry->created_at?->toISOString(),
                 'user' => $inquiry->user ? [

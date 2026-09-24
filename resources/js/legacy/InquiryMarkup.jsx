@@ -1,4 +1,5 @@
 import AccountSiteHeader from '../Components/AccountSiteHeader';
+import GoogleAdsBrief from '../Components/GoogleAdsBrief';
 import { localizedUrl } from '../content/siteLanguage';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -210,8 +211,17 @@ export default function InquiryMarkup({
       <div className="inquiry-form-header">
         <div>
           <span className="form-eyebrow" data-i18n="inquiry_eyebrow">[ PROJECT BRIEF / 2 MIN ]</span>
-          <h1 id="inquiryPageTitle" data-i18n-html="form_title">Get in Touch with I&amp;I Studio</h1>
-          <p data-i18n="form_desc">Leave your contacts and describe what you have in mind.</p>
+          {activeService === 'ads' ? (
+            <>
+              <h1 id="inquiryPageTitle">{language === 'uk' ? 'Запуск Google Ads' : 'Launch Google Ads'}</h1>
+              <p>{language === 'uk' ? 'Заповніть короткий бриф — технічні речі ми перевіримо самі.' : 'Complete the short brief — we will check the technical details ourselves.'}</p>
+            </>
+          ) : (
+            <>
+              <h1 id="inquiryPageTitle" data-i18n-html="form_title">Get in Touch with I&amp;I Studio</h1>
+              <p data-i18n="form_desc">Leave your contacts and describe what you have in mind.</p>
+            </>
+          )}
         </div>
       </div>
       <div className="service-selector-tabs" id="serviceTabs">
@@ -222,6 +232,12 @@ export default function InquiryMarkup({
         <button type="button" className={activeService === 'consultation' ? 'tab-btn active' : 'tab-btn'} data-service="consultation" data-i18n="tab_consultation" onClick={() => onServiceChange('consultation')}>Consultation</button>
         <button type="button" className={activeService === 'other' ? 'tab-btn active' : 'tab-btn'} data-service="other" data-i18n="tab_other" onClick={() => onServiceChange('other')}>Other</button>
       </div>
+      <form id="projectForm" className="smart-form" action={localizedUrl('/inquiry')} method="post" data-authenticated={isAuthenticated ? 'true' : 'false'} data-brief-mode={activeService === 'ads' ? 'google-ads' : 'generic'}>
+        <input type="hidden" name="service_type" id="serviceTypeInput" defaultValue={activeService} />
+        {activeService === 'ads' ? (
+          <GoogleAdsBrief language={language} />
+        ) : (
+          <>
       <section className="calculator-panel" aria-labelledby="calculatorTitle">
         <div className="calculator-panel-header">
           <div>
@@ -273,8 +289,6 @@ export default function InquiryMarkup({
           </aside>
         </div>
       </section>
-      <form id="projectForm" className="smart-form" action={localizedUrl('/inquiry')} method="post" data-authenticated={isAuthenticated ? 'true' : 'false'}>
-        <input type="hidden" name="service_type" id="serviceTypeInput" defaultValue={activeService} />
         <input type="hidden" name="calculator_summary" value={calculatorSummary} readOnly />
         <div className="form-grid-2 inquiry-form-grid">
           <div className="form-group"><label htmlFor="clientName" data-i18n-html="form_name_label">Your Name <span className="req">*</span></label><input type="text" id="clientName" name="client_name" placeholder="Alex" data-i18n-placeholder="form_name_ph" required /></div>
@@ -282,6 +296,8 @@ export default function InquiryMarkup({
         </div>
         <div className="form-group"><label htmlFor="clientBudget" data-i18n="form_budget_label">Proposed budget / payment amount (optional)</label><input type="text" id="clientBudget" name="client_budget" placeholder="e.g. $500, $1,000, 20,000 ₴ or your offer" data-i18n-placeholder="form_budget_ph" /></div>
         <div className="form-group project-comment-group"><label htmlFor="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span className="req">*</span></label><textarea id="projectComment" name="project_comment" rows={8} placeholder="Write in your own words: what your company does, what you want to achieve, any reference links, questions, or your approximate budget. We'll reply quickly with a concrete proposal." data-i18n-placeholder="form_comment_ph" required defaultValue={""} /></div>
+          </>
+        )}
         <p className="inquiry-form-note" data-i18n="inquiry_form_note">We usually reply within 1–2 hours during working hours.</p>
         <button type="submit" className="btn btn-primary btn-block btn-submit" id="submitBtn"><span data-i18n="form_btn_submit">Send Request</span><svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1={22} y1={2} x2={11} y2={13} /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg></button>
       </form>
