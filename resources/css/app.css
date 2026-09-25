@@ -5980,10 +5980,12 @@ html[data-theme="dark"] .inquiry-form-card {
   color: var(--text-inverse);
 }
 
-.inquiry-cta-card .action-service-pill.active:hover {
-  background: var(--accent-black);
-  border-color: var(--accent-black);
-  color: var(--text-inverse);
+@media (hover: hover) and (pointer: fine) {
+  .inquiry-cta-card .action-service-pill.active:hover {
+    background: var(--accent-black);
+    border-color: var(--accent-black);
+    color: var(--text-inverse);
+  }
 }
 
 .goal-pill-number {
@@ -8536,5 +8538,80 @@ html[data-theme="dark"] .inquiry-detail-modal {
 
   .site-footer .footer-nav {
     justify-content: center;
+  }
+}
+
+/* On phones, every dialog uses the full viewport and scrolls within its content. */
+@media (max-width: 640px) {
+  .account-modal-backdrop,
+  .inquiry-detail-backdrop,
+  .inquiry-chat-backdrop,
+  .calculator-modal-backdrop,
+  .modal-backdrop {
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: 0;
+  }
+
+  .account-modal-backdrop,
+  .inquiry-detail-backdrop,
+  .modal-backdrop {
+    place-items: stretch;
+  }
+
+  .inquiry-chat-backdrop,
+  .calculator-modal-backdrop,
+  .modal-backdrop {
+    align-items: stretch;
+    justify-content: stretch;
+  }
+
+  .account-modal,
+  .inquiry-detail-modal,
+  .inquiry-chat-modal,
+  .calculator-modal,
+  .modal-card {
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100vh;
+    min-height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .account-modal,
+  .inquiry-detail-modal {
+    max-width: none;
+    padding: calc(22px + env(safe-area-inset-top)) 18px calc(22px + env(safe-area-inset-bottom));
+  }
+
+  .inquiry-chat-modal,
+  .calculator-modal {
+    max-width: none;
+  }
+
+  .modal-card {
+    max-width: none;
+    overflow-y: auto;
+    padding: calc(24px + env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom));
+  }
+
+  .modal-backdrop.active .modal-card {
+    transform: none;
+  }
+
+  .form-feedback-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    border-radius: 0;
+    padding: calc(24px + env(safe-area-inset-top)) 18px calc(24px + env(safe-area-inset-bottom));
   }
 }
