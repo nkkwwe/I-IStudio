@@ -6123,103 +6123,6 @@ html[data-theme="dark"] .inquiry-form-card {
   text-transform: uppercase;
 }
 
-.case-visual-window {
-  position: relative;
-  width: min(92%, 280px);
-  margin: 38px auto 0;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 12px 12px 5px 5px;
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 18px 30px -20px rgba(0, 0, 0, 0.75);
-  transform: rotate(-2deg);
-}
-
-.case-visual-business .case-visual-window {
-  transform: rotate(1.5deg);
-}
-
-.case-visual-ads .case-visual-window {
-  transform: rotate(-1deg);
-}
-
-.case-window-bar {
-  display: flex;
-  gap: 4px;
-  padding: 7px 9px;
-  background: #e7e8eb;
-}
-
-.case-window-bar span {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #9ca3af;
-}
-
-.case-window-content {
-  padding: 16px;
-}
-
-.case-window-line {
-  width: 42%;
-  height: 6px;
-  margin-bottom: 7px;
-  border-radius: 99px;
-  background: #c7cbd3;
-}
-
-.case-window-line-long {
-  width: 72%;
-  height: 10px;
-  background: #4b5563;
-}
-
-.case-window-blocks {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 7px;
-  margin-top: 16px;
-}
-
-.case-window-blocks span {
-  display: block;
-  height: 28px;
-  border-radius: 5px;
-  background: #dce2e9;
-}
-
-.case-window-blocks span:nth-child(2) {
-  background: #b8d7ff;
-}
-
-.case-window-blocks span:nth-child(3) {
-  background: #c4f1df;
-}
-
-.case-window-chart {
-  display: flex;
-  align-items: end;
-  gap: 6px;
-  height: 42px;
-  margin-top: 16px;
-  padding: 0 8px;
-  border-bottom: 1px solid #d3d7de;
-}
-
-.case-window-chart i {
-  display: block;
-  width: 18%;
-  height: 35%;
-  border-radius: 4px 4px 0 0;
-  background: #a8b7ff;
-}
-
-.case-window-chart i:nth-child(2) { height: 58%; background: #8ea3ff; }
-.case-window-chart i:nth-child(3) { height: 45%; background: #6f87ff; }
-.case-window-chart i:nth-child(4) { height: 78%; background: #526cff; }
-.case-window-chart i:nth-child(5) { height: 92%; background: #3451ed; }
-
 .case-visual-ecommerce {
   background: linear-gradient(135deg, #edf5ff 0%, #dfe8ff 100%);
 }
@@ -6232,80 +6135,18 @@ html[data-theme="dark"] .inquiry-form-card {
   background: linear-gradient(135deg, #e9fbf5 0%, #d2f2e5 100%);
 }
 
-.case-device-1 {
-  position: relative;
-  z-index: 1;
-  margin-bottom: 7px;
-}
-
-.case-device-base {
+.case-visual-art {
   position: absolute;
-  right: 10%;
-  bottom: 9px;
-  left: 10%;
-  z-index: 0;
-  height: 7px;
-  border-radius: 999px;
-  background: #8e97a6;
-  box-shadow: 0 5px 8px -5px rgba(0, 0, 0, 0.7);
-  transform: perspective(80px) rotateX(22deg);
+  inset: 52px 0 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  pointer-events: none;
 }
 
-.case-device-2 {
-  width: 126px;
-  margin-top: 20px;
-  border: 6px solid #20242d;
-  border-radius: 24px;
-  background: #f7f8fa;
-  box-shadow: 0 18px 30px -18px rgba(23, 28, 39, 0.85);
-  transform: rotate(3deg);
-}
-
-.case-device-2::before {
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  width: 32px;
-  height: 4px;
-  border-radius: 99px;
-  background: #343a46;
-  content: '';
-  transform: translateX(-50%);
-}
-
-.case-device-2::after {
-  position: absolute;
-  bottom: 6px;
-  left: 50%;
-  width: 28px;
-  height: 3px;
-  border-radius: 99px;
-  background: #687181;
-  content: '';
-  transform: translateX(-50%);
-}
-
-.case-device-2 .case-window-bar {
-  padding: 14px 9px 7px;
-}
-
-.case-device-2 .case-window-content {
-  padding: 12px;
-}
-
-.case-device-2 .case-window-blocks {
-  gap: 5px;
-  margin-top: 11px;
-}
-
-.case-device-2 .case-window-blocks span {
-  height: 20px;
-}
-
-.case-device-2 .case-window-chart {
-  height: 32px;
-  margin-top: 11px;
-}
+.case-art-ecommerce { background-image: url('/images/case-studies/ecommerce-light.webp'); }
+.case-art-business { background-image: url('/images/case-studies/business-light.webp'); }
+.case-art-ads { background-image: url('/images/case-studies/ads-light.webp'); }
 
 .advantage-card-top {
   display: flex;
@@ -6512,85 +6353,9 @@ html[data-theme="dark"] .case-visual-ads {
   background: linear-gradient(135deg, #182926 0%, #213832 100%);
 }
 
-html[data-theme="dark"] .case-visual-window {
-  border-color: #3b4552;
-  background: #1b2027;
-  box-shadow: 0 18px 30px -20px rgba(0, 0, 0, 0.92);
-}
-
-html[data-theme="dark"] .case-window-bar {
-  background: #252b33;
-}
-
-html[data-theme="dark"] .case-window-bar span {
-  background: #737d8b;
-}
-
-html[data-theme="dark"] .case-window-line {
-  background: #697587;
-}
-
-html[data-theme="dark"] .case-window-line-long {
-  background: #b3bdca;
-}
-
-html[data-theme="dark"] .case-window-blocks span {
-  background: #3a4654;
-}
-
-html[data-theme="dark"] .case-window-blocks span:nth-child(2) {
-  background: #4a6383;
-}
-
-html[data-theme="dark"] .case-window-blocks span:nth-child(3) {
-  background: #3f665a;
-}
-
-html[data-theme="dark"] .case-window-chart {
-  border-bottom-color: #3b4552;
-}
-
-html[data-theme="dark"] .case-window-chart i,
-html[data-theme="dark"] .case-window-chart i:nth-child(2),
-html[data-theme="dark"] .case-window-chart i:nth-child(3),
-html[data-theme="dark"] .case-window-chart i:nth-child(4),
-html[data-theme="dark"] .case-window-chart i:nth-child(5) {
-  background: #6276ad;
-}
-
-html[data-theme="dark"] .case-window-chart i:nth-child(2) {
-  background: #5c709f;
-}
-
-html[data-theme="dark"] .case-window-chart i:nth-child(3) {
-  background: #536895;
-}
-
-html[data-theme="dark"] .case-window-chart i:nth-child(4) {
-  background: #4b6090;
-}
-
-html[data-theme="dark"] .case-window-chart i:nth-child(5) {
-  background: #435787;
-}
-
-html[data-theme="dark"] .case-device-2 {
-  border-color: #101319;
-  background: #15191f;
-  box-shadow: 0 18px 30px -18px rgba(0, 0, 0, 0.95);
-}
-
-html[data-theme="dark"] .case-device-2::before {
-  background: #697383;
-}
-
-html[data-theme="dark"] .case-device-2::after {
-  background: #596473;
-}
-
-html[data-theme="dark"] .case-device-base {
-  background: #56606d;
-}
+html[data-theme="dark"] .case-art-ecommerce { background-image: url('/images/case-studies/ecommerce-dark.webp'); }
+html[data-theme="dark"] .case-art-business { background-image: url('/images/case-studies/business-dark.webp'); }
+html[data-theme="dark"] .case-art-ads { background-image: url('/images/case-studies/ads-dark.webp'); }
 
 /* Account workspace: keep the private header focused on account controls. */
 .account-site-header .header-actions {

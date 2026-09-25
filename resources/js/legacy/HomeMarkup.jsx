@@ -10,9 +10,9 @@ const serviceGoals = [
 ];
 
 const cases = [
-  { key: '1', category: 'ecommerce', metric: '-38%', metricKey: 'case_1_metric', className: 'case-visual-ecommerce' },
-  { key: '2', category: 'business', metric: '2.6x', metricKey: 'case_2_metric', className: 'case-visual-business' },
-  { key: '3', category: 'advertising', metric: '3.9x', metricKey: 'case_3_metric', className: 'case-visual-ads' },
+  { key: '1', category: 'ecommerce', metric: '-38%', metricKey: 'case_1_metric', className: 'case-visual-ecommerce', art: 'ecommerce' },
+  { key: '2', category: 'business', metric: '2.6x', metricKey: 'case_2_metric', className: 'case-visual-business', art: 'business' },
+  { key: '3', category: 'advertising', metric: '3.9x', metricKey: 'case_3_metric', className: 'case-visual-ads', art: 'ads' },
 ];
 
 const workflowSteps = [
@@ -183,16 +183,7 @@ function CaseVisual({ item }) {
         <strong>{item.metric}</strong>
         <span data-i18n={item.metricKey + '_label'}>Lead Cost</span>
       </div>
-      <div className={'case-visual-window case-device-' + item.key}>
-        <div className="case-window-bar"><span /><span /><span /></div>
-        <div className="case-window-content">
-          <div className="case-window-line case-window-line-long" />
-          <div className="case-window-line" />
-          <div className="case-window-blocks"><span /><span /><span /></div>
-          <div className="case-window-chart"><i /><i /><i /><i /><i /></div>
-        </div>
-      </div>
-      {item.key === '1' && <span className="case-device-base" aria-hidden="true" />}
+      <div className={'case-visual-art case-art-' + item.art} aria-hidden="true" />
     </div>
   );
 }
