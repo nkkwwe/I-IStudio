@@ -8541,9 +8541,8 @@ html[data-theme="dark"] .inquiry-detail-modal {
   }
 }
 
-/* On phones, every dialog uses the full viewport and scrolls within its content. */
+/* On phones, long dialogs use the viewport while short account confirmations stay compact. */
 @media (max-width: 640px) {
-  .account-modal-backdrop,
   .inquiry-detail-backdrop,
   .inquiry-chat-backdrop,
   .calculator-modal-backdrop,
@@ -8553,7 +8552,6 @@ html[data-theme="dark"] .inquiry-detail-modal {
     padding: 0;
   }
 
-  .account-modal-backdrop,
   .inquiry-detail-backdrop,
   .modal-backdrop {
     place-items: stretch;
@@ -8566,7 +8564,6 @@ html[data-theme="dark"] .inquiry-detail-modal {
     justify-content: stretch;
   }
 
-  .account-modal,
   .inquiry-detail-modal,
   .inquiry-chat-modal,
   .calculator-modal,
@@ -8582,7 +8579,6 @@ html[data-theme="dark"] .inquiry-detail-modal {
     border-radius: 0;
   }
 
-  .account-modal,
   .inquiry-detail-modal {
     max-width: none;
     padding: calc(22px + env(safe-area-inset-top)) 18px calc(22px + env(safe-area-inset-bottom));
@@ -8591,6 +8587,22 @@ html[data-theme="dark"] .inquiry-detail-modal {
   .inquiry-chat-modal,
   .calculator-modal {
     max-width: none;
+  }
+
+  .account-modal-backdrop {
+    place-items: center;
+    padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+
+  .account-modal {
+    width: min(100%, 440px);
+    height: auto;
+    min-height: 0;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
+    padding: 22px 18px;
+    border: 1px solid var(--border-light);
+    border-radius: 18px;
   }
 
   .modal-card {
