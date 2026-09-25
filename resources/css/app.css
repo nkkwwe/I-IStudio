@@ -6099,12 +6099,19 @@ html[data-theme="dark"] .inquiry-form-card {
 
 .case-metric-overlay {
   position: absolute;
-  top: 18px;
-  left: 18px;
+  top: 14px;
+  left: 14px;
   z-index: 2;
   display: flex;
   flex-direction: column;
   gap: 3px;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--bg-surface) 90%, transparent);
+  box-shadow: 0 8px 22px rgba(10, 15, 25, 0.12);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .case-metric-overlay strong {
@@ -6137,17 +6144,16 @@ html[data-theme="dark"] .inquiry-form-card {
 
 .case-visual-art {
   position: absolute;
-  inset: 80px 12px 12px;
+  inset: 0;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   pointer-events: none;
 }
 
 .case-art-ecommerce { background-image: url('/images/case-studies/ecommerce-light.webp'); }
 .case-art-business {
   background-image: url('/images/case-studies/business-light.webp');
-  background-size: contain;
 }
 .case-art-ads { background-image: url('/images/case-studies/ads-light.webp'); }
 
