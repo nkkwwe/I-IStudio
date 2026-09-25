@@ -6137,7 +6137,7 @@ html[data-theme="dark"] .inquiry-form-card {
 
 .case-visual-art {
   position: absolute;
-  inset: 52px 0 0;
+  inset: 80px 12px 12px;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -6145,7 +6145,10 @@ html[data-theme="dark"] .inquiry-form-card {
 }
 
 .case-art-ecommerce { background-image: url('/images/case-studies/ecommerce-light.webp'); }
-.case-art-business { background-image: url('/images/case-studies/business-light.webp'); }
+.case-art-business {
+  background-image: url('/images/case-studies/business-light.webp');
+  background-size: contain;
+}
 .case-art-ads { background-image: url('/images/case-studies/ads-light.webp'); }
 
 .advantage-card-top {
