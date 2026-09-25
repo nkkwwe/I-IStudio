@@ -1,5 +1,5 @@
 import { router, usePage } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import InquiryChatModal from '../../Components/InquiryChatModal';
 import InquiryDetailModal from '../../Components/InquiryDetailModal';
@@ -15,8 +15,20 @@ export default function ProjectBriefs() {
   const [updatingInquiryId, setUpdatingInquiryId] = useState<number | null>(null);
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
+  const isInquiryModalOpen = Boolean(selectedInquiry || activeChatInquiry);
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
+
+  useEffect(() => {
+    if (!isInquiryModalOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isInquiryModalOpen]);
 
   const updateStatus = (inquiry: Inquiry, status: string) => {
     setUpdatingInquiryId(inquiry.id);
@@ -78,41 +90,54 @@ export default function ProjectBriefs() {
           ))}
         </div>
       )}
-      {selectedInquiry && (
-        <InquiryDetailModal
-          inquiry={selectedInquiry}
-          currentRole="admin"
-          onClose={() => setSelectedInquiry(null)}
-          onOpenChat={() => {
-            const inq = selectedInquiry;
-            setSelectedInquiry(null);
-            setActiveChatInquiry(inq);
+      {isInquiryModalOpen && (
+        <div
+          className="inquiry-modal-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setSelectedInquiry(null);
+              setActiveChatInquiry(null);
+            }
           }}
-          statusSlot={
-            <div onClick={(e) => e.stopPropagation()}>
-              <AdminStatusSelect
-                value={selectedInquiry.status}
-                options={Object.entries(copy.admin.statuses).map(([value, label]) => ({ value, label }))}
-                onChange={(status) => {
-                  updateStatus(selectedInquiry, status);
-                  setSelectedInquiry((prev) => prev ? { ...prev, status } : null);
-                }}
-                disabled={updatingInquiryId === selectedInquiry.id}
-                ariaLabel={`${copy.admin.projectBriefs}: ${selectedInquiry.ticket}`}
-              />
-            </div>
-          }
-        />
-      )}
-      {activeChatInquiry && (
-        <InquiryChatModal
-          inquiryId={activeChatInquiry.id}
-          ticket={activeChatInquiry.ticket}
-          title={copy.services[activeChatInquiry.service_type] ?? activeChatInquiry.service_type}
-          endpoint={`/admin/project-briefs/${activeChatInquiry.id}/messages`}
-          currentRole="admin"
-          onClose={() => setActiveChatInquiry(null)}
-        />
+        >
+          {selectedInquiry && (
+            <InquiryDetailModal
+              inquiry={selectedInquiry}
+              currentRole="admin"
+              onClose={() => setSelectedInquiry(null)}
+              onOpenChat={() => {
+                const inq = selectedInquiry;
+                setSelectedInquiry(null);
+                setActiveChatInquiry(inq);
+              }}
+              statusSlot={
+                <div onClick={(e) => e.stopPropagation()}>
+                  <AdminStatusSelect
+                    value={selectedInquiry.status}
+                    options={Object.entries(copy.admin.statuses).map(([value, label]) => ({ value, label }))}
+                    onChange={(status) => {
+                      updateStatus(selectedInquiry, status);
+                      setSelectedInquiry((prev) => prev ? { ...prev, status } : null);
+                    }}
+                    disabled={updatingInquiryId === selectedInquiry.id}
+                    ariaLabel={`${copy.admin.projectBriefs}: ${selectedInquiry.ticket}`}
+                  />
+                </div>
+              }
+            />
+          )}
+          {activeChatInquiry && (
+            <InquiryChatModal
+              inquiryId={activeChatInquiry.id}
+              ticket={activeChatInquiry.ticket}
+              title={copy.services[activeChatInquiry.service_type] ?? activeChatInquiry.service_type}
+              endpoint={`/admin/project-briefs/${activeChatInquiry.id}/messages`}
+              currentRole="admin"
+              onClose={() => setActiveChatInquiry(null)}
+            />
+          )}
+        </div>
       )}
     </AdminShell>
   );

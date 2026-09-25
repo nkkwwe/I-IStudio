@@ -42,21 +42,12 @@ export default function InquiryDetailModal({
       }
     };
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', handleKeyDown);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [onClose]);
-
-  const handleBackdropMouseDown = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) {
-      onClose();
-    }
-  };
 
   const serviceTitle = copy.services[inquiry.service_type] ?? inquiry.service_type;
   const formattedBudget = formatBudget(inquiry.budget);
@@ -67,8 +58,7 @@ export default function InquiryDetailModal({
     : [];
 
   return (
-    <div className="inquiry-detail-backdrop" onMouseDown={handleBackdropMouseDown}>
-      <section
+    <section
         className="inquiry-detail-modal"
         role="dialog"
         aria-modal="true"
@@ -169,7 +159,6 @@ export default function InquiryDetailModal({
             )}
           </button>
         </div>
-      </section>
-    </div>
+    </section>
   );
 }

@@ -7663,7 +7663,7 @@ html[data-theme="dark"] .account-delete-button {
 /* ==========================================================================
    Project Brief Detail Modal
    ========================================================================== */
-.inquiry-detail-backdrop {
+.inquiry-modal-backdrop {
   position: fixed;
   inset: 0;
   z-index: 1100;
@@ -8543,7 +8543,7 @@ html[data-theme="dark"] .inquiry-detail-modal {
 
 /* On phones, long dialogs use the viewport while short account confirmations stay compact. */
 @media (max-width: 640px) {
-  .inquiry-detail-backdrop,
+  .inquiry-modal-backdrop,
   .inquiry-chat-backdrop,
   .calculator-modal-backdrop,
   .modal-backdrop {
@@ -8552,7 +8552,7 @@ html[data-theme="dark"] .inquiry-detail-modal {
     padding: 0;
   }
 
-  .inquiry-detail-backdrop,
+  .inquiry-modal-backdrop,
   .modal-backdrop {
     place-items: stretch;
   }

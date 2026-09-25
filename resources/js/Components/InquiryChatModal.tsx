@@ -112,9 +112,6 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   useEffect(() => {
     void loadMessages();
 
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
     const handleEscape = (event: globalThis.KeyboardEvent) => {
       if (event.key !== 'Escape') return;
 
@@ -130,7 +127,6 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     const refreshTimer = window.setInterval(() => void loadMessages(false), 5000);
 
     return () => {
-      document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', handleEscape);
       window.clearInterval(refreshTimer);
     };
@@ -196,13 +192,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   };
 
   return (
-    <div
-      className="inquiry-chat-backdrop"
-      role="presentation"
-      onMouseDown={(event) => {
-        if (event.target === event.currentTarget) onClose();
-      }}
-    >
+    <>
       <section className="inquiry-chat-modal" role="dialog" aria-modal="true" aria-labelledby={`inquiry-chat-title-${inquiryId}`}>
         <header className="inquiry-chat-header">
           <div>
@@ -335,6 +325,6 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
           <img src={imagePreview.url} alt={imagePreview.name} />
         </div>
       )}
-    </div>
+    </>
   );
 }

@@ -21,6 +21,18 @@ export default function AccountProjectBriefs() {
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
   const [isDark, setIsDark] = useState(false);
   const logoutForm = useForm({});
+  const isInquiryModalOpen = Boolean(selectedInquiry || activeChatInquiry);
+
+  useEffect(() => {
+    if (!isInquiryModalOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isInquiryModalOpen]);
 
   useEffect(() => {
     setIsDark(document.documentElement.dataset.theme === 'dark');
@@ -183,28 +195,41 @@ export default function AccountProjectBriefs() {
                 })}
               </div>
             )}
-            {selectedInquiry && (
-              <InquiryDetailModal
-                inquiry={selectedInquiry}
-                currentRole="user"
-                onClose={() => setSelectedInquiry(null)}
-                onOpenChat={() => {
-                  const inq = selectedInquiry;
-                  setSelectedInquiry(null);
-                  setActiveChatInquiry(inq);
+            {isInquiryModalOpen && (
+              <div
+                className="inquiry-modal-backdrop"
+                role="presentation"
+                onMouseDown={(event) => {
+                  if (event.target === event.currentTarget) {
+                    setSelectedInquiry(null);
+                    setActiveChatInquiry(null);
+                  }
                 }}
-              />
-            )}
-            {activeChatInquiry && (
-              <InquiryChatModal
-                inquiryId={activeChatInquiry.id}
-                ticket={activeChatInquiry.ticket}
-                title={copy.services[activeChatInquiry.service_type] ?? activeChatInquiry.service_type}
-                endpoint={`/account/project-briefs/${activeChatInquiry.id}/messages`}
-                currentRole="user"
-                onRead={() => markInquiryRead(activeChatInquiry.id)}
-                onClose={() => setActiveChatInquiry(null)}
-              />
+              >
+                {selectedInquiry && (
+                  <InquiryDetailModal
+                    inquiry={selectedInquiry}
+                    currentRole="user"
+                    onClose={() => setSelectedInquiry(null)}
+                    onOpenChat={() => {
+                      const inq = selectedInquiry;
+                      setSelectedInquiry(null);
+                      setActiveChatInquiry(inq);
+                    }}
+                  />
+                )}
+                {activeChatInquiry && (
+                  <InquiryChatModal
+                    inquiryId={activeChatInquiry.id}
+                    ticket={activeChatInquiry.ticket}
+                    title={copy.services[activeChatInquiry.service_type] ?? activeChatInquiry.service_type}
+                    endpoint={`/account/project-briefs/${activeChatInquiry.id}/messages`}
+                    currentRole="user"
+                    onRead={() => markInquiryRead(activeChatInquiry.id)}
+                    onClose={() => setActiveChatInquiry(null)}
+                  />
+                )}
+              </div>
             )}
           </section>
         </div>
