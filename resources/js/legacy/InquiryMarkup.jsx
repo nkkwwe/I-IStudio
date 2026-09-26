@@ -119,6 +119,7 @@ export default function InquiryMarkup({
   onServiceChange,
   language = 'en',
   isAuthenticated = false,
+  userName = '',
   inquirySubmitted = false,
   inquiryTicket = '#II-0000',
   inquiryServiceLabel = 'Landing Page',
@@ -187,6 +188,7 @@ export default function InquiryMarkup({
         onToggleTheme={onToggleTheme}
         showProfile={true}
         isAuthenticated={isAuthenticated}
+        userInitial={userName?.trim()?.charAt(0)?.toLocaleUpperCase() || 'A'}
         unreadChatCount={unreadChatCount}
       />
       <main className="inquiry-form-only">

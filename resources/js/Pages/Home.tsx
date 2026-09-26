@@ -7,7 +7,7 @@ import { useChatUnreadCount } from '../Components/ChatUnreadBadge';
 
 type PageProps = {
   auth?: {
-    user?: { id: number } | null;
+    user?: { id: number; name?: string | null } | null;
     unread_chat_count?: number;
   };
 };
@@ -32,6 +32,7 @@ export default function Home() {
       </Head>
       <HomeMarkup
         isAuthenticated={Boolean(auth?.user)}
+        userName={auth?.user?.name ?? ''}
         signInLabel={copy.auth.pageSignIn}
         unreadChatCount={unreadChatCount}
       />

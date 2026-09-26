@@ -11,7 +11,7 @@ type ServiceKey = (typeof serviceKeys)[number];
 
 type PageProps = {
   auth?: {
-    user?: { id: number } | null;
+    user?: { id: number; name?: string | null } | null;
     unread_chat_count?: number;
   } | null;
   flash?: {
@@ -68,6 +68,7 @@ export default function Inquiry() {
         onServiceChange={setActiveService}
         language={language}
         isAuthenticated={Boolean(auth?.user)}
+        userName={auth?.user?.name ?? ''}
         signInLabel={copy.auth.pageSignIn}
         inquirySubmitted={Boolean(flash.inquiry_submitted)}
         inquiryTicket={flash.inquiry_ticket ?? ''}

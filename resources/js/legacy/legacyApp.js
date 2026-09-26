@@ -52,7 +52,8 @@ function initThemeSwitcher() {
     toggle.setAttribute('aria-pressed', String(isDark));
     const t = window.translations?.[currentLanguage] || window.translations?.en || {};
     toggle.setAttribute('aria-label', isDark ? (t.theme_light || 'Enable light theme') : (t.theme_dark || 'Enable dark theme'));
-    toggle.setAttribute('title', isDark ? (t.theme_light || 'Light theme') : (t.theme_dark || 'Dark theme'));
+    toggle.removeAttribute('title');
+    toggle.dataset.tooltip = isDark ? (t.theme_light || 'Enable light theme') : (t.theme_dark || 'Enable dark theme');
     localStorage.setItem('ii_studio_theme', isDark ? 'dark' : 'light');
   };
 
@@ -94,6 +95,7 @@ function initLanguageSwitcher() {
 
       if (currentLabel) currentLabel.textContent = languageLabels[lang];
       trigger?.setAttribute('aria-label', `${t.aria_languages || 'Language selection'}: ${languageLabels[lang]}`);
+      switcher.dataset.tooltip = t.aria_languages || 'Language selection';
       closeSwitcher(switcher);
     });
 
@@ -107,6 +109,11 @@ function initLanguageSwitcher() {
     document.querySelectorAll('[data-i18n-title]').forEach(el => {
       const key = el.getAttribute('data-i18n-title');
       if (t[key] !== undefined) el.setAttribute('title', t[key]);
+    });
+
+    document.querySelectorAll('[data-i18n-tooltip]').forEach(el => {
+      const key = el.getAttribute('data-i18n-tooltip');
+      if (t[key] !== undefined) el.dataset.tooltip = t[key];
     });
 
     const themeToggle = document.getElementById('themeToggle');

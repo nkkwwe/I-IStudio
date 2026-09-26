@@ -456,6 +456,54 @@ p {
   display: block;
 }
 
+.account-header-initial {
+  display: inline-block;
+  color: var(--text-primary);
+  font: 700 0.9rem/1 var(--font-sans);
+  text-transform: uppercase;
+}
+
+[data-tooltip] {
+  --tooltip-shift: 5px;
+}
+
+[data-tooltip]::after {
+  position: absolute;
+  z-index: 1200;
+  top: calc(100% + 10px);
+  left: 50%;
+  width: max-content;
+  max-width: min(240px, calc(100vw - 32px));
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-card);
+  content: attr(data-tooltip);
+  font: 500 0.75rem/1.35 var(--font-sans);
+  text-align: center;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, var(--tooltip-shift));
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(0.2, 0.75, 0.25, 1), visibility 180ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-tooltip]:hover::after,
+  [data-tooltip]:focus-visible::after {
+    --tooltip-shift: 0px;
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-tooltip]::after { transition: none; }
+}
+
 .chat-unread-badge {
   display: inline-grid;
   width: 20px;

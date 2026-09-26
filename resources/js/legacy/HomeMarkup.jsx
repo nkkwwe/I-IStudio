@@ -81,7 +81,7 @@ function Logo({ href = '#hero' }) {
 
 function LanguageSwitcher({ mobile = false }) {
   return (
-    <div className={'language-switcher' + (mobile ? ' mobile-language-switcher' : '')} data-i18n-aria-label="aria_languages" aria-label="Language selection">
+    <div className={'language-switcher' + (mobile ? ' mobile-language-switcher' : '')} data-i18n-aria-label="aria_languages" data-i18n-tooltip="aria_languages" data-tooltip="Language selection" aria-label="Language selection">
       <button type="button" className="language-trigger" aria-haspopup="listbox" aria-expanded="false">
         <span className="language-current">EN</span>
         <svg className="language-chevron" width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
@@ -95,7 +95,7 @@ function LanguageSwitcher({ mobile = false }) {
   );
 }
 
-function Header({ isAuthenticated, signInLabel, unreadChatCount }) {
+function Header({ isAuthenticated, signInLabel, unreadChatCount, userName }) {
   return (
     <header className="site-header">
       <div className="container header-container">
@@ -111,8 +111,8 @@ function Header({ isAuthenticated, signInLabel, unreadChatCount }) {
         </nav>
         <div className="header-actions">
           {isAuthenticated ? (
-            <a href={localizedUrl('/account')} className="account-header-link" data-i18n-aria-label="aria_account" data-i18n-title="aria_account" aria-label="Account" title="Account">
-              <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx={12} cy={8} r="3.2" /><path d="M5.5 20c.8-3.2 3.1-5 6.5-5s5.7 1.8 6.5 5" /></svg>
+            <a href={localizedUrl('/account')} className="account-header-link" data-i18n-aria-label="aria_account" data-i18n-tooltip="aria_account" aria-label="Account" data-tooltip="Account">
+              <span className="account-header-initial" aria-hidden="true">{userName?.trim()?.charAt(0)?.toLocaleUpperCase() || 'A'}</span>
               <ChatUnreadBadge count={unreadChatCount} />
             </a>
           ) : (
@@ -123,7 +123,7 @@ function Header({ isAuthenticated, signInLabel, unreadChatCount }) {
             <svg className="theme-icon theme-icon-moon" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z" /></svg>
           </button>
           <LanguageSwitcher />
-          <button className="mobile-toggle" id="mobileToggle" data-i18n-aria-label="aria_menu" aria-label="Toggle menu"><span /><span /><span /></button>
+          <button className="mobile-toggle" id="mobileToggle" data-i18n-aria-label="aria_menu" data-i18n-tooltip="aria_menu" data-tooltip="Toggle menu" aria-label="Toggle menu"><span /><span /><span /></button>
         </div>
       </div>
     </header>
@@ -321,10 +321,10 @@ function Footer() {
   );
 }
 
-export default function HomeMarkup({ isAuthenticated = false, signInLabel = 'Sign in', unreadChatCount = 0 }) {
+export default function HomeMarkup({ isAuthenticated = false, signInLabel = 'Sign in', unreadChatCount = 0, userName = '' }) {
   return (
     <div className="react-page-root">
-      <Header isAuthenticated={isAuthenticated} signInLabel={signInLabel} unreadChatCount={unreadChatCount} />
+      <Header isAuthenticated={isAuthenticated} signInLabel={signInLabel} unreadChatCount={unreadChatCount} userName={userName} />
       <main>
         <Hero />
         <ServicesAndSolutions />
