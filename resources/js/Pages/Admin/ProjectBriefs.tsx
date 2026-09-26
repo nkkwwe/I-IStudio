@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import InquiryChatModal from '../../Components/InquiryChatModal';
 import InquiryDetailModal from '../../Components/InquiryDetailModal';
-import AdminShell, { formatDate, formatBudget, type Inquiry } from './AdminShell';
+import AdminShell from './AdminShell';
+import { formatDate, formatBudget, type Inquiry } from '../../lib/inquiries';
 import AdminStatusSelect from './AdminStatusSelect';
 
 type PageProps = {

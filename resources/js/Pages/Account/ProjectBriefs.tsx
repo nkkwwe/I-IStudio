@@ -6,7 +6,7 @@ import ChatUnreadBadge, { fetchChatUnreadCounts } from '../../Components/ChatUnr
 import InquiryChatModal from '../../Components/InquiryChatModal';
 import InquiryDetailModal from '../../Components/InquiryDetailModal';
 import AccountSiteHeader from '../../Components/AccountSiteHeader';
-import { formatDate, formatBudget, type Inquiry } from '../Admin/AdminShell';
+import { formatDate, formatBudget, type Inquiry } from '../../lib/inquiries';
 
 type PageProps = {
   inquiries: Inquiry[];

@@ -55,19 +55,18 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         $user = $request->user();
-        $unreadChatCount = $user
-            ? ProjectInquiryMessage::query()
-                ->where('sender_role', 'admin')
-                ->whereNull('read_at')
-                ->whereHas('inquiry', fn ($query) => $query->where('user_id', $user->id))
-                ->count()
-            : 0;
 
         return [
             ...parent::share($request),
             'site_language' => app()->getLocale(),
             'auth' => [
-                'unread_chat_count' => $unreadChatCount,
+                'unread_chat_count' => fn (): int => $user
+                    ? ProjectInquiryMessage::query()
+                        ->where('sender_role', 'admin')
+                        ->whereNull('read_at')
+                        ->whereHas('inquiry', fn ($query) => $query->where('user_id', $user->id))
+                        ->count()
+                    : 0,
                 'user' => $user
                     ? [
                         ...$user->only('id', 'name', 'email', 'avatar', 'created_at'),

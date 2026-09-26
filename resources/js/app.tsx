@@ -2,7 +2,6 @@ import { createInertiaApp } from '@inertiajs/react';
 import type { ComponentType } from 'react';
 import { createRoot } from 'react-dom/client';
 import '../css/app.css';
-import './content/translations';
 
 const savedTheme = window.localStorage.getItem('ii_studio_theme');
 if (savedTheme === 'dark') {

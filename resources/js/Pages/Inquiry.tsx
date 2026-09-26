@@ -51,9 +51,10 @@ export default function Inquiry() {
 
   useEffect(() => {
     document.body.className = 'inquiry-page-body inquiry-form-only-body';
-    initLegacyApp();
+    const cleanup = initLegacyApp();
 
     return () => {
+      cleanup();
       document.body.className = '';
     };
   }, []);

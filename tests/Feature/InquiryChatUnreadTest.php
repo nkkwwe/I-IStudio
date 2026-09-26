@@ -6,6 +6,7 @@ use App\Models\ProjectInquiry;
 use App\Models\ProjectInquiryMessage;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
@@ -25,6 +26,7 @@ class InquiryChatUnreadTest extends TestCase
         $user = User::factory()->create();
         $admin = User::factory()->create(['email' => 'admin@example.com']);
         $firstInquiry = $this->createInquiry($user);
+        $this->travel(1)->seconds();
         $secondInquiry = $this->createInquiry($user);
 
         $this->createMessage($firstInquiry, $admin, 'admin');
@@ -33,14 +35,14 @@ class InquiryChatUnreadTest extends TestCase
         $this->createMessage($secondInquiry, $admin, 'admin');
 
         $this->actingAs($user)
-            ->get('/account')
+            ->get('/en/account')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Account')
                 ->where('auth.unread_chat_count', 3));
 
         $this->actingAs($user)
-            ->get('/account/project-briefs')
+            ->get('/en/account/project-briefs')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Account/ProjectBriefs')
@@ -90,6 +92,37 @@ class InquiryChatUnreadTest extends TestCase
 
         $this->assertNotNull($fromUser->fresh()->read_at);
         $this->assertNull($fromAdmin->fresh()->read_at);
+    }
+
+    public function test_polling_does_not_compute_shared_page_unread_count(): void
+    {
+        $user = User::factory()->create();
+        $admin = User::factory()->create(['email' => 'admin@example.com']);
+        $inquiry = $this->createInquiry($user);
+        $this->createMessage($inquiry, $admin, 'admin');
+
+        DB::flushQueryLog();
+        DB::enableQueryLog();
+
+        try {
+            $this->actingAs($user)
+                ->getJson(route('account.project-briefs.unread-counts'))
+                ->assertOk()
+                ->assertJsonPath('unread_count', 1)
+                ->assertJsonPath('inquiries.0.unread_count', 1);
+
+            $sharedCountQueries = collect(DB::getQueryLog())->filter(
+                fn (array $query): bool => str_starts_with(
+                    $query['query'],
+                    'select count(*) as aggregate from "project_inquiry_messages"',
+                ),
+            );
+
+            $this->assertCount(0, $sharedCountQueries);
+        } finally {
+            DB::disableQueryLog();
+            DB::flushQueryLog();
+        }
     }
 
     private function createInquiry(User $user): ProjectInquiry

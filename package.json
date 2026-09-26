@@ -5,7 +5,8 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite --host 0.0.0.0",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:frontend": "node --test tests/frontend/*.test.mjs"
   },
   "dependencies": {
     "@inertiajs/react": "^3.4.0",

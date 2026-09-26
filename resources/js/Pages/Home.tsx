@@ -19,7 +19,7 @@ export default function Home() {
 
   useEffect(() => {
     document.body.className = '';
-    initLegacyApp();
+    return initLegacyApp();
   }, []);
 
   return (

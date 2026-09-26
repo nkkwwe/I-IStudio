@@ -35,9 +35,12 @@ class AdminAccessTest extends TestCase
     {
         $this->actingAs(User::factory()->create(['email' => 'Admin@Example.com']))
             ->get('/admin')
+            ->assertRedirect(route('admin.project-briefs'));
+
+        $this->get('/admin/project-briefs')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('Admin/Index')
+                ->component('Admin/ProjectBriefs')
                 ->where('auth.user.is_admin', true));
     }
 
@@ -45,9 +48,12 @@ class AdminAccessTest extends TestCase
     {
         $this->actingAs(User::factory()->create(['email' => 'SECOND-ADMIN@example.com']))
             ->get('/admin')
+            ->assertRedirect(route('admin.project-briefs'));
+
+        $this->get('/admin/project-briefs')
             ->assertOk()
             ->assertInertia(fn (Assert $page) => $page
-                ->component('Admin/Index')
+                ->component('Admin/ProjectBriefs')
                 ->where('auth.user.is_admin', true));
     }
 }

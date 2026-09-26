@@ -1,6 +1,7 @@
 import { usePage } from '@inertiajs/react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
-import AdminShell, { formatDate, getInitials, type AdminUser } from './AdminShell';
+import AdminShell, { getInitials, type AdminUser } from './AdminShell';
+import { formatDate } from '../../lib/inquiries';
 
 type PageProps = {
   users: AdminUser[];

@@ -3,6 +3,7 @@
  */
 
 import { router } from '@inertiajs/react';
+import '../content/translations';
 import { getSiteLanguageFromDocument, localizedCurrentUrl, localizedUrl } from '../content/siteLanguage';
 
 let currentLanguage = getSiteLanguageFromDocument();
@@ -14,13 +15,25 @@ if (savedTheme === 'dark') {
 }
 
 export function initLegacyApp() {
-  initThemeSwitcher();
-  initMobileMenu();
-  initLanguageSwitcher();
-  initSolutionsByGoal();
-  initServiceTabs();
-  initSmartForm();
-  initScrollSpy();
+  const controller = new AbortController();
+  currentLanguage = getSiteLanguageFromDocument();
+  activeGoalKey = 'landing';
+
+  const cleanups = [
+    initThemeSwitcher,
+    initMobileMenu,
+    initLanguageSwitcher,
+    initSolutionsByGoal,
+    initServiceTabs,
+    initSmartForm,
+    initScrollSpy,
+  ].map(initialize => initialize(controller.signal));
+
+  // Inertia keeps the document alive between pages; release each page's listeners.
+  return () => {
+    controller.abort();
+    cleanups.forEach(cleanup => cleanup?.());
+  };
 }
 
 /* ==========================================================================
@@ -29,7 +42,7 @@ export function initLegacyApp() {
 /* ==========================================================================
    1. Theme Switcher
    ========================================================================== */
-function initThemeSwitcher() {
+function initThemeSwitcher(signal) {
   if (document.querySelector('.account-site-header')) return;
   const languageSwitcher = document.querySelector('.language-switcher');
   if (!languageSwitcher) return;
@@ -60,11 +73,11 @@ function initThemeSwitcher() {
   toggle.addEventListener('click', () => {
     const isDark = document.documentElement.dataset.theme === 'dark';
     applyTheme(isDark ? 'light' : 'dark');
-  });
+  }, { signal });
 
   applyTheme(document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light');
 }
-function initLanguageSwitcher() {
+function initLanguageSwitcher(signal) {
   const options = document.querySelectorAll('.site-header:not(.account-site-header) .language-option');
   const switchers = Array.from(document.querySelectorAll('.site-header:not(.account-site-header) .language-switcher'));
   const supportedLanguages = ['en', 'uk', 'ro'];
@@ -75,7 +88,7 @@ function initLanguageSwitcher() {
     trigger?.setAttribute('aria-expanded', 'false');
   };
 
-  window.setLanguage = function(lang) {
+  const setLanguage = function(lang) {
     if (!window.translations || !window.translations[lang]) {
       lang = 'en';
     }
@@ -167,7 +180,7 @@ function initLanguageSwitcher() {
         const parentSwitcher = option.closest('.language-switcher');
         if (parentSwitcher) closeSwitcher(parentSwitcher);
       }
-    });
+    }, { signal });
   });
 
   switchers.forEach(switcher => {
@@ -181,30 +194,35 @@ function initLanguageSwitcher() {
         if (otherSwitcher !== switcher) closeSwitcher(otherSwitcher);
       });
       trigger.setAttribute('aria-expanded', String(isOpen));
-    });
+    }, { signal });
   });
 
   document.addEventListener('click', (event) => {
     if (!switchers.some(switcher => switcher.contains(event.target))) {
       switchers.forEach(closeSwitcher);
     }
-  });
+  }, { signal });
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       switchers.forEach(closeSwitcher);
-      switchers[0].querySelector('.language-trigger')?.focus();
+      switchers[0]?.querySelector('.language-trigger')?.focus();
     }
-  });
+  }, { signal });
 
   // Apply initially
-  window.setLanguage(supportedLanguages.includes(currentLanguage) ? currentLanguage : 'en');
+  window.setLanguage = setLanguage;
+  setLanguage(supportedLanguages.includes(currentLanguage) ? currentLanguage : 'en');
+
+  return () => {
+    if (window.setLanguage === setLanguage) delete window.setLanguage;
+  };
 }
 
 /* ==========================================================================
    2. Mobile Navigation
    ========================================================================== */
-function initMobileMenu() {
+function initMobileMenu(signal) {
   const toggle = document.getElementById('mobileToggle');
   const menu = document.getElementById('navMenu');
   const header = document.querySelector('.site-header');
@@ -212,13 +230,13 @@ function initMobileMenu() {
   if (toggle && menu) {
     toggle.addEventListener('click', () => {
       menu.classList.toggle('open');
-    });
+    }, { signal });
 
     // Close on link click
     menu.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', () => {
         menu.classList.remove('open');
-      });
+      }, { signal });
     });
   }
 
@@ -230,14 +248,14 @@ function initMobileMenu() {
       } else {
         header.classList.remove('scrolled');
       }
-    }, { passive: true });
+    }, { passive: true, signal });
   }
 }
 
 /* ==========================================================================
    2.1. ScrollSpy Navigation
    ========================================================================== */
-function initScrollSpy() {
+function initScrollSpy(signal) {
   const navLinks = document.querySelectorAll('.nav-menu .nav-link');
   if (!navLinks.length) return;
 
@@ -254,6 +272,8 @@ function initScrollSpy() {
 
   let isClickScrolling = false;
   let scrollEndTimer = null;
+  let animationFrame = null;
+  const header = document.querySelector('.site-header');
 
   const setActiveLink = (targetLink) => {
     sectionsWithLinks.forEach(({ link }) => {
@@ -268,7 +288,7 @@ function initScrollSpy() {
   const updateActiveNav = () => {
     if (isClickScrolling) return;
 
-    const headerHeight = document.querySelector('.site-header')?.offsetHeight || 72;
+    const headerHeight = header?.offsetHeight || 72;
     const isBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 50);
 
     if (isBottom) {
@@ -306,6 +326,14 @@ function initScrollSpy() {
     clearTimeout(scrollEndTimer);
   };
 
+  const scheduleUpdate = () => {
+    if (animationFrame !== null) return;
+    animationFrame = window.requestAnimationFrame(() => {
+      animationFrame = null;
+      updateActiveNav();
+    });
+  };
+
   sectionsWithLinks.forEach(({ link }) => {
     link.addEventListener('click', () => {
       setActiveLink(link);
@@ -313,7 +341,7 @@ function initScrollSpy() {
       clearTimeout(scrollEndTimer);
       // Fallback timer: auto-release if no scroll events occur
       scrollEndTimer = setTimeout(endClickScroll, 1200);
-    });
+    }, { signal });
   });
 
   const logo = document.querySelector('.site-header .logo');
@@ -323,7 +351,7 @@ function initScrollSpy() {
       isClickScrolling = true;
       clearTimeout(scrollEndTimer);
       scrollEndTimer = setTimeout(endClickScroll, 1200);
-    });
+    }, { signal });
   }
 
   const handleScroll = () => {
@@ -334,14 +362,14 @@ function initScrollSpy() {
       scrollEndTimer = setTimeout(endClickScroll, 150);
       return;
     }
-    updateActiveNav();
+    scheduleUpdate();
   };
 
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  window.addEventListener('resize', updateActiveNav, { passive: true });
+  window.addEventListener('scroll', handleScroll, { passive: true, signal });
+  window.addEventListener('resize', scheduleUpdate, { passive: true, signal });
 
   if ('onscrollend' in window) {
-    window.addEventListener('scrollend', endClickScroll, { passive: true });
+    window.addEventListener('scrollend', endClickScroll, { passive: true, signal });
   }
 
   const preventManualScroll = (event) => {
@@ -350,23 +378,29 @@ function initScrollSpy() {
     }
   };
 
-  window.addEventListener('wheel', preventManualScroll, { passive: false });
-  window.addEventListener('touchmove', preventManualScroll, { passive: false });
+  window.addEventListener('wheel', preventManualScroll, { passive: false, signal });
+  window.addEventListener('touchmove', preventManualScroll, { passive: false, signal });
   window.addEventListener('keydown', (event) => {
     if (isClickScrolling && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) {
       event.preventDefault();
     }
-  });
+  }, { signal });
 
   updateActiveNav();
+
+  return () => {
+    clearTimeout(scrollEndTimer);
+    if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
+  };
 }
 
 /* ==========================================================================
    3. Solutions by Goal (Objective Selector)
    ========================================================================== */
-function initSolutionsByGoal() {
+function initSolutionsByGoal(signal) {
   const pills = document.querySelectorAll('.goal-pill');
   const output = document.getElementById('solutionOutput');
+  if (!output) return;
 
   pills.forEach(pill => {
     pill.addEventListener('click', () => {
@@ -379,7 +413,7 @@ function initSolutionsByGoal() {
 
       activeGoalKey = pill.getAttribute('data-goal');
       renderSolution(activeGoalKey);
-    });
+    }, { signal });
   });
 
   function renderSolution(key) {
@@ -430,18 +464,23 @@ function initSolutionsByGoal() {
     `;
   }
 
-  window.renderActiveSolution = function() {
+  const renderActiveSolution = function() {
     renderSolution(activeGoalKey);
   };
+  window.renderActiveSolution = renderActiveSolution;
 
   // Render initial
   renderSolution('landing');
+
+  return () => {
+    if (window.renderActiveSolution === renderActiveSolution) delete window.renderActiveSolution;
+  };
 }
 
 /* ==========================================================================
    4. Service Direction Selector
    ========================================================================== */
-function initServiceTabs() {
+function initServiceTabs(signal) {
   const tabs = document.querySelectorAll('#serviceTabs .tab-btn');
   const serviceInput = document.getElementById('serviceTypeInput');
 
@@ -452,7 +491,7 @@ function initServiceTabs() {
 
       const service = tab.getAttribute('data-service');
       if (serviceInput) serviceInput.value = service;
-    });
+    }, { signal });
   });
 }
 
@@ -499,7 +538,7 @@ window.preselectService = function(serviceKey, openModal = true) {
 /* ==========================================================================
    5. Inquiry Page, Smart Form & Ticket Confirmation
    ========================================================================== */
-function initSmartForm() {
+function initSmartForm(signal) {
   const form = document.getElementById('projectForm');
   const openInquiryBtns = document.querySelectorAll('#openInquiryPageBtn, [data-open-page="inquiry"], .action-service-pill, [data-scroll-to-inquiry], [data-route-to-inquiry]');
   const overlay = document.getElementById('feedbackOverlay');
@@ -519,7 +558,7 @@ function initSmartForm() {
           return;
         }
         window.preselectService(btn.dataset.service || 'landing');
-      });
+      }, { signal });
     });
     return;
   }
@@ -528,7 +567,7 @@ function initSmartForm() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       window.openInquiryPage(btn.dataset.service || 'landing');
-    });
+    }, { signal });
   });
 
   const requestedService = new URLSearchParams(window.location.search).get('service');
@@ -560,7 +599,7 @@ function initSmartForm() {
           }
         },
       });
-    });
+    }, { signal });
 
     if (closeFeedbackBtn) {
       closeFeedbackBtn.addEventListener('click', () => {
@@ -570,7 +609,7 @@ function initSmartForm() {
         const budgetRow = document.getElementById('feedbackBudgetRow');
         if (budgetRow) budgetRow.style.display = 'none';
         window.preselectService('landing', false);
-      });
+      }, { signal });
     }
   }
 }

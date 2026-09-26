@@ -1,7 +1,7 @@
 import { useEffect, type ReactNode } from 'react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import ChatUnreadBadge from './ChatUnreadBadge';
-import { formatDate, formatBudget, type Inquiry } from '../Pages/Admin/AdminShell';
+import { formatDate, formatBudget, type Inquiry } from '../lib/inquiries';
 
 function formatBriefKey(key: string): string {
   return key
