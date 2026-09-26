@@ -499,7 +499,7 @@ p {
     visibility: visible;
   }
 
-  .language-switcher.open[data-tooltip]::after {
+  .site-header:has(.language-switcher.open) [data-tooltip]::after {
     opacity: 0;
     visibility: hidden;
   }
