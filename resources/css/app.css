@@ -6566,7 +6566,7 @@ html[data-theme="dark"] .case-art-ads { background-image: url('/images/case-stud
   min-height: 0;
   padding: 0;
   overflow: hidden;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .account-action-card-link {
@@ -6609,6 +6609,7 @@ html[data-theme="dark"] .case-art-ads { background-image: url('/images/case-stud
   color: var(--text-primary);
   font-size: 1.35rem;
   font-weight: 700;
+  transition: transform 0.2s ease;
 }
 
 .account-action-card-link:focus-visible {
@@ -6620,6 +6621,17 @@ html[data-theme="dark"] .case-art-ads { background-image: url('/images/case-stud
   .account-action-card:hover {
     border-color: var(--border-strong);
     box-shadow: var(--shadow-card);
+  }
+
+  html[data-theme="dark"] .account-panel.account-action-card:hover {
+    background-color: var(--bg-panel);
+    border-color: var(--border-strong);
+    box-shadow: 0 0 0 1px rgba(196, 199, 205, 0.12), var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+
+  html[data-theme="dark"] .account-action-card:hover .account-action-card-arrow {
+    transform: translateX(4px);
   }
 }
 
