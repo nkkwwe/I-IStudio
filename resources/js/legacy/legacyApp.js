@@ -419,7 +419,7 @@ function initSolutionsByGoal() {
           </div>
           <div class="sol-stat-row">
             <span class="sol-stat-label">${t.sol_lbl_target}</span>
-            <span class="sol-stat-value" style="color: var(--accent-blue);">${data.kpi}</span>
+            <span class="sol-stat-value">${data.kpi}</span>
           </div>
           <div class="sol-stat-row">
             <span class="sol-stat-label">${t.sol_lbl_support}</span>
