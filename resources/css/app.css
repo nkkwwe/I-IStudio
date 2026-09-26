@@ -347,13 +347,20 @@ p {
   padding: 8px 14px;
   border: 1px solid transparent;
   border-radius: var(--radius-pill);
-  transition: color 0.25s ease, background-color 0.25s ease, font-weight 0.25s ease;
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, font-weight 0.25s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .nav-link:hover {
     color: var(--text-primary);
     background-color: var(--bg-panel);
+  }
+
+  html:not([data-theme="dark"]) .nav-link:hover,
+  html:not([data-theme="dark"]) .nav-link.active:hover {
+    background-color: #f0f0f2;
+    border-color: #dedee3;
+    box-shadow: 0 3px 10px rgba(24, 24, 27, 0.08);
   }
 }
 
