@@ -5,11 +5,12 @@ import { initLegacyApp } from '../legacy/legacyApp';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import { useChatUnreadCount } from '../Components/ChatUnreadBadge';
 
-const serviceKeys = ['landing', 'corporate', 'redesign', 'ads', 'consultation', 'other'] as const;
+const serviceKeys = ['landing', 'corporate', 'redesign', 'ads', 'meta-ads', 'consultation', 'other'] as const;
 
 type ServiceKey = (typeof serviceKeys)[number];
 
 type PageProps = {
+  errors?: Record<string, string>;
   auth?: {
     user?: { id: number; name?: string | null } | null;
     unread_chat_count?: number;
@@ -31,7 +32,7 @@ function getInitialService(): ServiceKey {
 }
 
 export default function Inquiry() {
-  const { auth, flash = {} } = usePage<PageProps>().props;
+  const { auth, flash = {}, errors = {} } = usePage<PageProps>().props;
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
   const unreadChatCount = useChatUnreadCount(auth?.unread_chat_count ?? 0, Boolean(auth?.user));
@@ -66,6 +67,7 @@ export default function Inquiry() {
       </Head>
       <InquiryMarkup
         activeService={activeService}
+        errors={errors}
         onServiceChange={setActiveService}
         language={language}
         isAuthenticated={Boolean(auth?.user)}

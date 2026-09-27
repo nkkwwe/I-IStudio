@@ -293,7 +293,8 @@ function Inquiry() {
             <button type="button" className="action-service-pill active" data-service="landing" aria-pressed="true" data-i18n="tab_landing">Landing Page</button>
             <button type="button" className="action-service-pill" data-service="corporate" aria-pressed="false" data-i18n="tab_corporate">Business Website</button>
             <button type="button" className="action-service-pill" data-service="redesign" aria-pressed="false" data-i18n="tab_redesign">Website Redesign</button>
-            <button type="button" className="action-service-pill" data-service="ads" aria-pressed="false" data-i18n="tab_ads">Advertising</button>
+            <button type="button" className="action-service-pill" data-service="ads" aria-pressed="false">Google Ads</button>
+            <button type="button" className="action-service-pill" data-service="meta-ads" aria-pressed="false">Meta (Facebook) Ads</button>
           </div>
           <button type="button" className="btn btn-primary btn-block" id="openInquiryPageBtn" data-route-to-inquiry="true" data-service="landing"><span data-i18n="inq_cta_btn">Start a conversation</span><Icon name="arrow" size={18} /></button>
         </div>

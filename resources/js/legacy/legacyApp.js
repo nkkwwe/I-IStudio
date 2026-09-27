@@ -578,7 +578,7 @@ function initSmartForm(signal) {
 
   // Form submission & Ticket confirmation
   if (form && overlay) {
-    if (form.dataset.briefMode !== 'google-ads') {
+    if (form.dataset.briefMode === 'generic') {
       restoreInquiryDraft(form);
     }
 
@@ -624,6 +624,8 @@ function restoreInquiryDraft(form) {
   }
 
   if (!draft || typeof draft !== 'object') return;
+  // Advertising briefs are controlled by React and never use the generic draft.
+  if (['ads', 'meta-ads'].includes(draft.service_type)) return;
 
   Object.entries(draft).forEach(([name, value]) => {
     if (name === 'calculator_summary') return;

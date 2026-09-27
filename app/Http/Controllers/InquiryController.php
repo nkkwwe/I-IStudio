@@ -6,6 +6,7 @@ use App\Models\ProjectInquiry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -96,16 +97,16 @@ class InquiryController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'service_type' => ['required', 'string', 'in:landing,corporate,redesign,ads,consultation,other'],
+            'service_type' => ['required', 'string', 'in:landing,corporate,redesign,ads,meta-ads,consultation,other'],
             'client_name' => ['required', 'string', 'max:120'],
-            'client_email' => ['required_if:service_type,ads', 'nullable', 'email', 'max:255'],
+            'client_email' => ['required_if:service_type,ads,meta-ads', 'nullable', 'email', 'max:255'],
             'client_contact' => ['nullable', 'string', 'max:255'],
             'client_budget' => ['nullable', 'string', 'max:120'],
             'project_comment' => ['required', 'string', 'max:10000'],
             'calculator_summary' => ['nullable', 'string', 'max:10000'],
-            'brief_data' => ['nullable', 'json', 'max:40000'],
+            'brief_data' => ['required_if:service_type,meta-ads', 'nullable', 'json', 'max:40000'],
             'lead_context' => ['nullable', 'json', 'max:10000'],
-            'ads_consent' => ['required_if:service_type,ads', 'accepted'],
+            'ads_consent' => ['required_if:service_type,ads,meta-ads', 'accepted'],
         ], [
             'client_name.required' => 'Please enter your name.',
             'project_comment.required' => 'Please describe your project or task.',
@@ -122,9 +123,25 @@ class InquiryController extends Controller
         unset($data['calculator_summary']);
 
         $briefData = $this->decodeJson($data['brief_data'] ?? null);
+        if ($data['service_type'] === 'meta-ads') {
+            $rules = [
+                'brief.brand_name' => ['required', 'string', 'max:255'],
+                'brief.website_url' => ['nullable', 'url:http,https', 'max:255'],
+                'brief.destinations' => ['nullable', 'array', 'max:6'],
+                'brief.destinations.*' => ['string', 'in:website,instagram,messengerChat,whatsapp,leadForm,advice'],
+                'brief.available_assets' => ['nullable', 'array', 'max:5'],
+                'brief.available_assets.*' => ['string', 'in:photos,videos,branding,reviews,none'],
+            ];
+            foreach (['business_type', 'business_description', 'promoted_offer', 'promoted_url', 'average_order_value', 'advantage', 'special_offer', 'locations', 'advertising_languages', 'audience_description', 'competitors', 'main_goal', 'monthly_result', 'monthly_budget', 'launch_timing', 'ads_history', 'previous_results', 'facebook_page', 'instagram_profile', 'creative_support', 'materials_url', 'client_name', 'client_email', 'phone', 'messenger', 'contact_method', 'additional_comments'] as $field) {
+                $rules['brief.'.$field] = ['nullable', 'string', 'max:3000'];
+            }
+            $briefData = Validator::make(['brief' => $briefData], $rules)->validate()['brief'];
+            $briefData['platform'] = 'meta';
+            $briefData['consent'] = true;
+        }
         $leadContext = $this->decodeJson($data['lead_context'] ?? null);
         $websiteUrl = trim((string) ($briefData['website_url'] ?? ''));
-        $isAdsBrief = $data['service_type'] === 'ads';
+        $isAdsBrief = in_array($data['service_type'], ['ads', 'meta-ads'], true);
         $clientEmail = trim((string) ($data['client_email'] ?? ''));
 
         unset($data['client_email'], $data['brief_data'], $data['lead_context'], $data['ads_consent']);

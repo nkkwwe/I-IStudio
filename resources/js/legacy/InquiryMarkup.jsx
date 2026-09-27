@@ -1,5 +1,7 @@
 import AccountSiteHeader from '../Components/AccountSiteHeader';
 import GoogleAdsBrief from '../Components/GoogleAdsBrief';
+import MetaAdsBrief from '../Components/MetaAdsBrief';
+import { getMetaAdsCopy } from '../content/metaAdsBrief';
 import { localizedUrl } from '../content/siteLanguage';
 import { createPortal } from 'react-dom';
 import { useEffect, useMemo, useState } from 'react';
@@ -128,13 +130,26 @@ export default function InquiryMarkup({
   unreadChatCount = 0,
   isDark = false,
   onToggleTheme,
+  errors = {},
 }) {
   const copy = calculatorCopy[language] || calculatorCopy.en;
+  const isMetaAds = activeService === 'meta-ads';
+  const isAds = activeService === 'ads' || isMetaAds;
+  const metaCopy = getMetaAdsCopy(language);
   const service = copy.services[activeService] || copy.services.other;
   const [calculatorOpen, setCalculatorOpen] = useState(false);
   const [calculatorStep, setCalculatorStep] = useState(1);
   const [scopeChoice, setScopeChoice] = useState(service.scope[0].value);
   const [extras, setExtras] = useState({});
+
+  useEffect(() => {
+    // Keep the selected direction visible inside the horizontal mobile selector.
+    const tabs = document.getElementById('serviceTabs');
+    const activeTab = tabs?.querySelector('.active');
+    if (tabs && activeTab && tabs.scrollWidth > tabs.clientWidth) {
+      tabs.scrollLeft = activeTab.offsetLeft - tabs.offsetLeft;
+    }
+  }, [activeService]);
 
   useEffect(() => {
     setCalculatorOpen(false);
@@ -195,11 +210,11 @@ export default function InquiryMarkup({
     <section className="inquiry-form-card inquiry-form-only-card" aria-labelledby="inquiryPageTitle">
       <div className="inquiry-form-header">
         <div>
-          <span className="form-eyebrow" data-i18n="inquiry_eyebrow">[ PROJECT BRIEF / 2 MIN ]</span>
-          {activeService === 'ads' ? (
+          {isMetaAds ? <span className="form-eyebrow">[ FACEBOOK / INSTAGRAM ]</span> : <span className="form-eyebrow" data-i18n="inquiry_eyebrow">[ PROJECT BRIEF / 2 MIN ]</span>}
+          {isAds ? (
             <>
-              <h1 id="inquiryPageTitle">{language === 'uk' ? 'Запуск Google Ads' : 'Launch Google Ads'}</h1>
-              <p>{language === 'uk' ? 'Заповніть короткий бриф — технічні речі ми перевіримо самі.' : 'Complete the short brief — we will check the technical details ourselves.'}</p>
+              <h1 id="inquiryPageTitle">{isMetaAds ? metaCopy.pageTitle : language === 'uk' ? 'Запуск Google Ads' : 'Launch Google Ads'}</h1>
+              <p>{isMetaAds ? metaCopy.note : language === 'uk' ? 'Заповніть короткий бриф — технічні речі ми перевіримо самі.' : 'Complete the short brief — we will check the technical details ourselves.'}</p>
             </>
           ) : (
             <>
@@ -213,13 +228,16 @@ export default function InquiryMarkup({
         <button type="button" className={activeService === 'landing' ? 'tab-btn active' : 'tab-btn'} data-service="landing" data-i18n="tab_landing" onClick={() => onServiceChange('landing')}>Landing Page</button>
         <button type="button" className={activeService === 'corporate' ? 'tab-btn active' : 'tab-btn'} data-service="corporate" data-i18n="tab_corporate" onClick={() => onServiceChange('corporate')}>Business Website</button>
         <button type="button" className={activeService === 'redesign' ? 'tab-btn active' : 'tab-btn'} data-service="redesign" data-i18n="tab_redesign" onClick={() => onServiceChange('redesign')}>Website Redesign</button>
-        <button type="button" className={activeService === 'ads' ? 'tab-btn active' : 'tab-btn'} data-service="ads" data-i18n="tab_ads" onClick={() => onServiceChange('ads')}>Advertising</button>
+        <button type="button" className={activeService === 'ads' ? 'tab-btn active' : 'tab-btn'} data-service="ads" aria-pressed={activeService === 'ads'} onClick={() => onServiceChange('ads')}>Google Ads</button>
+        <button type="button" className={isMetaAds ? 'tab-btn active' : 'tab-btn'} data-service="meta-ads" aria-pressed={isMetaAds} onClick={() => onServiceChange('meta-ads')}>Meta (Facebook) Ads</button>
         <button type="button" className={activeService === 'consultation' ? 'tab-btn active' : 'tab-btn'} data-service="consultation" data-i18n="tab_consultation" onClick={() => onServiceChange('consultation')}>Consultation</button>
         <button type="button" className={activeService === 'other' ? 'tab-btn active' : 'tab-btn'} data-service="other" data-i18n="tab_other" onClick={() => onServiceChange('other')}>Other</button>
       </div>
-      <form id="projectForm" className="smart-form" action={localizedUrl('/inquiry')} method="post" data-authenticated={isAuthenticated ? 'true' : 'false'} data-brief-mode={activeService === 'ads' ? 'google-ads' : 'generic'}>
-        <input type="hidden" name="service_type" id="serviceTypeInput" defaultValue={activeService} />
-        {activeService === 'ads' ? (
+      <form id="projectForm" className="smart-form" action={localizedUrl('/inquiry')} method="post" data-authenticated={isAuthenticated ? 'true' : 'false'} data-brief-mode={isMetaAds ? 'meta-ads' : isAds ? 'google-ads' : 'generic'}>
+        <input type="hidden" name="service_type" id="serviceTypeInput" value={activeService} readOnly />
+        {isMetaAds ? (
+          <MetaAdsBrief language={language} />
+        ) : activeService === 'ads' ? (
           <GoogleAdsBrief language={language} />
         ) : (
           <>
@@ -253,6 +271,7 @@ export default function InquiryMarkup({
         <div className="form-group project-comment-group"><label htmlFor="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span className="req">*</span></label><textarea id="projectComment" name="project_comment" rows={8} placeholder="Write in your own words: what your company does, what you want to achieve, any reference links, questions, or your approximate budget. We'll reply quickly with a concrete proposal." data-i18n-placeholder="form_comment_ph" required defaultValue={""} /></div>
           </>
         )}
+        {Object.keys(errors).length > 0 && <div className="account-inline-error" role="alert">{Object.values(errors).map((error, index) => <p key={index}>{error}</p>)}</div>}
         <p className="inquiry-form-note" data-i18n="inquiry_form_note">We usually reply within 1–2 hours during working hours.</p>
         <button type="submit" className="btn btn-primary btn-block btn-submit" id="submitBtn"><span data-i18n="form_btn_submit">Send Request</span><svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1={22} y1={2} x2={11} y2={13} /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg></button>
       </form>

@@ -2,6 +2,7 @@ import { useEffect, type ReactNode } from 'react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import ChatUnreadBadge from './ChatUnreadBadge';
 import { formatDate, formatBudget, type Inquiry } from '../lib/inquiries';
+import { getMetaBriefRows } from '../content/metaAdsBrief';
 
 function formatBriefKey(key: string): string {
   return key
@@ -52,7 +53,7 @@ export default function InquiryDetailModal({
   const serviceTitle = copy.services[inquiry.service_type] ?? inquiry.service_type;
   const formattedBudget = formatBudget(inquiry.budget);
   const briefRows = inquiry.brief_data
-    ? Object.entries(inquiry.brief_data)
+    ? inquiry.service_type === 'meta-ads' ? getMetaBriefRows(inquiry.brief_data, language) : Object.entries(inquiry.brief_data)
       .filter(([key, value]) => key !== 'consent' && formatBriefValue(value) !== '')
       .map(([key, value]) => ({ label: formatBriefKey(key), value: formatBriefValue(value) }))
     : [];
@@ -128,7 +129,7 @@ export default function InquiryDetailModal({
 
         {briefRows.length > 0 && (
           <div className="inquiry-detail-brief-section">
-            <span className="inquiry-detail-comment-label">Google Ads brief</span>
+            <span className="inquiry-detail-comment-label">{inquiry.service_type === 'meta-ads' ? 'Meta (Facebook & Instagram) Ads' : 'Google Ads brief'}</span>
             <div className="inquiry-detail-brief-grid">
               {briefRows.map((row) => (
                 <div className="inquiry-detail-brief-row" key={row.label}>

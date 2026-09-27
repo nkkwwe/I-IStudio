@@ -5770,6 +5770,34 @@ html[data-theme="dark"] .language-switcher:not(.mobile-language-switcher).open .
   color: var(--text-primary);
 }
 
+.meta-ads-brief .ads-choice {
+  min-height: 44px;
+}
+
+.meta-ads-brief .ads-choice:has(input:focus-visible) {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+.meta-ads-brief .ads-brief-section {
+  padding-top: 18px;
+}
+
+.meta-ads-brief .ads-brief-section legend {
+  position: static;
+  float: left;
+  width: 100%;
+  margin-bottom: 2px;
+}
+
+.meta-ads-brief .ads-brief-section legend + * {
+  clear: both;
+}
+
+.meta-ads-brief .ads-consent input {
+  flex: 0 0 16px;
+}
+
 .ads-choice.selected .ads-choice-mark {
   border-color: var(--accent-black);
   background: var(--accent-black);

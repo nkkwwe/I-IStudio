@@ -88,7 +88,7 @@ const languageLabels = {
   romanian: { en: 'Romanian', uk: 'Румунська' }, polish: { en: 'Polish', uk: 'Польська' }, otherLanguage: { en: 'Other', uk: 'Інша' },
 };
 
-function buildLeadContext() {
+export function buildLeadContext() {
   const params = new URLSearchParams(window.location.search);
   const utm = {};
   params.forEach((value, key) => {
@@ -115,7 +115,7 @@ function buildLeadContext() {
   };
 }
 
-function ChoiceGroup({ title, name = title, options, value, onChange, multiple = false, labels }) {
+export function ChoiceGroup({ title, name = title, options, value, onChange, multiple = false, labels }) {
   return (
     <div className="ads-choice-group">
       {title && <h4>{title}</h4>}
