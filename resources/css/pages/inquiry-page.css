@@ -1,0 +1,366 @@
+/* Form-only route: no site navigation or duplicated landing-page content. */
+.inquiry-form-only {
+  width: min(100%, 960px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 30px 24px 72px;
+}
+
+.inquiry-form-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.inquiry-mini-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--text-primary);
+}
+
+.inquiry-mini-logo .logo-text {
+  font-size: 1rem;
+}
+
+.inquiry-form-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.inquiry-form-tools .inquiry-back-link {
+  margin-top: 0;
+  font-size: 0.8rem;
+}
+
+.inquiry-form-only-card {
+  max-width: 860px;
+  margin: 64px auto 0;
+}
+
+.inquiry-form-only-card::before {
+  display: none;
+}
+
+.inquiry-form-only-card .inquiry-form-header h1 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.055em;
+}
+
+@media (max-width: 560px) {
+  .inquiry-form-only {
+    padding: 20px 14px 48px;
+  }
+
+  .inquiry-form-topbar {
+    align-items: flex-start;
+  }
+
+  .inquiry-form-tools .inquiry-back-link {
+    display: none;
+  }
+
+  .inquiry-form-only-card {
+    margin-top: 38px;
+  }
+}
+
+/* Inquiry form: keep the builder readable before the phone breakpoint. */
+@media (max-width: 780px) {
+  .inquiry-form-only {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .inquiry-form-only-card {
+    margin-top: 46px;
+  }
+
+  .inquiry-form-grid,
+  .ads-brief-form .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-panel-header {
+    display: grid;
+    gap: 14px;
+  }
+
+  .calculator-total {
+    text-align: left;
+  }
+
+  .calculator-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-summary {
+    position: static;
+  }
+
+  .calculator-options-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .calculator-launcher {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-launcher-actions {
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 230px);
+    align-items: center;
+  }
+
+  .calculator-modal-header,
+  .calculator-modal-body,
+  .calculator-modal-footer {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .inquiry-form-only {
+    padding: 16px 12px 40px;
+  }
+
+  .inquiry-form-only-card {
+    margin-top: 24px;
+    padding: 22px 14px 18px;
+  }
+
+  .inquiry-form-card .service-selector-tabs {
+    flex-wrap: nowrap;
+    gap: 7px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+  }
+
+  .inquiry-form-card .service-selector-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .inquiry-form-card .tab-btn {
+    flex: 0 0 auto;
+  }
+
+  .calculator-options-grid,
+  .ads-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-launcher {
+    padding: 16px;
+  }
+
+  .calculator-launcher-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-modal-backdrop {
+    align-items: flex-end;
+    padding: 10px;
+  }
+
+  .calculator-modal {
+    max-height: calc(100dvh - 20px);
+    border-radius: 20px;
+  }
+
+  .calculator-modal-header {
+    align-items: stretch;
+    gap: 12px;
+    flex-direction: column;
+    padding: 18px 14px 16px;
+  }
+
+  .calculator-modal-header-actions {
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .calculator-modal-header-actions .calculator-total {
+    min-width: 0;
+    flex: 1 1 auto;
+    text-align: left;
+  }
+
+  .calculator-modal-body {
+    padding: 16px 14px 18px;
+  }
+
+  .calculator-modal-footer {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .calculator-modal-footer .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .ads-brief-section {
+    padding: 36px 12px 14px;
+  }
+
+  .ads-brief-section legend {
+    top: 12px;
+    right: 12px;
+    left: 12px;
+  }
+}
+
+@media (max-width: 720px) {
+  .account-header-link,
+  .header-actions .account-logout {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    min-width: 44px;
+    flex-basis: 44px;
+  }
+
+  .account-topbar {
+    padding-bottom: 48px;
+  }
+
+  .account-hero {
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .account-avatar {
+    width: 56px;
+    height: 56px;
+    flex-basis: 56px;
+    font-size: 1.4rem;
+  }
+
+  .account-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .admin-topbar-actions {
+    justify-content: flex-start;
+  }
+
+  .admin-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .account-admin-panel,
+  .account-history-panel {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .account-history-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .account-history-actions {
+    justify-content: flex-start;
+  }
+
+  .account-admin-description {
+    max-width: none;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-shell {
+    width: min(100% - 24px, 470px);
+    padding: 36px 0;
+    gap: 20px;
+  }
+
+  .auth-card {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+
+  .account-shell {
+    width: min(100% - 24px, 1080px);
+    padding: 24px 0 48px;
+  }
+
+  .account-topbar {
+    padding-bottom: 32px;
+  }
+
+  .account-hero h1 {
+    font-size: clamp(1.75rem, 7vw, 2.2rem);
+  }
+
+  .account-panel {
+    min-height: 0;
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .account-details div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .account-details dd {
+    text-align: left;
+  }
+
+  .account-edit-button,
+  .account-delete-button {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .account-modal {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .account-modal-actions {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .account-modal-button {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .admin-section-nav-link {
+    flex: 1 1 auto;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .admin-topbar-actions .admin-back-link,
+  .account-history-actions .admin-back-link,
+  .account-history-actions .account-admin-button {
+    justify-content: center;
+    text-align: center;
+  }
+}
+

@@ -1,0 +1,147 @@
+
+:root {
+  /* Strict Monochrome & Zinc Palette */
+  --bg-body: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-subtle: #fafafa;
+  --bg-panel: #f4f4f5;
+  --bg-dark: #09090b;
+
+  --border-light: #f4f4f5;
+  --border: #e4e4e7;
+  --border-strong: #d4d4d8;
+  --border-dark: #09090b;
+
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+  --text-dim: #a1a1aa;
+  --text-inverse: #ffffff;
+
+  --accent-black: #09090b;
+  --accent-emerald: #10b981;
+  --accent-blue: #2563eb;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
+  --font-mono: 'Space Grotesk', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Strict Pill Geometry & Corners */
+  --radius-pill: 9999px;
+  --radius-card: 24px;
+  --radius-modal: 24px;
+  --radius-inner: 16px;
+  --radius-sm: 10px;
+
+  /* Subtle Crisp Tech Shadows */
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.02), 0 6px 16px -2px rgba(0, 0, 0, 0.03);
+  --shadow-card: 0 2px 10px -2px rgba(0, 0, 0, 0.03), 0 10px 24px -4px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 12px 32px -4px rgba(0, 0, 0, 0.08);
+
+  --transition: all 0.2s ease;
+
+  /* Standard Button Tokens & Hover Presets (Light Theme - Based on Hero Buttons 1 & 2) */
+  --btn-primary-bg: var(--accent-black);
+  --btn-primary-border: var(--accent-black);
+  --btn-primary-text: var(--text-inverse);
+  --btn-primary-hover-bg: #27272a;
+  --btn-primary-hover-border: #27272a;
+  --btn-primary-hover-text: var(--text-inverse);
+
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-border: var(--border);
+  --btn-secondary-text: var(--text-primary);
+  --btn-secondary-hover-bg: var(--bg-panel);
+  --btn-secondary-hover-border: var(--border-strong);
+  --btn-secondary-hover-text: var(--text-primary);
+}
+
+/* Base & Reset */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  font-size: 16px;
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-body);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img, svg {
+  display: block;
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+  line-height: 1.15;
+}
+
+p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* Swiss Section Header Tags */
+.section-header {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 56px auto;
+}
+
+.section-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  letter-spacing: -0.04em;
+  margin-bottom: 14px;
+}
+
+.section-desc {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+

@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Section 01: Solutions by Goal (Objective Selector)
+   ========================================================================== */
+.solutions-section {
+  padding: 96px 0;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+
+.goals-pills-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+
+.goal-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transform: none !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .goal-pill:hover {
+    background: var(--bg-panel);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+    transform: none !important;
+  }
+}
+
+.goal-pill.active {
+  background: var(--accent-black);
+  border-color: var(--accent-black);
+  color: #ffffff;
+}
+
+.solution-output-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 44px;
+  box-shadow: var(--shadow-card);
+}
+
+.solution-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.solution-left h3 {
+  font-size: 1.75rem;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+
+.solution-left p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.solution-stack-title {
+  font-family: var(--font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.solution-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.sol-tag {
+  font-size: 0.84rem;
+  font-weight: 500;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  color: var(--text-secondary);
+  max-width: 100%;
+  word-break: break-word;
+}
+
+.solution-left .btn,
+.solution-calc-btn {
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.solution-right {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sol-stat-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 14px;
+}
+
+.sol-stat-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.sol-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.sol-stat-value {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+

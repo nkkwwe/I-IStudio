@@ -133,7 +133,8 @@ function initLanguageSwitcher(signal) {
     if (themeToggle) {
       const isDark = document.documentElement.dataset.theme === 'dark';
       themeToggle.setAttribute('aria-label', isDark ? (t.theme_light || 'Enable light theme') : (t.theme_dark || 'Enable dark theme'));
-      themeToggle.setAttribute('title', isDark ? (t.theme_light || 'Light theme') : (t.theme_dark || 'Dark theme'));
+      // Native title tooltips also pop up on touch (long press); data-tooltip is hover-gated by CSS.
+      themeToggle.setAttribute('data-tooltip', isDark ? (t.theme_light || 'Enable light theme') : (t.theme_dark || 'Enable dark theme'));
     }
 
     // Update document title

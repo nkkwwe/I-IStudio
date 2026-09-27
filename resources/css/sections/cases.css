@@ -1,0 +1,433 @@
+/* ==========================================================================
+   Section 03: Selected Case Studies (Realistic Mockups)
+   ========================================================================== */
+.cases-section {
+  padding: 96px 0;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+
+.cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.case-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-subtle);
+  transform: none !important;
+}
+
+.visual-mockup-wrap {
+  background: var(--bg-panel);
+  padding: 28px 20px 20px 20px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.case-preview-image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+  margin-top: 28px;
+  border: 1px solid rgba(9, 9, 11, 0.14);
+  border-radius: 14px;
+  background: #15171a;
+  box-shadow: 0 18px 28px -22px rgba(0, 0, 0, 0.72);
+}
+
+.case-badge-overlay {
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.case-category {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  color: var(--text-primary);
+}
+
+.case-badge-metric {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: var(--accent-black);
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+/* Realistic Laptop Frame */
+.laptop-frame {
+  width: 90%;
+  max-width: 290px;
+  background: #18181b;
+  border-radius: 12px 12px 0 0;
+  padding: 8px 8px 0 8px;
+  box-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.15);
+  margin: 28px auto 0 auto;
+}
+
+.laptop-camera {
+  width: 4px;
+  height: 4px;
+  background: #3f3f46;
+  border-radius: 50%;
+  margin: 0 auto 6px auto;
+}
+
+.laptop-screen {
+  background: #ffffff;
+  border-radius: 4px 4px 0 0;
+  overflow: hidden;
+  font-size: 0.75rem;
+}
+
+.screen-browser-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f4f4f5;
+  padding: 5px 8px;
+  border-bottom: 1px solid #e4e4e7;
+}
+
+.nav-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d4d4d8;
+}
+
+.nav-dots .red { background: #f87171; }
+.nav-dots .yellow { background: #facc15; }
+.nav-dots .green { background: #4ade80; }
+
+.nav-url {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+.screen-content {
+  padding: 12px;
+  min-height: 100px;
+}
+
+.mockup-hero-banner {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+  margin-bottom: 8px;
+}
+
+.m-hero-badge {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--accent-black);
+  display: inline-block;
+  margin-bottom: 2px;
+}
+
+.mockup-hero-banner h5 {
+  font-size: 0.75rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 6px;
+}
+
+.m-hero-btn {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  background: var(--accent-black);
+  color: #ffffff;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.mockup-lead-bubble {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 0.65rem;
+}
+
+.bubble-icon {
+  font-size: 0.8rem;
+}
+
+.bubble-info strong {
+  display: block;
+  font-weight: 600;
+  color: #065f46;
+}
+
+.bubble-info span {
+  font-size: 0.58rem;
+  color: #047857;
+}
+
+.laptop-base {
+  width: 106%;
+  height: 7px;
+  background: #27272a;
+  border-radius: 0 0 8px 8px;
+  margin-left: -3%;
+}
+
+/* Dual Devices (Mini Laptop + Phone) */
+.dual-devices-wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.mini-laptop {
+  width: 65%;
+  max-width: 190px;
+  margin: 0;
+}
+
+.mockup-b2b-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.m-logo {
+  font-weight: 800;
+  font-size: 0.65rem;
+}
+
+.b2b-title {
+  font-weight: 700;
+  font-size: 0.7rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.b2b-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.b2b-card-mini {
+  background: #f4f4f5;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 0.55rem;
+  text-align: center;
+}
+
+.phone-frame {
+  width: 80px;
+  height: 140px;
+  background: #18181b;
+  border-radius: 16px;
+  padding: 4px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+
+.phone-notch {
+  width: 24px;
+  height: 3px;
+  background: #3f3f46;
+  border-radius: 2px;
+  margin: 2px auto 4px auto;
+}
+
+.phone-screen {
+  background: #ffffff;
+  border-radius: 12px;
+  flex: 1;
+  padding: 8px 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.phone-badge {
+  font-size: 0.55rem;
+  font-weight: 700;
+  background: #ecfdf5;
+  color: var(--accent-emerald);
+  padding: 2px 4px;
+  border-radius: var(--radius-pill);
+  text-align: center;
+}
+
+.phone-card {
+  background: #f4f4f5;
+  border-radius: 6px;
+  padding: 6px;
+  text-align: center;
+  font-size: 0.55rem;
+}
+
+.phone-btn {
+  background: var(--accent-black);
+  color: #ffffff;
+  border-radius: var(--radius-pill);
+  padding: 2px 4px;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* Catalog Mockup */
+.mockup-catalog-pills {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.cat-pill {
+  font-size: 0.55rem;
+  padding: 2px 6px;
+  border-radius: var(--radius-pill);
+  background: #f4f4f5;
+  color: var(--text-secondary);
+}
+
+.cat-pill.active {
+  background: var(--accent-black);
+  color: #ffffff;
+}
+
+.mockup-catalog-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.m-cat-card {
+  background: #f4f4f5;
+  border-radius: 4px;
+  padding: 6px;
+}
+
+.m-cat-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+}
+
+.m-cat-price {
+  font-size: 0.55rem;
+  color: var(--accent-emerald);
+  font-weight: 600;
+}
+
+/* Case Card Body */
+.case-body {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.case-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.case-title {
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+
+.case-challenge {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.case-scope {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.scope-tag {
+  font-size: 0.75rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+}
+
+.case-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+  margin-top: auto;
+  border-top: 1px solid var(--border-light);
+  padding-top: 18px;
+}
+
+.metric-box {
+  text-align: center;
+}
+
+.metric-val {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+.metric-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+

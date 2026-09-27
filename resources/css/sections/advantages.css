@@ -1,0 +1,78 @@
+/* ==========================================================================
+   Section 05: Advantages / Why Us
+   ========================================================================== */
+.advantages-section {
+  padding: 96px 0;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.advantage-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 32px;
+  box-shadow: var(--shadow-subtle);
+  transform: none !important;
+}
+
+.adv-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-inner);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-black);
+  margin-bottom: 18px;
+}
+
+.advantage-card h3 {
+  font-size: 1.25rem;
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+}
+
+.advantage-card p {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.55;
+}
+
+/* Inline and Pill SVG utilities */
+.inline-svg {
+  display: inline-block;
+  vertical-align: -1px;
+  margin-right: 4px;
+}
+
+.goal-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 2px;
+}
+
+.form-topic-group {
+  margin-bottom: 20px;
+}
+
+.form-topic-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-family: var(--font-mono);
+}
+

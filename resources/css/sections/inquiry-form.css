@@ -1,0 +1,260 @@
+/* ==========================================================================
+   Section 06: Smart Project Inquiry Form
+   ========================================================================== */
+.inquiry-section {
+  padding: 96px 0;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border);
+}
+
+.inquiry-container {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.inquiry-info {
+  position: sticky;
+  top: 96px;
+}
+
+.inquiry-title {
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  letter-spacing: -0.04em;
+  margin-bottom: 16px;
+}
+
+.inquiry-desc {
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.inquiry-guarantees {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 36px;
+}
+
+.guarantee-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.guarantee-item svg {
+  stroke: var(--accent-black);
+  flex-shrink: 0;
+}
+
+.inquiry-contact-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+  padding: 24px;
+}
+
+.inquiry-contact-card h4 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.inquiry-contact-card p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.direct-contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.direct-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: color 0.15s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .direct-link:hover {
+    color: var(--accent-blue);
+  }
+}
+
+/* Inquiry Action Card in Section 06 */
+.inquiry-action-card {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 40px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+}
+
+.inquiry-action-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.inquiry-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.action-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.live-status-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.dot-ping {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+}
+
+.inquiry-action-title {
+  font-size: clamp(1.35rem, 2vw, 1.625rem);
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+.inquiry-action-desc {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.action-topic-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-topic-label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.action-service-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.action-service-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-service-pill .pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  transition: background-color 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .action-service-pill:hover {
+    background: var(--bg-panel);
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .action-service-pill:hover .pill-dot {
+    background: var(--accent-black);
+  }
+}
+
+.inquiry-action-main {
+  margin-top: 4px;
+}
+
+.inquiry-features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.inquiry-feat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.inquiry-feat-item svg {
+  color: var(--text-primary);
+  flex-shrink: 0;
+}
+
+.inquiry-action-footer {
+  text-align: center;
+}
+
+.security-note {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+

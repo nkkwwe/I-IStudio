@@ -75,17 +75,28 @@ export default function AccountSiteHeader({
 
         <div className="header-actions">
           {showProfile && (
-            <a
-              href={localizedUrl(isAuthenticated ? '/account' : '/login')}
-              className="account-header-link"
-              aria-label={isAuthenticated ? copy.common.account : copy.auth.pageSignIn}
-              data-tooltip={isAuthenticated ? copy.common.account : copy.auth.pageSignIn}
-            >
-              {isAuthenticated ? <span className="account-header-initial" aria-hidden="true">{userInitial}</span> : <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx={12} cy={8} r="3.2" /><path d="M5.5 20c.8-3.2 3.1-5 6.5-5s5.7 1.8 6.5 5" /></svg>}
-              {Boolean(unreadChatCount && unreadChatCount > 0) && (
-                <ChatUnreadBadge count={unreadChatCount} />
-              )}
-            </a>
+            isAuthenticated ? (
+              <a
+                href={localizedUrl('/account')}
+                className="account-header-link"
+                aria-label={copy.common.account}
+                data-tooltip={copy.common.account}
+              >
+                <span className="account-header-initial" aria-hidden="true">{userInitial}</span>
+                {Boolean(unreadChatCount && unreadChatCount > 0) && (
+                  <ChatUnreadBadge count={unreadChatCount} />
+                )}
+              </a>
+            ) : (
+              <a
+                href={localizedUrl('/login')}
+                className="account-header-link account-sign-in-link"
+                aria-label={copy.auth.pageSignIn}
+                data-tooltip={copy.auth.pageSignIn}
+              >
+                {copy.auth.pageSignIn}
+              </a>
+            )
           )}
 
           <button type="button" className="theme-toggle" onClick={onToggleTheme} aria-label={isDark ? copy.common.enableLightTheme : copy.common.enableDarkTheme} data-tooltip={isDark ? copy.common.enableLightTheme : copy.common.enableDarkTheme}>
