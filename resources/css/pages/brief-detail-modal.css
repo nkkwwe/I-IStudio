@@ -991,7 +991,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   color: #bd7f12;
   cursor: pointer;
   font: 700 0.82rem var(--font-sans);
-  transition: border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease;
+  transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
 }
 
 @media (max-width: 460px) {
@@ -1007,10 +1007,21 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 
 @media (hover: hover) and (pointer: fine) {
   .inquiry-detail-review-btn:hover {
-    border-color: #e9a328;
-    background: rgba(233, 163, 40, 0.18);
-    color: #9a6508;
+    transform: translateY(-1px);
+    border-color: var(--border-strong);
+    background: var(--bg-panel);
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(9, 9, 11, 0.1);
   }
+
+  .inquiry-detail-review-btn:hover svg {
+    color: #e9a328;
+    transform: scale(1.08);
+  }
+}
+
+.inquiry-detail-review-btn svg {
+  transition: color 0.18s ease, transform 0.18s ease;
 }
 
 .inquiry-detail-review-btn:focus-visible {
@@ -1132,6 +1143,7 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
   width: 34px;
   height: 34px;
   flex: 0 0 34px;
+  transition: transform 0.16s ease, filter 0.16s ease;
 }
 
 .inquiry-review-star-base,
@@ -1166,6 +1178,17 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
   stroke-width: 1.1;
 }
 
+.inquiry-review-stars.is-preview .inquiry-review-star-colored {
+  color: var(--accent-blue);
+}
+
+.inquiry-review-stars.is-preview .inquiry-review-star:has(.inquiry-review-star-hit:hover),
+.inquiry-review-stars.is-preview .inquiry-review-star:has(.inquiry-review-star-hit:focus-visible) {
+  z-index: 2;
+  transform: scale(1.13);
+  filter: drop-shadow(0 2px 5px rgba(37, 99, 235, 0.32));
+}
+
 .inquiry-review-star-hit {
   position: absolute;
   top: 0;
@@ -1193,6 +1216,10 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
   color: var(--text-secondary);
   font-size: 0.76rem;
   font-weight: 700;
+}
+
+.inquiry-review-stars.is-preview .inquiry-review-rating-value {
+  color: var(--accent-blue);
 }
 
 .inquiry-review-textarea {
@@ -1257,46 +1284,62 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
   }
 }
 
-.inquiry-review-photo-preview {
-  display: flex;
-  min-height: 58px;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 9px;
-  border: 1px solid var(--border-light);
-  border-radius: 14px;
+.inquiry-review-photos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.inquiry-review-photo-card {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 13px;
   background: var(--bg-subtle);
 }
 
-.inquiry-review-photo-preview img {
-  width: 48px;
-  height: 48px;
-  flex: 0 0 48px;
-  border-radius: 10px;
+.inquiry-review-photo-card img {
+  width: 100%;
+  aspect-ratio: 1.35;
   object-fit: cover;
 }
 
-.inquiry-review-photo-preview span {
-  min-width: 0;
+.inquiry-review-photo-card > span {
+  display: block;
   overflow: hidden;
+  padding: 7px 9px;
   color: var(--text-secondary);
-  font-size: 0.76rem;
+  font-size: 0.67rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.inquiry-review-photo-preview button {
+.inquiry-review-photo-card > button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
   display: grid;
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
-  margin-left: auto;
+  width: 29px;
+  height: 29px;
   place-items: center;
-  border: 1px solid var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 50%;
-  background: var(--bg-surface);
-  color: var(--text-secondary);
+  background: rgba(9, 9, 11, 0.72);
+  color: #fff;
   cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+
+.inquiry-review-photo-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.inquiry-review-photo-count {
+  color: var(--text-muted);
+  font-size: 0.7rem;
 }
 
 .inquiry-review-error {
@@ -1358,5 +1401,17 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
     max-height: calc(100dvh - 16px);
     padding: 23px 19px max(19px, env(safe-area-inset-bottom));
     border-radius: 22px;
+  }
+
+  .inquiry-review-photos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inquiry-detail-review-btn,
+  .inquiry-detail-review-btn svg,
+  .inquiry-review-star {
+    transition: none;
   }
 }

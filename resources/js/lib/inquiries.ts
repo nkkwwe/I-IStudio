@@ -3,8 +3,13 @@ import type { SiteLanguage } from '../content/siteLanguage';
 export type InquiryReview = {
   rating: number;
   body: string;
-  attachment_url?: string | null;
-  attachment_name?: string | null;
+  attachments: InquiryReviewAttachment[];
+};
+
+export type InquiryReviewAttachment = {
+  id: number;
+  name: string;
+  url: string;
 };
 
 export type Inquiry = {

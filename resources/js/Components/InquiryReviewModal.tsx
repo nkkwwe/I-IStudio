@@ -22,26 +22,22 @@ export default function InquiryReviewModal({ inquiry, onClose, onReviewSaved }: 
   const copy = getUiCopy(language);
   const initialReview = inquiry.review;
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [newPhotoPreviews, setNewPhotoPreviews] = useState<string[]>([]);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [saved, setSaved] = useState(false);
   const form = useForm({
     rating: initialReview?.rating ?? 5,
     body: initialReview?.body ?? '',
-    attachment: null as File | null,
-    remove_attachment: false,
+    attachment_ids: initialReview?.attachments.map((attachment) => attachment.id) ?? [],
+    attachment_ids_json: '[]',
+    attachments: [] as File[],
   });
 
   useEffect(() => {
-    if (!form.data.attachment) {
-      setPreviewUrl(null);
-      return undefined;
-    }
-
-    const url = URL.createObjectURL(form.data.attachment);
-    setPreviewUrl(url);
-    return () => URL.revokeObjectURL(url);
-  }, [form.data.attachment]);
+    const urls = form.data.attachments.map((file) => URL.createObjectURL(file));
+    setNewPhotoPreviews(urls);
+    return () => urls.forEach((url) => URL.revokeObjectURL(url));
+  }, [form.data.attachments]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -53,35 +49,70 @@ export default function InquiryReviewModal({ inquiry, onClose, onReviewSaved }: 
   }, [form.processing, onClose]);
 
   const displayedRating = hoverRating ?? form.data.rating;
-  const ratingLabel = copy.review.ratingValue.replace('{rating}', displayedRating.toFixed(2).replace(/0+$/, '').replace(/\.$/, ''));
+  const formattedRating = displayedRating.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
+  const ratingLabel = (hoverRating !== null ? copy.review.previewRating : copy.review.ratingValue)
+    .replace('{rating}', formattedRating);
+  const keptPhotos = initialReview?.attachments.filter((attachment) => form.data.attachment_ids.includes(attachment.id)) ?? [];
+  const photoCount = keptPhotos.length + form.data.attachments.length;
 
   const handlePhoto = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] ?? null;
+    const files = Array.from(event.target.files ?? []);
     event.target.value = '';
-    if (!file) return;
+    if (files.length === 0) return;
 
     const acceptedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    if (!acceptedTypes.includes(file.type) || file.size > 5 * 1024 * 1024) {
-      form.setError('attachment', copy.review.imageError);
+    if (files.some((file) => !acceptedTypes.includes(file.type) || file.size > 5 * 1024 * 1024)) {
+      form.setError('attachments', copy.review.imageError);
       return;
     }
 
-    form.clearErrors('attachment');
-    form.setData('attachment', file);
-    form.setData('remove_attachment', false);
+    const available = 6 - photoCount;
+    if (files.length > available) {
+      form.setError('attachments', copy.review.photoLimitError);
+      if (available <= 0) return;
+    } else {
+      form.clearErrors('attachments');
+    }
+
+    form.setData('attachments', [...form.data.attachments, ...files.slice(0, available)]);
     setSaved(false);
   };
 
-  const removePhoto = () => {
-    form.setData('attachment', null);
-    form.setData('remove_attachment', Boolean(initialReview?.attachment_url));
-    if (fileInputRef.current) fileInputRef.current.value = '';
+  const removeSavedPhoto = (id: number) => {
+    form.setData('attachment_ids', form.data.attachment_ids.filter((attachmentId) => attachmentId !== id));
+    form.clearErrors('attachments');
     setSaved(false);
   };
+
+  const removeNewPhoto = (index: number) => {
+    form.setData('attachments', form.data.attachments.filter((_, fileIndex) => fileIndex !== index));
+    form.clearErrors('attachments');
+    setSaved(false);
+  };
+
+  const photoCards = [
+    ...keptPhotos.map((attachment) => ({
+      key: `saved-${attachment.id}`,
+      url: attachment.url,
+      name: attachment.name,
+      onRemove: () => removeSavedPhoto(attachment.id),
+    })),
+    ...form.data.attachments.map((file, index) => ({
+      key: `new-${index}-${file.name}`,
+      url: newPhotoPreviews[index] ?? '',
+      name: file.name,
+      onRemove: () => removeNewPhoto(index),
+    })),
+  ];
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    form.transform((data) => ({ ...data, _method: 'PUT', body: data.body.trim() }));
+    form.transform(({ attachment_ids, ...data }) => ({
+      ...data,
+      _method: 'PUT',
+      body: data.body.trim(),
+      attachment_ids_json: JSON.stringify(attachment_ids),
+    }));
     form.post(`/account/project-briefs/${inquiry.id}/review`, {
       forceFormData: true,
       preserveScroll: true,
@@ -91,14 +122,17 @@ export default function InquiryReviewModal({ inquiry, onClose, onReviewSaved }: 
           only: ['inquiries'],
           onSuccess: (page) => {
             const updatedInquiry = (page.props.inquiries as Inquiry[]).find((item) => item.id === inquiry.id);
-            if (updatedInquiry?.review) onReviewSaved(updatedInquiry.review);
+            if (updatedInquiry?.review) {
+              form.setData('attachment_ids', updatedInquiry.review.attachments.map((attachment) => attachment.id));
+              form.setData('attachments', []);
+              form.clearErrors('attachments');
+              onReviewSaved(updatedInquiry.review);
+            }
           },
         });
       },
     });
   };
-
-  const photoUrl = previewUrl ?? (form.data.remove_attachment ? null : initialReview?.attachment_url ?? null);
 
   return (
     <div
@@ -127,7 +161,7 @@ export default function InquiryReviewModal({ inquiry, onClose, onReviewSaved }: 
         <form className="inquiry-review-form" onSubmit={submit}>
           <fieldset className="inquiry-review-rating">
             <legend>{copy.review.rating}</legend>
-            <div className="inquiry-review-stars" onMouseLeave={() => setHoverRating(null)}>
+            <div className={`inquiry-review-stars${hoverRating !== null ? ' is-preview' : ''}`} onMouseLeave={() => setHoverRating(null)}>
               {Array.from({ length: 5 }, (_, starIndex) => {
                 const fill = Math.max(0, Math.min(1, displayedRating - starIndex));
                 return (
@@ -153,6 +187,7 @@ export default function InquiryReviewModal({ inquiry, onClose, onReviewSaved }: 
                           onClick={() => {
                             form.setData('rating', rating);
                             form.clearErrors('rating');
+                            setHoverRating(null);
                             setSaved(false);
                           }}
                         />
@@ -190,28 +225,34 @@ export default function InquiryReviewModal({ inquiry, onClose, onReviewSaved }: 
             className="inquiry-review-file-input"
             type="file"
             accept="image/jpeg,image/png,image/gif,image/webp"
+            multiple
             onChange={handlePhoto}
             aria-label={copy.review.addPhoto}
             disabled={form.processing}
           />
-          {photoUrl ? (
-            <div className="inquiry-review-photo-preview">
-              <img src={photoUrl} alt={form.data.attachment?.name ?? initialReview?.attachment_name ?? copy.chat.imageAlt} />
-              <span>{form.data.attachment?.name ?? initialReview?.attachment_name ?? copy.chat.imageAlt}</span>
-              <button type="button" onClick={removePhoto} aria-label={copy.review.removePhoto} disabled={form.processing}>
-                <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
-              </button>
-            </div>
-          ) : (
-            <button type="button" className="inquiry-review-add-photo" onClick={() => fileInputRef.current?.click()} disabled={form.processing}>
+          <div className="inquiry-review-photos" aria-label={copy.review.photoCount.replace('{count}', String(photoCount))}>
+            {photoCards.map((photo) => (
+              <div className="inquiry-review-photo-card" key={photo.key}>
+                {photo.url && <img src={photo.url} alt={photo.name || copy.chat.imageAlt} />}
+                <span title={photo.name}>{photo.name || copy.chat.imageAlt}</span>
+                <button type="button" onClick={photo.onRemove} aria-label={`${copy.review.removePhoto}: ${photo.name}`} disabled={form.processing}>
+                  <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="inquiry-review-photo-actions">
+            <button type="button" className="inquiry-review-add-photo" onClick={() => fileInputRef.current?.click()} disabled={form.processing || photoCount >= 6}>
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" /><circle cx="8.5" cy="8.5" r="1.5" /><path d="m21 15-5-5L5 21" /></svg>
-              <span>{initialReview?.attachment_url ? copy.review.replacePhoto : copy.review.addPhoto}</span>
+              <span>{copy.review.addPhoto}</span>
             </button>
+            <span className="inquiry-review-photo-count">{copy.review.photoCount.replace('{count}', String(photoCount))}</span>
+          </div>
+          {(form.errors.attachments || form.errors.attachment_ids_json) && (
+            <span className="inquiry-review-error">{form.errors.attachments || form.errors.attachment_ids_json}</span>
           )}
-          {form.errors.attachment && <span className="inquiry-review-error">{form.errors.attachment || copy.review.imageError}</span>}
 
           {saved && <p className="inquiry-review-saved" role="status">{copy.review.saved}</p>}
-          {form.errors.remove_attachment && <span className="inquiry-review-error">{form.errors.remove_attachment}</span>}
 
           <div className="inquiry-review-actions">
             <button type="button" className="inquiry-review-cancel" onClick={onClose} disabled={form.processing}>{copy.common.cancel}</button>

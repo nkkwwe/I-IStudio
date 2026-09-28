@@ -136,11 +136,14 @@ type ReviewCopy = {
   description: string;
   rating: string;
   ratingValue: string;
+  previewRating: string;
   comment: string;
   placeholder: string;
   addPhoto: string;
   replacePhoto: string;
   removePhoto: string;
+  photoCount: string;
+  photoLimitError: string;
   save: string;
   update: string;
   saving: string;
@@ -286,11 +289,14 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       description: 'Your feedback helps us make every project better.',
       rating: 'Your rating',
       ratingValue: '{rating} out of 5',
+      previewRating: 'Preview · {rating} out of 5 — click to select',
       comment: 'Your review',
       placeholder: 'Tell us what you think about working with us…',
       addPhoto: 'Add a photo',
       replacePhoto: 'Change photo',
       removePhoto: 'Remove photo',
+      photoCount: '{count} of 6 photos',
+      photoLimitError: 'You can add up to 6 photos.',
       save: 'Send review',
       update: 'Save changes',
       saving: 'Sending…',
@@ -434,11 +440,14 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       description: 'Ваш відгук допоможе нам ставати кращими з кожним проєктом.',
       rating: 'Ваша оцінка',
       ratingValue: '{rating} з 5',
+      previewRating: 'Попередній перегляд · {rating} з 5 — натисніть, щоб вибрати',
       comment: 'Ваш відгук',
       placeholder: 'Розкажіть про співпрацю з нами…',
       addPhoto: 'Додати фото',
       replacePhoto: 'Змінити фото',
       removePhoto: 'Видалити фото',
+      photoCount: '{count} з 6 фото',
+      photoLimitError: 'Можна додати не більше 6 фото.',
       save: 'Надіслати відгук',
       update: 'Зберегти зміни',
       saving: 'Надсилання…',
@@ -582,11 +591,14 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       description: 'Părerea ta ne ajută să îmbunătățim fiecare proiect.',
       rating: 'Evaluarea ta',
       ratingValue: '{rating} din 5',
+      previewRating: 'Previzualizare · {rating} din 5 — apasă pentru a selecta',
       comment: 'Recenzia ta',
       placeholder: 'Povestește-ne cum a fost colaborarea…',
       addPhoto: 'Adaugă o fotografie',
       replacePhoto: 'Schimbă fotografia',
       removePhoto: 'Elimină fotografia',
+      photoCount: '{count} din 6 fotografii',
+      photoLimitError: 'Poți adăuga cel mult 6 fotografii.',
       save: 'Trimite recenzia',
       update: 'Salvează modificările',
       saving: 'Se trimite…',
