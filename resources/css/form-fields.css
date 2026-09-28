@@ -1,4 +1,4 @@
-/* Shared focus transition for editable text fields across public, account, and admin pages. */
+/* Shared appearance and interaction states for editable text fields. */
 :root {
   --form-field-focus-ring: 0 0 0 3px rgba(9, 9, 11, 0.07);
 }
@@ -7,7 +7,22 @@
   input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),
   textarea
 ) {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+  background-color: var(--bg-subtle);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  box-shadow: none;
   transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+:is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),
+  textarea
+):hover:not(:focus):not(:disabled):not([readonly]) {
+  border-color: var(--border-strong);
+  background-color: var(--bg-surface);
+  box-shadow: 0 0 0 2px rgba(9, 9, 11, 0.04);
 }
 
 :is(
@@ -16,6 +31,7 @@
 ):focus {
   outline: none;
   border-color: var(--border-strong);
+  background-color: var(--bg-subtle);
   box-shadow: var(--form-field-focus-ring);
 }
 
