@@ -1419,18 +1419,19 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
 }
 
 .inquiry-review-actions button {
-  min-height: 42px;
-  padding: 0 17px;
+  min-height: 40px;
+  padding: 0 15px;
   border-radius: var(--radius-pill);
   cursor: pointer;
-  font: 700 0.78rem var(--font-sans);
-  transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+  font: 700 0.76rem var(--font-sans);
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .inquiry-review-cancel {
-  border: 1px solid var(--border);
-  background: var(--bg-surface);
-  color: var(--text-secondary);
+  border: 1px solid var(--btn-secondary-border);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1456,8 +1457,8 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
 }
 
 .inquiry-review-actions button:disabled {
-  cursor: not-allowed;
-  opacity: 0.56;
+  cursor: wait;
+  opacity: 0.6;
 }
 
 @media (max-width: 560px) {
