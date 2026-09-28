@@ -51,8 +51,7 @@ export default function InquiryReviewModal({ inquiry, embedded = false, onClose,
 
   const displayedRating = hoverRating ?? form.data.rating;
   const formattedRating = displayedRating.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
-  const ratingLabel = (hoverRating !== null ? copy.review.previewRating : copy.review.ratingValue)
-    .replace('{rating}', formattedRating);
+  const ratingLabel = copy.review.ratingValue.replace('{rating}', formattedRating);
   const keptPhotos = initialReview?.attachments.filter((attachment) => form.data.attachment_ids.includes(attachment.id)) ?? [];
   const photoCount = keptPhotos.length + form.data.attachments.length;
 
