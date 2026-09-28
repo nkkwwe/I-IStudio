@@ -181,8 +181,14 @@ export default function InquiryReviewModal({ inquiry, embedded = false, onClose,
                           aria-label={copy.review.ratingValue.replace('{rating}', rating.toFixed(2).replace(/0+$/, '').replace(/\.$/, ''))}
                           aria-pressed={form.data.rating === rating}
                           disabled={rating < 1 || form.processing}
-                          onMouseEnter={() => setHoverRating(rating)}
-                          onFocus={() => setHoverRating(rating)}
+                          onPointerEnter={(event) => {
+                            if (event.pointerType === 'mouse' && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+                              setHoverRating(rating);
+                            }
+                          }}
+                          onFocus={(event) => {
+                            if (event.currentTarget.matches(':focus-visible')) setHoverRating(rating);
+                          }}
                           onBlur={() => setHoverRating(null)}
                           onClick={() => {
                             form.setData('rating', rating);

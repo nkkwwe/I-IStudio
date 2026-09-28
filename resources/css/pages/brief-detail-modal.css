@@ -191,8 +191,10 @@ html[data-theme="dark"] .inquiry-detail-modal {
   transition: border-color 0.2s ease;
 }
 
-.inquiry-detail-review-photos a:hover {
-  border-color: var(--border-strong);
+@media (hover: hover) and (pointer: fine) {
+  .inquiry-detail-review-photos a:hover {
+    border-color: var(--border-strong);
+  }
 }
 
 .inquiry-detail-review-photos img {
@@ -956,7 +958,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   }
 }
 
-/* On phones, long dialogs use the viewport while short account confirmations stay compact. */
+/* Phone dialogs fill the viewport, including account confirmations. */
 @media (max-width: 640px) {
   .inquiry-modal-backdrop,
   .inquiry-chat-backdrop,
@@ -1005,19 +1007,19 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   }
 
   .account-modal-backdrop {
-    place-items: center;
-    padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+    place-items: stretch;
+    padding: 0;
   }
 
   .account-modal {
-    width: min(100%, 440px);
-    height: auto;
-    min-height: 0;
-    max-height: calc(100vh - 32px);
-    max-height: calc(100dvh - 32px);
-    padding: 22px 18px;
-    border: 1px solid var(--border-light);
-    border-radius: 18px;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    padding: calc(22px + env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) calc(22px + env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+    border: 0;
+    border-radius: 0;
   }
 
   .modal-card {
@@ -1255,10 +1257,16 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
   color: var(--accent-blue);
 }
 
-.inquiry-review-stars.is-preview .inquiry-review-star:has(.inquiry-review-star-hit:hover),
 .inquiry-review-stars.is-preview .inquiry-review-star:has(.inquiry-review-star-hit:focus-visible) {
   z-index: 2;
   transform: scale(1.13);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inquiry-review-stars.is-preview .inquiry-review-star:has(.inquiry-review-star-hit:hover) {
+    z-index: 2;
+    transform: scale(1.13);
+  }
 }
 
 .inquiry-review-star-hit {
@@ -1478,22 +1486,116 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
   opacity: 0.6;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 640px) {
   .inquiry-review-backdrop.is-embedded {
     width: 100%;
+    height: 100%;
   }
 
   .inquiry-review-backdrop {
-    place-items: end center;
-    padding: 8px 8px max(8px, env(safe-area-inset-bottom));
+    place-items: stretch;
+    padding: 0;
+    overflow: hidden;
   }
 
   .inquiry-review-modal {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    max-height: calc(100vh - 16px);
-    max-height: calc(100dvh - 16px);
-    padding: 23px 19px max(19px, env(safe-area-inset-bottom));
-    border-radius: 22px;
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100vh;
+    max-height: 100dvh;
+    padding: calc(22px + env(safe-area-inset-top)) max(18px, env(safe-area-inset-right)) calc(22px + env(safe-area-inset-bottom)) max(18px, env(safe-area-inset-left));
+    border: 0;
+    border-radius: 0;
+    overscroll-behavior: contain;
+  }
+
+  .inquiry-detail-modal {
+    display: flex;
+    flex-direction: column;
+    overscroll-behavior: contain;
+    padding-inline: max(18px, env(safe-area-inset-left)) max(18px, env(safe-area-inset-right));
+  }
+
+  .inquiry-review-modal > *,
+  .inquiry-review-form > * {
+    flex-shrink: 0;
+  }
+
+  .inquiry-review-form {
+    flex: 1 0 auto;
+  }
+
+  .inquiry-review-actions {
+    margin-top: auto;
+  }
+
+  .inquiry-detail-modal > * {
+    flex-shrink: 0;
+  }
+
+  .inquiry-detail-heading {
+    position: relative;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .inquiry-detail-heading > div:first-child {
+    width: 100%;
+    padding-right: 56px;
+  }
+
+  .inquiry-detail-heading-actions {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .inquiry-detail-heading-actions .account-modal-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .inquiry-detail-modal .account-modal-close,
+  .inquiry-review-modal .account-modal-close {
+    width: 44px;
+    height: 44px;
+  }
+
+  .inquiry-detail-meta-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .inquiry-detail-meta-value,
+  .inquiry-detail-comment-box,
+  .inquiry-review-textarea {
+    font-size: 1rem;
+  }
+
+  .inquiry-detail-footer {
+    margin-top: auto;
+    padding-top: 20px;
+    flex-wrap: wrap;
+  }
+
+  .inquiry-detail-comment-section {
+    margin-bottom: 24px;
+  }
+
+  .inquiry-detail-footer > button {
+    flex: 1 1 130px;
+    min-height: 44px;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .inquiry-review-actions button {
+    min-height: 44px;
+    flex: 1;
   }
 
   .inquiry-review-photos {
