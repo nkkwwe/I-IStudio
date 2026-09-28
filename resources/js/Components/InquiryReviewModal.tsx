@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type ChangeEvent, type FormEvent, type PointerEvent } from 'react';
 import { router, useForm } from '@inertiajs/react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import type { Inquiry, InquiryReview } from '../lib/inquiries';
@@ -23,6 +23,7 @@ export default function InquiryReviewModal({ inquiry, embedded = false, onClose,
   const copy = getUiCopy(language);
   const initialReview = inquiry.review;
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const ratingDrag = useRef<{ pointerId: number; initialRating: number; wasSaved: boolean } | null>(null);
   const [newPhotoPreviews, setNewPhotoPreviews] = useState<string[]>([]);
   const [hoverRating, setHoverRating] = useState<number | null>(null);
   const [saved, setSaved] = useState(false);
@@ -54,6 +55,24 @@ export default function InquiryReviewModal({ inquiry, embedded = false, onClose,
   const ratingLabel = copy.review.ratingValue.replace('{rating}', formattedRating);
   const keptPhotos = initialReview?.attachments.filter((attachment) => form.data.attachment_ids.includes(attachment.id)) ?? [];
   const photoCount = keptPhotos.length + form.data.attachments.length;
+
+  const updateTouchRating = (event: PointerEvent<HTMLDivElement>) => {
+    const stars = Array.from(event.currentTarget.querySelectorAll<HTMLElement>('.inquiry-review-star'));
+    if (!stars.length) return;
+    let rating = 5;
+    for (const [index, star] of stars.entries()) {
+      const bounds = star.getBoundingClientRect();
+      if (event.clientX <= bounds.right) {
+        const fraction = Math.max(0, Math.min(1, (event.clientX - bounds.left) / bounds.width));
+        rating = Math.max(1, index + Math.ceil(fraction * 4) / 4);
+        break;
+      }
+    }
+    form.setData('rating', rating);
+    form.clearErrors('rating');
+    setHoverRating(null);
+    setSaved(false);
+  };
 
   const handlePhoto = (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(event.target.files ?? []);
@@ -161,7 +180,40 @@ export default function InquiryReviewModal({ inquiry, embedded = false, onClose,
         <form className="inquiry-review-form" onSubmit={submit}>
           <fieldset className="inquiry-review-rating">
             <legend>{copy.review.rating}</legend>
-            <div className={`inquiry-review-stars${hoverRating !== null ? ' is-preview' : ''}`} onMouseLeave={() => setHoverRating(null)}>
+            <div
+              className={`inquiry-review-stars${hoverRating !== null ? ' is-preview' : ''}`}
+              onMouseLeave={() => setHoverRating(null)}
+              onPointerDownCapture={(event) => {
+                if (event.pointerType === 'mouse' || !event.isPrimary || form.processing || ratingDrag.current) return;
+                if (!(event.target as Element).closest('.inquiry-review-star')) return;
+                event.preventDefault();
+                ratingDrag.current = { pointerId: event.pointerId, initialRating: form.data.rating, wasSaved: saved };
+                event.currentTarget.setPointerCapture(event.pointerId);
+                updateTouchRating(event);
+              }}
+              onPointerMove={(event) => {
+                if (ratingDrag.current?.pointerId === event.pointerId) updateTouchRating(event);
+              }}
+              onPointerUp={(event) => {
+                if (ratingDrag.current?.pointerId !== event.pointerId) return;
+                updateTouchRating(event);
+                ratingDrag.current = null;
+                event.currentTarget.releasePointerCapture(event.pointerId);
+              }}
+              onPointerCancel={(event) => {
+                if (ratingDrag.current?.pointerId !== event.pointerId) return;
+                form.setData('rating', ratingDrag.current.initialRating);
+                setSaved(ratingDrag.current.wasSaved);
+                ratingDrag.current = null;
+              }}
+              onLostPointerCapture={() => { ratingDrag.current = null; }}
+              onClickCapture={(event) => {
+                if (event.nativeEvent instanceof window.PointerEvent && event.nativeEvent.pointerType !== 'mouse' && event.detail !== 0) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+              }}
+            >
               {Array.from({ length: 5 }, (_, starIndex) => {
                 const fill = Math.max(0, Math.min(1, displayedRating - starIndex));
                 return (
