@@ -1571,6 +1571,7 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
   .inquiry-review-modal .account-modal-close {
     width: 44px;
     height: 44px;
+    flex: 0 0 44px;
   }
 
   .inquiry-detail-meta-grid {
