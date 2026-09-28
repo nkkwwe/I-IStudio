@@ -14,12 +14,12 @@
   padding: 24px;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.28s;
 }
 
 .modal-backdrop.active {
   opacity: 1;
   visibility: visible;
+  animation: account-modal-backdrop-in 0.2s ease both;
 }
 
 .modal-card {
@@ -33,12 +33,24 @@
   border-radius: var(--radius-card);
   padding: 30px 36px 32px 36px;
   box-shadow: 0 24px 64px -12px rgba(0, 0, 0, 0.3);
-  transform: scale(0.94) translateY(18px);
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s;
+  opacity: 0;
+  transform: scale(0.96);
 }
 
 .modal-backdrop.active .modal-card {
-  transform: scale(1) translateY(0);
+  animation: account-modal-in 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop.active,
+  .modal-backdrop.active .modal-card {
+    animation: none;
+  }
+
+  .modal-backdrop.active .modal-card {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .modal-close-btn {
