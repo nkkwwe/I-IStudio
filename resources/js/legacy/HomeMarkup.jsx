@@ -1,4 +1,5 @@
 import ChatUnreadBadge from '../Components/ChatUnreadBadge';
+import ClientReviews from '../Components/ClientReviews';
 import { localizedUrl } from '../content/siteLanguage';
 
 const serviceGoals = [
@@ -322,7 +323,7 @@ function Footer() {
   );
 }
 
-export default function HomeMarkup({ isAuthenticated = false, signInLabel = 'Sign in', unreadChatCount = 0, userName = '' }) {
+export default function HomeMarkup({ isAuthenticated = false, signInLabel = 'Sign in', unreadChatCount = 0, userName = '', reviews = /** @type {import('../Components/ClientReviews').PublicReview[]} */ ([]) }) {
   return (
     <div className="react-page-root">
       <Header isAuthenticated={isAuthenticated} signInLabel={signInLabel} unreadChatCount={unreadChatCount} userName={userName} />
@@ -330,6 +331,7 @@ export default function HomeMarkup({ isAuthenticated = false, signInLabel = 'Sig
         <Hero />
         <ServicesAndSolutions />
         <CaseStudies />
+        <ClientReviews reviews={reviews} />
         <Process />
         <Advantages />
         <Inquiry />

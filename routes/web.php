@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InquiryChatController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectInquiryReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,9 +46,7 @@ Route::delete('/account', [AuthController::class, 'deleteAccount'])->middleware(
 Route::prefix('{locale}')
     ->whereIn('locale', $siteLocales)
     ->group(function (): void {
-        Route::get('/', function () {
-            return Inertia::render('Home');
-        })->name('home.localized');
+        Route::get('/', [HomeController::class, 'show'])->name('home.localized');
 
         Route::get('/inquiry', [InquiryController::class, 'show'])->name('inquiry.localized');
         Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.store.localized');
