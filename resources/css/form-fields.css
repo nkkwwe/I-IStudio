@@ -1,0 +1,33 @@
+/* Shared focus transition for editable text fields across public, account, and admin pages. */
+:root {
+  --form-field-focus-ring: 0 0 0 3px rgba(9, 9, 11, 0.07);
+}
+
+html[data-theme="dark"] {
+  --form-field-focus-ring: 0 0 0 3px rgba(244, 244, 245, 0.1);
+}
+
+:is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),
+  textarea
+) {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+:is(
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),
+  textarea
+):focus {
+  outline: none;
+  border-color: var(--border-strong);
+  box-shadow: var(--form-field-focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),
+    textarea
+  ) {
+    transition: none;
+  }
+}
