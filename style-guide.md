@@ -68,11 +68,11 @@
 
 | Токен | Значение | Назначение |
 |---|---|---|
-| `--font-sans` | `Inter`, системные sans-serif fallback | Основной текст, формы, кнопки и интерфейс. |
-| `--font-display` | `Space Grotesk`, затем `Inter` | H1–H3, крупные числа и брендовые заголовки. |
-| `--font-mono` | `Space Grotesk`, затем ui-monospace | Технические метки, eyebrow, короткие статусы. |
+| `--font-sans` | `Manrope`, системные sans-serif fallback | Основной текст, формы, кнопки и интерфейс. |
+| `--font-display` | `Manrope`, системные sans-serif fallback | H1–H3, крупные числа и брендовые заголовки. |
+| `--font-mono` | `Manrope`, системные fallback | Технические метки, eyebrow, короткие статусы. |
 
-Используй веса `400`, `500`, `600`, `700`, `800`, `900` только там, где это оправдано и поддерживается выбранным шрифтом.
+Используй веса `400`, `500`, `600`, `700`, `800` только там, где это оправдано и поддерживается выбранным шрифтом.
 
 ### Размеры и межстрочные интервалы
 
@@ -88,7 +88,7 @@
 
 ### Типографические правила
 
-- Заголовки используют `--font-display`, вес `700`, отрицательный tracking в диапазоне `-0.045em`…`-0.02em`.
+- Заголовки используют `--font-display`, вес `700`, мягкий отрицательный tracking в диапазоне `-0.035em`…`-0.02em` и line-height не ниже `1.14` для крупных заголовков.
 - Основной текст использует `--font-sans`, цвет `--text-secondary` или `--text-primary`.
 - Не используй длинные строки: максимальная ширина текстового блока — около `65ch`.
 - Uppercase применяй только к коротким eyebrow/label; используй `letter-spacing: 0.08em`–`0.13em`.
@@ -225,9 +225,9 @@
   --status-warning: #facc15;
 
   /* Typography */
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
-  --font-mono: 'Space Grotesk', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'Manrope', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --font-size-base: 1rem;
   --line-height-body: 1.6;
 
