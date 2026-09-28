@@ -991,7 +991,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   color: #bd7f12;
   cursor: pointer;
   font: 700 0.82rem var(--font-sans);
-  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 @media (max-width: 460px) {
@@ -1005,14 +1005,6 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   }
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .inquiry-detail-review-btn:hover {
-    border-color: #e9a328;
-    background: rgba(233, 163, 40, 0.18);
-    color: #9a6508;
-  }
-}
-
 .inquiry-detail-review-btn:focus-visible {
   outline: 2px solid var(--accent-blue);
   outline-offset: 3px;
@@ -1022,6 +1014,15 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
   border-color: rgba(245, 185, 77, 0.32);
   background: rgba(245, 185, 77, 0.1);
   color: #f5b94d;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inquiry-detail-review-btn:hover {
+    border-color: #e9a328;
+    background: #e9a328;
+    color: #171717;
+    box-shadow: 0 0 0 4px rgba(233, 163, 40, 0.1);
+  }
 }
 
 .inquiry-review-backdrop {
