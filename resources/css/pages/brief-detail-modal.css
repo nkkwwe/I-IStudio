@@ -1017,7 +1017,8 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .inquiry-detail-review-btn:hover {
+  .inquiry-detail-review-btn:hover,
+  html[data-theme="dark"] .inquiry-detail-review-btn:hover {
     border-color: #e9a328;
     background: #e9a328;
     color: #171717;
