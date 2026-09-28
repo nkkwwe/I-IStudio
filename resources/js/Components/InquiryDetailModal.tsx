@@ -24,6 +24,7 @@ type InquiryDetailModalProps = {
   onClose: () => void;
   onOpenChat: () => void;
   statusSlot?: ReactNode;
+  onOpenReview?: () => void;
 };
 
 export default function InquiryDetailModal({
@@ -32,13 +33,14 @@ export default function InquiryDetailModal({
   onClose,
   onOpenChat,
   statusSlot,
+  onOpenReview,
 }: InquiryDetailModalProps) {
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === 'Escape' && !document.querySelector('.inquiry-review-backdrop')) {
         onClose();
       }
     };
@@ -149,6 +151,14 @@ export default function InquiryDetailModal({
         )}
 
         <div className="inquiry-detail-footer">
+          {currentRole === 'user' && inquiry.status === 'completed' && onOpenReview && (
+            <button type="button" className="inquiry-detail-review-btn" onClick={onOpenReview}>
+              <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3.5 14.6 8.8l5.9.9-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.9L12 3.5Z" fill="currentColor" />
+              </svg>
+              <span>{inquiry.review ? copy.review.edit : copy.review.write}</span>
+            </button>
+          )}
           <button type="button" className="inquiry-detail-chat-btn" onClick={onOpenChat}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M20 11.5a7.5 7.5 0 0 1-8 7.5 8.8 8.8 0 0 1-3.7-.8L4 20l1.8-3.6A7.4 7.4 0 0 1 4.5 12 7.5 7.5 0 0 1 12 4.5a7.5 7.5 0 0 1 8 7Z" />

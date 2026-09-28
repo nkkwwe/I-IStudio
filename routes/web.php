@@ -1,12 +1,13 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\InquiryChatController;
+use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\ProjectInquiryReviewController;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 $siteLocales = ['en', 'ua', 'ro'];
 
@@ -76,6 +77,8 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/account/project-briefs/unread-counts', [InquiryController::class, 'unreadCounts'])->name('account.project-briefs.unread-counts');
     Route::get('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'indexForUser'])->name('account.project-briefs.messages');
     Route::post('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'storeForUser'])->name('account.project-briefs.messages.store');
+    Route::put('/account/project-briefs/{inquiry}/review', [ProjectInquiryReviewController::class, 'save'])->name('account.project-briefs.review.save');
+    Route::get('/project-inquiry-reviews/{review}/attachment', [ProjectInquiryReviewController::class, 'attachment'])->name('project-inquiry-reviews.attachment');
     Route::get('/project-inquiry-messages/{message}/attachment', [InquiryChatController::class, 'attachment'])->name('project-inquiry-messages.attachment');
 });
 

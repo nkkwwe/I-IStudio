@@ -128,12 +128,33 @@ type ChatCopy = {
   close: string;
 };
 
+type ReviewCopy = {
+  write: string;
+  edit: string;
+  title: string;
+  editTitle: string;
+  description: string;
+  rating: string;
+  ratingValue: string;
+  comment: string;
+  placeholder: string;
+  addPhoto: string;
+  replacePhoto: string;
+  removePhoto: string;
+  save: string;
+  update: string;
+  saving: string;
+  saved: string;
+  imageError: string;
+};
+
 type UiCopy = {
   common: CommonCopy;
   auth: AuthCopy;
   admin: AdminCopy;
   account: AccountCopy;
   chat: ChatCopy;
+  review: ReviewCopy;
   services: Record<string, string>;
 };
 
@@ -256,6 +277,25 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       imageError: 'Choose a JPG, PNG, GIF, or WEBP image up to 5 MB.',
       send: 'Send',
       close: 'Close',
+    },
+    review: {
+      write: 'Write a review',
+      edit: 'Edit review',
+      title: 'Share your experience',
+      editTitle: 'Edit your review',
+      description: 'Your feedback helps us make every project better.',
+      rating: 'Your rating',
+      ratingValue: '{rating} out of 5',
+      comment: 'Your review',
+      placeholder: 'Tell us what you think about working with us…',
+      addPhoto: 'Add a photo',
+      replacePhoto: 'Change photo',
+      removePhoto: 'Remove photo',
+      save: 'Send review',
+      update: 'Save changes',
+      saving: 'Sending…',
+      saved: 'Your review has been saved. You can edit it any time.',
+      imageError: 'Choose a JPG, PNG, GIF, or WEBP image up to 5 MB.',
     },
     services: {
       landing: 'Landing Page',
@@ -386,6 +426,25 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       send: 'Надіслати',
       close: 'Закрити',
     },
+    review: {
+      write: 'Залишити відгук',
+      edit: 'Змінити відгук',
+      title: 'Поділіться враженнями',
+      editTitle: 'Редагувати відгук',
+      description: 'Ваш відгук допоможе нам ставати кращими з кожним проєктом.',
+      rating: 'Ваша оцінка',
+      ratingValue: '{rating} з 5',
+      comment: 'Ваш відгук',
+      placeholder: 'Розкажіть про співпрацю з нами…',
+      addPhoto: 'Додати фото',
+      replacePhoto: 'Змінити фото',
+      removePhoto: 'Видалити фото',
+      save: 'Надіслати відгук',
+      update: 'Зберегти зміни',
+      saving: 'Надсилання…',
+      saved: 'Відгук збережено. Ви можете змінити його будь-коли.',
+      imageError: 'Оберіть зображення JPG, PNG, GIF або WEBP розміром до 5 МБ.',
+    },
     services: {
       landing: 'Лендінг',
       corporate: 'Бізнес-сайт',
@@ -514,6 +573,25 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       imageError: 'Alege o imagine JPG, PNG, GIF sau WEBP de maximum 5 MB.',
       send: 'Trimite',
       close: 'Închide',
+    },
+    review: {
+      write: 'Scrie o recenzie',
+      edit: 'Editează recenzia',
+      title: 'Spune-ne cum a fost',
+      editTitle: 'Editează recenzia',
+      description: 'Părerea ta ne ajută să îmbunătățim fiecare proiect.',
+      rating: 'Evaluarea ta',
+      ratingValue: '{rating} din 5',
+      comment: 'Recenzia ta',
+      placeholder: 'Povestește-ne cum a fost colaborarea…',
+      addPhoto: 'Adaugă o fotografie',
+      replacePhoto: 'Schimbă fotografia',
+      removePhoto: 'Elimină fotografia',
+      save: 'Trimite recenzia',
+      update: 'Salvează modificările',
+      saving: 'Se trimite…',
+      saved: 'Recenzia a fost salvată. O poți modifica oricând.',
+      imageError: 'Alege o imagine JPG, PNG, GIF sau WEBP de maximum 5 MB.',
     },
     services: {
       landing: 'Landing page',

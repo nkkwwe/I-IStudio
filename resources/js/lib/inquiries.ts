@@ -1,5 +1,12 @@
 import type { SiteLanguage } from '../content/siteLanguage';
 
+export type InquiryReview = {
+  rating: number;
+  body: string;
+  attachment_url?: string | null;
+  attachment_name?: string | null;
+};
+
 export type Inquiry = {
   id: number;
   ticket: string;
@@ -15,6 +22,7 @@ export type Inquiry = {
   status: string;
   created_at?: string | null;
   unread_count?: number;
+  review?: InquiryReview | null;
 };
 
 const dateFormatters = new Map<SiteLanguage, Intl.DateTimeFormat>();

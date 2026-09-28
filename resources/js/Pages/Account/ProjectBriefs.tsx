@@ -5,6 +5,7 @@ import { localizedUrl } from '../../content/siteLanguage';
 import ChatUnreadBadge, { fetchChatUnreadCounts } from '../../Components/ChatUnreadBadge';
 import InquiryChatModal from '../../Components/InquiryChatModal';
 import InquiryDetailModal from '../../Components/InquiryDetailModal';
+import InquiryReviewModal from '../../Components/InquiryReviewModal';
 import AccountSiteHeader from '../../Components/AccountSiteHeader';
 import { formatDate, formatBudget, type Inquiry } from '../../lib/inquiries';
 
@@ -19,9 +20,10 @@ export default function AccountProjectBriefs() {
   const [inquiries, setInquiries] = useState(initialInquiries);
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
+  const [activeReviewInquiry, setActiveReviewInquiry] = useState<Inquiry | null>(null);
   const [isDark, setIsDark] = useState(false);
   const logoutForm = useForm({});
-  const isInquiryModalOpen = Boolean(selectedInquiry || activeChatInquiry);
+  const isInquiryModalOpen = Boolean(selectedInquiry || activeChatInquiry || activeReviewInquiry);
 
   useEffect(() => {
     if (!isInquiryModalOpen) return undefined;
@@ -216,6 +218,7 @@ export default function AccountProjectBriefs() {
                       setSelectedInquiry(null);
                       setActiveChatInquiry(inq);
                     }}
+                    onOpenReview={() => setActiveReviewInquiry(selectedInquiry)}
                   />
                 )}
                 {activeChatInquiry && (
@@ -234,6 +237,19 @@ export default function AccountProjectBriefs() {
           </section>
         </div>
       </main>
+      {activeReviewInquiry && (
+        <InquiryReviewModal
+          inquiry={activeReviewInquiry}
+          onClose={() => setActiveReviewInquiry(null)}
+          onReviewSaved={(review) => {
+            setInquiries((current) => current.map((inquiry) => (
+              inquiry.id === activeReviewInquiry.id ? { ...inquiry, review } : inquiry
+            )));
+            setActiveReviewInquiry((current) => current ? { ...current, review } : null);
+            setSelectedInquiry((current) => current?.id === activeReviewInquiry.id ? { ...current, review } : current);
+          }}
+        />
+      )}
     </>
   );
 }

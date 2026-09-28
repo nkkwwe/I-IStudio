@@ -42,6 +42,7 @@ class InquiryController extends Controller
     {
         $inquiries = ProjectInquiry::query()
             ->where('user_id', $request->user()->id)
+            ->with('review')
             ->withCount([
                 'messages as unread_count' => fn ($query) => $query
                     ->where('sender_role', 'admin')
@@ -64,6 +65,14 @@ class InquiryController extends Controller
                 'status' => $inquiry->status,
                 'created_at' => $inquiry->created_at?->toISOString(),
                 'unread_count' => (int) $inquiry->unread_count,
+                'review' => $inquiry->review ? [
+                    'rating' => (float) $inquiry->review->rating,
+                    'body' => $inquiry->review->body,
+                    'attachment_url' => $inquiry->review->attachment_path
+                        ? route('project-inquiry-reviews.attachment', ['review' => $inquiry->review->id])
+                        : null,
+                    'attachment_name' => $inquiry->review->attachment_name,
+                ] : null,
             ])
             ->values();
 
