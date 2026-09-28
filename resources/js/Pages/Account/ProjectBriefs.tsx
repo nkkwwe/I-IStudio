@@ -7,6 +7,7 @@ import InquiryChatModal from '../../Components/InquiryChatModal';
 import InquiryDetailModal from '../../Components/InquiryDetailModal';
 import InquiryReviewModal from '../../Components/InquiryReviewModal';
 import AccountSiteHeader from '../../Components/AccountSiteHeader';
+import AccountModal from '../../Components/AccountModal';
 import { formatDate, formatBudget, type Inquiry } from '../../lib/inquiries';
 
 type PageProps = {
@@ -23,10 +24,12 @@ export default function AccountProjectBriefs() {
   const [activeReviewInquiry, setActiveReviewInquiry] = useState<Inquiry | null>(null);
   const [isDark, setIsDark] = useState(false);
   const logoutForm = useForm({});
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const isInquiryModalOpen = Boolean(selectedInquiry || activeChatInquiry || activeReviewInquiry);
+  const hasOpenModal = isInquiryModalOpen || logoutModalOpen;
 
   useEffect(() => {
-    if (!isInquiryModalOpen) return undefined;
+    if (!hasOpenModal) return undefined;
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -34,7 +37,16 @@ export default function AccountProjectBriefs() {
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [isInquiryModalOpen]);
+  }, [hasOpenModal]);
+
+  useEffect(() => {
+    if (!logoutModalOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && !logoutForm.processing) setLogoutModalOpen(false);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [logoutModalOpen, logoutForm.processing]);
 
   useEffect(() => {
     setIsDark(document.documentElement.dataset.theme === 'dark');
@@ -94,7 +106,7 @@ export default function AccountProjectBriefs() {
   return (
     <>
       <Head title={copy.account.myProjectBriefs} />
-      <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => logoutForm.post(localizedUrl('/logout'))} />
+      <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => setLogoutModalOpen(true)} />
       <main className="account-page account-history-page">
         <div className="account-shell">
           <div className="account-history-topbar">
@@ -254,6 +266,24 @@ export default function AccountProjectBriefs() {
           </section>
         </div>
       </main>
+      {logoutModalOpen && (
+        <AccountModal
+          eyebrow={copy.account.accountLabel}
+          title={copy.account.signOutTitle}
+          closeLabel={copy.common.closeDialog}
+          onClose={() => { if (!logoutForm.processing) setLogoutModalOpen(false); }}
+        >
+          <p className="account-modal-copy">{copy.account.signOutDescription}</p>
+          <div className="account-modal-actions">
+            <button type="button" className="account-modal-button account-modal-button-danger" onClick={() => logoutForm.post(localizedUrl('/logout'))} disabled={logoutForm.processing}>
+              {logoutForm.processing ? copy.account.signingOut : copy.common.signOut}
+            </button>
+            <button type="button" className="account-modal-button account-modal-button-secondary" onClick={() => setLogoutModalOpen(false)} disabled={logoutForm.processing}>
+              {copy.common.cancel}
+            </button>
+          </div>
+        </AccountModal>
+      )}
     </>
   );
 }
