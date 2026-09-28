@@ -34,7 +34,7 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .goal-pill:hover {
+  .goal-pill:not(.active):hover {
     background: var(--bg-panel);
     border-color: var(--border-strong);
     color: var(--text-primary);

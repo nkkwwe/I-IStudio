@@ -34,13 +34,6 @@
     transform: none !important;
   }
 
-  .service-solutions-section .goal-pill.active:hover {
-    background: var(--accent-black);
-    border-color: var(--accent-black);
-    color: var(--text-inverse);
-    box-shadow: 0 8px 20px rgba(9, 9, 11, 0.14);
-    transform: none !important;
-  }
 }
 
 .inquiry-cta-card .action-service-pill.active {
@@ -161,9 +154,20 @@
   color: var(--accent-blue);
 }
 
+html:not([data-theme="dark"]) .case-link,
+html:not([data-theme="dark"]) .case-link svg,
+html:not([data-theme="dark"]) .advantage-icon,
+html:not([data-theme="dark"]) .advantage-card p {
+  color: var(--text-primary);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .case-link:hover {
     color: var(--accent-blue);
+  }
+
+  html:not([data-theme="dark"]) .case-link:hover {
+    color: var(--text-primary);
   }
 }
 

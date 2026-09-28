@@ -174,7 +174,7 @@ html[data-theme="dark"] .tab-btn {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  html[data-theme="dark"] .goal-pill:hover,
+  html[data-theme="dark"] .goal-pill:not(.active):hover,
   html[data-theme="dark"] .tab-btn:hover,
   html[data-theme="dark"] .action-service-pill:hover,
   html[data-theme="dark"] .modal-close-btn:hover,
