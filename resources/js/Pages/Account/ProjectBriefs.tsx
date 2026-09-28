@@ -268,6 +268,7 @@ export default function AccountProjectBriefs() {
       </main>
       {logoutModalOpen && (
         <AccountModal
+          compact
           eyebrow={copy.account.accountLabel}
           title={copy.account.signOutTitle}
           closeLabel={copy.common.closeDialog}

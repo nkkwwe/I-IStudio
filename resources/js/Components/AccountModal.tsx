@@ -6,10 +6,11 @@ type AccountModalProps = {
   closeLabel: string;
   children: React.ReactNode;
   danger?: boolean;
+  compact?: boolean;
   onClose: () => void;
 };
 
-export default function AccountModal({ eyebrow, title, closeLabel, children, danger = false, onClose }: AccountModalProps) {
+export default function AccountModal({ eyebrow, title, closeLabel, children, danger = false, compact = false, onClose }: AccountModalProps) {
   const handleBackdropMouseDown = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -17,7 +18,7 @@ export default function AccountModal({ eyebrow, title, closeLabel, children, dan
   };
 
   return (
-    <div className="account-modal-backdrop" onMouseDown={handleBackdropMouseDown}>
+    <div className={`account-modal-backdrop${compact ? ' is-compact' : ''}`} onMouseDown={handleBackdropMouseDown}>
       <section className={`account-modal${danger ? ' account-modal-danger' : ''}`} role="dialog" aria-modal="true" aria-labelledby="account-modal-title">
         <div className="account-modal-heading">
           <div>

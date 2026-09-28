@@ -1022,6 +1022,37 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
     border-radius: 0;
   }
 
+  .account-modal-backdrop.is-compact {
+    place-items: center;
+    overflow-y: auto;
+    padding: max(16px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+
+  .account-modal-backdrop.is-compact .account-modal {
+    width: min(100%, 440px);
+    height: auto;
+    max-height: calc(100vh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    max-height: calc(100dvh - 32px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    padding: 24px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    overscroll-behavior: contain;
+  }
+
+  .account-modal-backdrop.is-compact .account-modal-close {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+  }
+
+  .account-modal-backdrop.is-compact .account-modal-button {
+    min-height: 44px;
+  }
+
+  .account-modal-backdrop.is-compact input {
+    font-size: 1rem;
+  }
+
   .modal-card {
     max-width: none;
     overflow-y: auto;
