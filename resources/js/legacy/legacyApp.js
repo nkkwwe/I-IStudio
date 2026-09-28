@@ -439,7 +439,7 @@ function initSolutionsByGoal(signal) {
 
           <a href="#inquiry" class="btn btn-primary solution-calc-btn" data-service="${data.serviceKey}" onclick="preselectService('${data.serviceKey}'); return false;">
             <span>${t.sol_calc_btn}</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
           </a>
         </div>
 

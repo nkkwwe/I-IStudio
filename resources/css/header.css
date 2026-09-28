@@ -857,15 +857,8 @@
   text-decoration: none;
 }
 
-.account-primary-link span {
-  font-size: 1.2rem;
-  transition: transform 0.2s ease;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .account-primary-link:hover span {
-    transform: translateX(4px);
-  }
+.account-primary-link svg {
+  flex-shrink: 0;
 }
 
 .account-admin-panel {
