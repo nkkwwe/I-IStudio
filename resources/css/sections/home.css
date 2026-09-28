@@ -152,6 +152,7 @@
 .case-link svg {
   flex-shrink: 0;
   color: var(--accent-blue);
+  transition: transform 0.2s ease;
 }
 
 html:not([data-theme="dark"]) .case-link,
@@ -166,8 +167,19 @@ html:not([data-theme="dark"]) .advantage-card p {
     color: var(--accent-blue);
   }
 
+  .case-link:hover svg {
+    transform: translateX(4px);
+  }
+
   html:not([data-theme="dark"]) .case-link:hover {
     color: var(--text-primary);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-link svg {
+    transition: none;
+    transform: none;
   }
 }
 
