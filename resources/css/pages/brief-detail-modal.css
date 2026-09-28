@@ -136,6 +136,71 @@ html[data-theme="dark"] .inquiry-detail-modal {
   word-break: break-word;
 }
 
+.inquiry-detail-review-section {
+  margin-top: 20px;
+  padding: 15px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+  background: var(--bg-subtle);
+}
+
+.inquiry-detail-review-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.inquiry-detail-review-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #e9a328;
+  font-size: 0.78rem;
+}
+
+.inquiry-detail-review-rating strong {
+  color: var(--text-primary);
+}
+
+.inquiry-detail-review-body {
+  margin-top: 11px;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.inquiry-detail-review-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.inquiry-detail-review-photos a {
+  display: block;
+  width: 82px;
+  height: 68px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-panel);
+  transition: border-color 0.2s ease;
+}
+
+.inquiry-detail-review-photos a:hover {
+  border-color: var(--border-strong);
+}
+
+.inquiry-detail-review-photos img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-meta-grid,
 html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-comment-box,
 html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-grid {

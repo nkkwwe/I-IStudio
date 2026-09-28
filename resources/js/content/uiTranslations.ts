@@ -137,6 +137,8 @@ type ReviewCopy = {
   rating: string;
   ratingValue: string;
   previewRating: string;
+  clientReview: string;
+  reviewPhotos: string;
   comment: string;
   placeholder: string;
   addPhoto: string;
@@ -290,6 +292,8 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       rating: 'Your rating',
       ratingValue: '{rating} out of 5',
       previewRating: 'Preview · {rating} out of 5 — click to select',
+      clientReview: 'Client review',
+      reviewPhotos: 'Review photos',
       comment: 'Your review',
       placeholder: 'Tell us what you think about working with us…',
       addPhoto: 'Add a photo',
@@ -441,6 +445,8 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       rating: 'Ваша оцінка',
       ratingValue: '{rating} з 5',
       previewRating: 'Попередній перегляд · {rating} з 5 — натисніть, щоб вибрати',
+      clientReview: 'Відгук клієнта',
+      reviewPhotos: 'Фото до відгуку',
       comment: 'Ваш відгук',
       placeholder: 'Розкажіть про співпрацю з нами…',
       addPhoto: 'Додати фото',
@@ -592,6 +598,8 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       rating: 'Evaluarea ta',
       ratingValue: '{rating} din 5',
       previewRating: 'Previzualizare · {rating} din 5 — apasă pentru a selecta',
+      clientReview: 'Recenzia clientului',
+      reviewPhotos: 'Fotografii din recenzie',
       comment: 'Recenzia ta',
       placeholder: 'Povestește-ne cum a fost colaborarea…',
       addPhoto: 'Adaugă o fotografie',

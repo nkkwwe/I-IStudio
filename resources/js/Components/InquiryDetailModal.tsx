@@ -18,6 +18,10 @@ function formatBriefValue(value: unknown): string {
   return String(value);
 }
 
+function formatReviewRating(rating: number): string {
+  return rating.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
+}
+
 type InquiryDetailModalProps = {
   inquiry: Inquiry;
   currentRole: 'admin' | 'user';
@@ -128,6 +132,33 @@ export default function InquiryDetailModal({
             {inquiry.comment ? inquiry.comment : <em>{copy.admin.noDescription}</em>}
           </div>
         </div>
+
+        {currentRole === 'admin' && inquiry.review && (
+          <section className="inquiry-detail-review-section" aria-labelledby={`inquiry-review-title-${inquiry.id}`}>
+            <div className="inquiry-detail-review-heading">
+              <span className="inquiry-detail-comment-label" id={`inquiry-review-title-${inquiry.id}`}>{copy.review.clientReview}</span>
+              <span
+                className="inquiry-detail-review-rating"
+                aria-label={copy.review.ratingValue.replace('{rating}', formatReviewRating(inquiry.review.rating))}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M12 3.5 14.6 8.8l5.9.9-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.9L12 3.5Z" fill="currentColor" />
+                </svg>
+                <strong>{formatReviewRating(inquiry.review.rating)} / 5</strong>
+              </span>
+            </div>
+            <p className="inquiry-detail-review-body">{inquiry.review.body}</p>
+            {inquiry.review.attachments.length > 0 && (
+              <div className="inquiry-detail-review-photos" aria-label={copy.review.reviewPhotos}>
+                {inquiry.review.attachments.map((attachment) => (
+                  <a href={attachment.url} target="_blank" rel="noreferrer" key={attachment.id} title={attachment.name}>
+                    <img src={attachment.url} alt={attachment.name || copy.chat.imageAlt} loading="lazy" />
+                  </a>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
 
         {briefRows.length > 0 && (
           <div className="inquiry-detail-brief-section">

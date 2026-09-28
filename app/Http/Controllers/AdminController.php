@@ -62,6 +62,7 @@ class AdminController extends Controller
     {
         $inquiries = ProjectInquiry::query()
             ->with('user:id,name,email')
+            ->with('review.attachments')
             ->latest('created_at')
             ->get()
             ->map(fn (ProjectInquiry $inquiry): array => [
@@ -82,6 +83,17 @@ class AdminController extends Controller
                     'id' => $inquiry->user->id,
                     'name' => $inquiry->user->name,
                     'email' => $inquiry->user->email,
+                ] : null,
+                'review' => $inquiry->review ? [
+                    'rating' => (float) $inquiry->review->rating,
+                    'body' => $inquiry->review->body,
+                    'attachments' => $inquiry->review->attachments
+                        ->map(fn ($attachment): array => [
+                            'id' => $attachment->id,
+                            'name' => $attachment->attachment_name,
+                            'url' => route('project-inquiry-review-attachments.show', ['attachment' => $attachment->id]),
+                        ])
+                        ->values(),
                 ] : null,
             ])
             ->values();

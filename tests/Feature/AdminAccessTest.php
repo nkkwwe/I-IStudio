@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\ProjectInquiry;
+use App\Models\ProjectInquiryReview;
+use App\Models\ProjectInquiryReviewAttachment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -55,5 +58,44 @@ class AdminAccessTest extends TestCase
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Admin/ProjectBriefs')
                 ->where('auth.user.is_admin', true));
+    }
+
+    public function test_admin_can_view_a_briefs_user_review_and_photos(): void
+    {
+        $admin = User::factory()->create(['email' => 'admin@example.com']);
+        $user = User::factory()->create(['email' => 'member@example.com']);
+        $inquiry = ProjectInquiry::query()->create([
+            'user_id' => $user->id,
+            'client_name' => $user->name,
+            'client_email' => $user->email,
+            'client_contact' => null,
+            'client_budget' => null,
+            'service_type' => 'landing',
+            'project_comment' => 'Test project brief',
+            'status' => 'completed',
+        ]);
+        $review = ProjectInquiryReview::query()->create([
+            'project_inquiry_id' => $inquiry->id,
+            'user_id' => $user->id,
+            'rating' => '4.75',
+            'body' => 'Great collaboration.',
+        ]);
+        $attachment = ProjectInquiryReviewAttachment::query()->create([
+            'project_inquiry_review_id' => $review->id,
+            'attachment_path' => 'project-inquiry-reviews/test/review.jpg',
+            'attachment_name' => 'review.jpg',
+            'attachment_mime' => 'image/jpeg',
+            'attachment_size' => 120,
+        ]);
+
+        $this->actingAs($admin)
+            ->get('/admin/project-briefs')
+            ->assertOk()
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Admin/ProjectBriefs')
+                ->where('inquiries.0.review.rating', 4.75)
+                ->where('inquiries.0.review.body', 'Great collaboration.')
+                ->where('inquiries.0.review.attachments.0.name', 'review.jpg')
+                ->where('inquiries.0.review.attachments.0.url', route('project-inquiry-review-attachments.show', $attachment)));
     }
 }
