@@ -177,7 +177,8 @@ html:not([data-theme="dark"]) .advantage-card p {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .case-link svg {
+  .case-link svg,
+  .case-link:hover svg {
     transition: none;
     transform: none;
   }
