@@ -205,6 +205,7 @@ export default function AccountProjectBriefs() {
                   if (event.target === event.currentTarget) {
                     setSelectedInquiry(null);
                     setActiveChatInquiry(null);
+                    setActiveReviewInquiry(null);
                   }
                 }}
               >
@@ -218,7 +219,10 @@ export default function AccountProjectBriefs() {
                       setSelectedInquiry(null);
                       setActiveChatInquiry(inq);
                     }}
-                    onOpenReview={() => setActiveReviewInquiry(selectedInquiry)}
+                    onOpenReview={() => {
+                      setActiveReviewInquiry(selectedInquiry);
+                      setSelectedInquiry(null);
+                    }}
                   />
                 )}
                 {activeChatInquiry && (
@@ -232,24 +236,24 @@ export default function AccountProjectBriefs() {
                     onClose={() => setActiveChatInquiry(null)}
                   />
                 )}
+                {activeReviewInquiry && (
+                  <InquiryReviewModal
+                    inquiry={activeReviewInquiry}
+                    embedded
+                    onClose={() => setActiveReviewInquiry(null)}
+                    onReviewSaved={(review) => {
+                      setInquiries((current) => current.map((inquiry) => (
+                        inquiry.id === activeReviewInquiry.id ? { ...inquiry, review } : inquiry
+                      )));
+                      setActiveReviewInquiry((current) => current ? { ...current, review } : null);
+                    }}
+                  />
+                )}
               </div>
             )}
           </section>
         </div>
       </main>
-      {activeReviewInquiry && (
-        <InquiryReviewModal
-          inquiry={activeReviewInquiry}
-          onClose={() => setActiveReviewInquiry(null)}
-          onReviewSaved={(review) => {
-            setInquiries((current) => current.map((inquiry) => (
-              inquiry.id === activeReviewInquiry.id ? { ...inquiry, review } : inquiry
-            )));
-            setActiveReviewInquiry((current) => current ? { ...current, review } : null);
-            setSelectedInquiry((current) => current?.id === activeReviewInquiry.id ? { ...current, review } : current);
-          }}
-        />
-      )}
     </>
   );
 }

@@ -1104,6 +1104,18 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
   animation: account-modal-backdrop-in 0.2s ease both;
 }
 
+.inquiry-review-backdrop.is-embedded {
+  position: static;
+  inset: auto;
+  z-index: auto;
+  place-items: center;
+  overflow: visible;
+  padding: 0;
+  background: transparent;
+  backdrop-filter: none;
+  animation: none;
+}
+
 .inquiry-review-modal {
   width: min(100%, 520px);
   max-height: calc(100vh - 40px);

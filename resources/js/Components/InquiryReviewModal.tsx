@@ -5,6 +5,7 @@ import type { Inquiry, InquiryReview } from '../lib/inquiries';
 
 type InquiryReviewModalProps = {
   inquiry: Inquiry;
+  embedded?: boolean;
   onClose: () => void;
   onReviewSaved: (review: InquiryReview) => void;
 };
@@ -17,7 +18,7 @@ function StarShape({ className }: { className: string }) {
   );
 }
 
-export default function InquiryReviewModal({ inquiry, onClose, onReviewSaved }: InquiryReviewModalProps) {
+export default function InquiryReviewModal({ inquiry, embedded = false, onClose, onReviewSaved }: InquiryReviewModalProps) {
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
   const initialReview = inquiry.review;
@@ -136,7 +137,7 @@ export default function InquiryReviewModal({ inquiry, onClose, onReviewSaved }: 
 
   return (
     <div
-      className="inquiry-review-backdrop"
+      className={`inquiry-review-backdrop${embedded ? ' is-embedded' : ''}`}
       role="presentation"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget && !form.processing) onClose();
