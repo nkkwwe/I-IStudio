@@ -1021,7 +1021,7 @@ html[data-theme="dark"] .inquiry-detail-review-btn {
   html[data-theme="dark"] .inquiry-detail-review-btn:hover {
     border-color: #e9a328;
     background: #e9a328;
-    color: #171717;
+    color: #fff;
     box-shadow: 0 0 0 4px rgba(233, 163, 40, 0.1);
   }
 }
