@@ -19,15 +19,6 @@
 :is(
   input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),
   textarea
-):hover:not(:focus):not(:disabled):not([readonly]) {
-  border-color: var(--border-strong);
-  background-color: var(--bg-surface);
-  box-shadow: 0 0 0 2px rgba(9, 9, 11, 0.04);
-}
-
-:is(
-  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),
-  textarea
 ):focus {
   outline: none;
   border-color: var(--border-strong);
