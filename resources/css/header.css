@@ -1050,6 +1050,10 @@
   transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
+html:not([data-theme="dark"]) .admin-section-nav-link:not(.active) {
+  border-color: var(--border);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .admin-section-nav-link:hover {
     border-color: var(--border-strong);
