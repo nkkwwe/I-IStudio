@@ -36,6 +36,9 @@
 }
 
 .account-brief-status-row {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: border-color 200ms ease, background-color 200ms ease;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,6 +55,18 @@
   display: grid;
   min-width: 0;
   gap: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  a.account-brief-status-row:hover,
+  html[data-theme="dark"] a.account-brief-status-row:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-subtle);
+  }
+}
+a.account-brief-status-row:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
 }
 
 .account-brief-ticket {

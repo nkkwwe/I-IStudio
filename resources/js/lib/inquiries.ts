@@ -27,6 +27,7 @@ export type Inquiry = {
   status: string;
   created_at?: string | null;
   unread_count?: number;
+  user?: { id: number; name: string; email: string } | null;
   review?: InquiryReview | null;
 };
 

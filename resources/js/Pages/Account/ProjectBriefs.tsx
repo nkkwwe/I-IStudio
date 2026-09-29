@@ -15,7 +15,8 @@ type PageProps = {
 };
 
 export default function AccountProjectBriefs() {
-  const { inquiries: initialInquiries, auth } = usePage<PageProps>().props;
+  const page = usePage<PageProps>();
+  const { inquiries: initialInquiries, auth } = page.props;
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
   const [inquiries, setInquiries] = useState(initialInquiries);
@@ -24,6 +25,11 @@ export default function AccountProjectBriefs() {
   const [activeReviewInquiry, setActiveReviewInquiry] = useState<Inquiry | null>(null);
   const [isDark, setIsDark] = useState(false);
   const isInquiryModalOpen = Boolean(selectedInquiry || activeChatInquiry || activeReviewInquiry);
+
+  useEffect(() => {
+    const id = Number(new URL(page.url, window.location.origin).searchParams.get('brief'));
+    setSelectedInquiry(initialInquiries.find((inquiry) => inquiry.id === id) ?? null);
+  }, [page.url]);
 
   useEffect(() => {
     if (!isInquiryModalOpen) return undefined;

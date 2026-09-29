@@ -6,6 +6,7 @@ use App\Models\ProjectInquiry;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -27,6 +28,22 @@ class AdminController extends Controller
     {
         return Inertia::render('Admin/RegisteredUsers', [
             'users' => $this->getUsers(),
+        ]);
+    }
+
+    public function userDetails(User $user): JsonResponse
+    {
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'avatar' => $user->avatar,
+            'created_at' => $user->created_at?->toISOString(),
+            'updated_at' => $user->updated_at?->toISOString(),
+            'email_verified_at' => $user->email_verified_at?->toISOString(),
+            'is_admin' => $user->isAdmin(),
+            'login_method' => $user->google_id ? 'Google' : 'Email',
+            'inquiries' => $this->getInquiries($user->id),
         ]);
     }
 
@@ -58,9 +75,10 @@ class AdminController extends Controller
         return $users;
     }
 
-    private function getInquiries()
+    private function getInquiries(?int $userId = null)
     {
         $inquiries = ProjectInquiry::query()
+            ->when($userId !== null, fn ($query) => $query->where('user_id', $userId))
             ->with('user:id,name,email')
             ->with('review.attachments')
             ->latest('created_at')

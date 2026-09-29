@@ -153,13 +153,13 @@ export default function Account() {
               {submittedBriefs.length > 0 && (
                 <div className="account-brief-status-list" aria-label={accountCopy.submittedBriefs}>
                   {submittedBriefs.map((brief) => (
-                    <div className="account-brief-status-row" key={brief.id}>
+                    <Link className="account-brief-status-row" key={brief.id} href={`${localizedUrl('/account/project-briefs')}?brief=${brief.id}`}>
                       <div>
                         <span className="account-brief-ticket">{brief.ticket}</span>
                         <strong>{copy.services[brief.service_type] ?? brief.service_type}</strong>
                       </div>
                       <span className={`account-brief-status account-brief-status-${brief.status}`}>{copy.admin.statuses[brief.status] ?? brief.status}</span>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}

@@ -6,19 +6,27 @@ import InquiryDetailModal from '../../Components/InquiryDetailModal';
 import AdminShell from './AdminShell';
 import { formatDate, formatBudget, type Inquiry } from '../../lib/inquiries';
 import AdminStatusSelect from './AdminStatusSelect';
+import BriefFilters, { useBriefFilters } from './BriefFilters';
+import { getAdminCopy } from './adminCopy';
 
 type PageProps = {
   inquiries: Inquiry[];
 };
 
 export default function ProjectBriefs() {
-  const { inquiries } = usePage<PageProps>().props;
+  const page = usePage<PageProps>();
+  const { inquiries } = page.props;
+  const filterState = useBriefFilters(inquiries);
   const [updatingInquiryId, setUpdatingInquiryId] = useState<number | null>(null);
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
   const isInquiryModalOpen = Boolean(selectedInquiry || activeChatInquiry);
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
+  useEffect(() => {
+    const id = Number(new URL(page.url, window.location.origin).searchParams.get('brief'));
+    setSelectedInquiry(inquiries.find((inquiry) => inquiry.id === id) ?? null);
+  }, [page.url]);
 
   useEffect(() => {
     if (!isInquiryModalOpen) return undefined;
@@ -47,14 +55,14 @@ export default function ProjectBriefs() {
       count={inquiries.length}
       activeSection="briefs"
     >
-      {inquiries.length === 0 ? (
+      <BriefFilters inquiries={inquiries} state={filterState} />
+      {filterState.filtered.length === 0 ? (
         <div className="account-panel admin-empty-state">
-          <strong>{copy.admin.noProjectBriefs}</strong>
-          <p>{copy.admin.newTasks}</p>
+          <strong>{inquiries.length ? getAdminCopy(language).empty : copy.admin.noProjectBriefs}</strong>
         </div>
       ) : (
         <div className="admin-inquiry-list">
-          {inquiries.map((inquiry) => (
+          {filterState.filtered.map((inquiry) => (
             <article
               className="account-panel admin-inquiry-card"
               key={inquiry.id}

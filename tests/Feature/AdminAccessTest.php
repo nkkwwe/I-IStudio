@@ -97,5 +97,20 @@ class AdminAccessTest extends TestCase
                 ->where('inquiries.0.review.body', 'Great collaboration.')
                 ->where('inquiries.0.review.attachments.0.name', 'review.jpg')
                 ->where('inquiries.0.review.attachments.0.url', route('project-inquiry-review-attachments.show', $attachment)));
+
+        $this->getJson('/admin/registered-users/'.$user->id)
+            ->assertOk()
+            ->assertJsonPath('id', $user->id)
+            ->assertJsonPath('inquiries.0.id', $inquiry->id)
+            ->assertJsonPath('inquiries.0.status', 'completed')
+            ->assertJsonPath('inquiries.0.review.rating', 4.75)
+            ->assertJsonPath('inquiries.0.review.attachments.0.name', 'review.jpg')
+            ->assertJsonMissingPath('password')
+            ->assertJsonMissingPath('remember_token')
+            ->assertJsonMissingPath('google_id');
+
+        $this->getJson('/admin/registered-users/'.$admin->id)
+            ->assertOk()->assertJsonCount(0, 'inquiries');
+        $this->actingAs($user)->getJson('/admin/registered-users/'.$admin->id)->assertForbidden();
     }
 }

@@ -89,4 +89,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function (): void {
     Route::get('/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'indexForAdmin'])->name('admin.project-briefs.messages');
     Route::post('/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'storeForAdmin'])->name('admin.project-briefs.messages.store');
     Route::get('/registered-users', [AdminController::class, 'registeredUsers'])->name('admin.registered-users');
+    Route::get('/registered-users/{user}', [AdminController::class, 'userDetails'])->name('admin.user-details');
 });
