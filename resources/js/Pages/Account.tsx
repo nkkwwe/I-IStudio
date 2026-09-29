@@ -211,7 +211,7 @@ export default function Account() {
         </section>
 
         {nameModalOpen && (
-          <AccountModal eyebrow={accountCopy.profileLabel} title={accountCopy.changeName} closeLabel={common.closeDialog} onClose={closeNameModal}>
+          <AccountModal eyebrow={accountCopy.profileLabel} title={accountCopy.changeName} closeLabel={common.closeDialog} compact onClose={closeNameModal}>
             <p className="account-modal-copy">{accountCopy.changeNameDescription}</p>
             <label className="account-field account-modal-field">
               <span>{accountCopy.name}</span>
