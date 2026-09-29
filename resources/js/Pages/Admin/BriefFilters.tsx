@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import type { Inquiry } from '../../lib/inquiries';
 import { getAdminCopy } from './adminCopy';
+import AdminStatusSelect from './AdminStatusSelect';
 
 const defaults = { search: '', status: '', service: '', account: '', review: '', rating: '', from: '', to: '', budget: '', contact: '', sort: 'newest' };
 export function useBriefFilters(inquiries: Inquiry[]) {
@@ -35,10 +36,10 @@ export default function BriefFilters({ inquiries, state }: { inquiries: Inquiry[
   const { filters, setFilters, filtered } = state;
   const update = (key: keyof typeof defaults, value: string) => setFilters((previous) => ({ ...previous, [key]: value }));
   const select = (key: keyof typeof defaults, label: string, options: [string, string][]) => (
-    <label>{label}<select value={filters[key]} onChange={(event) => update(key, event.target.value)}>
-      {key !== 'sort' && <option value="">{text.all}</option>}
-      {options.map(([value, title]) => <option value={value} key={value}>{title}</option>)}
-    </select></label>
+    <div className="admin-filter-field"><span>{label}</span><AdminStatusSelect
+      variant="filter" ariaLabel={label} value={filters[key]} onChange={(value) => update(key, value)}
+      options={[...(key !== 'sort' ? [{ value: '', label: text.all }] : []), ...options.map(([value, title]) => ({ value, label: title }))]}
+    /></div>
   );
   const presence: [string, string][] = [['yes', text.yes], ['no', text.no]];
   return <div className="account-panel admin-filters">

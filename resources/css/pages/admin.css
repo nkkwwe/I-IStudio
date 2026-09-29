@@ -7,22 +7,22 @@
 
 .admin-filters { display: grid; gap: 18px; margin-bottom: 20px; }
 .admin-filter-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 16px; }
-.admin-filters label { display: grid; gap: 8px; min-width: 0; color: var(--text-primary); font-size: 0.875rem; font-weight: 600; }
-.admin-filters input, .admin-filters select {
+.admin-filters label, .admin-filter-field { display: grid; gap: 8px; min-width: 0; color: var(--text-primary); font-size: 0.875rem; font-weight: 600; }
+.admin-filters input {
   width: 100%; min-width: 0; min-height: 44px; box-sizing: border-box; padding: 10px 12px;
   font: 400 1rem var(--font-sans);
-}
-.admin-filters select {
-  border: 1px solid var(--border); border-radius: var(--radius-inner);
-  color: var(--text-primary); background: var(--bg-subtle);
-  transition: border-color 200ms ease, background-color 200ms ease;
 }
 .admin-filter-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; color: var(--text-muted); font-size: 0.875rem; }
 .admin-filter-footer .btn { min-height: 44px; white-space: normal; }
 button.admin-user-row {
   width: 100%; min-width: 0; min-height: 44px; border: 0; border-bottom: 1px solid var(--border);
   background: transparent; color: var(--text-primary); font: inherit; text-align: left; cursor: pointer;
-  transition: background-color 200ms ease;
+  position: relative; isolation: isolate;
+}
+button.admin-user-row::before {
+  content: ''; position: absolute; inset: 8px -12px; z-index: -1;
+  border: 1px solid transparent; border-radius: var(--radius-inner);
+  background: transparent; transition: background-color 200ms ease, border-color 200ms ease;
 }
 .admin-user-brief { border: 1px solid var(--border); border-radius: var(--radius-inner); padding: 16px; min-width: 0; }
 .admin-user-brief-link { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; min-height: 44px; color: var(--text-primary); text-decoration: none; border-radius: var(--radius-inner); }
@@ -33,13 +33,41 @@ button.admin-user-row {
 .admin-user-details h3 { margin: 24px 0 16px; }
 .admin-user-review { border-top: 1px solid var(--border); margin-top: 16px; padding-top: 16px; }
 .admin-user-review a { max-width: 100%; overflow-wrap: anywhere; white-space: normal; margin: 4px; }
-.admin-filters select:focus-visible, button.admin-user-row:focus-visible, .admin-user-brief-link:focus-visible {
+button.admin-user-row:focus-visible, .admin-user-brief-link:focus-visible {
   outline: 2px solid var(--text-primary); outline-offset: 3px;
 }
 @media (hover: hover) and (pointer: fine) {
-  .admin-filters select:not(:disabled):hover { border-color: var(--border-strong); background: var(--bg-panel); }
-  button.admin-user-row:not(:disabled):hover { background: var(--bg-panel); }
+  button.admin-user-row:not(:disabled):hover::before { background: var(--bg-subtle); border-color: var(--border); }
   .admin-user-brief-link:hover { background: var(--bg-panel); }
+}
+
+.admin-filter-select { min-width: 0; }
+.admin-filter-select:has(.open) { z-index: 4; }
+.admin-filter-select .admin-status-select {
+  width: 100%; min-height: 44px; padding: 10px 12px;
+  border-color: var(--border); border-radius: var(--radius-inner);
+  background: var(--bg-subtle); color: var(--text-primary);
+  font: 400 1rem var(--font-sans); letter-spacing: normal; text-transform: none; text-align: left;
+}
+.admin-filter-select .admin-status-select > span { min-width: 0; overflow-wrap: anywhere; }
+.admin-filter-select .admin-status-select.open { border-color: var(--border-strong); background: var(--bg-panel); }
+.admin-filter-select .admin-status-menu {
+  left: 0; right: 0; width: auto; min-width: 0; max-height: min(320px, 45dvh);
+  overflow-y: auto; overscroll-behavior: contain; border-radius: var(--radius-inner);
+}
+.admin-filter-select .admin-status-option {
+  min-height: 44px; padding: 10px; font-size: 0.875rem; font-weight: 400;
+  overflow-wrap: anywhere;
+}
+.admin-status-select:focus-visible, .admin-status-option:focus-visible {
+  outline: 2px solid var(--text-primary); outline-offset: 3px;
+}
+.admin-status-option:focus-visible { outline-offset: -2px; }
+@media (hover: hover) and (pointer: fine) {
+  .admin-filter-select .admin-status-select:not(:disabled):hover { border-color: var(--border-strong); background: var(--bg-panel); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-status-select, .admin-status-select-chevron, .admin-status-option, button.admin-user-row::before { transition: none; }
 }
 
 .admin-section-heading {
@@ -188,7 +216,7 @@ button.admin-user-row {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .admin-status-select:hover {
+  .admin-status-select:not(:disabled):hover {
     border-color: currentColor;
     background: var(--bg-panel);
   }
