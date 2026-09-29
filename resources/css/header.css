@@ -1420,73 +1420,19 @@
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
 }
 
-/* Content forms share the account dialog styling, with readable controls. */
-.account-modal.account-modal-form {
-  border-color: var(--border);
-  border-radius: var(--radius-modal);
-  overscroll-behavior: contain;
-}
-
-.account-modal-form .account-modal-heading h2 {
-  line-height: 1.18;
-  overflow-wrap: anywhere;
-}
-
-.account-modal-form .account-modal-close {
-  width: 44px;
-  height: 44px;
-  flex-basis: 44px;
-}
-
-.account-modal-form .account-modal-copy {
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.account-modal-form .account-modal-field {
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
-.account-modal-form .account-modal-field input {
-  min-height: 48px;
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-.account-modal-form .account-modal-field input:focus {
-  border-color: var(--border-strong);
-  background-color: var(--bg-subtle);
-  box-shadow: var(--form-field-focus-ring);
-  outline: 2px solid var(--text-primary);
-  outline-offset: 3px;
-}
-
-.account-modal-form .account-modal-button {
-  min-height: 48px;
-  padding: 12px 26px;
-  font-size: 0.9375rem;
-  font-weight: 600;
-  overflow-wrap: anywhere;
-}
-
-.account-modal-form :is(.account-modal-close, .account-modal-button):focus-visible {
-  outline: 2px solid var(--text-primary);
-  outline-offset: 3px;
-}
-
 @media (max-width: 640px) {
-  .account-modal.account-modal-form {
-    border-radius: 0;
-  }
-
-  .account-modal-form .account-modal-actions {
+  .account-modal-actions {
     flex-direction: column-reverse;
     align-items: stretch;
   }
 
-  .account-modal-form .account-modal-button {
+  .account-modal-button {
     width: 100%;
+    min-height: 44px;
+  }
+
+  .account-modal-field input {
+    font-size: 1rem;
   }
 }
 
