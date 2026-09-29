@@ -17,13 +17,22 @@ export default function ClientReviews({ reviews }: { reviews: PublicReview[] }) 
   const group = useRef<HTMLDivElement>(null);
   const [overflow, setOverflow] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(true);
+  const [touchInput, setTouchInput] = useState(false);
   const [paused, setPaused] = useState(false);
   const many = reviews.length > 3;
-  const automatic = many && overflow && !reducedMotion;
+  const automatic = many && overflow && !reducedMotion && !touchInput;
 
   useEffect(() => {
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => setReducedMotion(media.matches);
+    update();
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
+    const media = window.matchMedia('(any-pointer: coarse)');
+    const update = () => setTouchInput(media.matches);
     update();
     media.addEventListener('change', update);
     return () => media.removeEventListener('change', update);

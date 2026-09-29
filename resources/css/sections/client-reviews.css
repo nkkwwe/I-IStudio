@@ -8,13 +8,13 @@
 .client-reviews-section > .container { max-width: none; padding-inline: 0; }
 .client-reviews-section .section-header { padding-inline: 24px; }
 .client-reviews-section .section-title { margin-bottom: 20px; }
-.client-reviews-viewport { overflow: hidden; padding-block: 12px; }
+.client-reviews-viewport { overflow: hidden; margin-block: -20px; padding: 20px; }
 .client-reviews-group {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: 24px;
 }
-.client-reviews-viewport.has-many { overflow-x: auto; }
+.client-reviews-viewport.has-many { overflow-x: hidden; }
 .has-many .client-reviews-track { display: flex; width: max-content; }
 .has-many .client-reviews-group { display: flex; padding-right: 24px; }
 .has-many .client-review-card { width: calc((100vw - 48px) / 3); flex: 0 0 calc((100vw - 48px) / 3); }
@@ -68,27 +68,25 @@
   .has-many .client-review-card { width: 100vw; flex-basis: 100vw; }
   .client-review-card { padding: 22px; }
 }
-@media (max-width: 640px) and (pointer: coarse) {
+@media (any-pointer: coarse) {
   .client-reviews-viewport {
-    margin-block: -16px;
-    padding-block: 16px;
+    margin-block: -24px;
+    padding: 24px;
   }
 
   .client-reviews-viewport.has-many {
-    scroll-padding-inline: 16px;
+    overflow-x: auto;
+    scroll-padding-inline: 24px;
     scroll-snap-type: x mandatory;
-    touch-action: pan-x;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
 
   .client-reviews-viewport.has-many::-webkit-scrollbar { display: none; }
 
-  .has-many .client-reviews-group { padding-left: 16px; }
-
   .has-many .client-review-card {
-    width: min(82vw, 360px);
-    flex-basis: min(82vw, 360px);
+    width: min(74vw, 360px);
+    flex-basis: min(74vw, 360px);
     scroll-snap-align: start;
   }
 
