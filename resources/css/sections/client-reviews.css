@@ -8,7 +8,7 @@
 .client-reviews-section > .container { max-width: none; padding-inline: 0; }
 .client-reviews-section .section-header { padding-inline: 24px; }
 .client-reviews-section .section-title { margin-bottom: 20px; }
-.client-reviews-viewport { overflow: hidden; }
+.client-reviews-viewport { overflow: hidden; padding-block: 12px; }
 .client-reviews-group {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
@@ -67,6 +67,38 @@
   .has-many .client-reviews-group { padding-right: 16px; }
   .has-many .client-review-card { width: 100vw; flex-basis: 100vw; }
   .client-review-card { padding: 22px; }
+}
+@media (max-width: 640px) and (pointer: coarse) {
+  .client-reviews-viewport {
+    margin-block: -16px;
+    padding-block: 16px;
+  }
+
+  .client-reviews-viewport.has-many {
+    scroll-padding-inline: 16px;
+    scroll-snap-type: x mandatory;
+    touch-action: pan-x;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .client-reviews-viewport.has-many::-webkit-scrollbar { display: none; }
+
+  .has-many .client-reviews-group { padding-left: 16px; }
+
+  .has-many .client-review-card {
+    width: min(82vw, 360px);
+    flex-basis: min(82vw, 360px);
+    scroll-snap-align: start;
+  }
+
+  .client-review-card blockquote {
+    display: -webkit-box;
+    max-height: none;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .is-automatic .client-reviews-track,

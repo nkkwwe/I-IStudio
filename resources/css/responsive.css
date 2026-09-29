@@ -333,10 +333,6 @@
     font-size: 0.95rem;
   }
 
-  .logo-sub {
-    display: none;
-  }
-
   .header-actions {
     flex-shrink: 0;
     gap: 6px;
