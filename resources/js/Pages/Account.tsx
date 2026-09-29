@@ -220,7 +220,6 @@ export default function Account() {
                 value={nameForm.data.name}
                 onChange={(event) => nameForm.setData('name', event.target.value)}
                 autoComplete="name"
-                autoFocus
               />
             </label>
             {nameForm.errors.name && <small className="account-inline-error">{nameForm.errors.name}</small>}
@@ -256,7 +255,6 @@ export default function Account() {
                 onChange={(event) => deleteForm.setData('confirmation', event.target.value)}
                 placeholder={accountCopy.deleteConfirmationPlaceholder}
                 autoComplete="off"
-                autoFocus
               />
             </label>
             {deleteForm.errors.confirmation && <small className="account-inline-error">{deleteForm.errors.confirmation}</small>}
