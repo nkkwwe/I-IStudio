@@ -21,6 +21,9 @@
 .is-automatic:not(.is-paused) { overflow-x: hidden; }
 .is-automatic:not(.is-paused) .client-reviews-track { animation: client-reviews-scroll linear infinite; }
 .is-automatic:focus-within .client-reviews-track { animation-play-state: paused; }
+@media (hover: hover) and (pointer: fine) {
+  .is-automatic:hover .client-reviews-track { animation-play-state: paused; }
+}
 
 .client-review-card {
   display: flex;
