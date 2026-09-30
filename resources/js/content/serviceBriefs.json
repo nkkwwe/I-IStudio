@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "steps": [
+    {"id": "business", "title": ["Your business", "Ваш бізнес", "Afacerea ta"], "fields": ["brand_name", "product", "website_url", "locations", "business_country"]},
+    {"id": "goal", "title": ["Your goal", "Ваша мета", "Obiectivul tău"], "fields": ["goal", "destination", "audience", "offer", "platforms", "store_status", "catalog_size"]},
+    {"id": "readiness", "title": ["Budget and readiness", "Бюджет і готовність", "Buget și pregătire"], "fields": ["budget", "currency", "account", "tracking", "catalog_source", "feed", "order_owner"]},
+    {"id": "materials", "title": ["Materials and launch", "Матеріали та запуск", "Materiale și lansare"], "fields": ["creatives", "materials_url", "tiktok_account", "spark", "restrictions", "timing"]},
+    {"id": "contact", "title": ["Contact and review", "Контакт і перевірка", "Contact și verificare"], "fields": ["client_name", "client_email", "notes"]}
+  ],
+  "fields": {
+    "brand_name": {"label": ["Business name", "Назва бізнесу", "Numele afacerii"], "required": true},
+    "product": {"label": ["What do you sell?", "Що ви продаєте?", "Ce vinzi?"], "type": "textarea", "required": true},
+    "website_url": {"label": ["Website or social page, if available", "Сайт або соцмережа, якщо є", "Site sau pagină socială, dacă există"], "type": "url"},
+    "locations": {"label": ["Where are your customers?", "Де ваші клієнти?", "Unde sunt clienții tăi?"], "required": true},
+    "business_country": {"label": ["Country of business registration", "Країна реєстрації бізнесу", "Țara de înregistrare a afacerii"], "services": ["tiktok-ads"], "required": true},
+    "goal": {"label": ["Main goal", "Головна мета", "Obiectiv principal"], "type": "select", "options": ["leads", "sales", "messages", "traffic", "views", "app", "unknown"], "exclude": ["marketplaces"], "required": true},
+    "destination": {"label": ["Where should customers contact you?", "Куди клієнтам звертатися?", "Unde să te contacteze clienții?"], "when": {"field": "goal", "values": ["messages", "leads"]}},
+    "audience": {"label": ["Who is your customer? Leave blank if unsure.", "Хто ваш клієнт? Можна пропустити, якщо не знаєте.", "Cine este clientul tău? Poți omite dacă nu știi."], "exclude": ["marketplaces"]},
+    "offer": {"label": ["What makes your offer useful?", "Чим корисна ваша пропозиція?", "Ce face oferta ta utilă?"], "type": "textarea", "exclude": ["marketplaces"]},
+    "platforms": {"label": ["Marketplace", "Маркетплейс", "Marketplace"], "type": "select", "options": ["rozetka", "prom", "allo", "several", "unknown"], "services": ["marketplaces"], "required": true},
+    "store_status": {"label": ["What support do you need?", "Який супровід потрібен?", "De ce ajutor ai nevoie?"], "type": "select", "options": ["new", "existing", "both", "unknown"], "services": ["marketplaces"]},
+    "catalog_size": {"label": ["Approximate number of products", "Приблизна кількість товарів", "Numărul aproximativ de produse"], "services": ["marketplaces"]},
+    "budget": {"label": ["Monthly ad budget / marketplace project budget (optional)", "Місячний рекламний бюджет / бюджет проєкту маркетплейсу (необов’язково)", "Buget publicitar lunar / buget proiect marketplace (opțional)"], "type": "number"},
+    "currency": {"label": ["Currency", "Валюта", "Monedă"], "type": "select", "options": ["UAH", "EUR", "USD", "MDL"], "when": {"field": "budget", "filled": true}, "required": true},
+    "account": {"label": ["Do you have an advertising account?", "Є рекламний кабінет?", "Ai un cont publicitar?"], "type": "select", "options": ["yes", "no", "unknown"], "exclude": ["marketplaces"]},
+    "tracking": {"label": ["Are website conversions measured?", "Чи вимірюються конверсії на сайті?", "Sunt măsurate conversiile pe site?"], "type": "select", "options": ["yes", "no", "unknown"], "when": {"field": "goal", "values": ["sales", "traffic"]}},
+    "catalog_source": {"label": ["Where do you manage prices and stock?", "Де ведете ціни й залишки?", "Unde gestionezi prețurile și stocurile?"], "services": ["marketplaces"]},
+    "feed": {"label": ["Do you have a catalogue export?", "Є вивантаження каталогу?", "Ai un export al catalogului?"], "type": "select", "options": ["yes", "no", "unknown"], "services": ["marketplaces"]},
+    "order_owner": {"label": ["Who handles orders, delivery and returns?", "Хто обробляє замовлення, доставку й повернення?", "Cine gestionează comenzile, livrarea și retururile?"], "services": ["marketplaces"]},
+    "creatives": {"label": ["Materials for the project", "Матеріали для проєкту", "Materiale pentru proiect"], "type": "select", "options": ["own", "make", "ugc", "unknown"]},
+    "materials_url": {"label": ["Link to materials (optional)", "Посилання на матеріали (необов’язково)", "Link către materiale (opțional)"], "type": "url", "when": {"field": "creatives", "values": ["own"]}},
+    "tiktok_account": {"label": ["Do you have a TikTok account?", "Є TikTok-акаунт?", "Ai un cont TikTok?"], "type": "select", "options": ["yes", "no", "unknown"], "services": ["tiktok-ads"]},
+    "spark": {"label": ["Use your published videos in advertising?", "Використати ваші опубліковані відео в рекламі?", "Folosim videourile tale publicate în publicitate?"], "type": "select", "options": ["yes", "no", "unknown"], "services": ["tiktok-ads"], "when": {"field": "tiktok_account", "values": ["yes"]}},
+    "restrictions": {"label": ["Product restrictions or important details (optional)", "Обмеження продукту або важливі деталі (необов’язково)", "Restricții ale produsului sau detalii importante (opțional)"], "type": "textarea"},
+    "timing": {"label": ["Preferred launch date, if known", "Бажаний строк запуску, якщо відомо", "Data dorită pentru lansare, dacă o cunoști"]},
+    "client_name": {"label": ["Your name", "Ваше ім’я", "Numele tău"], "required": true},
+    "client_email": {"label": ["Email", "Email", "Email"], "type": "email", "required": true},
+    "notes": {"label": ["Anything else? (optional)", "Щось іще? (необов’язково)", "Alte detalii? (opțional)"], "type": "textarea"}
+  },
+  "options": {
+    "leads": ["Inquiries", "Заявки", "Solicitări"], "sales": ["Website purchases", "Покупки на сайті", "Cumpărări pe site"], "messages": ["Messages", "Повідомлення", "Mesaje"], "traffic": ["Website visits", "Відвідування сайту", "Vizite pe site"], "views": ["Video views", "Перегляди відео", "Vizualizări video"], "app": ["App installs", "Встановлення застосунку", "Instalări de aplicație"], "unknown": ["Not sure — please advise", "Не знаю — потрібна допомога", "Nu știu — am nevoie de ajutor"], "yes": ["Yes", "Так", "Da"], "no": ["No", "Ні", "Nu"], "new": ["New store", "Новий магазин", "Magazin nou"], "existing": ["Support an existing store", "Супровід наявного магазину", "Administrarea magazinului existent"], "both": ["Launch and ongoing support", "Запуск і супровід", "Lansare și administrare"], "own": ["I have materials", "Маю матеріали", "Am materiale"], "make": ["Help create materials", "Допоможіть створити матеріали", "Ajutați-mă să creez materiale"], "ugc": ["Discuss creator videos / UGC", "Обговорити відео авторів / UGC", "Discutăm video de la creatori / UGC"], "rozetka": ["Rozetka", "Rozetka", "Rozetka"], "prom": ["Prom", "Prom", "Prom"], "allo": ["Allo", "Allo", "Allo"], "several": ["Several platforms", "Кілька майданчиків", "Mai multe platforme"]
+  }
+}

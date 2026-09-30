@@ -571,12 +571,6 @@ function initSmartForm(signal) {
     }, { signal });
   });
 
-  const requestedService = new URLSearchParams(window.location.search).get('service');
-  if (requestedService) {
-    const requestedTab = document.querySelector(`#serviceTabs .tab-btn[data-service="${requestedService}"]`);
-    if (requestedTab) requestedTab.click();
-  }
-
   // Form submission & Ticket confirmation
   if (form && overlay) {
     if (form.dataset.briefMode === 'generic') {
@@ -626,7 +620,7 @@ function restoreInquiryDraft(form) {
 
   if (!draft || typeof draft !== 'object') return;
   // Advertising briefs are controlled by React and never use the generic draft.
-  if (['ads', 'meta-ads'].includes(draft.service_type)) return;
+  if (['ads', 'meta-ads', 'tiktok-ads', 'marketplaces'].includes(draft.service_type)) return;
 
   Object.entries(draft).forEach(([name, value]) => {
     if (name === 'calculator_summary') return;

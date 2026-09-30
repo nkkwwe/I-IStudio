@@ -5,7 +5,7 @@ import { initLegacyApp } from '../legacy/legacyApp';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import { useChatUnreadCount } from '../Components/ChatUnreadBadge';
 import type { PublicReview } from '../Components/ClientReviews';
-import { getTestReviews } from '../content/testReviews';
+import { landing, translate } from '../content/startupContent';
 
 type PageProps = {
   reviews?: PublicReview[];
@@ -31,11 +31,11 @@ export default function Home() {
       <Head title="">
         <meta
           name="description"
-          content={copy.common.homeMetaDescription}
+          content={translate(landing.description, language)}
         />
       </Head>
       <HomeMarkup
-        reviews={[...reviews, ...getTestReviews(language)]}
+        reviews={reviews}
         isAuthenticated={Boolean(auth?.user)}
         userName={auth?.user?.name ?? ''}
         signInLabel={copy.auth.pageSignIn}

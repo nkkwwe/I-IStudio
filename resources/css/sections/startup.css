@@ -1,0 +1,41 @@
+.startup-section { padding-block: 96px; border-bottom: 1px solid var(--border); }
+.startup-service-grid, .startup-principles, .startup-steps { display: grid; gap: 24px; }
+.startup-service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.startup-principles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.startup-steps { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.startup-section .advantage-card, .startup-section .workflow-card { min-width: 0; background: var(--bg-surface); color: var(--text-primary); }
+.startup-service-card { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; }
+.startup-service-card h3 { margin: 0; }
+.startup-service-card ul { padding-left: 20px; color: var(--text-secondary); line-height: 1.6; }
+.startup-service-card .btn { margin-top: auto; }
+.startup-reading { max-width: 800px; }
+.startup-reading > p { margin-block: 24px; color: var(--text-secondary); line-height: 1.7; }
+.startup-faq { border-bottom: 1px solid var(--border); }
+.startup-faq summary { padding-block: 20px; min-height: 44px; cursor: pointer; font-weight: 600; }
+.startup-faq p { padding-bottom: 20px; color: var(--text-secondary); line-height: 1.6; }
+.startup-faq summary:focus-visible, .startup-lead a:focus-visible, .startup-brief button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
+.startup-lead .form-group { margin: 0; min-width: 0; }
+.startup-lead select, .startup-brief select { width: 100%; min-height: 44px; padding: 12px; border: 1px solid var(--border); border-radius: var(--radius-inner); background: var(--bg-subtle); color: var(--text-primary); font: inherit; }
+.startup-lead select:focus-visible, .startup-brief select:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
+.startup-lead input:not([type='checkbox']), .startup-lead textarea { width: 100%; padding: 12px; font-size: 16px; }
+.startup-lead .ads-consent, .startup-brief .ads-consent { min-height: 44px; align-items: flex-start; line-height: 1.5; }
+.startup-lead .ads-consent input, .startup-brief .ads-consent input { flex-shrink: 0; margin-top: 4px; }
+.startup-brief progress { width: 100%; accent-color: var(--text-primary); margin-block: 12px 24px; }
+.startup-brief-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.startup-brief h2 { margin-block: 16px; }
+.startup-brief input:not([type='checkbox']), .startup-brief textarea { width: 100%; padding: 12px; font-size: 16px; }
+.startup-brief h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.2; overflow-wrap: anywhere; }
+.startup-brief dl { display: grid; gap: 12px; }
+.startup-brief dt { font-weight: 600; }
+.startup-brief dd { margin: 0 0 12px; color: var(--text-secondary); white-space: pre-wrap; overflow-wrap: anywhere; }
+.startup-brief-note { color: var(--text-muted); font-size: .875rem; line-height: 1.6; margin-block: 16px; }
+@media (hover: hover) and (pointer: fine) {
+  .startup-lead select:not(:disabled):hover, .startup-brief select:not(:disabled):hover { border-color: var(--border-strong); }
+}
+@media (max-width: 900px) { .startup-steps, .startup-principles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .startup-section { padding-block: 64px; }
+  .startup-service-grid, .startup-steps, .startup-principles { grid-template-columns: minmax(0, 1fr); }
+  .startup-service-card .btn { width: 100%; white-space: normal; }
+  .startup-brief input, .startup-brief select, .startup-brief textarea { font-size: 16px; }
+}

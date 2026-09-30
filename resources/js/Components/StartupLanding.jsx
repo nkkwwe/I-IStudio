@@ -1,0 +1,65 @@
+import { useForm, usePage } from '@inertiajs/react';
+import { useRef } from 'react';
+import { useSiteLanguage } from '../content/uiTranslations';
+import { localizedUrl } from '../content/siteLanguage';
+import { landing, translate } from '../content/startupContent';
+import ClientReviews from './ClientReviews';
+
+export default function StartupLanding({ reviews = [] }) {
+  const language = useSiteLanguage();
+  const t = (value) => translate(value, language);
+  const { flash = {} } = usePage().props;
+  const heading = useRef(null);
+  const form = useForm({ submission_kind: 'initial', service_type: 'consultation', client_name: '', client_email: '', project_comment: '', ads_consent: false });
+  const selectService = (id) => {
+    form.setData('service_type', id);
+    heading.current?.focus({ preventScroll: true });
+    heading.current?.scrollIntoView({ block: 'start', behavior: 'auto' });
+  };
+  const input = (name, label, type = 'text') => <div className="form-group">
+    <label htmlFor={`lead-${name}`}>{t(label)} *</label>
+    <input id={`lead-${name}`} type={type} autoComplete={type === 'email' ? 'email' : 'name'} required maxLength={name === 'client_name' ? 120 : 255} value={form.data[name]} onChange={(e) => form.setData(name, e.target.value)} aria-invalid={Boolean(form.errors[name])} aria-describedby={form.errors[name] ? `lead-${name}-error` : undefined} />
+    {form.errors[name] && <p className="account-inline-error" id={`lead-${name}-error`}>{form.errors[name]}</p>}
+  </div>;
+  return <>
+    <section className="hero-section" id="hero"><div className="container hero-container">
+      <div className="hero-badge"><span className="hero-badge-dot" />{t(landing.badge)}</div>
+      <h1 className="hero-title">{t(landing.title)}</h1>
+      <p className="hero-subtitle">{t(landing.description)}</p>
+      <div className="hero-cta-group"><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}</a><a className="btn btn-secondary" href="#services">{t(landing.explore)}</a></div>
+      <div className="hero-trust-bar">{landing.trust.map((item, i) => <span className="trust-pill" key={i}>{t(item)}</span>)}</div>
+    </div></section>
+    <section className="startup-section service-solutions-section" id="services"><div className="container">
+      <div className="section-header"><h2 className="section-title">{t(landing.servicesTitle)}</h2><p className="section-desc">{t(landing.servicesDescription)}</p></div>
+      <div className="startup-service-grid">{landing.services.map((service, i) => <article className="advantage-card startup-service-card" key={service.id}>
+        <span className="advantage-num">0{i + 1}</span><h3>{t(service.name)}</h3><p>{t(service.description)}</p>
+        <ul>{service.items.map((item, index) => <li key={index}>{t(item)}</li>)}</ul>
+        <button type="button" className="btn btn-secondary" onClick={() => selectService(service.id)}>{t(landing.discuss)}</button>
+      </article>)}</div>
+    </div></section>
+    <section className="startup-section" id="advantages"><div className="container">
+      <div className="section-header"><h2 className="section-title">{t(landing.approachTitle)}</h2></div>
+      <div className="startup-principles">{landing.principles.map(([title, body], i) => <article className="advantage-card" key={i}><h3>{t(title)}</h3><p>{t(body)}</p></article>)}</div>
+    </div></section>
+    {reviews.length > 0 && <ClientReviews reviews={reviews} />}
+    <section className="startup-section workflow-section" id="process"><div className="container">
+      <div className="section-header"><h2 className="section-title">{t(landing.processTitle)}</h2></div>
+      <div className="startup-steps">{landing.steps.map(([title, body], i) => <article className="workflow-card" key={i}><div className="workflow-card-top"><span className="workflow-num">0{i + 1}</span></div><h3>{t(title)}</h3><p>{t(body)}</p></article>)}</div>
+    </div></section>
+    <section className="startup-section" id="pricing"><div className="container startup-reading"><h2 className="section-title">{t(landing.pricingTitle)}</h2><p>{t(landing.pricing)}</p><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}</a></div></section>
+    <section className="startup-section" id="faq"><div className="container startup-reading"><h2 className="section-title">{t(landing.faqTitle)}</h2>{landing.faq.map(([question, answer], i) => <details className="startup-faq" key={i}><summary>{t(question)}</summary><p>{t(answer)}</p></details>)}</div></section>
+    <section className="inquiry-section" id="inquiry"><div className="container inquiry-container">
+      <div className="inquiry-copy"><h2 className="section-title" ref={heading} tabIndex={-1}>{t(landing.contactTitle)}</h2><p className="section-desc">{t(landing.contactDescription)}</p></div>
+      <form className="smart-form inquiry-cta-card startup-lead" onSubmit={(e) => { e.preventDefault(); if (form.processing) return; form.post(localizedUrl('/inquiry'), { preserveScroll: true, onSuccess: () => form.reset('client_name', 'client_email', 'project_comment', 'ads_consent') }); }}>
+        {flash.inquiry_submitted && <p role="status">{t(landing.success)} <strong>{flash.inquiry_ticket}</strong></p>}
+        {input('client_name', landing.name)}{input('client_email', landing.email, 'email')}
+        <div className="form-group"><label htmlFor="lead-service">{t(landing.service)}</label><select id="lead-service" value={form.data.service_type} onChange={(e) => form.setData('service_type', e.target.value)}><option value="consultation">{t(landing.advice)}</option>{landing.services.map((service) => <option key={service.id} value={service.id}>{t(service.name)}</option>)}</select></div>
+        <div className="form-group"><label htmlFor="lead-task">{t(landing.task)}</label><textarea id="lead-task" rows={3} maxLength={1000} value={form.data.project_comment} onChange={(e) => form.setData('project_comment', e.target.value)} /></div>
+        <label className="ads-consent"><input type="checkbox" required checked={form.data.ads_consent} onChange={(e) => form.setData('ads_consent', e.target.checked)} />{t(landing.consent)}</label>
+        {Object.keys(form.errors).length > 0 && <div role="alert" className="account-inline-error">{Object.entries(form.errors).filter(([key]) => !['client_name', 'client_email'].includes(key)).map(([key, error]) => <p key={key}>{error}</p>)}</div>}
+        <button className="btn btn-primary" type="submit" disabled={form.processing}>{t(form.processing ? landing.sending : landing.submit)}</button>
+        <a className="btn btn-secondary" href={localizedUrl(`/inquiry?service=${form.data.service_type}`)}>{t(landing.detailed)}</a>
+      </form>
+    </div></section>
+  </>;
+}

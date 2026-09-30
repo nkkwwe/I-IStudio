@@ -1,8 +1,7 @@
+import ServiceBrief from '../Components/ServiceBrief';
+import { landing, translate } from '../content/startupContent';
 import AccountSiteHeader from '../Components/AccountSiteHeader';
-import GoogleAdsBrief from '../Components/GoogleAdsBrief';
-import MetaAdsBrief from '../Components/MetaAdsBrief';
 import calculatorCopy from '../content/inquiryCalculatorCopy';
-import { getMetaAdsCopy } from '../content/metaAdsBrief';
 import { localizedUrl } from '../content/siteLanguage';
 import { createPortal } from 'react-dom';
 import { useEffect, useMemo, useState } from 'react';
@@ -44,9 +43,6 @@ export default function InquiryMarkup({
   errors = {},
 }) {
   const copy = calculatorCopy[language] || calculatorCopy.en;
-  const isMetaAds = activeService === 'meta-ads';
-  const isAds = activeService === 'ads' || isMetaAds;
-  const metaCopy = getMetaAdsCopy(language);
   const service = copy.services[activeService] || copy.services.other;
   const [calculatorOpen, setCalculatorOpen] = useState(false);
   const [calculatorStep, setCalculatorStep] = useState(1);
@@ -107,6 +103,16 @@ export default function InquiryMarkup({
   ].join('\n');
   const toggleExtra = (key) => setExtras((current) => ({ ...current, [key]: !current[key] }));
 
+  if (['ads', 'meta-ads', 'tiktok-ads', 'marketplaces'].includes(activeService)) {
+    return <div className="react-page-root">
+      <AccountSiteHeader isDark={isDark} onToggleTheme={onToggleTheme} showProfile={true} isAuthenticated={isAuthenticated} userInitial={userName?.trim()?.charAt(0)?.toLocaleUpperCase() || 'A'} unreadChatCount={unreadChatCount} />
+      <main className="inquiry-form-only"><section className="inquiry-form-card inquiry-form-only-card">
+        <div className="service-selector-tabs" id="serviceTabs">{landing.services.map((item) => <button type="button" key={item.id} className={activeService === item.id ? 'tab-btn active' : 'tab-btn'} aria-pressed={activeService === item.id} onClick={() => onServiceChange(item.id)}>{translate(item.name, language)}</button>)}<button type="button" className="tab-btn" onClick={() => onServiceChange('consultation')}>{translate(landing.advice, language)}</button></div>
+        <ServiceBrief key={activeService} service={activeService} language={language} submitted={inquirySubmitted} ticket={inquiryTicket} />
+      </section></main>
+    </div>;
+  }
+
   return (
     <div className="react-page-root">
       <AccountSiteHeader
@@ -121,18 +127,9 @@ export default function InquiryMarkup({
     <section className="inquiry-form-card inquiry-form-only-card" aria-labelledby="inquiryPageTitle">
       <div className="inquiry-form-header">
         <div>
-          {isMetaAds ? <span className="form-eyebrow">[ FACEBOOK / INSTAGRAM ]</span> : <span className="form-eyebrow" data-i18n="inquiry_eyebrow">[ PROJECT BRIEF / 2 MIN ]</span>}
-          {isAds ? (
-            <>
-              <h1 id="inquiryPageTitle">{isMetaAds ? metaCopy.pageTitle : language === 'uk' ? 'Запуск Google Ads' : 'Launch Google Ads'}</h1>
-              <p>{isMetaAds ? metaCopy.note : language === 'uk' ? 'Заповніть короткий бриф — технічні речі ми перевіримо самі.' : 'Complete the short brief — we will check the technical details ourselves.'}</p>
-            </>
-          ) : (
-            <>
-              <h1 id="inquiryPageTitle" data-i18n-html="form_title">Get in Touch with I&amp;I Studio</h1>
-              <p data-i18n="form_desc">Leave your contacts and describe what you have in mind.</p>
-            </>
-          )}
+          <span className="form-eyebrow" data-i18n="inquiry_eyebrow">[ PROJECT BRIEF ]</span>
+          <h1 id="inquiryPageTitle" data-i18n-html="form_title">Get in Touch with I&amp;I Studio</h1>
+          <p data-i18n="form_desc">Leave your contacts and describe what you have in mind.</p>
         </div>
       </div>
       <div className="service-selector-tabs" id="serviceTabs">
@@ -140,18 +137,13 @@ export default function InquiryMarkup({
         <button type="button" className={activeService === 'corporate' ? 'tab-btn active' : 'tab-btn'} data-service="corporate" data-i18n="tab_corporate" onClick={() => onServiceChange('corporate')}>Business Website</button>
         <button type="button" className={activeService === 'redesign' ? 'tab-btn active' : 'tab-btn'} data-service="redesign" data-i18n="tab_redesign" onClick={() => onServiceChange('redesign')}>Website Redesign</button>
         <button type="button" className={activeService === 'ads' ? 'tab-btn active' : 'tab-btn'} data-service="ads" aria-pressed={activeService === 'ads'} onClick={() => onServiceChange('ads')}>Google Ads</button>
-        <button type="button" className={isMetaAds ? 'tab-btn active' : 'tab-btn'} data-service="meta-ads" aria-pressed={isMetaAds} onClick={() => onServiceChange('meta-ads')}>Meta (Facebook) Ads</button>
+        <button type="button" className="tab-btn" data-service="meta-ads" aria-pressed={false} onClick={() => onServiceChange('meta-ads')}>Meta (Facebook) Ads</button>
+        {landing.services.filter((item) => ['tiktok-ads', 'marketplaces'].includes(item.id)).map((item) => <button type="button" key={item.id} className="tab-btn" onClick={() => onServiceChange(item.id)}>{translate(item.name, language)}</button>)}
         <button type="button" className={activeService === 'consultation' ? 'tab-btn active' : 'tab-btn'} data-service="consultation" data-i18n="tab_consultation" onClick={() => onServiceChange('consultation')}>Consultation</button>
         <button type="button" className={activeService === 'other' ? 'tab-btn active' : 'tab-btn'} data-service="other" data-i18n="tab_other" onClick={() => onServiceChange('other')}>Other</button>
       </div>
-      <form id="projectForm" className="smart-form" action={localizedUrl('/inquiry')} method="post" data-authenticated={isAuthenticated ? 'true' : 'false'} data-brief-mode={isMetaAds ? 'meta-ads' : isAds ? 'google-ads' : 'generic'}>
+      <form id="projectForm" className="smart-form" action={localizedUrl('/inquiry')} method="post" data-authenticated={isAuthenticated ? 'true' : 'false'} data-brief-mode="generic">
         <input type="hidden" name="service_type" id="serviceTypeInput" value={activeService} readOnly />
-        {isMetaAds ? (
-          <MetaAdsBrief language={language} />
-        ) : activeService === 'ads' ? (
-          <GoogleAdsBrief language={language} />
-        ) : (
-          <>
       <section className="calculator-launcher" aria-labelledby="calculatorLauncherTitle">
         <div className="calculator-launcher-copy">
           <span className="calculator-kicker">{copy.kicker}</span>
@@ -180,10 +172,8 @@ export default function InquiryMarkup({
         </div>
         <div className="form-group"><label htmlFor="clientBudget" data-i18n="form_budget_label">Proposed budget / payment amount (optional)</label><input type="text" id="clientBudget" name="client_budget" placeholder="e.g. $500, $1,000, 20,000 ₴ or your offer" data-i18n-placeholder="form_budget_ph" /></div>
         <div className="form-group project-comment-group"><label htmlFor="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span className="req">*</span></label><textarea id="projectComment" name="project_comment" rows={8} placeholder="Write in your own words: what your company does, what you want to achieve, any reference links, questions, or your approximate budget. We'll reply quickly with a concrete proposal." data-i18n-placeholder="form_comment_ph" required defaultValue={""} /></div>
-          </>
-        )}
         {Object.keys(errors).length > 0 && <div className="account-inline-error" role="alert">{Object.values(errors).map((error, index) => <p key={index}>{error}</p>)}</div>}
-        <p className="inquiry-form-note" data-i18n="inquiry_form_note">We usually reply within 1–2 hours during working hours.</p>
+        <p className="inquiry-form-note">{translate(landing.contactDescription, language)}</p>
         <button type="submit" className="btn btn-primary btn-block btn-submit" id="submitBtn"><span data-i18n="form_btn_submit">Send Request</span><svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1={22} y1={2} x2={11} y2={13} /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg></button>
       </form>
       {calculatorOpen && typeof document !== 'undefined' && createPortal(
@@ -252,9 +242,9 @@ export default function InquiryMarkup({
         <div className="feedback-card">
           <div className="feedback-icon"><svg width={48} height={48} viewBox="0 0 24 24" fill="none" stroke="#10b981" strokeWidth={2}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg></div>
           <h2 data-i18n="feedback_title">Thank you! Inquiry Received.</h2>
-          <p className="feedback-msg" data-i18n="feedback_msg">We have registered your request and will contact you shortly.</p>
+          <p className="feedback-msg">{translate(landing.success, language)}</p>
           <div className="ticket-box"><span className="ticket-label" data-i18n="feedback_ticket_lbl">Inquiry ID</span><span className="ticket-number" id="ticketNumberDisplay">{inquiryTicket}</span></div>
-          <div className="automated-actions-list"><div className="action-step done"><span className="step-icon">✓</span><span><span data-i18n="feedback_step_1">Category:</span> <strong id="assignedService">{inquiryServiceLabel}</strong></span></div><div className="action-step done" id="feedbackBudgetRow" style={{display: inquiryBudget ? 'flex' : 'none'}}><span className="step-icon">✓</span><span><span data-i18n="feedback_budget_lbl">Budget:</span> <strong id="assignedBudget">{inquiryBudget}</strong></span></div><div className="action-step done"><span className="step-icon">✓</span><span data-i18n="feedback_step_2">Instant notification dispatched to manager</span></div><div className="action-step done"><span className="step-icon">✓</span><span data-i18n="feedback_step_3">Estimated reply time: within 1–2 hours</span></div></div>
+          <div className="automated-actions-list"><div className="action-step done"><span className="step-icon">✓</span><span><span data-i18n="feedback_step_1">Category:</span> <strong id="assignedService">{inquiryServiceLabel}</strong></span></div><div className="action-step done" id="feedbackBudgetRow" style={{display: inquiryBudget ? 'flex' : 'none'}}><span className="step-icon">✓</span><span><span data-i18n="feedback_budget_lbl">Budget:</span> <strong id="assignedBudget">{inquiryBudget}</strong></span></div></div>
           <p className="feedback-note" data-i18n="feedback_note">We'll review your requirements and message you with an estimate and suggestions.</p>
           <button type="button" className="btn btn-secondary btn-block" id="closeFeedbackBtn" data-i18n="feedback_btn_close">Close</button>
         </div>

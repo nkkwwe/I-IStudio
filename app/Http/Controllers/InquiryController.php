@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -109,24 +110,36 @@ class InquiryController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
+        $isInitial = $request->input('submission_kind') === 'initial';
+        $isStructured = ! $isInitial && $request->input('brief_version') == 1;
+        $structuredServices = ['ads', 'meta-ads', 'tiktok-ads', 'marketplaces'];
+        $requiresContact = $isInitial || in_array($request->input('service_type'), $structuredServices, true);
         $data = $request->validate([
-            'service_type' => ['required', 'string', 'in:landing,corporate,redesign,ads,meta-ads,consultation,other'],
+            'submission_kind' => ['nullable', 'in:initial,detailed'],
+            'brief_version' => ['nullable', 'integer', 'in:1', Rule::prohibitedIf(! in_array($request->input('service_type'), $structuredServices, true))],
+            'service_type' => ['required', 'string', 'in:landing,corporate,redesign,ads,meta-ads,tiktok-ads,marketplaces,consultation,other'],
             'client_name' => ['required', 'string', 'max:120'],
-            'client_email' => ['required_if:service_type,ads,meta-ads', 'nullable', 'email', 'max:255'],
+            'client_email' => [Rule::requiredIf($requiresContact), 'nullable', 'email', 'max:255'],
             'client_contact' => ['nullable', 'string', 'max:255'],
             'client_budget' => ['nullable', 'string', 'max:120'],
-            'project_comment' => ['required', 'string', 'max:10000'],
+            'project_comment' => [Rule::requiredIf(! $isInitial), 'nullable', 'string', $isInitial ? 'max:1000' : 'max:10000'],
             'calculator_summary' => ['nullable', 'string', 'max:10000'],
-            'brief_data' => ['required_if:service_type,meta-ads', 'nullable', 'json', 'max:40000'],
+            'brief_data' => [Rule::requiredIf(! $isInitial && ($isStructured || $request->input('service_type') === 'meta-ads')), 'nullable', 'json', 'max:40000'],
             'lead_context' => ['nullable', 'json', 'max:10000'],
-            'ads_consent' => ['required_if:service_type,ads,meta-ads', 'accepted'],
+            'ads_consent' => [Rule::requiredIf($requiresContact), 'accepted'],
         ], [
             'client_name.required' => 'Please enter your name.',
             'project_comment.required' => 'Please describe your project or task.',
         ]);
 
+        // New service types always use the structured contract outside initial contact.
+        if (! $isInitial && in_array($data['service_type'], ['tiktok-ads', 'marketplaces'], true)) {
+            Validator::make($data, ['brief_version' => ['required', 'integer', 'in:1']])->validate();
+        }
+
         $calculatorSummary = trim((string) ($data['calculator_summary'] ?? ''));
-        $projectComment = trim($data['project_comment']);
+        $projectComment = trim((string) ($data['project_comment'] ?? ''));
+        if ($isInitial && $projectComment === '') $projectComment = 'Initial inquiry — '.$data['service_type'];
 
         if ($calculatorSummary !== '') {
             $projectComment .= "\n\n--- Price calculator example ---\n".$calculatorSummary;
@@ -135,8 +148,15 @@ class InquiryController extends Controller
         $data['project_comment'] = $projectComment;
         unset($data['calculator_summary']);
 
-        $briefData = $this->decodeJson($data['brief_data'] ?? null);
-        if ($data['service_type'] === 'meta-ads') {
+        $briefData = $isInitial ? ['consent' => true] : $this->decodeJson($data['brief_data'] ?? null);
+        if ($isStructured) {
+            $briefData = $this->validateStartupBrief($briefData ?? [], $data['service_type']);
+            $briefData['schema_version'] = 1;
+            $briefData['consent'] = true;
+            $data['client_name'] = $briefData['client_name'];
+            $data['client_email'] = $briefData['client_email'];
+            $data['client_budget'] = ! empty($briefData['budget']) ? $briefData['budget'].' '.$briefData['currency'] : null;
+        } elseif (! $isInitial && $data['service_type'] === 'meta-ads') {
             $rules = [
                 'brief.brand_name' => ['required', 'string', 'max:255'],
                 'brief.website_url' => ['nullable', 'url:http,https', 'max:255'],
@@ -157,9 +177,9 @@ class InquiryController extends Controller
         $isAdsBrief = in_array($data['service_type'], ['ads', 'meta-ads'], true);
         $clientEmail = trim((string) ($data['client_email'] ?? ''));
 
-        unset($data['client_email'], $data['brief_data'], $data['lead_context'], $data['ads_consent']);
+        unset($data['client_email'], $data['brief_data'], $data['lead_context'], $data['ads_consent'], $data['submission_kind'], $data['brief_version']);
 
-        if (! $request->user() && ! $isAdsBrief) {
+        if (! $request->user() && ! $isAdsBrief && ! $isInitial && ! $isStructured) {
             $request->session()->put('pending_inquiry', $data);
             $request->session()->put('url.intended', $this->localizedRoute($request, 'inquiry.localized'));
 
@@ -181,12 +201,44 @@ class InquiryController extends Controller
 
         $request->session()->forget('pending_inquiry');
 
-        return redirect($this->localizedRoute($request, 'inquiry.localized'))->with([
+        return redirect($this->localizedRoute($request, $isInitial ? 'home.localized' : 'inquiry.localized').($isInitial ? '#inquiry' : '?service='.urlencode($inquiry->service_type)))->with([
             'inquiry_submitted' => true,
             'inquiry_ticket' => sprintf('#II-%04d', $inquiry->id),
             'inquiry_service' => $inquiry->service_type,
             'inquiry_budget' => $inquiry->client_budget,
         ]);
+    }
+
+    private function validateStartupBrief(array $answers, string $service): array
+    {
+        $schema = json_decode(file_get_contents(resource_path('js/content/serviceBriefs.json')), true, flags: JSON_THROW_ON_ERROR);
+        $rules = [];
+        $activeAnswers = [];
+        foreach ($schema['fields'] as $key => $field) {
+            if (isset($field['services']) && ! in_array($service, $field['services'], true)) continue;
+            if (in_array($service, $field['exclude'] ?? [], true)) continue;
+            if (isset($field['when'])) {
+                $condition = $field['when'];
+                $value = $answers[$condition['field']] ?? null;
+                $visible = ! empty($condition['filled']) ? filled($value) : in_array($value, $condition['values'], true);
+                if (! $visible) continue;
+            }
+            $type = $field['type'] ?? 'text';
+            $fieldRules = [! empty($field['required']) ? 'required' : 'nullable'];
+            if ($type === 'number') {
+                $fieldRules = [...$fieldRules, 'numeric', 'gt:0', 'max:1000000000'];
+            } else {
+                $fieldRules[] = 'string';
+                $fieldRules[] = $type === 'textarea' ? 'max:1000' : ($key === 'client_name' ? 'max:120' : 'max:255');
+                if ($type === 'email') $fieldRules[] = 'email';
+                if ($type === 'url') $fieldRules[] = 'url:http,https';
+                if (isset($field['options'])) $fieldRules[] = Rule::in($field['options']);
+            }
+            $rules['brief.'.$key] = $fieldRules;
+            $activeAnswers[$key] = $answers[$key] ?? null;
+        }
+
+        return Validator::make(['brief' => $activeAnswers], $rules)->validate()['brief'];
     }
 
     private function localizedRoute(Request $request, string $routeName): string

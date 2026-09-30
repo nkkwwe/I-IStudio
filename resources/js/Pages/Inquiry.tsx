@@ -1,3 +1,4 @@
+import { localizedUrl } from '../content/siteLanguage';
 import { Head, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import InquiryMarkup from '../legacy/InquiryMarkup';
@@ -5,7 +6,7 @@ import { initLegacyApp } from '../legacy/legacyApp';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import { useChatUnreadCount } from '../Components/ChatUnreadBadge';
 
-const serviceKeys = ['landing', 'corporate', 'redesign', 'ads', 'meta-ads', 'consultation', 'other'] as const;
+const serviceKeys = ['landing', 'corporate', 'redesign', 'ads', 'meta-ads', 'tiktok-ads', 'marketplaces', 'consultation', 'other'] as const;
 
 type ServiceKey = (typeof serviceKeys)[number];
 
@@ -36,7 +37,7 @@ export default function Inquiry() {
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
   const unreadChatCount = useChatUnreadCount(auth?.unread_chat_count ?? 0, Boolean(auth?.user));
-  const [activeService, setActiveService] = useState<ServiceKey>(getInitialService);
+  const [activeService] = useState<ServiceKey>(getInitialService);
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -68,7 +69,9 @@ export default function Inquiry() {
       <InquiryMarkup
         activeService={activeService}
         errors={errors}
-        onServiceChange={setActiveService}
+        onServiceChange={(service: string) => {
+          if (service !== activeService) window.location.href = localizedUrl(`/inquiry?service=${encodeURIComponent(service)}`);
+        }}
         language={language}
         isAuthenticated={Boolean(auth?.user)}
         userName={auth?.user?.name ?? ''}

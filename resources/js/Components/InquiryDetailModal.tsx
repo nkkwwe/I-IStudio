@@ -1,3 +1,4 @@
+import { getStartupBriefRows } from '../content/startupContent';
 import { useEffect, type ReactNode } from 'react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import ChatUnreadBadge from './ChatUnreadBadge';
@@ -59,7 +60,7 @@ export default function InquiryDetailModal({
   const serviceTitle = copy.services[inquiry.service_type] ?? inquiry.service_type;
   const formattedBudget = formatBudget(inquiry.budget);
   const briefRows = inquiry.brief_data
-    ? inquiry.service_type === 'meta-ads' ? getMetaBriefRows(inquiry.brief_data, language) : Object.entries(inquiry.brief_data)
+    ? inquiry.brief_data.schema_version === 1 ? getStartupBriefRows(inquiry.brief_data, language) : inquiry.service_type === 'meta-ads' ? getMetaBriefRows(inquiry.brief_data, language) : Object.entries(inquiry.brief_data)
       .filter(([key, value]) => key !== 'consent' && formatBriefValue(value) !== '')
       .map(([key, value]) => ({ label: formatBriefKey(key), value: formatBriefValue(value) }))
     : [];
