@@ -74,7 +74,6 @@
 .startup-brief-note { color: var(--text-muted); font-size: .875rem; line-height: 1.6; margin-block: 16px; }
 @media (hover: hover) and (pointer: fine) {
   .startup-lead select:not(:disabled):hover, .startup-brief select:not(:disabled):hover { border-color: var(--border-strong); }
-  .startup-principle-card:hover, .startup-steps .workflow-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-card); }
 }
 @media (max-width: 1024px) {
   .startup-hero-layout { grid-template-columns: minmax(0, 1fr) minmax(270px, .72fr); gap: 28px; }

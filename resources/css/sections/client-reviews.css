@@ -57,9 +57,6 @@
 .client-review-demo-tag { align-self: flex-start; padding: 4px 9px; border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--bg-subtle); color: var(--text-muted); font-size: 0.7rem; font-weight: 600; }
 .client-review-demo-note { margin-top: 4px; color: var(--text-muted); font-size: 0.875rem; }
 @keyframes client-reviews-scroll { to { transform: translateX(-50%); } }
-@media (hover: hover) and (pointer: fine) {
-  .is-automatic:hover .client-reviews-track { animation-play-state: paused; }
-}
 @media (max-width: 1024px) {
   .has-many .client-review-card { width: calc((100vw - 24px) / 2); flex-basis: calc((100vw - 24px) / 2); }
 }
