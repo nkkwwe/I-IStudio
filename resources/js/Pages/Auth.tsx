@@ -43,7 +43,6 @@ export default function Auth() {
           </a>
 
           <div className="auth-google-note">
-            <img className="google-note-mark" src="/images/google.svg" alt="" aria-hidden="true" />
             {copy.auth.noPasswordNote}
           </div>
         </section>

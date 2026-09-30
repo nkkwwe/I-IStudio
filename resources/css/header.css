@@ -439,9 +439,7 @@
 }
 
 .auth-google-note {
-  display: flex;
-  align-items: flex-start;
-  gap: 9px;
+  display: block;
   margin-top: 18px;
   color: var(--text-muted);
   font-size: 0.74rem;
@@ -452,14 +450,6 @@
   height: 22px;
   width: 22px;
   flex: 0 0 22px;
-  object-fit: contain;
-}
-
-.google-note-mark {
-  width: 16px;
-  height: 16px;
-  flex: 0 0 16px;
-  margin-top: 2px;
   object-fit: contain;
 }
 
