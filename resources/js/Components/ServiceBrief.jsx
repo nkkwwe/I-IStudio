@@ -3,6 +3,7 @@ import { useForm } from '@inertiajs/react';
 import { localizedUrl } from '../content/siteLanguage';
 import { landing, schema, translate, serviceLabel, visibleField, getStartupBriefRows } from '../content/startupContent';
 import { buildLeadContext } from './GoogleAdsBrief';
+import StartupSelect from './StartupSelect';
 
 export default function ServiceBrief({ service, language, submitted, ticket }) {
   const t = (value) => translate(value, language);
@@ -78,7 +79,7 @@ export default function ServiceBrief({ service, language, submitted, ticket }) {
     const error = invalid[key] || form.errors[`brief.${key}`] || form.errors[key];
     const props = { id: `brief-${key}`, value: form.data[key] || '', required: Boolean(field.required), onChange: (e) => form.setData(key, e.target.value), 'aria-invalid': Boolean(error), 'aria-describedby': error ? `error-${key}` : undefined };
     return <div className="form-group" key={key}><label htmlFor={props.id}>{t(field.label)}{field.required ? ' *' : ''}</label>
-      {field.type === 'select' ? <select {...props}><option value="">{t(landing.choose)}</option>{field.options.map((value) => <option value={value} key={value}>{t(schema.options[value] || value)}</option>)}</select>
+      {field.type === 'select' ? <StartupSelect {...props}><option value="">{t(landing.choose)}</option>{field.options.map((value) => <option value={value} key={value}>{t(schema.options[value] || value)}</option>)}</StartupSelect>
         : field.type === 'textarea' ? <textarea {...props} rows={3} maxLength={1000} /> : <input {...props} type={field.type || 'text'} maxLength={key === 'client_name' ? 120 : 255} {...(field.type === 'number' ? { min: '0.01', step: '0.01' } : {})} />}
       {error && <p className="account-inline-error" id={`error-${key}`}>{error}</p>}
     </div>;

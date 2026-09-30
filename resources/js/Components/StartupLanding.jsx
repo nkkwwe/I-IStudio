@@ -4,6 +4,7 @@ import { useSiteLanguage } from '../content/uiTranslations';
 import { localizedUrl } from '../content/siteLanguage';
 import { landing, translate } from '../content/startupContent';
 import ClientReviews from './ClientReviews';
+import StartupSelect from './StartupSelect';
 
 export default function StartupLanding({ reviews = [] }) {
   const language = useSiteLanguage();
@@ -54,13 +55,13 @@ export default function StartupLanding({ reviews = [] }) {
       <div className="startup-steps">{landing.steps.map(([title, body], i) => <article className="workflow-card" key={i}><div className="workflow-card-top"><span className="workflow-num">0{i + 1}</span></div><h3>{t(title)}</h3><p>{t(body)}</p></article>)}</div>
     </div></section>
     <section className="startup-section startup-pricing-section" id="pricing"><div className="container startup-reading startup-pricing-card"><span className="section-tag">{t(landing.pricingTag)}</span><h2 className="section-title">{t(landing.pricingTitle)}</h2><p>{t(landing.pricing)}</p><a className="btn btn-secondary" href="#inquiry">{t(landing.discuss)}</a></div></section>
-    <section className="startup-section startup-faq-section" id="faq"><div className="container startup-reading"><span className="section-tag">{t(landing.faqTag)}</span><h2 className="section-title">{t(landing.faqTitle)}</h2>{landing.faq.map(([question, answer], i) => <details className="startup-faq" key={i}><summary>{t(question)}</summary><p>{t(answer)}</p></details>)}</div></section>
+    <section className="startup-section startup-faq-section" id="faq"><div className="container startup-reading"><span className="section-tag">{t(landing.faqTag)}</span><h2 className="section-title">{t(landing.faqTitle)}</h2>{landing.faq.map(([question, answer], i) => <details className="startup-faq" key={i}><summary>{t(question)}</summary><div className="startup-faq-answer"><div><p>{t(answer)}</p></div></div></details>)}</div></section>
     <section className="inquiry-section" id="inquiry"><div className="container inquiry-container">
-      <div className="inquiry-copy"><h2 className="section-title" ref={heading} tabIndex={-1}>{t(landing.contactTitle)}</h2><p className="section-desc">{t(landing.contactDescription)}</p></div>
+      <div className="inquiry-copy"><h2 className="section-title" ref={heading} tabIndex={-1}>{t(landing.contactTitle)}</h2><p className="section-desc">{t(landing.contactDescription)}</p><aside className="startup-contact-card"><h3>{t(landing.contactStepsTitle)}</h3><ol className="startup-contact-steps">{landing.contactSteps.map(([title, body], i) => <li key={i}><span>0{i + 1}</span><div><strong>{t(title)}</strong><p>{t(body)}</p></div></li>)}</ol></aside></div>
       <form className="smart-form inquiry-cta-card startup-lead" onSubmit={(e) => { e.preventDefault(); if (form.processing) return; form.post(localizedUrl('/inquiry'), { preserveScroll: true, onSuccess: () => form.reset('client_name', 'client_email', 'project_comment', 'ads_consent') }); }}>
         {flash.inquiry_submitted && <p role="status">{t(landing.success)} <strong>{flash.inquiry_ticket}</strong></p>}
         {input('client_name', landing.name)}{input('client_email', landing.email, 'email')}
-        <div className="form-group"><label htmlFor="lead-service">{t(landing.service)}</label><select id="lead-service" value={form.data.service_type} onChange={(e) => form.setData('service_type', e.target.value)}><option value="consultation">{t(landing.advice)}</option>{landing.services.map((service) => <option key={service.id} value={service.id}>{t(service.name)}</option>)}</select></div>
+        <div className="form-group"><label htmlFor="lead-service">{t(landing.service)}</label><StartupSelect id="lead-service" value={form.data.service_type} onChange={(e) => form.setData('service_type', e.target.value)}><option value="consultation">{t(landing.advice)}</option>{landing.services.map((service) => <option key={service.id} value={service.id}>{t(service.name)}</option>)}</StartupSelect></div>
         <div className="form-group"><label htmlFor="lead-task">{t(landing.task)}</label><textarea id="lead-task" rows={3} maxLength={1000} value={form.data.project_comment} onChange={(e) => form.setData('project_comment', e.target.value)} /></div>
         <label className="ads-consent"><input type="checkbox" required checked={form.data.ads_consent} onChange={(e) => form.setData('ads_consent', e.target.checked)} />{t(landing.consent)}</label>
         {Object.keys(form.errors).length > 0 && <div role="alert" className="account-inline-error">{Object.entries(form.errors).filter(([key]) => !['client_name', 'client_email'].includes(key)).map(([key, error]) => <p key={key}>{error}</p>)}</div>}

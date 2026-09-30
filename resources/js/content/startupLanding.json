@@ -48,6 +48,12 @@
   ],
   "contactTitle": ["Tell us where you want to start", "Розкажіть, з чого хочете почати", "Spune-ne de unde vrei să începi"],
   "contactDescription": ["A few words are enough. We will discuss technical details together. No account is needed to send an inquiry.", "Достатньо кількох слів. Технічні деталі обговоримо разом. Для заявки реєстрація не потрібна.", "Sunt suficiente câteva cuvinte. Discutăm împreună detaliile tehnice. Nu ai nevoie de cont pentru a trimite o solicitare."],
+  "contactStepsTitle": ["What happens next", "Що буде далі", "Ce urmează"],
+  "contactSteps": [
+    [["We review your request", "Переглянемо вашу заявку", "Analizăm solicitarea"], ["We read about your business and goals.", "Ознайомимося з вашим бізнесом і цілями.", "Citim despre afacerea și obiectivele tale."]],
+    [["Clarify the scope together", "Уточнимо обсяг робіт", "Stabilim împreună volumul"], ["We discuss what to do first and what can wait.", "Обговоримо, що зробити спочатку, а що може зачекати.", "Discutăm ce facem mai întâi și ce poate aștepta."]],
+    [["Agree cost before work", "Узгодимо вартість до початку", "Agreăm costul înainte de începere"], ["You decide whether the proposed plan suits you.", "Ви вирішуєте, чи підходить запропонований план.", "Decizi dacă planul propus ți se potrivește."]]
+  ],
   "name": ["Your name", "Ваше ім’я", "Numele tău"],
   "email": ["Email for our reply", "Email для відповіді", "Email pentru răspuns"],
   "service": ["Service", "Послуга", "Serviciu"],
