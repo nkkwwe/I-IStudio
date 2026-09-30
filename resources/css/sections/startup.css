@@ -42,12 +42,15 @@
 .startup-pricing-card .section-title, .startup-faq-section .section-title { font-size: clamp(1.8rem, 3.5vw, 2.5rem); }
 .startup-faq-section { background: var(--bg-body); }
 .startup-faq { border-bottom: 1px solid var(--border); }
-.startup-faq summary { padding-block: 20px; min-height: 44px; cursor: pointer; color: var(--text-primary); font-weight: 600; line-height: 1.5; }
-.startup-faq-answer { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 280ms cubic-bezier(.22, 1, .36, 1), opacity 220ms ease; }
+.startup-faq h3 { margin: 0; }
+.startup-faq-trigger { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; min-height: 64px; padding-block: 20px; border: 0; background: transparent; color: var(--text-primary); font: inherit; font-weight: 600; line-height: 1.5; text-align: left; cursor: pointer; }
+.startup-faq-trigger svg { flex: 0 0 16px; width: 16px; height: 16px; transition: transform 220ms ease; }
+.startup-faq-trigger svg.is-open { transform: rotate(180deg); }
+.startup-faq-answer { display: grid; grid-template-rows: 0fr; opacity: 0; visibility: hidden; transition: grid-template-rows 280ms cubic-bezier(.22, 1, .36, 1), opacity 220ms ease, visibility 0s linear 280ms; }
+.startup-faq-answer.is-open { grid-template-rows: 1fr; opacity: 1; visibility: visible; transition: grid-template-rows 280ms cubic-bezier(.22, 1, .36, 1), opacity 220ms ease, visibility 0s; }
 .startup-faq-answer > div { min-height: 0; overflow: hidden; }
-.startup-faq[open] .startup-faq-answer { grid-template-rows: 1fr; opacity: 1; }
 .startup-faq-answer p { padding-bottom: 20px; color: var(--text-secondary); line-height: 1.6; }
-.startup-faq summary:focus-visible, .startup-lead a:focus-visible, .startup-lead button:focus-visible, .startup-brief button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
+.startup-faq-trigger:focus-visible, .startup-lead a:focus-visible, .startup-lead button:focus-visible, .startup-brief button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
 .startup-lead .form-group { margin: 0; min-width: 0; }
 .startup-select-wrap { position: relative; display: block; }
 .startup-lead .startup-select-wrap select, .startup-brief .startup-select-wrap select { width: 100%; min-height: 48px; padding: 12px 44px 12px 16px; appearance: none; border: 1px solid var(--border); border-radius: var(--radius-inner); background: var(--bg-subtle); color: var(--text-primary); font: inherit; cursor: pointer; }

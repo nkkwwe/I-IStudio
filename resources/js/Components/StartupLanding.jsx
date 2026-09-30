@@ -1,10 +1,23 @@
 import { useForm, usePage } from '@inertiajs/react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useSiteLanguage } from '../content/uiTranslations';
 import { localizedUrl } from '../content/siteLanguage';
 import { landing, translate } from '../content/startupContent';
 import ClientReviews from './ClientReviews';
 import StartupSelect from './StartupSelect';
+
+function StartupFaqItem({ id, question, answer, t }) {
+  const [open, setOpen] = useState(false);
+  const answerId = `startup-faq-answer-${id}`;
+  return <div className="startup-faq">
+    <h3><button className="startup-faq-trigger" type="button" aria-expanded={open} aria-controls={answerId} onClick={() => setOpen((value) => !value)}>
+      <span>{t(question)}</span><svg className={open ? 'is-open' : ''} viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m4 6 4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+    </button></h3>
+    <div className={`startup-faq-answer${open ? ' is-open' : ''}`} id={answerId} aria-hidden={!open} inert={!open}>
+      <div><p>{t(answer)}</p></div>
+    </div>
+  </div>;
+}
 
 export default function StartupLanding({ reviews = [] }) {
   const language = useSiteLanguage();
@@ -55,7 +68,7 @@ export default function StartupLanding({ reviews = [] }) {
       <div className="startup-steps">{landing.steps.map(([title, body], i) => <article className="workflow-card" key={i}><div className="workflow-card-top"><span className="workflow-num">0{i + 1}</span></div><h3>{t(title)}</h3><p>{t(body)}</p></article>)}</div>
     </div></section>
     <section className="startup-section startup-pricing-section" id="pricing"><div className="container startup-reading startup-pricing-card"><span className="section-tag">{t(landing.pricingTag)}</span><h2 className="section-title">{t(landing.pricingTitle)}</h2><p>{t(landing.pricing)}</p><a className="btn btn-secondary" href="#inquiry">{t(landing.discuss)}</a></div></section>
-    <section className="startup-section startup-faq-section" id="faq"><div className="container startup-reading"><span className="section-tag">{t(landing.faqTag)}</span><h2 className="section-title">{t(landing.faqTitle)}</h2>{landing.faq.map(([question, answer], i) => <details className="startup-faq" key={i}><summary>{t(question)}</summary><div className="startup-faq-answer"><div><p>{t(answer)}</p></div></div></details>)}</div></section>
+    <section className="startup-section startup-faq-section" id="faq"><div className="container startup-reading"><span className="section-tag">{t(landing.faqTag)}</span><h2 className="section-title">{t(landing.faqTitle)}</h2>{landing.faq.map(([question, answer], i) => <StartupFaqItem id={i} key={i} question={question} answer={answer} t={t} />)}</div></section>
     <section className="inquiry-section" id="inquiry"><div className="container inquiry-container">
       <div className="inquiry-copy"><h2 className="section-title" ref={heading} tabIndex={-1}>{t(landing.contactTitle)}</h2><p className="section-desc">{t(landing.contactDescription)}</p><aside className="startup-contact-card"><h3>{t(landing.contactStepsTitle)}</h3><ol className="startup-contact-steps">{landing.contactSteps.map(([title, body], i) => <li key={i}><span>0{i + 1}</span><div><strong>{t(title)}</strong><p>{t(body)}</p></div></li>)}</ol></aside></div>
       <form className="smart-form inquiry-cta-card startup-lead" onSubmit={(e) => { e.preventDefault(); if (form.processing) return; form.post(localizedUrl('/inquiry'), { preserveScroll: true, onSuccess: () => form.reset('client_name', 'client_email', 'project_comment', 'ads_consent') }); }}>
