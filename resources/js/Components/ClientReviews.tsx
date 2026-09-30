@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 
-export type PublicReview = { id: number; author: string; rating: number; body: string; service: string };
+export type PublicReview = { id: number; author: string; rating: number; body: string; service: string; demo?: boolean };
 
 const labels = {
-  en: { tag: 'CLIENT REVIEWS', title: 'What our clients say', client: 'Client', pause: 'Pause reviews', resume: 'Play reviews' },
-  uk: { tag: 'ВІДГУКИ КЛІЄНТІВ', title: 'Що кажуть наші клієнти', client: 'Клієнт', pause: 'Зупинити відгуки', resume: 'Продовжити відгуки' },
-  ro: { tag: 'RECENZII CLIENȚI', title: 'Ce spun clienții noștri', client: 'Client', pause: 'Oprește recenziile', resume: 'Continuă recenziile' },
+  en: { tag: 'CLIENT REVIEWS', title: 'What our clients say', client: 'Client', sample: 'Example only', note: 'Sample content for layout preview — these are not client testimonials.', pause: 'Pause reviews', resume: 'Play reviews' },
+  uk: { tag: 'ВІДГУКИ КЛІЄНТІВ', title: 'Що кажуть наші клієнти', client: 'Клієнт', sample: 'Лише приклад', note: 'Демонстраційний текст для перегляду макета, це не відгуки клієнтів.', pause: 'Зупинити відгуки', resume: 'Продовжити відгуки' },
+  ro: { tag: 'RECENZII CLIENȚI', title: 'Ce spun clienții noștri', client: 'Client', sample: 'Doar exemplu', note: 'Text demonstrativ pentru previzualizarea aspectului, nu sunt recenzii reale.', pause: 'Oprește recenziile', resume: 'Continuă recenziile' },
 };
 
 export default function ClientReviews({ reviews }: { reviews: PublicReview[] }) {
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
   const text = labels[language];
+  const hasSamples = reviews.some((review) => review.demo);
   const viewport = useRef<HTMLDivElement>(null);
   const group = useRef<HTMLDivElement>(null);
   const [overflow, setOverflow] = useState(false);
@@ -51,7 +52,8 @@ export default function ClientReviews({ reviews }: { reviews: PublicReview[] }) 
   if (!reviews.length) return null;
 
   const cards = (duplicate = false) => reviews.map((review) => (
-    <article className="client-review-card" key={review.id}>
+    <article className={`client-review-card${review.demo ? ' is-demo-review' : ''}`} key={review.id}>
+      {review.demo && <span className="client-review-demo-tag">{text.sample}</span>}
       <div className="client-review-rating" aria-label={copy.review.ratingValue.replace('{rating}', String(review.rating))}>
         <div className="client-review-stars" aria-hidden="true">
           {Array.from({ length: 5 }, (_, index) => (
@@ -74,6 +76,7 @@ export default function ClientReviews({ reviews }: { reviews: PublicReview[] }) 
         <div className="section-header">
           <span className="section-tag">{text.tag}</span>
           <h2 className="section-title" id="client-reviews-title">{text.title}</h2>
+          {hasSamples && <p className="client-review-demo-note">{text.note}</p>}
           {automatic && <button type="button" className="btn btn-secondary btn-sm" aria-pressed={paused} onClick={() => setPaused((value) => !value)}>{paused ? text.resume : text.pause}</button>}
         </div>
         <div ref={viewport} className={`client-reviews-viewport${many ? ' has-many' : ''}${automatic ? ' is-automatic' : ''}${paused ? ' is-paused' : ''}`} onFocus={() => setPaused(true)} onPointerDown={(event) => { if (event.pointerType !== 'mouse') setPaused(true); }}>

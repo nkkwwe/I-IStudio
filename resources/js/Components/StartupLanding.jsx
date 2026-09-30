@@ -22,15 +22,22 @@ export default function StartupLanding({ reviews = [] }) {
     {form.errors[name] && <p className="account-inline-error" id={`lead-${name}-error`}>{form.errors[name]}</p>}
   </div>;
   return <>
-    <section className="hero-section" id="hero"><div className="container hero-container">
-      <div className="hero-badge"><span className="hero-badge-dot" />{t(landing.badge)}</div>
-      <h1 className="hero-title">{t(landing.title)}</h1>
-      <p className="hero-subtitle">{t(landing.description)}</p>
-      <div className="hero-cta-group"><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}</a><a className="btn btn-secondary" href="#services">{t(landing.explore)}</a></div>
-      <div className="hero-trust-bar">{landing.trust.map((item, i) => <span className="trust-pill" key={i}>{t(item)}</span>)}</div>
+    <section className="hero-section startup-hero" id="hero"><div className="container startup-hero-layout">
+      <div className="startup-hero-copy">
+        <div className="hero-badge"><span className="hero-badge-dot" />{t(landing.badge)}</div>
+        <h1 className="hero-title">{t(landing.title)}</h1>
+        <p className="hero-subtitle">{t(landing.description)}</p>
+        <div className="hero-cta-group"><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}</a><a className="btn btn-secondary" href="#services">{t(landing.explore)}</a></div>
+        <div className="hero-trust-bar">{landing.trust.map((item, i) => <span className="trust-pill" key={i}>{t(item)}</span>)}</div>
+      </div>
+      <aside className="startup-hero-panel" aria-label={t(landing.heroPanelTitle)}>
+        <span className="startup-panel-kicker">I&amp;I STUDIO / DIGITAL</span>
+        <h2>{t(landing.heroPanelTitle)}</h2><p>{t(landing.heroPanelDescription)}</p>
+        <ol>{landing.heroPanelItems.map(([number, en, uk, ro]) => <li key={number}><span>{number}</span><strong>{t([en, uk, ro])}</strong></li>)}</ol>
+      </aside>
     </div></section>
     <section className="startup-section service-solutions-section" id="services"><div className="container">
-      <div className="section-header"><h2 className="section-title">{t(landing.servicesTitle)}</h2><p className="section-desc">{t(landing.servicesDescription)}</p></div>
+      <div className="section-header"><span className="section-tag">{t(landing.servicesTag)}</span><h2 className="section-title">{t(landing.servicesTitle)}</h2><p className="section-desc">{t(landing.servicesDescription)}</p></div>
       <div className="startup-service-grid">{landing.services.map((service, i) => <article className="advantage-card startup-service-card" key={service.id}>
         <span className="advantage-num">0{i + 1}</span><h3>{t(service.name)}</h3><p>{t(service.description)}</p>
         <ul>{service.items.map((item, index) => <li key={index}>{t(item)}</li>)}</ul>
@@ -38,16 +45,16 @@ export default function StartupLanding({ reviews = [] }) {
       </article>)}</div>
     </div></section>
     <section className="startup-section" id="advantages"><div className="container">
-      <div className="section-header"><h2 className="section-title">{t(landing.approachTitle)}</h2></div>
-      <div className="startup-principles">{landing.principles.map(([title, body], i) => <article className="advantage-card" key={i}><h3>{t(title)}</h3><p>{t(body)}</p></article>)}</div>
+      <div className="section-header"><span className="section-tag">{t(landing.approachTag)}</span><h2 className="section-title">{t(landing.approachTitle)}</h2></div>
+      <div className="startup-principles">{landing.principles.map(([title, body], i) => <article className="advantage-card startup-principle-card" key={i}><span className="advantage-num">0{i + 1}</span><h3>{t(title)}</h3><p>{t(body)}</p></article>)}</div>
     </div></section>
     {reviews.length > 0 && <ClientReviews reviews={reviews} />}
     <section className="startup-section workflow-section" id="process"><div className="container">
-      <div className="section-header"><h2 className="section-title">{t(landing.processTitle)}</h2></div>
+      <div className="section-header"><span className="section-tag">{t(landing.processTag)}</span><h2 className="section-title">{t(landing.processTitle)}</h2></div>
       <div className="startup-steps">{landing.steps.map(([title, body], i) => <article className="workflow-card" key={i}><div className="workflow-card-top"><span className="workflow-num">0{i + 1}</span></div><h3>{t(title)}</h3><p>{t(body)}</p></article>)}</div>
     </div></section>
-    <section className="startup-section" id="pricing"><div className="container startup-reading"><h2 className="section-title">{t(landing.pricingTitle)}</h2><p>{t(landing.pricing)}</p><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}</a></div></section>
-    <section className="startup-section" id="faq"><div className="container startup-reading"><h2 className="section-title">{t(landing.faqTitle)}</h2>{landing.faq.map(([question, answer], i) => <details className="startup-faq" key={i}><summary>{t(question)}</summary><p>{t(answer)}</p></details>)}</div></section>
+    <section className="startup-section startup-pricing-section" id="pricing"><div className="container startup-reading startup-pricing-card"><span className="section-tag">{t(landing.pricingTag)}</span><h2 className="section-title">{t(landing.pricingTitle)}</h2><p>{t(landing.pricing)}</p><a className="btn btn-secondary" href="#inquiry">{t(landing.discuss)}</a></div></section>
+    <section className="startup-section startup-faq-section" id="faq"><div className="container startup-reading"><span className="section-tag">{t(landing.faqTag)}</span><h2 className="section-title">{t(landing.faqTitle)}</h2>{landing.faq.map(([question, answer], i) => <details className="startup-faq" key={i}><summary>{t(question)}</summary><p>{t(answer)}</p></details>)}</div></section>
     <section className="inquiry-section" id="inquiry"><div className="container inquiry-container">
       <div className="inquiry-copy"><h2 className="section-title" ref={heading} tabIndex={-1}>{t(landing.contactTitle)}</h2><p className="section-desc">{t(landing.contactDescription)}</p></div>
       <form className="smart-form inquiry-cta-card startup-lead" onSubmit={(e) => { e.preventDefault(); if (form.processing) return; form.post(localizedUrl('/inquiry'), { preserveScroll: true, onSuccess: () => form.reset('client_name', 'client_email', 'project_comment', 'ads_consent') }); }}>

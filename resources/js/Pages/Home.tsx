@@ -6,6 +6,7 @@ import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import { useChatUnreadCount } from '../Components/ChatUnreadBadge';
 import type { PublicReview } from '../Components/ClientReviews';
 import { landing, translate } from '../content/startupContent';
+import { getTestReviews } from '../content/testReviews';
 
 type PageProps = {
   reviews?: PublicReview[];
@@ -35,7 +36,7 @@ export default function Home() {
         />
       </Head>
       <HomeMarkup
-        reviews={reviews}
+        reviews={[...reviews, ...getTestReviews(language)]}
         isAuthenticated={Boolean(auth?.user)}
         userName={auth?.user?.name ?? ''}
         signInLabel={copy.auth.pageSignIn}

@@ -5,8 +5,7 @@
 }
 
 .client-reviews-section .section-header { margin-bottom: 32px; }
-.client-reviews-section > .container { max-width: none; padding-inline: 0; }
-.client-reviews-section .section-header { padding-inline: 24px; }
+.client-reviews-section > .container { max-width: 1200px; }
 .client-reviews-section .section-title { margin-bottom: 20px; }
 .client-reviews-viewport { overflow: hidden; margin-block: -20px; padding: 20px; }
 .client-reviews-group {
@@ -17,7 +16,7 @@
 .client-reviews-viewport.has-many { overflow-x: hidden; }
 .has-many .client-reviews-track { display: flex; width: max-content; }
 .has-many .client-reviews-group { display: flex; padding-right: 24px; }
-.has-many .client-review-card { width: calc((100vw - 48px) / 3); flex: 0 0 calc((100vw - 48px) / 3); }
+.has-many .client-review-card { width: calc((min(100vw, 1200px) - 120px) / 3); flex: 0 0 calc((min(100vw, 1200px) - 120px) / 3); }
 .is-automatic:not(.is-paused) { overflow-x: hidden; }
 .is-automatic:not(.is-paused) .client-reviews-track { animation: client-reviews-scroll linear infinite; }
 .is-automatic:focus-within .client-reviews-track { animation-play-state: paused; }
@@ -54,18 +53,20 @@
 .client-review-card footer { display: flex; flex-direction: column; gap: 4px; margin-top: auto; }
 .client-review-card footer strong { color: var(--text-primary); font-size: 0.9375rem; font-weight: 600; }
 .client-review-card footer span { color: var(--text-secondary); font-size: 0.875rem; }
+.client-review-demo-tag { align-self: flex-start; padding: 4px 9px; border: 1px solid var(--border); border-radius: var(--radius-pill); background: var(--bg-subtle); color: var(--text-muted); font-size: 0.7rem; font-weight: 600; }
+.client-review-demo-note { margin-top: 4px; color: var(--text-muted); font-size: 0.875rem; }
 @keyframes client-reviews-scroll { to { transform: translateX(-50%); } }
 @media (hover: hover) and (pointer: fine) {
   .is-automatic:hover .client-reviews-track { animation-play-state: paused; }
 }
 @media (max-width: 1024px) {
-  .has-many .client-review-card { width: calc((100vw - 24px) / 2); flex-basis: calc((100vw - 24px) / 2); }
+  .has-many .client-review-card { width: calc((min(100vw, 1200px) - 96px) / 2); flex-basis: calc((min(100vw, 1200px) - 96px) / 2); }
 }
 @media (max-width: 640px) {
   .client-reviews-section { padding: 56px 0; }
   .client-reviews-group { gap: 16px; }
   .has-many .client-reviews-group { padding-right: 16px; }
-  .has-many .client-review-card { width: 100vw; flex-basis: 100vw; }
+  .has-many .client-review-card { width: calc(100vw - 72px); flex-basis: calc(100vw - 72px); }
   .client-review-card { padding: 22px; }
 }
 @media (any-pointer: coarse) {

@@ -4,10 +4,14 @@
   "badge": ["Websites · Advertising · Marketplaces", "Сайти · Реклама · Маркетплейси", "Site-uri · Publicitate · Marketplace-uri"],
   "title": ["Helping your business start selling online", "Допомагаємо вашому бізнесу почати продавати онлайн", "Ajutăm afacerea ta să înceapă să vândă online"],
   "description": ["A website, an advertising campaign or a marketplace store. Together, we choose the right first step for your goals and budget.", "Сайт, рекламна кампанія або магазин на маркетплейсі. Разом оберемо перший крок під вашу задачу та бюджет.", "Un site, o campanie publicitară sau un magazin pe marketplace. Alegem împreună primul pas potrivit obiectivelor și bugetului tău."],
+  "heroPanelTitle": ["A good start is a clear plan", "Хороший старт — це зрозумілий план", "Un început bun pornește de la un plan clar"],
+  "heroPanelDescription": ["Choose what your business needs right now. Agree the scope before work begins.", "Оберіть те, що потрібно бізнесу зараз. Узгодимо обсяг до початку робіт.", "Alege ce are nevoie afacerea acum. Stabilim volumul înainte de începerea lucrărilor."],
+  "heroPanelItems": [["01", "A clear website", "Зрозумілий сайт", "Un site clar"], ["02", "A considered ad campaign", "Продумана реклама", "O campanie bine gândită"], ["03", "An organised marketplace", "Впорядкований маркетплейс", "Un marketplace organizat"]],
   "discuss": ["Discuss your project", "Обговорити проєкт", "Discutăm proiectul"],
   "explore": ["Explore services", "Обрати послугу", "Vezi serviciile"],
   "trust": [["Start with one service", "Почніть з однієї послуги", "Începe cu un singur serviciu"], ["Agree the scope first", "Спочатку узгодимо обсяг", "Stabilim întâi ce facem"], ["Direct communication", "Пряме спілкування", "Comunicare directă"]],
   "servicesTitle": ["Where shall we start?", "З чого почнемо?", "De unde începem?"],
+  "servicesTag": ["01 / WHAT WE CAN DO", "01 / ЧИМ ДОПОМОЖЕМО", "01 / CU CE TE AJUTĂM"],
   "servicesDescription": ["Choose one direction. We can add the next stage when your business needs it.", "Оберіть один напрям. Наступний етап підключимо, коли він буде потрібен бізнесу.", "Alege o direcție. Adăugăm următoarea etapă când afacerea are nevoie de ea."],
   "services": [
     {"id": "landing", "name": ["Website development", "Розробка сайту", "Dezvoltare site"], "description": ["Present your offer clearly and make it easy to contact you.", "Зрозуміло презентуємо вашу пропозицію та спростимо звернення клієнтів.", "Prezentăm clar oferta și simplificăm contactul cu clienții."], "items": [["Structure, copy and responsive development", "Структура, тексти й адаптивна розробка", "Structură, texte și dezvoltare adaptivă"], ["Inquiry form and agreed analytics", "Форма заявки та узгоджена аналітика", "Formular și analitică agreată"], ["Handover and instructions", "Передача сайту та інструкції", "Predare și instrucțiuni"]]},
@@ -17,12 +21,14 @@
     {"id": "tiktok-ads", "name": ["TikTok Ads", "TikTok Ads", "TikTok Ads"], "description": ["Discuss video campaigns for your product. We check market and account eligibility before proposing a launch.", "Обговоримо відеорекламу продукту. Перед пропозицією запуску перевіримо доступність для ринку й акаунта.", "Discutăm campanii video pentru produsul tău. Verificăm eligibilitatea pieței și contului înainte de propunerea lansării."], "items": [["Video concept and creative requirements", "Ідея відео та вимоги до креативів", "Concept video și cerințe creative"], ["Existing videos, production or UGC by agreement", "Ваші відео, створення або UGC за домовленістю", "Videouri proprii, producție sau UGC prin acord"], ["Campaign setup and measurement", "Налаштування та вимірювання кампаній", "Configurarea și măsurarea campaniilor"]]}
   ],
   "approachTitle": ["A clear start, one step at a time", "Зрозумілий старт, крок за кроком", "Un început clar, pas cu pas"],
+  "approachTag": ["02 / HOW WE WORK", "02 / ЯК ПРАЦЮЄМО", "02 / CUM LUCRĂM"],
   "principles": [
     [["Your goal comes first", "Починаємо з вашої задачі", "Începem cu obiectivul tău"], ["We learn what you sell, who your customers are and what is ready. Then we propose a manageable first stage.", "З’ясовуємо, що ви продаєте, хто ваші клієнти та що вже готово. Пропонуємо посильний перший етап.", "Aflăm ce vinzi, cine sunt clienții și ce este pregătit. Propunem o primă etapă realistă."]],
     [["Agree before we begin", "Домовляємося до початку", "Stabilim detaliile înainte"], ["Scope, deliverables, cost and responsibilities are agreed before work starts.", "Обсяг, результат, вартість і відповідальність сторін узгоджуємо до початку робіт.", "Agreăm lucrările, rezultatul, costul și responsabilitățile înainte de începere."]],
     [["Understand what happens next", "Розуміємо наступний крок", "Știi ce urmează"], ["We explain what is done, what we can measure and what we suggest next.", "Пояснюємо, що зроблено, що вдалося виміряти та що пропонуємо далі.", "Explicăm ce am făcut, ce putem măsura și ce propunem în continuare."]]
   ],
   "processTitle": ["From your idea to launch", "Від ідеї до запуску", "De la idee la lansare"],
+  "processTag": ["03 / THE PROCESS", "03 / ЕТАПИ РОБОТИ", "03 / ETAPELE LUCRĂRII"],
   "steps": [
     [["Introduction", "Знайомство", "Cunoaștere"], ["Tell us about your business. We can help you choose a service.", "Розкажіть про бізнес. Допоможемо обрати послугу.", "Povestește-ne despre afacere. Te ajutăm să alegi serviciul."]],
     [["Plan & estimate", "План та оцінка", "Plan și estimare"], ["A short brief helps us agree the work, budget and timeline.", "Короткий бриф допоможе узгодити роботи, бюджет і строки.", "Un brief scurt ne ajută să stabilim lucrările, bugetul și termenul."]],
@@ -30,8 +36,10 @@
     [["Handover or support", "Передача або супровід", "Predare sau administrare"], ["Receive the result and instructions. Ongoing support is agreed separately.", "Передаємо результат та інструкції. Подальшу підтримку узгоджуємо окремо.", "Primești rezultatul și instrucțiunile. Suportul ulterior se stabilește separat."]]
   ],
   "pricingTitle": ["Priced around your project", "Вартість під вашу задачу", "Costul depinde de proiect"],
+  "pricingTag": ["04 / COST & SCOPE", "04 / ВАРТІСТЬ І ОБСЯГ", "04 / COST ȘI VOLUM"],
   "pricing": ["After the brief, we separate one-off work, ongoing support and external costs. Advertising budgets, platform fees, hosting and paid tools are separate unless agreed otherwise. Timelines depend on scope, materials, access and platform review.", "Після брифу окремо оцінимо разові роботи, супровід і зовнішні витрати. Рекламний бюджет, комісії платформ, хостинг і платні сервіси оплачуються окремо, якщо не погоджено інше. Строки залежать від обсягу, матеріалів, доступів і модерації.", "După brief estimăm separat lucrările inițiale, administrarea și costurile externe. Bugetul publicitar, taxele platformelor, găzduirea și instrumentele plătite sunt separate, dacă nu agreăm altfel. Termenele depind de lucrări, materiale, acces și moderare."],
   "faqTitle": ["Before we start", "Перед початком", "Înainte să începem"],
+  "faqTag": ["05 / QUESTIONS", "05 / ЗАПИТАННЯ", "05 / ÎNTREBĂRI"],
   "faq": [
     [["Can I start with just an idea?", "Можна звернутися лише з ідеєю?", "Pot începe doar cu o idee?"], ["Yes. Describe what you want to offer. We will discuss what to prepare first.", "Так. Розкажіть, що хочете запропонувати. Обговоримо, що підготувати насамперед.", "Da. Spune-ne ce dorești să oferi. Discutăm ce trebuie pregătit mai întâi."]],
     [["Do I need a website?", "Чи обов’язково мати сайт?", "Am nevoie de un site?"], ["Not for every project. A social page, messages or a marketplace store may suit your goal. We will discuss the options.", "Не для кожної задачі. Можуть підійти соцмережі, повідомлення або маркетплейс. Обговоримо варіанти.", "Nu pentru orice proiect. O pagină socială, mesaje sau un marketplace pot fi potrivite. Discutăm opțiunile."]],
