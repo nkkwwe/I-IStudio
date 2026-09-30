@@ -1,8 +1,7 @@
-export default function StartupSelect({ children, ...props }) {
-  return <span className="startup-select-wrap">
-    <select {...props}>{children}</select>
-    <svg className="startup-select-chevron" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="m4 6 4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  </span>;
+import { Children } from 'react';
+import ThemedSelect from './ThemedSelect';
+
+export default function StartupSelect({ children, id, value, onChange, ariaLabel, ...props }) {
+  const options = Children.toArray(children).map((option) => ({ value: String(option.props.value ?? ''), label: option.props.children }));
+  return <ThemedSelect id={id} value={value} onChange={onChange} ariaLabel={ariaLabel} options={options} {...props} />;
 }

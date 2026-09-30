@@ -52,10 +52,6 @@
 .startup-faq-answer p { padding-bottom: 20px; color: var(--text-secondary); line-height: 1.6; }
 .startup-faq-trigger:focus-visible, .startup-lead a:focus-visible, .startup-lead button:focus-visible, .startup-brief button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
 .startup-lead .form-group { margin: 0; min-width: 0; }
-.startup-select-wrap { position: relative; display: block; }
-.startup-lead .startup-select-wrap select, .startup-brief .startup-select-wrap select { width: 100%; min-height: 48px; padding: 12px 44px 12px 16px; appearance: none; border: 1px solid var(--border); border-radius: var(--radius-inner); background: var(--bg-subtle); color: var(--text-primary); font: inherit; cursor: pointer; }
-.startup-select-chevron { position: absolute; top: 50%; right: 16px; width: 16px; height: 16px; color: var(--text-secondary); pointer-events: none; transform: translateY(-50%); }
-.startup-lead select:focus-visible, .startup-brief select:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
 .startup-lead input:not([type='checkbox']), .startup-lead textarea { width: 100%; padding: 12px; font-size: 16px; }
 .startup-lead .ads-consent, .startup-brief .ads-consent { min-height: 44px; align-items: flex-start; line-height: 1.5; }
 .startup-contact-card { margin-top: 32px; padding: 24px; border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--bg-surface); box-shadow: var(--shadow-subtle); }
@@ -76,7 +72,6 @@
 .startup-brief dd { margin: 0 0 12px; color: var(--text-secondary); white-space: pre-wrap; overflow-wrap: anywhere; }
 .startup-brief-note { color: var(--text-muted); font-size: .875rem; line-height: 1.6; margin-block: 16px; }
 @media (hover: hover) and (pointer: fine) {
-  .startup-lead select:not(:disabled):hover, .startup-brief select:not(:disabled):hover { border-color: var(--border-strong); }
   .startup-principle-card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-card); }
 }
 @media (max-width: 1024px) {
@@ -103,7 +98,7 @@
   .startup-service-card:nth-last-child(2), .startup-service-card:last-child { grid-column: auto; }
   .startup-service-card .btn { width: 100%; white-space: normal; }
   .startup-pricing-card { padding: 24px; }
-  .startup-brief input, .startup-brief select, .startup-brief textarea { font-size: 16px; }
+  .startup-brief input, .startup-brief textarea { font-size: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .startup-faq-answer { transition: none; }
