@@ -333,7 +333,7 @@ class AuthController extends Controller
             'email_verified_at' => now(),
         ])->save();
 
-        Auth::login($user, true);
+        Auth::login($user);
         $request->session()->regenerate();
 
         $response = redirect()->intended($this->localizedRoute($request, 'account.localized'));
