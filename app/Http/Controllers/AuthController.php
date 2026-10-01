@@ -271,7 +271,7 @@ class AuthController extends Controller
         return Socialite::driver('google')->redirect();
     }
 
-    public function googleCallback(Request $request): \Symfony\Component\HttpFoundation\Response
+    public function googleCallback(Request $request): RedirectResponse
     {
         try {
             $googleUser = Socialite::driver('google')->user();
@@ -326,9 +326,7 @@ class AuthController extends Controller
         Auth::login($user, true);
         $request->session()->regenerate();
 
-        $destination = redirect()->intended($this->localizedRoute($request, 'account.localized'))->getTargetUrl();
-        $encodedDestination = htmlspecialchars($destination, ENT_QUOTES, 'UTF-8');
-        return response('<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="refresh" content="0;url='.$encodedDestination.'"><title>Signing in</title></head><body><a href="'.$encodedDestination.'">Continue to your workspace</a></body></html>')->header('Cache-Control', 'no-store');
+        return redirect()->intended($this->localizedRoute($request, 'account.localized'));
     }
 
     private function siteLanguage(Request $request): string

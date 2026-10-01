@@ -1,4 +1,8 @@
 /* Account workspace: keep the private header focused on account controls. */
+.account-site-header .header-actions {
+  gap: 8px;
+}
+
 .account-site-header .account-logout {
   border-color: var(--border);
   background: var(--bg-surface);
