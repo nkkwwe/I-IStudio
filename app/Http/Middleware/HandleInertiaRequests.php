@@ -32,11 +32,7 @@ class HandleInertiaRequests extends Middleware
         app()->setLocale($siteLanguage);
         $request->session()->put('site_language', $siteLanguage);
 
-        $response = parent::handle($request, $next);
-        if ($request->routeIs('auth.google.callback')) {
-            \Illuminate\Support\Facades\Log::info('Google callback response', ['status' => $response->getStatusCode(), 'path' => parse_url((string) $response->headers->get('Location', ''), PHP_URL_PATH)]);
-        }
-        return $response;
+        return parent::handle($request, $next);
     }
 
     /**

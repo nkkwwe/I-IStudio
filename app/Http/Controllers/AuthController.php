@@ -10,7 +10,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -274,13 +273,6 @@ class AuthController extends Controller
 
     public function googleCallback(Request $request): RedirectResponse
     {
-        Log::info('Google callback received', [
-            'has_session_state' => $request->session()->has('state'),
-            'state_matches' => is_string($request->session()->get('state')) && hash_equals($request->session()->get('state'), (string) $request->query('state', '')),
-            'authenticated' => Auth::check(),
-            'inertia' => $request->header('X-Inertia'),
-            'intended_path' => parse_url((string) $request->session()->get('url.intended', ''), PHP_URL_PATH),
-        ]);
         try {
             $googleUser = Socialite::driver('google')->user();
         } catch (Throwable $exception) {
@@ -290,8 +282,6 @@ class AuthController extends Controller
                 'google' => 'Не вдалося завершити вхід через Google. Спробуйте ще раз.',
             ]);
         }
-
-        Log::info('Google profile received');
 
         $email = mb_strtolower(trim((string) $googleUser->getEmail()));
         $googleId = trim((string) $googleUser->getId());
@@ -333,13 +323,10 @@ class AuthController extends Controller
             'email_verified_at' => now(),
         ])->save();
 
-        Auth::login($user);
+        Auth::login($user, true);
         $request->session()->regenerate();
 
-        $response = redirect()->intended($this->localizedRoute($request, 'account.localized'));
-        Log::info('Google login completed', ['destination_path' => parse_url($response->getTargetUrl(), PHP_URL_PATH), 'destination_host' => parse_url($response->getTargetUrl(), PHP_URL_HOST), 'destination_scheme' => parse_url($response->getTargetUrl(), PHP_URL_SCHEME), 'authenticated' => Auth::check()]);
-
-        return $response;
+        return redirect()->intended($this->localizedRoute($request, 'account.localized'));
     }
 
     private function siteLanguage(Request $request): string
