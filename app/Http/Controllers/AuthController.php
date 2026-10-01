@@ -278,6 +278,7 @@ class AuthController extends Controller
             'has_session_state' => $request->session()->has('state'),
             'state_matches' => is_string($request->session()->get('state')) && hash_equals($request->session()->get('state'), (string) $request->query('state', '')),
             'authenticated' => Auth::check(),
+            'inertia' => $request->header('X-Inertia'),
             'intended_path' => parse_url((string) $request->session()->get('url.intended', ''), PHP_URL_PATH),
         ]);
         try {
@@ -336,7 +337,7 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         $response = redirect()->intended($this->localizedRoute($request, 'account.localized'));
-        Log::info('Google login completed', ['destination_path' => parse_url($response->getTargetUrl(), PHP_URL_PATH), 'authenticated' => Auth::check()]);
+        Log::info('Google login completed', ['destination_path' => parse_url($response->getTargetUrl(), PHP_URL_PATH), 'destination_host' => parse_url($response->getTargetUrl(), PHP_URL_HOST), 'destination_scheme' => parse_url($response->getTargetUrl(), PHP_URL_SCHEME), 'authenticated' => Auth::check()]);
 
         return $response;
     }
