@@ -268,12 +268,11 @@ class AuthController extends Controller
             ]);
         }
 
-        return Socialite::driver('google')->with(['prompt' => 'consent'])->redirect();
+        return Socialite::driver('google')->redirect();
     }
 
     public function googleCallback(Request $request): RedirectResponse
     {
-        \Illuminate\Support\Facades\Log::info('Google callback request context', ['prefetch' => $request->prefetch(), 'purpose' => $request->header('Purpose'), 'sec_purpose' => $request->header('Sec-Purpose'), 'fetch_mode' => $request->header('Sec-Fetch-Mode'), 'fetch_dest' => $request->header('Sec-Fetch-Dest')]);
         try {
             $googleUser = Socialite::driver('google')->user();
         } catch (Throwable $exception) {
