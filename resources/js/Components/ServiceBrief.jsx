@@ -88,7 +88,7 @@ export default function ServiceBrief({ service, language, submitted, ticket }) {
     {submitted && <p role="status">{t(landing.success)} <strong>{ticket}</strong></p>}
     <h1>{serviceLabel(service, language)}</h1>
     <p className="startup-brief-note">{t(landing.budgetNote)}</p>
-    <p className="startup-brief-note">{t(landing.draft)} <button type="button" className="btn btn-secondary btn-sm" onClick={clear}>{t(landing.clear)}</button></p>
+    <div className="startup-brief-draft"><p className="startup-brief-note">{t(landing.draft)}</p><button type="button" className="btn btn-secondary btn-sm" onClick={clear}>{t(landing.clear)}</button></div>
     <p>{t(landing.step)} {step + 1} / {stepCount + 1}</p><progress max={stepCount + 1} value={step + 1} aria-label={t(landing.step)} />
     <h2 ref={title} tabIndex={-1}>{t(review ? landing.review : schema.steps[step].title)}</h2>
     {review ? <><dl>{getStartupBriefRows(answers, language).map((row) => <div key={row.label}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}</dl><label className="ads-consent"><input type="checkbox" required checked={form.data.consent} onChange={(e) => form.setData('consent', e.target.checked)} />{t(landing.consent)}</label></> : schema.steps[step].fields.map(renderField)}

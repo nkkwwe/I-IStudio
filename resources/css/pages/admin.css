@@ -482,3 +482,18 @@ button.admin-user-row:focus-visible, .admin-user-brief-link:focus-visible {
   outline-offset: 3px;
 }
 
+
+/* Shared opening motion for every ThemedSelect menu. */
+.admin-status-menu {
+  transform-origin: top;
+  animation: themed-select-in 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  overscroll-behavior: contain;
+}
+.admin-status-menu[data-placement="top"] { transform-origin: bottom; }
+@keyframes themed-select-in {
+  from { opacity: 0; transform: scaleY(0.96); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .admin-status-menu { animation: none; }
+}
