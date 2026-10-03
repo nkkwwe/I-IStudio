@@ -643,6 +643,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 
 .inquiry-chat-composer-row {
   display: flex;
+  min-width: 0;
   align-items: flex-end;
   gap: 10px;
 }
@@ -1014,11 +1015,6 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
     min-height: 0;
     max-height: none;
     padding: 14px;
-  }
-
-  .inquiry-chat-attach,
-  .inquiry-chat-send {
-    justify-content: center;
   }
 
   .inquiry-chat-composer {

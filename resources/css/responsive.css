@@ -241,15 +241,6 @@
     grid-template-columns: 1fr;
   }
 
-  .inquiry-chat-composer-row {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .inquiry-chat-attach,
-  .inquiry-chat-send {
-    justify-content: center;
-  }
 }
 
 @media (max-width: 480px) {
