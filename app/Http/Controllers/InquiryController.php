@@ -126,7 +126,7 @@ class InquiryController extends Controller
             'calculator_summary' => ['nullable', 'string', 'max:10000'],
             'brief_data' => [Rule::requiredIf(! $isInitial && ($isStructured || $request->input('service_type') === 'meta-ads')), 'nullable', 'json', 'max:40000'],
             'lead_context' => ['nullable', 'json', 'max:10000'],
-            'ads_consent' => [Rule::requiredIf($requiresContact), 'accepted'],
+            'ads_consent' => $requiresContact ? ['required', 'accepted'] : ['sometimes', 'accepted'],
         ], [
             'client_name.required' => 'Please enter your name.',
             'project_comment.required' => 'Please describe your project or task.',
