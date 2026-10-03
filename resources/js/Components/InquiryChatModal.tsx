@@ -77,6 +77,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
   const attachmentInputRef = useRef<HTMLInputElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
+  const composerRef = useRef<HTMLFormElement>(null);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const followBottomRef = useRef(true);
   const initialScrollRef = useRef(true);
@@ -97,6 +98,20 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   }, []);
 
   useLayoutEffect(resizeMessageInput, [form.data.body, resizeMessageInput]);
+
+  useLayoutEffect(() => {
+    const composer = composerRef.current;
+    const list = messagesRef.current;
+    if (!composer || !list) return;
+    const updateInset = () => {
+      list.style.setProperty('--chat-composer-height', `${composer.offsetHeight}px`);
+      if (followBottomRef.current) list.scrollTop = list.scrollHeight;
+    };
+    updateInset();
+    const observer = new ResizeObserver(updateInset);
+    observer.observe(composer);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const input = messageInputRef.current;
@@ -347,7 +362,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
           )}
         </div>
 
-        <form className="inquiry-chat-composer" onSubmit={submitMessage}>
+        <form ref={composerRef} className="inquiry-chat-composer" onSubmit={submitMessage}>
           <div className="inquiry-chat-attachment-list">
           {selectedImages.map((selectedImage, index) => previewUrls[index] && (
             <div className="inquiry-chat-attachment-preview" key={`${selectedImage.name}-${index}`}>
