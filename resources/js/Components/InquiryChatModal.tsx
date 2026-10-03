@@ -21,6 +21,7 @@ type InquiryChatModalProps = {
   title: string;
   endpoint: string;
   currentRole: 'admin' | 'user';
+  clientName?: string;
   onClose: () => void;
   onRead?: () => void;
 };
@@ -64,7 +65,7 @@ function formatDay(value: string | null | undefined, copy: ReturnType<typeof get
   }).format(date);
 }
 
-export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, currentRole, onClose, onRead }: InquiryChatModalProps) {
+export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, currentRole, clientName, onClose, onRead }: InquiryChatModalProps) {
   const copy = getUiCopy(useSiteLanguage());
   const activity = useInquiryChatActivity(endpoint);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -231,7 +232,10 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
       <section className="inquiry-chat-modal" role="dialog" aria-modal="true" aria-labelledby={`inquiry-chat-title-${inquiryId}`}>
         <header className="inquiry-chat-header">
           <div>
-            <span className="inquiry-chat-ticket">{ticket}</span>
+            <div className="inquiry-chat-ticket-row">
+              <span className="inquiry-chat-ticket">{ticket}</span>
+              {currentRole === 'admin' && clientName && <strong className="inquiry-chat-client-name">{clientName}</strong>}
+            </div>
             <div className="inquiry-chat-heading-row">
               <h2 id={`inquiry-chat-title-${inquiryId}`}>{copy.chat.title}</h2>
               <span className={`inquiry-chat-presence${activity.peer_present ? ' is-present' : ''}`}>
@@ -269,9 +273,6 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               return (
                 <div className={`inquiry-chat-message${isOwn ? ' is-own' : ''}`} key={message.id}>
                   <div className={`inquiry-chat-bubble${(message.attachments?.length ?? 0) > 1 ? ' has-album' : ''}`}>
-                    <div className="inquiry-chat-message-meta">
-                      <strong>{message.sender_role === 'admin' ? copy.chat.studio : message.sender_name}</strong>
-                    </div>
                     <div className={`inquiry-chat-photos${(message.attachments?.length ?? 0) > 1 ? ' is-album' : ''}`}>
                     {(message.attachments ?? (message.attachment_url ? [{ url: message.attachment_url, name: message.attachment_name || copy.chat.imageAlt }] : [])).map((photo) => (
                       <button

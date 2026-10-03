@@ -312,6 +312,24 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   letter-spacing: 0.08em;
 }
 
+.inquiry-chat-ticket-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+}
+
+.inquiry-chat-client-name {
+  padding: 4px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--bg-panel);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
 .inquiry-chat-header h2 {
   margin: 8px 0 3px;
   color: var(--text-primary);
@@ -467,7 +485,9 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   align-items: center;
   justify-content: flex-end;
   gap: 5px;
-  margin-top: 4px;
+  grid-column: 2;
+  align-self: end;
+  margin-bottom: 3px;
   color: var(--text-muted);
   font-size: 0.7rem;
   line-height: 1;
@@ -478,6 +498,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 .inquiry-chat-receipt.is-read { color: var(--text-primary); }
 .inquiry-chat-message.is-own .inquiry-chat-receipt.is-read { color: inherit; }
 .inquiry-chat-photos:empty { display: none; }
+.inquiry-chat-photos { grid-column: 1 / -1; }
 .inquiry-chat-photos.is-album { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; }
 .inquiry-chat-bubble.has-album { width: min(82%, 450px); }
 .inquiry-chat-photos.is-album .inquiry-chat-image-link { width: 100%; margin: 0; }
@@ -504,8 +525,13 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 }
 
 .inquiry-chat-bubble {
-  max-width: min(82%, 450px);
-  padding: 10px 14px 11px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 5px 12px;
+  min-width: min(140px, 82%);
+  max-width: min(82%, 560px);
+  padding: 9px 12px;
   border: 1px solid var(--border-strong);
   border-radius: 17px 17px 17px 5px;
   background: var(--bg-panel);
@@ -521,30 +547,8 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   box-shadow: 0 1px 3px rgba(45, 116, 185, 0.2);
 }
 
-.inquiry-chat-message-meta {
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-bottom: 4px;
-  color: var(--text-muted);
-  font-size: 0.68rem;
-}
-
-.inquiry-chat-message-meta strong {
-  color: var(--text-primary);
-  font-weight: 700;
-}
-
-.inquiry-chat-message.is-own .inquiry-chat-message-meta {
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.inquiry-chat-message.is-own .inquiry-chat-message-meta strong {
-  color: #ffffff;
-}
-
 .inquiry-chat-bubble p {
+  min-width: 0;
   color: inherit;
   font-size: 0.9375rem;
   line-height: 1.5;

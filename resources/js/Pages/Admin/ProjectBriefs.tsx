@@ -149,6 +149,7 @@ export default function ProjectBriefs() {
             <InquiryChatModal
               inquiryId={activeChatInquiry.id}
               ticket={activeChatInquiry.ticket}
+              clientName={activeChatInquiry.name}
               title={copy.services[activeChatInquiry.service_type] ?? activeChatInquiry.service_type}
               endpoint={`/admin/project-briefs/${activeChatInquiry.id}/messages`}
               currentRole="admin"
