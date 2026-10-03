@@ -75,6 +75,9 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [attachmentError, setAttachmentError] = useState('');
   const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
+  const [dateVisible, setDateVisible] = useState(false);
+  const dateHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastScrollTopRef = useRef(0);
   const attachmentInputRef = useRef<HTMLInputElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
   const composerRef = useRef<HTMLFormElement>(null);
@@ -85,6 +88,12 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const onReadRef = useRef(onRead);
   const imagePreviewRef = useRef<ImagePreview | null>(null);
   const form = useForm<{ body: string; attachments: File[] }>({ body: '', attachments: [] });
+  const scrollToBottom = useCallback(() => {
+    const list = messagesRef.current;
+    if (!list) return;
+    list.scrollTop = list.scrollHeight;
+    lastScrollTopRef.current = list.scrollTop;
+  }, []);
   const resizeMessageInput = useCallback(() => {
     const input = messageInputRef.current;
     if (!input) return;
@@ -105,12 +114,16 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     if (!composer || !list) return;
     const updateInset = () => {
       list.style.setProperty('--chat-composer-height', `${composer.offsetHeight}px`);
-      if (followBottomRef.current) list.scrollTop = list.scrollHeight;
+      if (followBottomRef.current) scrollToBottom();
     };
     updateInset();
     const observer = new ResizeObserver(updateInset);
     observer.observe(composer);
     return () => observer.disconnect();
+  }, [scrollToBottom]);
+
+  useEffect(() => () => {
+    if (dateHideTimerRef.current !== null) clearTimeout(dateHideTimerRef.current);
   }, []);
 
   useEffect(() => {
@@ -208,12 +221,13 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     };
   }, [loadMessages]);
 
+  const lastMessageId = messages.at(-1)?.id;
   useEffect(() => {
     if (!loading && messagesRef.current && (initialScrollRef.current || followBottomRef.current)) {
-      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+      scrollToBottom();
       initialScrollRef.current = false;
     }
-  }, [messages, loading, activity.peer_typing]);
+  }, [lastMessageId, loading, scrollToBottom]);
 
   const sendMessage = () => {
     if ((!form.data.body.trim() && !form.data.attachments.length) || form.processing) return;
@@ -301,9 +315,14 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
           </button>
         </header>
 
-        <div className="inquiry-chat-messages" ref={messagesRef} aria-live="polite" onScroll={(event) => {
+        <div className={`inquiry-chat-messages${dateVisible ? ' is-scrolling' : ''}`} ref={messagesRef} aria-live="polite" onScroll={(event) => {
           const list = event.currentTarget;
-          followBottomRef.current = list.scrollHeight - list.scrollTop - list.clientHeight < 80;
+          if (Math.abs(list.scrollTop - lastScrollTopRef.current) < 1) return;
+          lastScrollTopRef.current = list.scrollTop;
+          followBottomRef.current = list.scrollHeight - list.scrollTop - list.clientHeight <= 2;
+          setDateVisible(true);
+          if (dateHideTimerRef.current !== null) clearTimeout(dateHideTimerRef.current);
+          dateHideTimerRef.current = setTimeout(() => setDateVisible(false), 10000);
         }}>
           {loading ? (
             <p className="inquiry-chat-state">{copy.chat.loading}</p>
@@ -333,7 +352,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
                         aria-label={photo.name || copy.chat.imageAlt}
                       >
                         <img src={photo.url} alt={photo.name || copy.chat.imageAlt} onLoad={() => {
-                          if (followBottomRef.current && messagesRef.current) messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+                          if (followBottomRef.current) scrollToBottom();
                         }} />
                       </button>
                     ))}

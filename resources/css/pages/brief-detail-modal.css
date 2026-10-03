@@ -464,6 +464,8 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 }
 
 .inquiry-chat-date {
+  opacity: 0;
+  transition: opacity 240ms ease;
   position: sticky;
   z-index: 1;
   top: 0;
@@ -471,6 +473,16 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   justify-content: center;
   padding-bottom: 4px;
   pointer-events: none;
+}
+
+.inquiry-chat-messages.is-scrolling .inquiry-chat-date {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inquiry-chat-date {
+    transition: none;
+  }
 }
 
 .inquiry-chat-date span {
