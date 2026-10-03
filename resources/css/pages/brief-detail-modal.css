@@ -225,6 +225,15 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   border-top: 1px solid var(--border-light);
 }
 
+.inquiry-detail-cancel-btn {
+  margin-right: auto;
+}
+
+.inquiry-detail-cancel-btn,
+.inquiry-cancel-confirm-btn {
+  color: var(--status-danger-text);
+}
+
 .inquiry-detail-chat-btn {
   display: inline-flex;
   min-height: 42px;

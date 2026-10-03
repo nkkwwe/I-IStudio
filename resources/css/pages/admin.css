@@ -100,6 +100,29 @@ button.admin-user-row:focus-visible, .admin-user-brief-link:focus-visible {
   gap: 12px;
 }
 
+.inquiry-card-updates {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.inquiry-unread-notice {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.admin-status.admin-status-cancelled {
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  color: var(--text-secondary);
+}
+
 .admin-inquiry-card {
   min-height: 0;
   padding: 24px;

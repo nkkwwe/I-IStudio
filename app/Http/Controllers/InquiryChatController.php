@@ -12,6 +12,20 @@ use Illuminate\Validation\ValidationException;
 
 class InquiryChatController extends Controller
 {
+    public function unreadCountsForAdmin(): JsonResponse
+    {
+        $counts = ProjectInquiry::query()->withCount([
+            'messages as unread_count' => fn ($query) => $query
+                ->where('sender_role', 'user')->whereNull('read_at'),
+        ])->get(['id', 'status'])->map(fn ($inquiry) => [
+            'id' => $inquiry->id,
+            'status' => $inquiry->status,
+            'unread_count' => (int) $inquiry->unread_count,
+        ]);
+
+        return response()->json(['unread_count' => $counts->sum('unread_count'), 'inquiries' => $counts]);
+    }
+
     public function indexForUser(Request $request, ProjectInquiry $inquiry): JsonResponse
     {
         $this->ensureOwnInquiry($request, $inquiry);

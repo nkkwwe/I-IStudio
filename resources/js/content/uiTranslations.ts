@@ -113,6 +113,7 @@ type AccountCopy = {
 };
 
 type ChatCopy = {
+  newMessages: string;
   title: string;
   openChat: string;
   studio: string;
@@ -153,6 +154,15 @@ type ReviewCopy = {
 };
 
 type UiCopy = {
+  cancellation: {
+    action: string;
+    title: string;
+    description: string;
+    confirm: string;
+    processing: string;
+    error: string;
+    notice: string;
+  };
   common: CommonCopy;
   auth: AuthCopy;
   admin: AdminCopy;
@@ -164,6 +174,13 @@ type UiCopy = {
 
 export const uiTranslations: Record<SiteLanguage, UiCopy> = {
   en: {
+    cancellation: {
+      action: 'Cancel brief', title: 'Cancel this brief?',
+      description: 'The studio will see the brief as cancelled. The brief and its conversation will be permanently deleted 14 days after cancellation.',
+      confirm: 'Cancel brief', processing: 'Cancelling…',
+      error: 'Unable to cancel this brief. It may already be completed. Refresh the page and try again.',
+      notice: 'This brief is cancelled and will be permanently deleted 14 days after cancellation.',
+    },
     common: {
       nav: { solutions: 'Solutions', services: 'Services', cases: 'Cases', process: 'How We Work', about: 'About', contact: 'Contact' },
       discussProject: 'Discuss Project',
@@ -226,6 +243,7 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
         ready_to_start: 'Ready to start',
         in_progress: 'In progress',
         completed: 'Completed',
+        cancelled: 'Cancelled',
       },
     },
     account: {
@@ -269,6 +287,7 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     },
     chat: {
       title: 'Project chat',
+      newMessages: 'New messages',
       openChat: 'Open chat',
       studio: 'I&I Studio',
       empty: 'No messages yet. Start the conversation.',
@@ -318,6 +337,13 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     },
   },
   uk: {
+    cancellation: {
+      action: 'Скасувати бриф', title: 'Скасувати цей бриф?',
+      description: 'Студія побачить статус «Скасовано». Бриф і листування буде остаточно видалено через 14 днів після скасування.',
+      confirm: 'Скасувати бриф', processing: 'Скасування…',
+      error: 'Не вдалося скасувати бриф. Можливо, його вже завершено. Оновіть сторінку та спробуйте ще раз.',
+      notice: 'Цей бриф скасовано. Його буде остаточно видалено через 14 днів після скасування.',
+    },
     common: {
       nav: { solutions: 'Рішення', services: 'Послуги', cases: 'Кейси', process: 'Як ми працюємо', about: 'Про нас', contact: 'Контакти' },
       discussProject: 'Обговорити проєкт',
@@ -380,6 +406,7 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
         ready_to_start: 'Готово до старту',
         in_progress: 'У роботі',
         completed: 'Завершено',
+        cancelled: 'Скасовано',
       },
     },
     account: {
@@ -423,6 +450,7 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     },
     chat: {
       title: 'Чат проєкту',
+      newMessages: 'Нові повідомлення',
       openChat: 'Відкрити чат',
       studio: 'I&I Studio',
       empty: 'Повідомлень ще немає. Почніть розмову.',
@@ -472,6 +500,13 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     },
   },
   ro: {
+    cancellation: {
+      action: 'Anulează brief-ul', title: 'Anulezi acest brief?',
+      description: 'Studioul va vedea statusul „Anulat”. Brief-ul și conversația vor fi șterse definitiv la 14 zile după anulare.',
+      confirm: 'Anulează brief-ul', processing: 'Se anulează…',
+      error: 'Brief-ul nu a putut fi anulat. Este posibil să fie deja finalizat. Reîncarcă pagina și încearcă din nou.',
+      notice: 'Acest brief este anulat și va fi șters definitiv la 14 zile după anulare.',
+    },
     common: {
       nav: { solutions: 'Soluții', services: 'Servicii', cases: 'Studii de caz', process: 'Cum lucrăm', about: 'Despre noi', contact: 'Contact' },
       discussProject: 'Discută proiectul',
@@ -534,6 +569,7 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
         ready_to_start: 'Gata de începere',
         in_progress: 'În lucru',
         completed: 'Finalizat',
+        cancelled: 'Anulat',
       },
     },
     account: {
@@ -577,6 +613,7 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     },
     chat: {
       title: 'Chatul proiectului',
+      newMessages: 'Mesaje noi',
       openChat: 'Deschide chatul',
       studio: 'I&I Studio',
       empty: 'Nu există mesaje. Începe conversația.',

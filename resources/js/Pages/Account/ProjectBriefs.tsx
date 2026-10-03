@@ -2,7 +2,9 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
 import { getUiCopy, useSiteLanguage } from '../../content/uiTranslations';
 import { localizedUrl } from '../../content/siteLanguage';
-import ChatUnreadBadge, { fetchChatUnreadCounts } from '../../Components/ChatUnreadBadge';
+import InquiryUnreadNotice from '../../Components/InquiryUnreadNotice';
+import InquiryCancelModal from '../../Components/InquiryCancelModal';
+import useInquiryUnreadPolling from '../../lib/useInquiryUnreadPolling';
 import InquiryChatModal from '../../Components/InquiryChatModal';
 import InquiryDetailModal from '../../Components/InquiryDetailModal';
 import InquiryReviewModal from '../../Components/InquiryReviewModal';
@@ -23,8 +25,10 @@ export default function AccountProjectBriefs() {
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
   const [activeReviewInquiry, setActiveReviewInquiry] = useState<Inquiry | null>(null);
+  const [cancelInquiry, setCancelInquiry] = useState<Inquiry | null>(null);
   const [isDark, setIsDark] = useState(false);
-  const isInquiryModalOpen = Boolean(selectedInquiry || activeChatInquiry || activeReviewInquiry);
+  const isInquiryModalOpen = Boolean(selectedInquiry || activeChatInquiry || activeReviewInquiry || cancelInquiry);
+  useInquiryUnreadPolling(setInquiries, '/account/project-briefs/unread-counts');
 
   useEffect(() => {
     const id = Number(new URL(page.url, window.location.origin).searchParams.get('brief'));
@@ -57,40 +61,6 @@ export default function AccountProjectBriefs() {
   useEffect(() => {
     setInquiries(initialInquiries);
   }, [initialInquiries]);
-
-  useEffect(() => {
-    let cancelled = false;
-
-    const refreshUnreadCounts = async () => {
-      if (document.visibilityState === 'hidden') return;
-
-      try {
-        const payload = await fetchChatUnreadCounts();
-        if (cancelled) return;
-
-        const unreadByInquiry = new Map(
-          (payload.inquiries ?? []).map((inquiry) => [inquiry.id, inquiry.unread_count]),
-        );
-
-        setInquiries((current) => current.map((inquiry) => ({
-          ...inquiry,
-          unread_count: unreadByInquiry.get(inquiry.id) ?? 0,
-        })));
-      } catch {
-        // Keep the server-rendered counts during a temporary network failure.
-      }
-    };
-
-    const handleFocus = () => void refreshUnreadCounts();
-    const timer = window.setInterval(() => void refreshUnreadCounts(), 15000);
-    window.addEventListener('focus', handleFocus);
-
-    return () => {
-      cancelled = true;
-      window.clearInterval(timer);
-      window.removeEventListener('focus', handleFocus);
-    };
-  }, []);
 
   const markInquiryRead = (inquiryId: number) => {
     setInquiries((current) => current.map((inquiry) => (
@@ -191,10 +161,8 @@ export default function AccountProjectBriefs() {
                             </span>
                           ))}
                         </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          {Boolean(inquiry.unread_count && inquiry.unread_count > 0) && (
-                            <ChatUnreadBadge count={inquiry.unread_count ?? 0} />
-                          )}
+                        <div className="inquiry-card-updates">
+                          <InquiryUnreadNotice count={inquiry.unread_count} />
                           <span className="admin-inquiry-date">{formatDate(inquiry.created_at, language)}</span>
                         </div>
                       </div>
@@ -203,7 +171,7 @@ export default function AccountProjectBriefs() {
                 })}
               </div>
             )}
-            {isInquiryModalOpen && (
+            {Boolean(selectedInquiry || activeChatInquiry || activeReviewInquiry) && (
               <div
                 className="inquiry-modal-backdrop"
                 role="presentation"
@@ -217,9 +185,13 @@ export default function AccountProjectBriefs() {
               >
                 {selectedInquiry && (
                   <InquiryDetailModal
-                    inquiry={selectedInquiry}
+                    inquiry={inquiries.find((inquiry) => inquiry.id === selectedInquiry.id) ?? selectedInquiry}
                     currentRole="user"
                     onClose={() => setSelectedInquiry(null)}
+                    onCancel={() => {
+                      setCancelInquiry(selectedInquiry);
+                      setSelectedInquiry(null);
+                    }}
                     onOpenChat={() => {
                       const inq = selectedInquiry;
                       setSelectedInquiry(null);
@@ -258,6 +230,11 @@ export default function AccountProjectBriefs() {
               </div>
             )}
           </section>
+          {cancelInquiry && (
+            <InquiryCancelModal inquiry={cancelInquiry}
+              onClose={() => { setSelectedInquiry(cancelInquiry); setCancelInquiry(null); }}
+              onCancelled={() => { setCancelInquiry(null); setSelectedInquiry(null); }} />
+          )}
         </div>
       </main>
     </>

@@ -94,6 +94,23 @@ class InquiryChatUnreadTest extends TestCase
         $this->assertNull($fromAdmin->fresh()->read_at);
     }
 
+    public function test_admin_gets_only_incoming_unread_counts_and_endpoint_is_protected(): void
+    {
+        $user = User::factory()->create();
+        $admin = User::factory()->create(['email' => 'admin@example.com']);
+        $inquiry = $this->createInquiry($user);
+        $this->createMessage($inquiry, $user, 'user');
+        $this->createMessage($inquiry, $admin, 'admin');
+
+        $this->actingAs($user)->getJson(route('admin.project-briefs.unread-counts'))->assertForbidden();
+        $this->actingAs($admin)->get('/admin/project-briefs')->assertInertia(fn (Assert $page) => $page
+            ->where('inquiries.0.unread_count', 1));
+        $this->getJson(route('admin.project-briefs.unread-counts'))->assertOk()
+            ->assertJsonPath('unread_count', 1)->assertJsonPath('inquiries.0.unread_count', 1);
+        $this->getJson(route('admin.project-briefs.messages', $inquiry))->assertOk();
+        $this->getJson(route('admin.project-briefs.unread-counts'))->assertJsonPath('unread_count', 0);
+    }
+
     public function test_polling_does_not_compute_shared_page_unread_count(): void
     {
         $user = User::factory()->create();

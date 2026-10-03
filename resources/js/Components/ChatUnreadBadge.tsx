@@ -5,6 +5,7 @@ export type ChatUnreadCountsPayload = {
   inquiries?: Array<{
     id: number;
     unread_count: number;
+    status?: string;
   }>;
 };
 
@@ -14,8 +15,8 @@ function normalizeCount(value: unknown): number {
   return Number.isFinite(count) && count > 0 ? Math.floor(count) : 0;
 }
 
-export async function fetchChatUnreadCounts(): Promise<ChatUnreadCountsPayload> {
-  const response = await fetch('/account/project-briefs/unread-counts', {
+export async function fetchChatUnreadCounts(endpoint = '/account/project-briefs/unread-counts'): Promise<ChatUnreadCountsPayload> {
+  const response = await fetch(endpoint, {
     cache: 'no-store',
     credentials: 'same-origin',
     headers: {
@@ -36,6 +37,7 @@ export async function fetchChatUnreadCounts(): Promise<ChatUnreadCountsPayload> 
       ? payload.inquiries.map((inquiry) => ({
           id: Number(inquiry.id),
           unread_count: normalizeCount(inquiry.unread_count),
+          status: typeof inquiry.status === 'string' ? inquiry.status : undefined,
         }))
       : [],
   };

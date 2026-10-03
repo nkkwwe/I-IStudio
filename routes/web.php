@@ -74,6 +74,7 @@ Route::prefix('{locale}')
 // These endpoints are application APIs and remain unprefixed.
 Route::middleware('auth')->group(function (): void {
     Route::get('/account/project-briefs/unread-counts', [InquiryController::class, 'unreadCounts'])->name('account.project-briefs.unread-counts');
+    Route::patch('/account/project-briefs/{inquiry}/cancel', [InquiryController::class, 'cancel'])->name('account.project-briefs.cancel');
     Route::get('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'indexForUser'])->name('account.project-briefs.messages');
     Route::post('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'storeForUser'])->name('account.project-briefs.messages.store');
     Route::put('/account/project-briefs/{inquiry}/review', [ProjectInquiryReviewController::class, 'save'])->name('account.project-briefs.review.save');
@@ -85,6 +86,7 @@ Route::middleware('auth')->group(function (): void {
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function (): void {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/project-briefs', [AdminController::class, 'projectBriefs'])->name('admin.project-briefs');
+    Route::get('/project-briefs/unread-counts', [InquiryChatController::class, 'unreadCountsForAdmin'])->name('admin.project-briefs.unread-counts');
     Route::patch('/project-briefs/{inquiry}/status', [AdminController::class, 'updateInquiryStatus'])->name('admin.project-briefs.status');
     Route::get('/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'indexForAdmin'])->name('admin.project-briefs.messages');
     Route::post('/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'storeForAdmin'])->name('admin.project-briefs.messages.store');

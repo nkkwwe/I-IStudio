@@ -7,6 +7,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -95,9 +97,10 @@ class InquiryController extends Controller
                     ->where('sender_role', 'admin')
                     ->whereNull('read_at'),
             ])
-            ->get(['id'])
+            ->get(['id', 'status'])
             ->map(fn (ProjectInquiry $inquiry): array => [
                 'id' => $inquiry->id,
+                'status' => $inquiry->status,
                 'unread_count' => (int) $inquiry->unread_count,
             ])
             ->values();
@@ -106,6 +109,23 @@ class InquiryController extends Controller
             'unread_count' => $counts->sum('unread_count'),
             'inquiries' => $counts,
         ]);
+    }
+
+    public function cancel(Request $request, ProjectInquiry $inquiry): RedirectResponse
+    {
+        abort_unless((int) $inquiry->user_id === (int) $request->user()->id, 403);
+
+        DB::transaction(function () use ($inquiry): void {
+            $locked = ProjectInquiry::query()->lockForUpdate()->findOrFail($inquiry->id);
+            if ($locked->status === 'completed') {
+                throw ValidationException::withMessages(['status' => 'Completed briefs cannot be cancelled.']);
+            }
+            if ($locked->status !== 'cancelled') {
+                $locked->forceFill(['status' => 'cancelled', 'cancelled_at' => now()])->save();
+            }
+        });
+
+        return back();
     }
 
     public function store(Request $request): RedirectResponse

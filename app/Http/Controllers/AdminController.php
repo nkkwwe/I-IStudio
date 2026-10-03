@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class AdminController extends Controller
 {
@@ -53,7 +55,13 @@ class AdminController extends Controller
             'status' => ['required', 'string', 'in:new,ready_to_start,in_progress,completed'],
         ]);
 
-        $inquiry->forceFill(['status' => $data['status']])->save();
+        DB::transaction(function () use ($inquiry, $data): void {
+            $locked = ProjectInquiry::query()->lockForUpdate()->findOrFail($inquiry->id);
+            if ($locked->status === 'cancelled') {
+                throw ValidationException::withMessages(['status' => 'Cancelled briefs cannot be reopened.']);
+            }
+            $locked->forceFill(['status' => $data['status']])->save();
+        });
 
         return back();
     }
@@ -81,6 +89,8 @@ class AdminController extends Controller
             ->when($userId !== null, fn ($query) => $query->where('user_id', $userId))
             ->with('user:id,name,email')
             ->with('review.attachments')
+            ->withCount(['messages as unread_count' => fn ($query) => $query
+                ->where('sender_role', 'user')->whereNull('read_at')])
             ->latest('created_at')
             ->get()
             ->map(fn (ProjectInquiry $inquiry): array => [
@@ -96,6 +106,7 @@ class AdminController extends Controller
                 'lead_context' => $inquiry->lead_context,
                 'site_audit' => $inquiry->site_audit,
                 'status' => $inquiry->status,
+                'unread_count' => (int) $inquiry->unread_count,
                 'created_at' => $inquiry->created_at?->toISOString(),
                 'user' => $inquiry->user ? [
                     'id' => $inquiry->user->id,

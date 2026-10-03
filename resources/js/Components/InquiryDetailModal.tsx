@@ -30,6 +30,7 @@ type InquiryDetailModalProps = {
   onOpenChat: () => void;
   statusSlot?: ReactNode;
   onOpenReview?: () => void;
+  onCancel?: () => void;
 };
 
 export default function InquiryDetailModal({
@@ -39,6 +40,7 @@ export default function InquiryDetailModal({
   onOpenChat,
   statusSlot,
   onOpenReview,
+  onCancel,
 }: InquiryDetailModalProps) {
   const language = useSiteLanguage();
   const copy = getUiCopy(language);
@@ -182,7 +184,13 @@ export default function InquiryDetailModal({
           </div>
         )}
 
+        {inquiry.status === 'cancelled' && <p className="account-modal-copy">{copy.cancellation.notice}</p>}
         <div className="inquiry-detail-footer">
+          {currentRole === 'user' && !['completed', 'cancelled'].includes(inquiry.status) && onCancel && (
+            <button type="button" className="account-modal-button account-modal-button-danger inquiry-detail-cancel-btn" onClick={onCancel}>
+              {copy.cancellation.action}
+            </button>
+          )}
           {currentRole === 'user' && inquiry.status === 'completed' && onOpenReview && (
             <button type="button" className="inquiry-detail-review-btn" onClick={onOpenReview}>
               <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">

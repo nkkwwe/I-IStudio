@@ -8,6 +8,8 @@ import { formatDate, formatBudget, type Inquiry } from '../../lib/inquiries';
 import AdminStatusSelect from './AdminStatusSelect';
 import BriefFilters, { useBriefFilters } from './BriefFilters';
 import { getAdminCopy } from './adminCopy';
+import InquiryUnreadNotice from '../../Components/InquiryUnreadNotice';
+import useInquiryUnreadPolling from '../../lib/useInquiryUnreadPolling';
 
 type PageProps = {
   inquiries: Inquiry[];
@@ -15,10 +17,14 @@ type PageProps = {
 
 export default function ProjectBriefs() {
   const page = usePage<PageProps>();
-  const { inquiries } = page.props;
+  const { inquiries: initialInquiries } = page.props;
+  const [inquiries, setInquiries] = useState(initialInquiries);
+  useInquiryUnreadPolling(setInquiries, '/admin/project-briefs/unread-counts');
+  useEffect(() => { setInquiries(initialInquiries); }, [initialInquiries]);
   const filterState = useBriefFilters(inquiries);
   const [updatingInquiryId, setUpdatingInquiryId] = useState<number | null>(null);
   const [selectedInquiry, setSelectedInquiry] = useState<Inquiry | null>(null);
+  const currentInquiry = selectedInquiry ? inquiries.find((inquiry) => inquiry.id === selectedInquiry.id) ?? selectedInquiry : null;
   const [activeChatInquiry, setActiveChatInquiry] = useState<Inquiry | null>(null);
   const isInquiryModalOpen = Boolean(selectedInquiry || activeChatInquiry);
   const language = useSiteLanguage();
@@ -43,6 +49,7 @@ export default function ProjectBriefs() {
     setUpdatingInquiryId(inquiry.id);
     router.patch(`/admin/project-briefs/${inquiry.id}/status`, { status }, {
       preserveScroll: true,
+      onSuccess: () => setSelectedInquiry((current) => current?.id === inquiry.id ? { ...current, status } : current),
       onFinish: () => setUpdatingInquiryId(null),
     });
   };
@@ -87,7 +94,10 @@ export default function ProjectBriefs() {
               </div>
               <div className="admin-inquiry-meta">
                 <span><strong>{inquiry.name}</strong> · {inquiry.email}</span>
-                <span>{formatDate(inquiry.created_at, language)}</span>
+                <div className="inquiry-card-updates">
+                  <InquiryUnreadNotice count={inquiry.unread_count} />
+                  <span>{formatDate(inquiry.created_at, language)}</span>
+                </div>
               </div>
               {(inquiry.contact || inquiry.budget) && (
                 <div className="admin-inquiry-details">
@@ -110,30 +120,29 @@ export default function ProjectBriefs() {
             }
           }}
         >
-          {selectedInquiry && (
+          {currentInquiry && (
             <InquiryDetailModal
-              inquiry={selectedInquiry}
+              inquiry={currentInquiry}
               currentRole="admin"
               onClose={() => setSelectedInquiry(null)}
               onOpenChat={() => {
-                const inq = selectedInquiry;
+                const inq = currentInquiry;
                 setSelectedInquiry(null);
                 setActiveChatInquiry(inq);
               }}
-              statusSlot={
+              statusSlot={currentInquiry.status !== 'cancelled' && (
                 <div onClick={(e) => e.stopPropagation()}>
                   <AdminStatusSelect
-                    value={selectedInquiry.status}
-                    options={Object.entries(copy.admin.statuses).map(([value, label]) => ({ value, label }))}
+                    value={currentInquiry.status}
+                    options={Object.entries(copy.admin.statuses).filter(([value]) => value !== 'cancelled').map(([value, label]) => ({ value, label }))}
                     onChange={(status) => {
-                      updateStatus(selectedInquiry, status);
-                      setSelectedInquiry((prev) => prev ? { ...prev, status } : null);
+                      updateStatus(currentInquiry, status);
                     }}
-                    disabled={updatingInquiryId === selectedInquiry.id}
-                    ariaLabel={`${copy.admin.projectBriefs}: ${selectedInquiry.ticket}`}
+                    disabled={updatingInquiryId === currentInquiry.id}
+                    ariaLabel={`${copy.admin.projectBriefs}: ${currentInquiry.ticket}`}
                   />
                 </div>
-              }
+              )}
             />
           )}
           {activeChatInquiry && (
@@ -143,6 +152,7 @@ export default function ProjectBriefs() {
               title={copy.services[activeChatInquiry.service_type] ?? activeChatInquiry.service_type}
               endpoint={`/admin/project-briefs/${activeChatInquiry.id}/messages`}
               currentRole="admin"
+              onRead={() => setInquiries((current) => current.map((inquiry) => inquiry.id === activeChatInquiry.id ? { ...inquiry, unread_count: 0 } : inquiry))}
               onClose={() => setActiveChatInquiry(null)}
             />
           )}

@@ -50,6 +50,34 @@ export default function InquiryMarkup({
   const [extras, setExtras] = useState({});
 
   useEffect(() => {
+    const overlay = document.getElementById('feedbackOverlay');
+    if (!overlay) return undefined;
+    let restoreScroll = null;
+    const syncScrollLock = () => {
+      if (overlay.classList.contains('active') && !restoreScroll) {
+        const bodyOverflow = document.body.style.overflow;
+        const rootOverflow = document.documentElement.style.overflow;
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+        restoreScroll = () => {
+          document.body.style.overflow = bodyOverflow;
+          document.documentElement.style.overflow = rootOverflow;
+          restoreScroll = null;
+        };
+      } else if (!overlay.classList.contains('active')) {
+        restoreScroll?.();
+      }
+    };
+    const observer = new MutationObserver(syncScrollLock);
+    observer.observe(overlay, { attributes: true, attributeFilter: ['class'] });
+    syncScrollLock();
+    return () => {
+      observer.disconnect();
+      restoreScroll?.();
+    };
+  }, []);
+
+  useEffect(() => {
     // Keep the selected direction visible inside the horizontal mobile selector.
     const tabs = document.getElementById('serviceTabs');
     const activeTab = tabs?.querySelector('.active');
