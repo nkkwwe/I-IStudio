@@ -136,7 +136,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
 
   useEffect(() => {
     if (messagesRef.current) messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
-  }, [messages, loading]);
+  }, [messages, loading, activity.peer_typing]);
 
   const sendMessage = () => {
     if ((!form.data.body.trim() && !form.data.attachment) || form.processing) return;
@@ -200,9 +200,16 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
         <header className="inquiry-chat-header">
           <div>
             <span className="inquiry-chat-ticket">{ticket}</span>
-            <h2 id={`inquiry-chat-title-${inquiryId}`}>{copy.chat.title}</h2>
+            <div className="inquiry-chat-heading-row">
+              <h2 id={`inquiry-chat-title-${inquiryId}`}>{copy.chat.title}</h2>
+              <span className={`inquiry-chat-presence${activity.peer_present ? ' is-present' : ''}`}>
+                <i aria-hidden="true" />
+                {currentRole === 'user'
+                  ? (activity.peer_present ? copy.chat.adminInChat : copy.chat.adminAway)
+                  : (activity.peer_present ? copy.chat.clientInChat : copy.chat.clientAway)}
+              </span>
+            </div>
             <p>{title}</p>
-            {activity.peer_present && <span className="inquiry-chat-presence"><i aria-hidden="true" />{currentRole === 'user' ? copy.chat.adminInChat : copy.chat.clientInChat}</span>}
           </div>
           <button type="button" className="inquiry-chat-close" onClick={onClose} aria-label={copy.chat.close}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -248,15 +255,15 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               );
             })
           )}
-        </div>
-
-        <form className="inquiry-chat-composer" onSubmit={submitMessage}>
           {activity.peer_typing && (
             <div className="inquiry-chat-typing" role="status">
               <span className="inquiry-chat-typing-dots" aria-hidden="true"><i /><i /><i /></span>
               <span>{currentRole === 'user' ? copy.chat.adminTyping : copy.chat.clientTyping}</span>
             </div>
           )}
+        </div>
+
+        <form className="inquiry-chat-composer" onSubmit={submitMessage}>
           {selectedImage && previewUrl && (
             <div className="inquiry-chat-attachment-preview">
               <img src={previewUrl} alt={selectedImage.name} />

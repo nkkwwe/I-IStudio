@@ -115,6 +115,8 @@ type AccountCopy = {
 type ChatCopy = {
   adminInChat: string;
   clientInChat: string;
+  adminAway: string;
+  clientAway: string;
   adminTyping: string;
   clientTyping: string;
   newMessages: string;
@@ -294,6 +296,8 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       newMessages: 'New messages',
       adminInChat: 'Administrator in chat',
       clientInChat: 'Client in chat',
+      adminAway: 'Administrator not in chat',
+      clientAway: 'Client not in chat',
       adminTyping: 'Administrator is typing',
       clientTyping: 'Client is typing',
       openChat: 'Open chat',
@@ -461,6 +465,8 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       newMessages: 'Нові повідомлення',
       adminInChat: 'Адміністратор у чаті',
       clientInChat: 'Клієнт у чаті',
+      adminAway: 'Адміністратор не в чаті',
+      clientAway: 'Клієнт не в чаті',
       adminTyping: 'Адміністратор друкує',
       clientTyping: 'Клієнт друкує',
       openChat: 'Відкрити чат',
@@ -628,6 +634,8 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       newMessages: 'Mesaje noi',
       adminInChat: 'Administratorul este în chat',
       clientInChat: 'Clientul este în chat',
+      adminAway: 'Administratorul nu este în chat',
+      clientAway: 'Clientul nu este în chat',
       adminTyping: 'Administratorul scrie',
       clientTyping: 'Clientul scrie',
       openChat: 'Deschide chatul',

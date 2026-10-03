@@ -319,6 +319,13 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   letter-spacing: -0.04em;
 }
 
+.inquiry-chat-heading-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+}
+
 .inquiry-chat-header p {
   color: var(--text-secondary);
   font-size: 0.8rem;
@@ -343,29 +350,43 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: 8px;
   padding: 4px 9px;
   border: 1px solid var(--border);
   border-radius: var(--radius-pill);
   background: var(--bg-surface);
-  color: var(--text-secondary);
+  color: var(--text-muted);
   font-size: 0.72rem;
+  white-space: nowrap;
 }
 
 .inquiry-chat-presence i {
   width: 6px;
   height: 6px;
   border-radius: 50%;
+  background: var(--text-muted);
+}
+
+.inquiry-chat-presence.is-present {
+  color: var(--text-secondary);
+}
+
+.inquiry-chat-presence.is-present i {
   background: var(--accent-emerald);
 }
 
 .inquiry-chat-typing {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 8px;
-  color: var(--text-muted);
+  align-self: flex-start;
+  max-width: min(82%, 450px);
+  padding: 9px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 17px 17px 17px 5px;
+  background: var(--bg-panel);
+  color: var(--text-secondary);
   font-size: 0.75rem;
+  box-shadow: var(--shadow-subtle);
 }
 
 .inquiry-chat-typing-dots { display: inline-flex; gap: 3px; }
@@ -403,7 +424,12 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   gap: 10px;
   overflow-y: auto;
   padding: 20px;
-  background: var(--bg-body);
+  background-color: var(--bg-body);
+  background-image:
+    radial-gradient(circle at 15% 20%, color-mix(in srgb, var(--accent-blue) 5%, transparent), transparent 38%),
+    radial-gradient(circle at 85% 80%, color-mix(in srgb, var(--accent-emerald) 4%, transparent), transparent 40%),
+    radial-gradient(circle, color-mix(in srgb, var(--border) 45%, transparent) 0.8px, transparent 1px);
+  background-size: auto, auto, 24px 24px;
 }
 
 .inquiry-chat-state {
