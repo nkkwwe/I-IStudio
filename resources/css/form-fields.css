@@ -5,7 +5,7 @@
 
 :is(
   input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),
-  textarea
+  textarea:where(:not(.inquiry-chat-input))
 ) {
   border: 1px solid var(--border);
   border-radius: var(--radius-inner);
@@ -18,7 +18,7 @@
 
 :is(
   input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),
-  textarea
+  textarea:where(:not(.inquiry-chat-input))
 ):focus {
   outline: none;
   border-color: var(--border-strong);

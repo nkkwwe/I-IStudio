@@ -388,6 +388,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               </svg>
             </label>
             <textarea
+              className="inquiry-chat-input"
               ref={messageInputRef}
               value={form.data.body}
               onChange={(event) => { form.setData('body', event.target.value); activity.updateTyping(event.target.value); }}

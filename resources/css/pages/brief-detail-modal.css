@@ -287,7 +287,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   overflow: hidden;
   border: 1px solid var(--border-strong);
   border-radius: 24px;
-  background: var(--bg-surface);
+  background: var(--bg-body);
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34);
   animation: account-modal-in 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -631,35 +631,24 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 }
 
 .inquiry-chat-composer {
-  --chat-input-bg: var(--bg-subtle);
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-  gap: 9px;
-  padding: 14px 16px 16px;
-  flex-shrink: 0;
-  background: transparent;
+  display: contents;
 }
 
 .inquiry-chat-composer-row {
   display: flex;
+  flex-shrink: 0;
+  margin: 14px 16px 16px;
   min-width: 0;
   align-items: flex-end;
   gap: 4px;
   padding: 6px;
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
-  background: var(--chat-input-bg);
-}
-
-.inquiry-chat-composer-row:has(textarea:focus) {
-  border-color: var(--border-strong);
-  box-shadow: var(--form-field-focus-ring);
+  background: var(--bg-subtle);
 }
 
 .inquiry-chat-composer-row:has(textarea:focus-visible) {
-  outline: 2px solid var(--text-primary);
-  outline-offset: 3px;
+  box-shadow: inset 0 -2px var(--text-muted);
 }
 
 .inquiry-chat-attach {
@@ -751,6 +740,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   gap: 6px;
   max-height: 160px;
   overflow-y: auto;
+  margin: 9px 16px 0;
 }
 .inquiry-chat-attachment-list:empty { display: none; }
 .inquiry-chat-attach:has(input:disabled) { cursor: not-allowed; opacity: 0.45; }
@@ -804,6 +794,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 }
 
 .inquiry-chat-form-error {
+  margin: 0 16px 12px;
   align-self: flex-start;
   color: #b44c4c;
   font-size: 0.68rem;
@@ -1030,8 +1021,8 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
     padding: 14px;
   }
 
-  .inquiry-chat-composer {
-    padding: 12px max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  .inquiry-chat-composer-row {
+    margin: 12px max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   }
 
   .inquiry-chat-lightbox {
