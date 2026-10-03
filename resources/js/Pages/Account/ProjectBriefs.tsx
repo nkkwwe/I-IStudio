@@ -171,12 +171,12 @@ export default function AccountProjectBriefs() {
                 })}
               </div>
             )}
-            {Boolean(selectedInquiry || activeChatInquiry || activeReviewInquiry) && (
+            {isInquiryModalOpen && (
               <div
                 className="inquiry-modal-backdrop"
                 role="presentation"
                 onMouseDown={(event) => {
-                  if (event.target === event.currentTarget) {
+                  if (event.target === event.currentTarget && !cancelInquiry) {
                     setSelectedInquiry(null);
                     setActiveChatInquiry(null);
                     setActiveReviewInquiry(null);
@@ -227,14 +227,14 @@ export default function AccountProjectBriefs() {
                     }}
                   />
                 )}
+                {cancelInquiry && (
+                  <InquiryCancelModal inquiry={cancelInquiry}
+                    onClose={() => { setSelectedInquiry(cancelInquiry); setCancelInquiry(null); }}
+                    onCancelled={() => { setCancelInquiry(null); setSelectedInquiry(null); }} />
+                )}
               </div>
             )}
           </section>
-          {cancelInquiry && (
-            <InquiryCancelModal inquiry={cancelInquiry}
-              onClose={() => { setSelectedInquiry(cancelInquiry); setCancelInquiry(null); }}
-              onCancelled={() => { setCancelInquiry(null); setSelectedInquiry(null); }} />
-          )}
         </div>
       </main>
     </>

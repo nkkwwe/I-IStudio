@@ -7,18 +7,18 @@ type AccountModalProps = {
   children: React.ReactNode;
   danger?: boolean;
   compact?: boolean;
+  embedded?: boolean;
   onClose: () => void;
 };
 
-export default function AccountModal({ eyebrow, title, closeLabel, children, danger = false, compact = false, onClose }: AccountModalProps) {
+export default function AccountModal({ eyebrow, title, closeLabel, children, danger = false, compact = false, embedded = false, onClose }: AccountModalProps) {
   const handleBackdropMouseDown = (event: MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
     }
   };
 
-  return (
-    <div className={`account-modal-backdrop${compact ? ' is-compact' : ''}`} onMouseDown={handleBackdropMouseDown}>
+  const dialog = (
       <section className={`account-modal${danger ? ' account-modal-danger' : ''}`} role="dialog" aria-modal="true" aria-labelledby="account-modal-title">
         <div className="account-modal-heading">
           <div>
@@ -33,6 +33,13 @@ export default function AccountModal({ eyebrow, title, closeLabel, children, dan
         </div>
         <div className="account-modal-body">{children}</div>
       </section>
+  );
+
+  if (embedded) return dialog;
+
+  return (
+    <div className={`account-modal-backdrop${compact ? ' is-compact' : ''}`} onMouseDown={handleBackdropMouseDown}>
+      {dialog}
     </div>
   );
 }

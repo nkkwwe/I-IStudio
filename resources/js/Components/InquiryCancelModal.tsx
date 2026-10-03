@@ -35,7 +35,7 @@ export default function InquiryCancelModal({ inquiry, onClose, onCancelled }: {
   }, []);
 
   return (
-    <AccountModal eyebrow={inquiry.ticket} title={copy.cancellation.title} danger closeLabel={copy.common.closeDialog}
+    <AccountModal eyebrow={inquiry.ticket} title={copy.cancellation.title} danger embedded closeLabel={copy.common.closeDialog}
       onClose={() => { if (!form.processing) onClose(); }}>
       <p className="account-modal-copy">{copy.cancellation.description}</p>
       {form.errors.status && <p className="account-inline-error" role="alert">{copy.cancellation.error}</p>}
