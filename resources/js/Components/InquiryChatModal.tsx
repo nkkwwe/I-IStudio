@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/react';
-import { useCallback, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { getSiteLanguage, getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import { useInquiryChatActivity } from '../lib/useInquiryChatActivity';
 
@@ -77,12 +77,44 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
   const attachmentInputRef = useRef<HTMLInputElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
+  const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const followBottomRef = useRef(true);
   const initialScrollRef = useRef(true);
   const onCloseRef = useRef(onClose);
   const onReadRef = useRef(onRead);
   const imagePreviewRef = useRef<ImagePreview | null>(null);
   const form = useForm<{ body: string; attachments: File[] }>({ body: '', attachments: [] });
+  const resizeMessageInput = useCallback(() => {
+    const input = messageInputRef.current;
+    if (!input) return;
+    const style = window.getComputedStyle(input);
+    const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+    const border = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
+    const maxHeight = parseFloat(style.lineHeight) * 6 + padding + border;
+    input.style.height = 'auto';
+    input.style.height = `${Math.min(input.scrollHeight + border, maxHeight)}px`;
+    input.style.overflowY = input.scrollHeight + border > maxHeight ? 'auto' : 'hidden';
+  }, []);
+
+  useLayoutEffect(resizeMessageInput, [form.data.body, resizeMessageInput]);
+
+  useEffect(() => {
+    const input = messageInputRef.current;
+    if (!input) return;
+    let width = input.getBoundingClientRect().width;
+    const observer = new ResizeObserver(() => {
+      const nextWidth = input.getBoundingClientRect().width;
+      if (nextWidth === width) return;
+      width = nextWidth;
+      resizeMessageInput();
+    });
+    observer.observe(input);
+    window.addEventListener('resize', resizeMessageInput);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', resizeMessageInput);
+    };
+  }, [resizeMessageInput]);
   const groups: { key: string; date?: string | null; messages: ChatMessage[] }[] = [];
   messages.forEach((message) => {
     const key = dayKey(message.created_at);
@@ -356,6 +388,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               </svg>
             </label>
             <textarea
+              ref={messageInputRef}
               value={form.data.body}
               onChange={(event) => { form.setData('body', event.target.value); activity.updateTyping(event.target.value); }}
               onBlur={activity.stopTyping}
@@ -366,8 +399,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               disabled={form.processing}
               onKeyDown={handleMessageKeyDown}
             />
-            <button type="submit" className="inquiry-chat-send" disabled={form.processing || (!form.data.body.trim() && !form.data.attachments.length)}>
-              <span>{copy.chat.send}</span>
+            <button type="submit" className="inquiry-chat-send" aria-label={copy.chat.send} title={copy.chat.send} disabled={form.processing || (!form.data.body.trim() && !form.data.attachments.length)}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="m22 2-7 20-4-9-9-4Z" />
                 <path d="M22 2 11 13" />

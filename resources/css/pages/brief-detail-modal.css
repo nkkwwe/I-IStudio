@@ -693,7 +693,8 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 
 .inquiry-chat-composer textarea {
   min-height: 42px;
-  max-height: 120px;
+  min-width: 0;
+  overflow-y: hidden;
   flex: 1;
   resize: none;
   padding: 11px 13px;
@@ -716,7 +717,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 .inquiry-chat-composer textarea:focus {
   border-color: var(--accent-black);
   background: var(--chat-input-bg);
-  box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
+  box-shadow: var(--form-field-focus-ring);
 }
 
 .inquiry-chat-attachment-preview {
@@ -797,11 +798,13 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 
 .inquiry-chat-send {
   display: inline-flex;
-  min-height: 42px;
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
   flex: 0 0 auto;
   align-items: center;
-  gap: 8px;
-  padding: 0 14px;
+  justify-content: center;
+  padding: 0;
   border: 1px solid #2d74b9;
   border-radius: var(--radius-pill);
   background: #2d74b9;
@@ -809,6 +812,11 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   cursor: pointer;
   font: 700 0.78rem var(--font-sans);
   transition: opacity 0.2s ease;
+}
+
+.inquiry-chat-send:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1006,11 +1014,6 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
     min-height: 0;
     max-height: none;
     padding: 14px;
-  }
-
-  .inquiry-chat-composer-row {
-    align-items: stretch;
-    flex-direction: column;
   }
 
   .inquiry-chat-attach,
