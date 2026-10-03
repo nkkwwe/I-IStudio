@@ -102,6 +102,8 @@ class InquiryChatController extends Controller
         $data = $request->validate([
             'body' => ['nullable', 'string', 'max:5000'],
             'attachment' => ['nullable', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
+            'attachments' => ['nullable', 'array', 'max:6'],
+            'attachments.*' => ['required', 'image', 'mimes:jpg,jpeg,png,gif,webp', 'max:5120'],
         ], [
             'body.max' => 'The message cannot be longer than 5000 characters.',
             'attachment.image' => 'The attachment must be an image.',
@@ -111,26 +113,41 @@ class InquiryChatController extends Controller
 
         $body = trim((string) ($data['body'] ?? ''));
         $attachment = $request->file('attachment');
+        $files = $request->file('attachments', []);
+        if ($attachment) $files[] = $attachment;
+        if (count($files) > 6) {
+            throw ValidationException::withMessages(['attachments' => 'Attach up to 6 photos per message.']);
+        }
 
-        if ($body === '' && ! $attachment) {
+        if ($body === '' && ! $files) {
             throw ValidationException::withMessages([
                 'body' => 'Write a message or attach an image first.',
             ]);
         }
 
         $user = $request->user();
-        $attachmentPath = $attachment?->store('inquiry-chat/'.$inquiry->id, 'local');
-        $message = ProjectInquiryMessage::query()->create([
-            'project_inquiry_id' => $inquiry->id,
-            'sender_id' => $user->id,
-            'sender_role' => $senderRole,
-            'sender_name' => trim((string) $user->name) ?: $user->email,
-            'body' => $body,
-            'attachment_path' => $attachmentPath,
-            'attachment_name' => $attachment?->getClientOriginalName(),
-            'attachment_mime' => $attachment?->getMimeType(),
-            'attachment_size' => $attachment?->getSize(),
-        ]);
+        $photos = [];
+        try {
+            foreach ($files as $file) {
+                $photos[] = ['path' => $file->store('inquiry-chat/'.$inquiry->id, 'local'),
+                    'name' => $file->getClientOriginalName(), 'mime' => $file->getMimeType(), 'size' => $file->getSize()];
+            }
+            $message = ProjectInquiryMessage::query()->create([
+                'project_inquiry_id' => $inquiry->id,
+                'sender_id' => $user->id,
+                'sender_role' => $senderRole,
+                'sender_name' => trim((string) $user->name) ?: $user->email,
+                'body' => $body,
+                'attachment_path' => $photos[0]['path'] ?? null,
+                'attachment_name' => $photos[0]['name'] ?? null,
+                'attachment_mime' => $photos[0]['mime'] ?? null,
+                'attachment_size' => $photos[0]['size'] ?? null,
+                'attachments' => $photos ?: null,
+            ]);
+        } catch (\Throwable $error) {
+            Storage::disk('local')->delete(array_column($photos, 'path'));
+            throw $error;
+        }
 
         if ($request->header('X-Inertia')) {
             return back();
@@ -146,13 +163,16 @@ class InquiryChatController extends Controller
         $inquiry = $message->inquiry;
         abort_unless($inquiry, 404);
         $this->ensureCanAccess($request, $inquiry);
-        abort_unless($message->attachment_path, 404);
+        $index = filter_var($request->query('index', 0), FILTER_VALIDATE_INT, ['options' => ['min_range' => 0]]);
+        abort_if($index === false, 404);
+        $photo = $this->messagePhotos($message)[$index] ?? null;
+        abort_unless($photo, 404);
 
         $disk = Storage::disk('local');
-        abort_unless($disk->exists($message->attachment_path), 404);
+        abort_unless($disk->exists($photo['path']), 404);
 
-        return response()->file($disk->path($message->attachment_path), [
-            'Content-Type' => $message->attachment_mime ?: 'application/octet-stream',
+        return response()->file($disk->path($photo['path']), [
+            'Content-Type' => $photo['mime'] ?: 'application/octet-stream',
             'X-Content-Type-Options' => 'nosniff',
         ]);
     }
@@ -183,9 +203,11 @@ class InquiryChatController extends Controller
             ->pluck('id');
 
         if ($unreadMessageIds->isNotEmpty()) {
+            $readAt = now();
             ProjectInquiryMessage::query()
                 ->whereIn('id', $unreadMessageIds)
-                ->update(['read_at' => now()]);
+                ->update(['read_at' => $readAt]);
+            foreach ($messages->whereIn('id', $unreadMessageIds) as $message) $message->read_at = $readAt;
         }
 
         return response()->json([
@@ -205,10 +227,23 @@ class InquiryChatController extends Controller
             'sender_name' => $message->sender_name,
             'body' => $message->body,
             'created_at' => $message->created_at?->toISOString(),
+            'read_at' => $message->read_at?->toISOString(),
+            'attachments' => collect($this->messagePhotos($message))->map(fn ($photo, $index) => [
+                'url' => route('project-inquiry-messages.attachment', ['message' => $message->id, 'index' => $index]),
+                'name' => $photo['name'],
+            ])->values()->all(),
             'attachment_url' => $message->attachment_path
                 ? route('project-inquiry-messages.attachment', ['message' => $message->id])
                 : null,
             'attachment_name' => $message->attachment_name,
         ];
+    }
+
+    private function messagePhotos(ProjectInquiryMessage $message): array
+    {
+        return $message->attachments ?: ($message->attachment_path ? [[
+            'path' => $message->attachment_path, 'name' => $message->attachment_name,
+            'mime' => $message->attachment_mime, 'size' => $message->attachment_size,
+        ]] : []);
     }
 }

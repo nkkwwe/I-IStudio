@@ -20,6 +20,7 @@ class ProjectInquiryMessage extends Model
         'attachment_name',
         'attachment_mime',
         'attachment_size',
+        'attachments',
         'read_at',
     ];
 
@@ -27,6 +28,7 @@ class ProjectInquiryMessage extends Model
     {
         return [
             'read_at' => 'datetime',
+            'attachments' => 'array',
         ];
     }
 

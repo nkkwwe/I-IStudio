@@ -113,6 +113,12 @@ type AccountCopy = {
 };
 
 type ChatCopy = {
+  today: string;
+  yesterday: string;
+  dayBeforeYesterday: string;
+  sent: string;
+  read: string;
+  imageLimit: string;
   adminInChat: string;
   clientInChat: string;
   adminAway: string;
@@ -293,6 +299,12 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     },
     chat: {
       title: 'Project chat',
+      today: 'Today',
+      yesterday: 'Yesterday',
+      dayBeforeYesterday: 'The day before yesterday',
+      sent: 'Sent',
+      read: 'Read',
+      imageLimit: 'Attach up to 6 photos per message.',
       newMessages: 'New messages',
       adminInChat: 'Administrator in chat',
       clientInChat: 'Client in chat',
@@ -462,6 +474,12 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     },
     chat: {
       title: 'Чат проєкту',
+      today: 'Сьогодні',
+      yesterday: 'Вчора',
+      dayBeforeYesterday: 'Позавчора',
+      sent: 'Надіслано',
+      read: 'Прочитано',
+      imageLimit: 'Додайте до 6 фото в одному повідомленні.',
       newMessages: 'Нові повідомлення',
       adminInChat: 'Адміністратор у чаті',
       clientInChat: 'Клієнт у чаті',
@@ -631,6 +649,12 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     },
     chat: {
       title: 'Chatul proiectului',
+      today: 'Astăzi',
+      yesterday: 'Ieri',
+      dayBeforeYesterday: 'Alaltăieri',
+      sent: 'Trimis',
+      read: 'Citit',
+      imageLimit: 'Atașați până la 6 fotografii per mesaj.',
       newMessages: 'Mesaje noi',
       adminInChat: 'Administratorul este în chat',
       clientInChat: 'Clientul este în chat',

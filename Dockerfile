@@ -36,6 +36,8 @@ RUN apt-get update \
 
 WORKDIR /var/www/html
 
+COPY docker/php-uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+
 COPY . .
 COPY --from=php-dependencies /app/vendor ./vendor
 COPY --from=frontend /app/public/build ./public/build

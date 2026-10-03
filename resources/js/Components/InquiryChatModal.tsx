@@ -9,6 +9,8 @@ type ChatMessage = {
   sender_name: string;
   body: string;
   created_at?: string | null;
+  read_at?: string | null;
+  attachments?: ImagePreview[];
   attachment_url?: string | null;
   attachment_name?: string | null;
 };
@@ -38,11 +40,28 @@ function formatMessageTime(value?: string | null): string {
   }[getSiteLanguage()];
 
   return new Intl.DateTimeFormat(locale, {
-    day: '2-digit',
-    month: 'short',
     hour: '2-digit',
     minute: '2-digit',
+    hour12: false,
   }).format(new Date(value));
+}
+
+function dayKey(value?: string | null): string {
+  const date = value ? new Date(value) : new Date();
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}
+
+function formatDay(value: string | null | undefined, copy: ReturnType<typeof getUiCopy>['chat']): string {
+  const date = value ? new Date(value) : new Date();
+  const today = new Date();
+  const calendarDay = (d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+  const days = Math.round((calendarDay(today) - calendarDay(date)) / 86400000);
+  if (days === 0) return copy.today;
+  if (days === 1) return copy.yesterday;
+  if (days === 2) return copy.dayBeforeYesterday;
+  return new Intl.DateTimeFormat({ en: 'en-GB', uk: 'uk-UA', ro: 'ro-RO' }[getSiteLanguage()], {
+    day: 'numeric', month: 'long', ...(date.getFullYear() !== today.getFullYear() ? { year: 'numeric' as const } : {}),
+  }).format(date);
 }
 
 export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, currentRole, onClose, onRead }: InquiryChatModalProps) {
@@ -51,16 +70,25 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState('');
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [attachmentError, setAttachmentError] = useState('');
   const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
   const attachmentInputRef = useRef<HTMLInputElement>(null);
   const messagesRef = useRef<HTMLDivElement>(null);
+  const followBottomRef = useRef(true);
+  const initialScrollRef = useRef(true);
   const onCloseRef = useRef(onClose);
   const onReadRef = useRef(onRead);
   const imagePreviewRef = useRef<ImagePreview | null>(null);
-  const form = useForm<{ body: string; attachment: File | null }>({ body: '', attachment: null });
+  const form = useForm<{ body: string; attachments: File[] }>({ body: '', attachments: [] });
+  const groups: { key: string; date?: string | null; messages: ChatMessage[] }[] = [];
+  messages.forEach((message) => {
+    const key = dayKey(message.created_at);
+    const last = groups[groups.length - 1];
+    if (last?.key === key) last.messages.push(message);
+    else groups.push({ key, date: message.created_at, messages: [message] });
+  });
 
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -75,18 +103,13 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   }, [imagePreview]);
 
   useEffect(() => {
-    if (!selectedImage) {
-      setPreviewUrl('');
-      return undefined;
-    }
-
-    const objectUrl = URL.createObjectURL(selectedImage);
-    setPreviewUrl(objectUrl);
-
-    return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedImage]);
+    const urls = selectedImages.map((file) => URL.createObjectURL(file));
+    setPreviewUrls(urls);
+    return () => urls.forEach((url) => URL.revokeObjectURL(url));
+  }, [selectedImages]);
 
   const loadMessages = useCallback(async (showLoader = true) => {
+    if (document.visibilityState !== 'visible') return;
     if (showLoader) setLoading(true);
     setLoadError('');
 
@@ -126,20 +149,26 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     };
 
     document.addEventListener('keydown', handleEscape);
-    const refreshTimer = window.setInterval(() => void loadMessages(false), 5000);
+    const refresh = () => { if (document.visibilityState === 'visible') void loadMessages(false); };
+    document.addEventListener('visibilitychange', refresh);
+    const refreshTimer = window.setInterval(refresh, 5000);
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('visibilitychange', refresh);
       window.clearInterval(refreshTimer);
     };
   }, [loadMessages]);
 
   useEffect(() => {
-    if (messagesRef.current) messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+    if (!loading && messagesRef.current && (initialScrollRef.current || followBottomRef.current)) {
+      messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+      initialScrollRef.current = false;
+    }
   }, [messages, loading, activity.peer_typing]);
 
   const sendMessage = () => {
-    if ((!form.data.body.trim() && !form.data.attachment) || form.processing) return;
+    if ((!form.data.body.trim() && !form.data.attachments.length) || form.processing) return;
     activity.stopTyping();
 
     form.post(endpoint, {
@@ -147,11 +176,12 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
       preserveScroll: true,
       preserveState: true,
       onSuccess: () => {
-        setSelectedImage(null);
+        followBottomRef.current = true;
+        setSelectedImages([]);
         setAttachmentError('');
         if (attachmentInputRef.current) attachmentInputRef.current.value = '';
         form.reset();
-        void loadMessages();
+        void loadMessages(false);
       },
     });
   };
@@ -169,27 +199,29 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   };
 
   const selectImage = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files?.[0] ?? null;
+    const files = Array.from(event.currentTarget.files ?? []);
     setAttachmentError('');
 
-    if (!file) return;
+    event.currentTarget.value = '';
+    if (!files.length) return;
+    if (selectedImages.length + files.length > 6) { setAttachmentError(copy.chat.imageLimit); return; }
 
     const acceptedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    if (!acceptedTypes.includes(file.type) || file.size > 5 * 1024 * 1024) {
-      setSelectedImage(null);
-      form.setData('attachment', null);
+    if (files.some((file) => !acceptedTypes.includes(file.type) || file.size > 5 * 1024 * 1024)) {
       setAttachmentError(copy.chat.imageError);
       event.currentTarget.value = '';
       return;
     }
 
-    setSelectedImage(file);
-    form.setData('attachment', file);
+    const next = [...selectedImages, ...files];
+    setSelectedImages(next);
+    form.setData('attachments', next);
   };
 
-  const removeSelectedImage = () => {
-    setSelectedImage(null);
-    form.setData('attachment', null);
+  const removeSelectedImage = (index: number) => {
+    const next = selectedImages.filter((_, position) => position !== index);
+    setSelectedImages(next);
+    form.setData('attachments', next);
     setAttachmentError('');
     if (attachmentInputRef.current) attachmentInputRef.current.value = '';
   };
@@ -218,7 +250,10 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
           </button>
         </header>
 
-        <div className="inquiry-chat-messages" ref={messagesRef} aria-live="polite">
+        <div className="inquiry-chat-messages" ref={messagesRef} aria-live="polite" onScroll={(event) => {
+          const list = event.currentTarget;
+          followBottomRef.current = list.scrollHeight - list.scrollTop - list.clientHeight < 80;
+        }}>
           {loading ? (
             <p className="inquiry-chat-state">{copy.chat.loading}</p>
           ) : loadError ? (
@@ -226,34 +261,50 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
           ) : messages.length === 0 ? (
             <p className="inquiry-chat-state">{copy.chat.empty}</p>
           ) : (
-            messages.map((message) => {
+            groups.map((group) => <div className="inquiry-chat-day" key={group.key}>
+              <div className="inquiry-chat-date"><span>{formatDay(group.date, copy.chat)}</span></div>
+              {group.messages.map((message) => {
               const isOwn = message.sender_role === currentRole;
 
               return (
                 <div className={`inquiry-chat-message${isOwn ? ' is-own' : ''}`} key={message.id}>
-                  <div className="inquiry-chat-bubble">
+                  <div className={`inquiry-chat-bubble${(message.attachments?.length ?? 0) > 1 ? ' has-album' : ''}`}>
                     <div className="inquiry-chat-message-meta">
                       <strong>{message.sender_role === 'admin' ? copy.chat.studio : message.sender_name}</strong>
-                      <span>{formatMessageTime(message.created_at)}</span>
                     </div>
-                    {message.attachment_url && (
+                    <div className={`inquiry-chat-photos${(message.attachments?.length ?? 0) > 1 ? ' is-album' : ''}`}>
+                    {(message.attachments ?? (message.attachment_url ? [{ url: message.attachment_url, name: message.attachment_name || copy.chat.imageAlt }] : [])).map((photo) => (
                       <button
                         type="button"
                         className="inquiry-chat-image-link"
+                        key={photo.url}
                         onClick={() => setImagePreview({
-                          url: message.attachment_url as string,
-                          name: message.attachment_name || copy.chat.imageAlt,
+                          url: photo.url,
+                          name: photo.name || copy.chat.imageAlt,
                         })}
-                        aria-label={message.attachment_name || copy.chat.imageAlt}
+                        aria-label={photo.name || copy.chat.imageAlt}
                       >
-                        <img src={message.attachment_url} alt={message.attachment_name || copy.chat.imageAlt} />
+                        <img src={photo.url} alt={photo.name || copy.chat.imageAlt} onLoad={() => {
+                          if (followBottomRef.current && messagesRef.current) messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
+                        }} />
                       </button>
-                    )}
+                    ))}
+                    </div>
                     {message.body && <p>{message.body}</p>}
+                    <div className="inquiry-chat-message-footer">
+                      <time dateTime={message.created_at || undefined}>{formatMessageTime(message.created_at)}</time>
+                      {isOwn && <span className={`inquiry-chat-receipt${message.read_at ? ' is-read' : ''}`} aria-label={message.read_at ? copy.chat.read : copy.chat.sent} title={message.read_at ? copy.chat.read : copy.chat.sent}>
+                        <svg width="20" height="14" viewBox="0 0 24 16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d="m2 8 4 4L17 2" />
+                          {message.read_at && <path d="m10 11 2 2L23 3" />}
+                        </svg>
+                      </span>}
+                    </div>
                   </div>
                 </div>
               );
-            })
+            })}
+            </div>)
           )}
           {activity.peer_typing && (
             <div className="inquiry-chat-typing" role="status">
@@ -264,20 +315,22 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
         </div>
 
         <form className="inquiry-chat-composer" onSubmit={submitMessage}>
-          {selectedImage && previewUrl && (
-            <div className="inquiry-chat-attachment-preview">
-              <img src={previewUrl} alt={selectedImage.name} />
+          <div className="inquiry-chat-attachment-list">
+          {selectedImages.map((selectedImage, index) => previewUrls[index] && (
+            <div className="inquiry-chat-attachment-preview" key={`${selectedImage.name}-${index}`}>
+              <img src={previewUrls[index]} alt={selectedImage.name} />
               <div>
                 <strong>{selectedImage.name}</strong>
                 <small>{Math.ceil(selectedImage.size / 1024)} KB</small>
               </div>
-              <button type="button" onClick={removeSelectedImage} aria-label={copy.chat.removeImage}>
+              <button type="button" disabled={form.processing} onClick={() => removeSelectedImage(index)} aria-label={`${copy.chat.removeImage}: ${selectedImage.name}`}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
                   <path d="M6 6l12 12M18 6L6 18" />
                 </svg>
               </button>
             </div>
-          )}
+          ))}
+          </div>
           <div className="inquiry-chat-composer-row">
             <label
               className="inquiry-chat-attach"
@@ -289,6 +342,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
                 ref={attachmentInputRef}
                 id={'inquiry-chat-attachment-' + inquiryId}
                 type="file"
+                multiple
                 accept="image/jpeg,image/png,image/gif,image/webp"
                 onChange={selectImage}
                 disabled={form.processing}
@@ -311,7 +365,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               disabled={form.processing}
               onKeyDown={handleMessageKeyDown}
             />
-            <button type="submit" className="inquiry-chat-send" disabled={form.processing || (!form.data.body.trim() && !form.data.attachment)}>
+            <button type="submit" className="inquiry-chat-send" disabled={form.processing || (!form.data.body.trim() && !form.data.attachments.length)}>
               <span>{copy.chat.send}</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="m22 2-7 20-4-9-9-4Z" />
@@ -319,8 +373,8 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               </svg>
             </button>
           </div>
-          {(attachmentError || form.errors.attachment || form.errors.body) && (
-            <span className="inquiry-chat-form-error">{attachmentError || form.errors.attachment || form.errors.body}</span>
+          {(attachmentError || Object.values(form.errors).length > 0) && (
+            <span className="inquiry-chat-form-error">{attachmentError || Object.values(form.errors)[0]}</span>
           )}
         </form>
       </section>
