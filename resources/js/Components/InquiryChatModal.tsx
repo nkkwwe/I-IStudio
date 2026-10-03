@@ -400,9 +400,8 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               onKeyDown={handleMessageKeyDown}
             />
             <button type="submit" className="inquiry-chat-send" aria-label={copy.chat.send} title={copy.chat.send} disabled={form.processing || (!form.data.body.trim() && !form.data.attachments.length)}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="m22 2-7 20-4-9-9-4Z" />
-                <path d="M22 2 11 13" />
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M12 19V5m-6 6 6-6 6 6" />
               </svg>
             </button>
           </div>
