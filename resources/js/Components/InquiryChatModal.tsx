@@ -1,6 +1,7 @@
 import { useForm } from '@inertiajs/react';
 import { useCallback, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
 import { getSiteLanguage, getUiCopy, useSiteLanguage } from '../content/uiTranslations';
+import { useInquiryChatActivity } from '../lib/useInquiryChatActivity';
 
 type ChatMessage = {
   id: number;
@@ -46,6 +47,7 @@ function formatMessageTime(value?: string | null): string {
 
 export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, currentRole, onClose, onRead }: InquiryChatModalProps) {
   const copy = getUiCopy(useSiteLanguage());
+  const activity = useInquiryChatActivity(endpoint);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState('');
@@ -138,6 +140,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
 
   const sendMessage = () => {
     if ((!form.data.body.trim() && !form.data.attachment) || form.processing) return;
+    activity.stopTyping();
 
     form.post(endpoint, {
       forceFormData: true,
@@ -199,6 +202,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
             <span className="inquiry-chat-ticket">{ticket}</span>
             <h2 id={`inquiry-chat-title-${inquiryId}`}>{copy.chat.title}</h2>
             <p>{title}</p>
+            {activity.peer_present && <span className="inquiry-chat-presence"><i aria-hidden="true" />{currentRole === 'user' ? copy.chat.adminInChat : copy.chat.clientInChat}</span>}
           </div>
           <button type="button" className="inquiry-chat-close" onClick={onClose} aria-label={copy.chat.close}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -247,6 +251,12 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
         </div>
 
         <form className="inquiry-chat-composer" onSubmit={submitMessage}>
+          {activity.peer_typing && (
+            <div className="inquiry-chat-typing" role="status">
+              <span className="inquiry-chat-typing-dots" aria-hidden="true"><i /><i /><i /></span>
+              <span>{currentRole === 'user' ? copy.chat.adminTyping : copy.chat.clientTyping}</span>
+            </div>
+          )}
           {selectedImage && previewUrl && (
             <div className="inquiry-chat-attachment-preview">
               <img src={previewUrl} alt={selectedImage.name} />
@@ -285,7 +295,8 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
             </label>
             <textarea
               value={form.data.body}
-              onChange={(event) => form.setData('body', event.target.value)}
+              onChange={(event) => { form.setData('body', event.target.value); activity.updateTyping(event.target.value); }}
+              onBlur={activity.stopTyping}
               placeholder={copy.chat.placeholder}
               rows={1}
               maxLength={5000}

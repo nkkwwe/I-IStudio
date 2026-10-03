@@ -8,10 +8,53 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class InquiryChatController extends Controller
 {
+    public function activityForUser(Request $request, ProjectInquiry $inquiry): JsonResponse
+    {
+        $this->ensureOwnInquiry($request, $inquiry);
+
+        return $this->activityResponse($request, $inquiry, 'user');
+    }
+
+    public function activityForAdmin(Request $request, ProjectInquiry $inquiry): JsonResponse
+    {
+        $this->ensureCanAccess($request, $inquiry);
+
+        return $this->activityResponse($request, $inquiry, 'admin');
+    }
+
+    private function activityResponse(Request $request, ProjectInquiry $inquiry, string $role): JsonResponse
+    {
+        $data = $request->validate([
+            'client_id' => ['required', 'uuid'],
+            'active' => ['required', 'boolean'],
+            'typing' => ['required', 'boolean'],
+        ]);
+        $identity = ['project_inquiry_id' => $inquiry->id, 'user_id' => $request->user()->id, 'client_id' => $data['client_id']];
+        if ($data['active']) {
+            DB::table('inquiry_chat_activities')->updateOrInsert($identity, [
+                'role' => $role,
+                'last_seen_at' => now(),
+                'typing_until' => $data['typing'] ? now()->addSeconds(6) : null,
+            ]);
+        } else {
+            DB::table('inquiry_chat_activities')->where($identity)->delete();
+        }
+        DB::table('inquiry_chat_activities')->where('last_seen_at', '<', now()->subMinute())->delete();
+        $peers = DB::table('inquiry_chat_activities')
+            ->where('project_inquiry_id', $inquiry->id)->where('role', '!=', $role)
+            ->where('last_seen_at', '>=', now()->subSeconds(12));
+
+        return response()->json([
+            'peer_present' => (clone $peers)->exists(),
+            'peer_typing' => $peers->where('typing_until', '>', now())->exists(),
+        ])->header('Cache-Control', 'no-store');
+    }
+
     public function unreadCountsForAdmin(): JsonResponse
     {
         $counts = ProjectInquiry::query()->withCount([

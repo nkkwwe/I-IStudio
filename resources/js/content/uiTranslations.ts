@@ -113,6 +113,10 @@ type AccountCopy = {
 };
 
 type ChatCopy = {
+  adminInChat: string;
+  clientInChat: string;
+  adminTyping: string;
+  clientTyping: string;
   newMessages: string;
   title: string;
   openChat: string;
@@ -288,6 +292,10 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     chat: {
       title: 'Project chat',
       newMessages: 'New messages',
+      adminInChat: 'Administrator in chat',
+      clientInChat: 'Client in chat',
+      adminTyping: 'Administrator is typing',
+      clientTyping: 'Client is typing',
       openChat: 'Open chat',
       studio: 'I&I Studio',
       empty: 'No messages yet. Start the conversation.',
@@ -451,6 +459,10 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     chat: {
       title: 'Чат проєкту',
       newMessages: 'Нові повідомлення',
+      adminInChat: 'Адміністратор у чаті',
+      clientInChat: 'Клієнт у чаті',
+      adminTyping: 'Адміністратор друкує',
+      clientTyping: 'Клієнт друкує',
       openChat: 'Відкрити чат',
       studio: 'I&I Studio',
       empty: 'Повідомлень ще немає. Почніть розмову.',
@@ -614,6 +626,10 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
     chat: {
       title: 'Chatul proiectului',
       newMessages: 'Mesaje noi',
+      adminInChat: 'Administratorul este în chat',
+      clientInChat: 'Clientul este în chat',
+      adminTyping: 'Administratorul scrie',
+      clientTyping: 'Clientul scrie',
       openChat: 'Deschide chatul',
       studio: 'I&I Studio',
       empty: 'Nu există mesaje. Începe conversația.',
