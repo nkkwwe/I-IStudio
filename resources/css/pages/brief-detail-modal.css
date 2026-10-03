@@ -694,13 +694,6 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .inquiry-chat-attach:hover:not(:has(input:disabled)) {
-    border-color: var(--border-strong);
-    background: var(--bg-panel);
-    color: var(--text-primary);
-  }
-}
 .inquiry-chat-attach:focus-within {
   outline: 2px solid var(--text-primary);
   outline-offset: 2px;
