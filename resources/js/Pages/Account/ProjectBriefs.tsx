@@ -211,14 +211,14 @@ export default function AccountProjectBriefs() {
                     endpoint={`/account/project-briefs/${activeChatInquiry.id}/messages`}
                     currentRole="user"
                     onRead={() => markInquiryRead(activeChatInquiry.id)}
-                    onClose={() => setActiveChatInquiry(null)}
+                    onClose={() => { setActiveChatInquiry(null); setSelectedInquiry(activeChatInquiry); }}
                   />
                 )}
                 {activeReviewInquiry && (
                   <InquiryReviewModal
                     inquiry={activeReviewInquiry}
                     embedded
-                    onClose={() => setActiveReviewInquiry(null)}
+                    onClose={() => { setActiveReviewInquiry(null); setSelectedInquiry(activeReviewInquiry); }}
                     onReviewSaved={(review) => {
                       setInquiries((current) => current.map((inquiry) => (
                         inquiry.id === activeReviewInquiry.id ? { ...inquiry, review } : inquiry

@@ -154,7 +154,7 @@ export default function ProjectBriefs() {
               endpoint={`/admin/project-briefs/${activeChatInquiry.id}/messages`}
               currentRole="admin"
               onRead={() => setInquiries((current) => current.map((inquiry) => inquiry.id === activeChatInquiry.id ? { ...inquiry, unread_count: 0 } : inquiry))}
-              onClose={() => setActiveChatInquiry(null)}
+              onClose={() => { setActiveChatInquiry(null); setSelectedInquiry(activeChatInquiry); }}
             />
           )}
         </div>

@@ -241,7 +241,6 @@ export default function Account() {
               <button type="button" className="account-modal-button account-modal-button-danger" onClick={confirmLogout} disabled={logoutForm.processing}>
                 {logoutForm.processing ? accountCopy.signingOut : common.signOut}
               </button>
-              <button type="button" className="account-modal-button account-modal-button-secondary" onClick={closeModals}>{common.cancel}</button>
             </div>
           </AccountModal>
         )}
@@ -264,7 +263,6 @@ export default function Account() {
               <button type="button" className="account-modal-button account-modal-button-danger" onClick={deleteAccount} disabled={deleteForm.processing}>
                 {deleteForm.processing ? common.deleting : common.deletePermanently}
               </button>
-              <button type="button" className="account-modal-button account-modal-button-secondary" onClick={closeModals}>{common.cancel}</button>
             </div>
           </AccountModal>
         )}

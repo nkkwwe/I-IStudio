@@ -9,7 +9,7 @@ export default function InquiryCancelModal({ inquiry, onClose, onCancelled }: {
 }) {
   const copy = getUiCopy(useSiteLanguage());
   const form = useForm({ status: 'cancelled' });
-  const keepButton = useRef<HTMLButtonElement>(null);
+  const confirmButton = useRef<HTMLButtonElement>(null);
   const closeRef = useRef(onClose);
   const processingRef = useRef(form.processing);
   closeRef.current = onClose;
@@ -17,11 +17,11 @@ export default function InquiryCancelModal({ inquiry, onClose, onCancelled }: {
 
   useEffect(() => {
     const previousFocus = document.activeElement as HTMLElement | null;
-    keepButton.current?.focus();
+    confirmButton.current?.focus();
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && !processingRef.current) closeRef.current();
       if (event.key !== 'Tab') return;
-      const buttons = Array.from(keepButton.current?.closest('[role="dialog"]')?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)') ?? []);
+      const buttons = Array.from(confirmButton.current?.closest('[role="dialog"]')?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)') ?? []);
       const first = buttons[0];
       const last = buttons[buttons.length - 1];
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
@@ -40,12 +40,9 @@ export default function InquiryCancelModal({ inquiry, onClose, onCancelled }: {
       <p className="account-modal-copy">{copy.cancellation.description}</p>
       {form.errors.status && <p className="account-inline-error" role="alert">{copy.cancellation.error}</p>}
       <div className="account-modal-actions">
-        <button type="button" className="account-modal-button account-modal-button-danger inquiry-cancel-confirm-btn" disabled={form.processing}
+        <button ref={confirmButton} type="button" className="account-modal-button account-modal-button-danger inquiry-cancel-confirm-btn" disabled={form.processing}
           onClick={() => form.patch(`/account/project-briefs/${inquiry.id}/cancel`, { preserveScroll: true, onSuccess: onCancelled })}>
           {form.processing ? copy.cancellation.processing : copy.cancellation.confirm}
-        </button>
-        <button ref={keepButton} type="button" className="account-modal-button account-modal-button-secondary" disabled={form.processing} onClick={onClose}>
-          {copy.common.cancel}
         </button>
       </div>
     </AccountModal>
