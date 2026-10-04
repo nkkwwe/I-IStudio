@@ -182,7 +182,7 @@ export default function Account() {
             <div className="account-dashboard-profile-head">
               <div>
                 <span className="account-panel-label">{accountCopy.accountLabel}</span>
-                <h2>{accountCopy.profileLabel}</h2>
+                <h2>{accountCopy.profileTitle}</h2>
               </div>
               <button type="button" className="account-edit-button" onClick={openNameModal}>{accountCopy.editName}</button>
             </div>

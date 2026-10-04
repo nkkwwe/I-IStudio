@@ -90,6 +90,7 @@ type AccountCopy = {
   workspaceTitle: string;
   workspaceDescription: string;
   profileLabel: string;
+  profileTitle: string;
   name: string;
   email: string;
   signIn: string;
@@ -276,6 +277,7 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       workspaceTitle: 'Your workspace is ready.',
       workspaceDescription: 'Use this space to keep your project brief, conversations and next steps connected to your account.',
       profileLabel: 'PROFILE',
+      profileTitle: 'Profile',
       name: 'Name',
       email: 'Email',
       signIn: 'Sign-in',
@@ -451,6 +453,7 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       workspaceTitle: 'Ваш простір готовий.',
       workspaceDescription: 'Зберігайте тут бриф проєкту, листування та наступні кроки, повʼязані з вашим акаунтом.',
       profileLabel: 'ПРОФІЛЬ',
+      profileTitle: 'Профіль',
       name: 'Імʼя',
       email: 'Email',
       signIn: 'Вхід',
@@ -626,6 +629,7 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       workspaceTitle: 'Spațiul tău este pregătit.',
       workspaceDescription: 'Păstrează aici brief-ul proiectului, conversațiile și pașii următori conectați la contul tău.',
       profileLabel: 'PROFIL',
+      profileTitle: 'Profil',
       name: 'Nume',
       email: 'Email',
       signIn: 'Autentificare',
