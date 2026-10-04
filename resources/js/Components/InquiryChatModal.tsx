@@ -1,84 +1,21 @@
 import { useForm } from '@inertiajs/react';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
-import { getSiteLanguage, getUiCopy, useSiteLanguage } from '../content/uiTranslations';
+import { Fragment, useEffect, useMemo, useRef, useState, type ChangeEvent, type FormEvent, type KeyboardEvent as ReactKeyboardEvent } from 'react';
+import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import { useInquiryChatActivity } from '../lib/useInquiryChatActivity';
-
-type ChatMessage = {
-  id: number;
-  sender_role: string;
-  sender_name: string;
-  body: string;
-  created_at?: string | null;
-  read_at?: string | null;
-  edited_at?: string | null;
-  can_manage?: boolean;
-  attachments?: ImagePreview[];
-  attachment_url?: string | null;
-  attachment_name?: string | null;
-};
-
-type InquiryChatModalProps = {
-  inquiryId: number;
-  ticket: string;
-  title: string;
-  endpoint: string;
-  currentRole: 'admin' | 'user';
-  clientName?: string;
-  onClose: () => void;
-  onRead?: () => void;
-};
-
-type ImagePreview = {
-  url: string;
-  name: string;
-};
-
-function formatMessageTime(value?: string | null): string {
-  if (!value) return '';
-
-  const locale = {
-    en: 'en-GB',
-    uk: 'uk-UA',
-    ro: 'ro-RO',
-  }[getSiteLanguage()];
-
-  return new Intl.DateTimeFormat(locale, {
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  }).format(new Date(value));
-}
-
-function dayKey(value?: string | null): string {
-  const date = value ? new Date(value) : new Date();
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-}
-
-function formatDay(value: string | null | undefined, copy: ReturnType<typeof getUiCopy>['chat']): string {
-  const date = value ? new Date(value) : new Date();
-  const today = new Date();
-  const calendarDay = (d: Date) => Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
-  const days = Math.round((calendarDay(today) - calendarDay(date)) / 86400000);
-  if (days === 0) return copy.today;
-  if (days === 1) return copy.yesterday;
-  if (days === 2) return copy.dayBeforeYesterday;
-  return new Intl.DateTimeFormat({ en: 'en-GB', uk: 'uk-UA', ro: 'ro-RO' }[getSiteLanguage()], {
-    day: 'numeric', month: 'long', ...(date.getFullYear() !== today.getFullYear() ? { year: 'numeric' as const } : {}),
-  }).format(date);
-}
+import { useInquiryChatScroll } from '../lib/useInquiryChatScroll';
+import { useInquiryChatMessages } from '../lib/useInquiryChatMessages';
+import type { ChatMessage, ImagePreview, InquiryChatModalProps } from './InquiryChat/types';
+import { groupMessages, formatDay } from './InquiryChat/format';
+import ChatMessageBubble from './InquiryChat/ChatMessageBubble';
 
 export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, currentRole, clientName, onClose, onRead }: InquiryChatModalProps) {
   const copy = getUiCopy(useSiteLanguage());
   const activity = useInquiryChatActivity(endpoint);
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [loadError, setLoadError] = useState('');
+  const { messages, setMessages, loading, loadError, firstUnreadMessageId, messageRevisionRef, loadMessages } = useInquiryChatMessages(endpoint, copy.chat.loadError, onRead);
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [attachmentError, setAttachmentError] = useState('');
   const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
-  const [dateVisible, setDateVisible] = useState(false);
-  const [floatingDates, setFloatingDates] = useState<string[]>([]);
   const [messageMenu, setMessageMenu] = useState<{ message: ChatMessage; x: number; y: number; confirmingDelete?: boolean } | null>(null);
   const [editingMessage, setEditingMessage] = useState<ChatMessage | null>(null);
   const [editBody, setEditBody] = useState('');
@@ -87,63 +24,13 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const menuRef = useRef<HTMLDivElement>(null);
   const interactionRef = useRef({ menu: false, editing: false });
   interactionRef.current = { menu: Boolean(messageMenu), editing: Boolean(editingMessage) };
-  const holdRef = useRef<{ timer: ReturnType<typeof setTimeout>; x: number; y: number } | null>(null);
-  const suppressHoldClickRef = useRef(false);
-  const messageRevisionRef = useRef(0);
-  const cancelHold = () => {
-    if (holdRef.current) clearTimeout(holdRef.current.timer);
-    holdRef.current = null;
-  };
-  const dateHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const lastScrollTopRef = useRef(0);
   const attachmentInputRef = useRef<HTMLInputElement>(null);
-  const messagesRef = useRef<HTMLDivElement>(null);
-  const composerRef = useRef<HTMLFormElement>(null);
-  const messageInputRef = useRef<HTMLTextAreaElement>(null);
-  const followBottomRef = useRef(true);
-  const initialScrollRef = useRef(true);
-  const updateFloatingDates = useCallback(() => {
-    const list = messagesRef.current;
-    if (!list) return;
-    const keys = Array.from(list.querySelectorAll<HTMLElement>('.inquiry-chat-day')).filter((day) => {
-      const date = day.querySelector<HTMLElement>('.inquiry-chat-date');
-      return date && date.getBoundingClientRect().top > day.getBoundingClientRect().top + 1;
-    }).map((day) => day.dataset.day!);
-    setFloatingDates((previous) => previous.join('|') === keys.join('|') ? previous : keys);
-  }, []);
-  useLayoutEffect(() => {
-    updateFloatingDates();
-    const list = messagesRef.current;
-    if (!list) return;
-    const observer = new ResizeObserver(updateFloatingDates);
-    observer.observe(list);
-    return () => observer.disconnect();
-  }, [messages, loading, updateFloatingDates]);
   const onCloseRef = useRef(onClose);
-  const onReadRef = useRef(onRead);
   const imagePreviewRef = useRef<ImagePreview | null>(null);
   const form = useForm<{ body: string; attachments: File[] }>({ body: '', attachments: [] });
-  const scrollToBottom = useCallback(() => {
-    const list = messagesRef.current;
-    if (!list) return;
-    list.scrollTop = list.scrollHeight;
-    lastScrollTopRef.current = list.scrollTop;
-  }, []);
-  const resizeMessageInput = useCallback(() => {
-    const input = messageInputRef.current;
-    if (!input) return;
-    const style = window.getComputedStyle(input);
-    const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
-    const border = parseFloat(style.borderTopWidth) + parseFloat(style.borderBottomWidth);
-    const maxHeight = parseFloat(style.lineHeight) * 6 + padding + border;
-    input.style.height = 'auto';
-    input.style.height = `${Math.min(input.scrollHeight + border, maxHeight)}px`;
-    input.style.overflowY = input.scrollHeight + border > maxHeight ? 'auto' : 'hidden';
-  }, []);
-
-  useLayoutEffect(resizeMessageInput, [form.data.body, editBody, editingMessage, resizeMessageInput]);
-
-  useEffect(() => () => cancelHold(), []);
+  const { messagesRef, composerRef, messageInputRef, followBottomRef, scrollToBottom, handleScroll, dateVisible, floatingDates } = useInquiryChatScroll(
+    messages, loading || Boolean(loadError), firstUnreadMessageId, editingMessage ? editBody : form.data.body, Boolean(editingMessage),
+  );
 
   useEffect(() => {
     if (!messageMenu) return;
@@ -155,56 +42,11 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     return () => document.removeEventListener('pointerdown', closeOutside);
   }, [messageMenu?.message.id, messageMenu?.confirmingDelete]);
 
-  useLayoutEffect(() => {
-    const composer = composerRef.current;
-    const list = messagesRef.current;
-    if (!composer || !list) return;
-    const updateInset = () => {
-      list.style.setProperty('--chat-composer-height', `${composer.offsetHeight}px`);
-      if (followBottomRef.current) scrollToBottom();
-    };
-    updateInset();
-    const observer = new ResizeObserver(updateInset);
-    observer.observe(composer);
-    return () => observer.disconnect();
-  }, [scrollToBottom]);
-
-  useEffect(() => () => {
-    if (dateHideTimerRef.current !== null) clearTimeout(dateHideTimerRef.current);
-  }, []);
-
-  useEffect(() => {
-    const input = messageInputRef.current;
-    if (!input) return;
-    let width = input.getBoundingClientRect().width;
-    const observer = new ResizeObserver(() => {
-      const nextWidth = input.getBoundingClientRect().width;
-      if (nextWidth === width) return;
-      width = nextWidth;
-      resizeMessageInput();
-    });
-    observer.observe(input);
-    window.addEventListener('resize', resizeMessageInput);
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('resize', resizeMessageInput);
-    };
-  }, [resizeMessageInput]);
-  const groups: { key: string; date?: string | null; messages: ChatMessage[] }[] = [];
-  messages.forEach((message) => {
-    const key = dayKey(message.created_at);
-    const last = groups[groups.length - 1];
-    if (last?.key === key) last.messages.push(message);
-    else groups.push({ key, date: message.created_at, messages: [message] });
-  });
+  const groups = useMemo(() => groupMessages(messages), [messages]);
 
   useEffect(() => {
     onCloseRef.current = onClose;
   }, [onClose]);
-
-  useEffect(() => {
-    onReadRef.current = onRead;
-  }, [onRead]);
 
   useEffect(() => {
     imagePreviewRef.current = imagePreview;
@@ -216,36 +58,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     return () => urls.forEach((url) => URL.revokeObjectURL(url));
   }, [selectedImages]);
 
-  const loadMessages = useCallback(async (showLoader = true) => {
-    const revision = messageRevisionRef.current;
-    if (document.visibilityState !== 'visible') return;
-    if (showLoader) setLoading(true);
-    setLoadError('');
-
-    try {
-      const response = await fetch(endpoint, {
-        credentials: 'same-origin',
-        headers: {
-          Accept: 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-      });
-
-      if (!response.ok) throw new Error('Unable to load chat');
-
-      const payload = await response.json() as { messages?: ChatMessage[] };
-      if (revision === messageRevisionRef.current) setMessages(payload.messages ?? []);
-      onReadRef.current?.();
-    } catch {
-      setLoadError(copy.chat.loadError);
-    } finally {
-      setLoading(false);
-    }
-  }, [copy.chat.loadError, endpoint]);
-
   useEffect(() => {
-    void loadMessages();
-
     const handleEscape = (event: globalThis.KeyboardEvent) => {
       if (event.key !== 'Escape') return;
 
@@ -269,24 +82,10 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     };
 
     document.addEventListener('keydown', handleEscape);
-    const refresh = () => { if (document.visibilityState === 'visible') void loadMessages(false); };
-    document.addEventListener('visibilitychange', refresh);
-    const refreshTimer = window.setInterval(refresh, 5000);
-
     return () => {
       document.removeEventListener('keydown', handleEscape);
-      document.removeEventListener('visibilitychange', refresh);
-      window.clearInterval(refreshTimer);
     };
-  }, [loadMessages]);
-
-  const lastMessageId = messages.at(-1)?.id;
-  useEffect(() => {
-    if (!loading && messagesRef.current && (initialScrollRef.current || followBottomRef.current)) {
-      scrollToBottom();
-      initialScrollRef.current = false;
-    }
-  }, [lastMessageId, loading, scrollToBottom]);
+  }, []);
 
   const sendMessage = () => {
     if (editingMessage) { void saveEditedMessage(); return; }
@@ -433,16 +232,8 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
         </header>
 
         <div className={`inquiry-chat-messages${dateVisible ? ' is-scrolling' : ''}`} ref={messagesRef} aria-live="polite" onScroll={(event) => {
-          const list = event.currentTarget;
-          updateFloatingDates();
-          if (Math.abs(list.scrollTop - lastScrollTopRef.current) < 1) return;
-          cancelHold();
+          if (!handleScroll(event)) return;
           setMessageMenu(null);
-          lastScrollTopRef.current = list.scrollTop;
-          followBottomRef.current = list.scrollHeight - list.scrollTop - list.clientHeight <= 2;
-          setDateVisible(true);
-          if (dateHideTimerRef.current !== null) clearTimeout(dateHideTimerRef.current);
-          dateHideTimerRef.current = setTimeout(() => setDateVisible(false), 10000);
         }}>
           {loading ? (
             <p className="inquiry-chat-state">{copy.chat.loading}</p>
@@ -453,95 +244,24 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
           ) : (
             groups.map((group) => <div className="inquiry-chat-day" key={group.key} data-day={group.key}>
               <div className={`inquiry-chat-date${floatingDates.includes(group.key) ? ' is-floating' : ''}`}><span>{formatDay(group.date, copy.chat)}</span></div>
-              {group.messages.map((message) => {
-              const isOwn = message.sender_role === currentRole;
-
-              return (
-                <div className={`inquiry-chat-message${isOwn ? ' is-own' : ''}`} key={message.id}>
-                  <div className={`inquiry-chat-bubble${(message.attachments?.length ?? 0) > 1 ? ' has-album' : ''}${isOwn && message.can_manage ? ' can-manage' : ''}`}
-                    tabIndex={isOwn && message.can_manage ? 0 : undefined}
-                    aria-label={isOwn && message.can_manage ? copy.chat.messageActions : undefined}
-                    onContextMenu={(event) => {
-                      if (!isOwn || !message.can_manage) return;
-                      event.preventDefault();
-                      cancelHold();
-                      openMessageMenu(message, event.currentTarget, event.clientX, event.clientY);
-                    }}
-                    onKeyDown={(event) => {
-                      if (event.key === 'ContextMenu' || (event.shiftKey && event.key === 'F10')) {
-                        if (!isOwn || !message.can_manage) return;
-                        event.preventDefault();
-                        openMessageMenu(message, event.currentTarget);
-                      }
-                    }}
-                    onPointerDown={(event) => {
-                      if (event.pointerType === 'mouse' || !isOwn || !message.can_manage) return;
-                      suppressHoldClickRef.current = false;
-                      cancelHold();
-                      const element = event.currentTarget;
-                      const x = event.clientX, y = event.clientY;
-                      holdRef.current = { x, y, timer: setTimeout(() => {
-                        holdRef.current = null;
-                        suppressHoldClickRef.current = true;
-                        openMessageMenu(message, element, x, y);
-                      }, 550) };
-                    }}
-                    onPointerMove={(event) => {
-                      if (holdRef.current && Math.hypot(event.clientX - holdRef.current.x, event.clientY - holdRef.current.y) > 10) cancelHold();
-                    }}
-                    onPointerUp={cancelHold}
-                    onPointerCancel={cancelHold}
-                    onClickCapture={(event) => {
-                      if (!suppressHoldClickRef.current) return;
-                      suppressHoldClickRef.current = false;
-                      event.preventDefault();
-                      event.stopPropagation();
-                    }}
-                  >
-                    <div className={`inquiry-chat-photos${(message.attachments?.length ?? 0) > 1 ? ' is-album' : ''}`}>
-                    {(message.attachments ?? (message.attachment_url ? [{ url: message.attachment_url, name: message.attachment_name || copy.chat.imageAlt }] : [])).map((photo) => (
-                      <button
-                        type="button"
-                        className="inquiry-chat-image-link"
-                        key={photo.url}
-                        onClick={() => setImagePreview({
-                          url: photo.url,
-                          name: photo.name || copy.chat.imageAlt,
-                        })}
-                        aria-label={photo.name || copy.chat.imageAlt}
-                      >
-                        <img src={photo.url} alt={photo.name || copy.chat.imageAlt} onLoad={() => {
-                          if (followBottomRef.current) scrollToBottom();
-                        }} />
-                      </button>
-                    ))}
-                    </div>
-                    {message.body && <p>{message.body}</p>}
-                    <div className="inquiry-chat-message-footer">
-                      {message.edited_at && <span className="inquiry-chat-edited">{copy.chat.edited}</span>}
-                      <time dateTime={message.created_at || undefined}>{formatMessageTime(message.created_at)}</time>
-                      {isOwn && <span className={`inquiry-chat-receipt${message.read_at ? ' is-read' : ''}`} aria-label={message.read_at ? copy.chat.read : copy.chat.sent} title={message.read_at ? copy.chat.read : copy.chat.sent}>
-                        <svg width="20" height="14" viewBox="0 0 24 16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                          <path d="m2 8 4 4L17 2" />
-                          {message.read_at && <path d="m10 11 2 2L23 3" />}
-                        </svg>
-                      </span>}
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+              {group.messages.map((message) => (
+                <Fragment key={message.id}>
+                  {message.id === firstUnreadMessageId && <div className="inquiry-chat-unread-boundary" data-unread-boundary>{copy.chat.unreadMessages}</div>}
+                  <ChatMessageBubble message={message} currentRole={currentRole} copy={copy} onOpenMenu={openMessageMenu} onPreview={setImagePreview} onImageLoad={() => { if (followBottomRef.current) scrollToBottom(); }} />
+                </Fragment>
+              ))}
             </div>)
           )}
+
+        </div>
+
+        <form ref={composerRef} className="inquiry-chat-composer" onSubmit={submitMessage}>
           {activity.peer_typing && (
             <div className="inquiry-chat-typing" role="status">
               <span className="inquiry-chat-typing-dots" aria-hidden="true"><i /><i /><i /></span>
               <span>{currentRole === 'user' ? copy.chat.adminTyping : copy.chat.clientTyping}</span>
             </div>
           )}
-        </div>
-
-        <form ref={composerRef} className="inquiry-chat-composer" onSubmit={submitMessage}>
           {editingMessage && <div className="inquiry-chat-editing-bar">
             <span>{copy.chat.editingMessage}</span>
             <button type="button" disabled={actionBusy} onClick={() => { setEditingMessage(null); setActionError(''); }}>{copy.common.cancel}</button>

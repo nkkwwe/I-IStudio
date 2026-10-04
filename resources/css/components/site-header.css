@@ -1,0 +1,284 @@
+/* ==========================================================================
+   Header / Navigation
+   ========================================================================== */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03), 0 6px 16px -4px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.site-header.scrolled {
+  background-color: rgba(255, 255, 255, 0.96);
+  border-bottom-color: var(--border-strong);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  text-decoration: none;
+}
+
+.logo-symbol {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-symbol svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text-primary);
+}
+
+.logo-sub {
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-left: 2px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-panel);
+  }
+
+  html:not([data-theme="dark"]) .nav-link:hover,
+  html:not([data-theme="dark"]) .nav-link.active:hover {
+    background-color: #f0f0f2;
+    border-color: #dedee3;
+    box-shadow: 0 3px 10px rgba(24, 24, 27, 0.08);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-link.active:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-panel);
+    border-color: var(--border-strong);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+.nav-link.active {
+  color: var(--text-primary);
+  background-color: var(--bg-panel);
+  border-color: var(--border-strong);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.header-actions .btn-sm,
+.account-header-link,
+.theme-toggle,
+.header-actions .account-logout,
+.language-trigger {
+  min-height: 44px;
+  height: 44px;
+}
+
+.header-actions .btn-sm {
+  display: inline-flex;
+  align-items: center;
+  padding-block: 0;
+}
+
+.account-header-link,
+.theme-toggle,
+.header-actions .account-logout,
+.language-switcher:not(.mobile-language-switcher) .language-trigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  min-width: 44px;
+  flex: 0 0 44px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .account-header-link:hover,
+  .theme-toggle:hover,
+  .header-actions .account-logout:hover,
+  .language-switcher:not(.mobile-language-switcher) .language-trigger:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-panel);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-subtle);
+  }
+}
+
+.account-header-link:focus-visible,
+.theme-toggle:focus-visible,
+.header-actions .account-logout:focus-visible,
+.language-switcher:not(.mobile-language-switcher) .language-trigger:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+.account-header-link.account-sign-in-link {
+  width: auto;
+  min-width: 0;
+  flex: 0 1 auto;
+  padding-inline: 16px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.account-header-link svg,
+.header-actions .account-logout svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.account-header-initial {
+  display: inline-block;
+  color: var(--text-primary);
+  font: 700 0.9rem/1 var(--font-sans);
+  text-transform: uppercase;
+}
+
+[data-tooltip] {
+  --tooltip-shift: 5px;
+}
+
+[data-tooltip]::after {
+  position: absolute;
+  z-index: 1200;
+  top: calc(100% + 10px);
+  left: 50%;
+  width: max-content;
+  max-width: min(240px, calc(100vw - 32px));
+  padding: 7px 10px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-card);
+  content: attr(data-tooltip);
+  font: 500 0.75rem/1.35 var(--font-sans);
+  text-align: center;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, var(--tooltip-shift));
+  transition: opacity 180ms ease, transform 220ms cubic-bezier(0.2, 0.75, 0.25, 1), visibility 180ms;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  [data-tooltip]:hover::after,
+  [data-tooltip]:focus-visible::after {
+    --tooltip-shift: 0px;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .site-header:has(.language-switcher.open) [data-tooltip]::after {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* Touch devices never show hover tooltips, even if the browser reports hover support. */
+@media (hover: none), (pointer: coarse) {
+  [data-tooltip]::after {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-tooltip]::after { transition: none; }
+}
+
+.chat-unread-badge {
+  display: inline-grid;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  place-items: center;
+  padding: 0;
+  border-radius: var(--radius-pill);
+  background: #dc3f4f;
+  color: #ffffff;
+  font: 800 0.68rem/1 var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(220, 63, 79, 0.32);
+  animation: chat-unread-badge-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.chat-unread-badge.is-wide {
+  width: auto;
+  padding-inline: 5px;
+}
+
+.account-header-link .chat-unread-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  border: 2px solid var(--bg-surface);
+}
+
+@keyframes chat-unread-badge-in {
+  from { opacity: 0; transform: scale(0.72); }
+  to { opacity: 1; transform: scale(1); }
+}

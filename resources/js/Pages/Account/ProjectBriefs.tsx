@@ -205,6 +205,7 @@ export default function AccountProjectBriefs() {
                 )}
                 {activeChatInquiry && (
                   <InquiryChatModal
+                    key={activeChatInquiry.id}
                     inquiryId={activeChatInquiry.id}
                     ticket={activeChatInquiry.ticket}
                     title={copy.services[activeChatInquiry.service_type] ?? activeChatInquiry.service_type}

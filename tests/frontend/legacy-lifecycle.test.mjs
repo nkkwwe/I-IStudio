@@ -103,7 +103,7 @@ test('revisiting a page does not duplicate theme, language or global event handl
   }
 });
 
-test('scroll work is batched and pending frames and click timers are cleared on exit', () => {
+test('scroll work is batched and pending frames are cleared on exit', () => {
   const page = pageFixture();
   const cleanup = page.init();
   const initialMeasurements = page.measurements();
@@ -116,7 +116,8 @@ test('scroll work is batched and pending frames and click timers are cleared on 
   assert.equal(page.measurements(), initialMeasurements + 1);
   page.window.dispatchEvent(new Event('scroll'));
   page.link.dispatchEvent(new Event('click'));
-  assert.equal(page.timers.size, 1);
+  assert.equal(page.link.classList.contains('active'), true);
+  assert.equal(page.timers.size, 0);
   cleanup();
   assert.equal(page.frames.size, 0);
   assert.equal(page.timers.size, 0);

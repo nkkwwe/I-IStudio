@@ -65,10 +65,14 @@ class InquiryChatUnreadTest extends TestCase
             ->getJson(route('account.project-briefs.messages', $inquiry))
             ->assertOk()
             ->assertJsonCount(2, 'messages')
+            ->assertJsonPath('first_unread_message_id', $incoming->id)
             ->assertJsonPath('unread_count', 0);
 
         $this->assertNotNull($incoming->fresh()->read_at);
         $this->assertNull($outgoing->fresh()->read_at);
+
+        $this->getJson(route('account.project-briefs.messages', $inquiry))
+            ->assertJsonPath('first_unread_message_id', null);
 
         $this->actingAs($user)
             ->getJson(route('account.project-briefs.unread-counts'))
@@ -88,10 +92,29 @@ class InquiryChatUnreadTest extends TestCase
         $this->actingAs($admin)
             ->getJson(route('admin.project-briefs.messages', $inquiry))
             ->assertOk()
+            ->assertJsonPath('first_unread_message_id', $fromUser->id)
             ->assertJsonCount(2, 'messages');
 
         $this->assertNotNull($fromUser->fresh()->read_at);
         $this->assertNull($fromAdmin->fresh()->read_at);
+    }
+
+    public function test_chat_starts_at_first_unread_incoming_message_after_read_history(): void
+    {
+        $user = User::factory()->create();
+        $admin = User::factory()->create(['email' => 'admin@example.com']);
+        $inquiry = $this->createInquiry($user);
+        $read = $this->createMessage($inquiry, $admin, 'admin');
+        $read->update(['read_at' => now()]);
+        $this->createMessage($inquiry, $user, 'user');
+        $firstUnread = $this->createMessage($inquiry, $admin, 'admin');
+        $this->createMessage($inquiry, $admin, 'admin');
+
+        $this->actingAs($user)->getJson(route('account.project-briefs.messages', $inquiry))
+            ->assertOk()
+            ->assertJsonPath('first_unread_message_id', $firstUnread->id)
+            ->assertJsonPath('messages.0.id', $read->id)
+            ->assertJsonCount(4, 'messages');
     }
 
     public function test_admin_gets_only_incoming_unread_counts_and_endpoint_is_protected(): void

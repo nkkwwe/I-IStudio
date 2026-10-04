@@ -1,0 +1,123 @@
+
+.admin-page .account-shell {
+  padding-top: clamp(48px, 8vw, 96px);
+}
+
+.admin-topbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding-bottom: 34px;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-topbar h1 {
+  margin: 10px 0 8px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.admin-topbar p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.admin-topbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.admin-back-link {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  padding: 0 16px;
+  border: 1px solid var(--btn-secondary-border);
+  border-radius: var(--radius-pill);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .admin-back-link:hover {
+    border-color: var(--btn-secondary-hover-border);
+    background-color: var(--btn-secondary-hover-bg);
+    color: var(--btn-secondary-hover-text);
+  }
+}
+
+.admin-section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.admin-section-nav-link {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  padding: 0 14px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-pill);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+html:not([data-theme="dark"]) .admin-section-nav-link:not(.active) {
+  border-color: var(--border);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .admin-section-nav-link:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-subtle);
+    color: var(--text-primary);
+  }
+}
+.admin-section-nav-link.active {
+  border-color: var(--text-primary);
+  background: var(--text-primary);
+  color: var(--text-inverse);
+}
+
+.admin-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.admin-overview-card {
+  min-height: 210px;
+}
+
+.admin-card-value {
+  display: block;
+  margin-top: 30px;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2.25rem);
+  letter-spacing: -0.045em;
+}
+
+.admin-overview-card p {
+  margin-top: 14px;
+  font-size: 0.82rem;
+}

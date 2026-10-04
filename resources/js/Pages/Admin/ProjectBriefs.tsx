@@ -147,6 +147,7 @@ export default function ProjectBriefs() {
           )}
           {activeChatInquiry && (
             <InquiryChatModal
+              key={activeChatInquiry.id}
               inquiryId={activeChatInquiry.id}
               ticket={activeChatInquiry.ticket}
               clientName={activeChatInquiry.name}

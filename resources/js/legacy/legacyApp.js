@@ -491,7 +491,6 @@ window.preselectService = function(serviceKey, openModal = true) {
     'full-pack': 'landing',
   };
   const inquiryServiceKey = serviceAliases[serviceKey] || serviceKey;
-  const tabs = document.querySelectorAll('#serviceTabs .tab-btn');
   const targetTab = document.querySelector(`#serviceTabs .tab-btn[data-service="${inquiryServiceKey}"]`);
   const serviceInput = document.getElementById('serviceTypeInput');
   const homepageInquiry = document.getElementById('inquiry');

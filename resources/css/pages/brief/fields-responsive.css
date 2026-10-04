@@ -1,0 +1,179 @@
+
+.inquiry-detail-brief-section {
+  margin-top: 20px;
+}
+
+.inquiry-detail-brief-grid {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-inner);
+  background: var(--bg-subtle);
+}
+
+.inquiry-detail-brief-row {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.45fr) minmax(0, 1fr);
+  gap: 14px;
+  padding: 10px 13px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.inquiry-detail-brief-row:last-child {
+  border-bottom: 0;
+}
+
+.inquiry-detail-brief-row span {
+  color: var(--text-muted);
+}
+
+.inquiry-detail-brief-row strong {
+  color: var(--text-primary);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.inquiry-detail-context {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.inquiry-form-grid {
+  gap: 18px;
+}
+
+.inquiry-form-card .smart-form {
+  gap: 18px;
+}
+
+.inquiry-form-card .form-group {
+  gap: 7px;
+}
+
+.inquiry-form-card .form-group textarea {
+  min-height: 330px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.inquiry-form-note {
+  margin: -3px 0 0;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.inquiry-form-card .btn-submit {
+  min-height: 54px;
+  margin-top: 4px;
+}
+
+.inquiry-page-footer {
+  padding: 0 0 32px;
+  background: transparent;
+  border-top: 0;
+}
+
+.inquiry-page-footer .footer-bottom {
+  border-top: 1px solid var(--border);
+}
+
+html[data-theme="dark"] .inquiry-form-card {
+  background: var(--bg-surface);
+  border-color: var(--border);
+}
+
+@media (max-width: 900px) {
+  .inquiry-page-container {
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .inquiry-page-intro {
+    position: static;
+    padding-top: 0;
+  }
+
+  .inquiry-page-title,
+  .inquiry-page-description,
+  .inquiry-page-benefits {
+    max-width: 720px;
+  }
+}
+
+@media (max-width: 560px) {
+  .inquiry-page {
+    padding: 104px 0 64px;
+  }
+
+  .inquiry-page-container {
+    gap: 32px;
+  }
+
+  .inquiry-page-title {
+    font-size: clamp(2.35rem, 13vw, 3.6rem);
+  }
+
+  .inquiry-form-card {
+    padding: 25px 18px 22px;
+    border-radius: var(--radius-inner);
+  }
+
+  .inquiry-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inquiry-form-card .form-group textarea {
+    min-height: 290px;
+  }
+
+  .calculator-panel {
+    padding: 14px;
+  }
+
+  .calculator-panel-header {
+    display: grid;
+    gap: 14px;
+  }
+
+  .calculator-total {
+    text-align: left;
+  }
+
+  .calculator-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .calculator-summary {
+    position: static;
+  }
+
+  .calculator-options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ads-brief-section {
+    padding: 15px;
+  }
+
+  .ads-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inquiry-detail-brief-row {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
+
+  .inquiry-page-footer .footer-bottom {
+    padding-top: 22px;
+  }
+}

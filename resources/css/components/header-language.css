@@ -1,0 +1,267 @@
+
+.language-switcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+}
+
+/* Header round button style (desktop / all site headers) */
+.language-switcher:not(.mobile-language-switcher) .language-trigger {
+  width: 44px;
+  min-width: 44px;
+  flex: 0 0 auto;
+  height: 44px;
+  min-height: 44px;
+  padding: 0 0 0 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  cursor: pointer;
+  overflow: hidden;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              gap 0.2s ease,
+              border-color 0.2s ease,
+              background-color 0.2s ease,
+              box-shadow 0.2s ease,
+              color 0.2s ease;
+}
+
+.language-switcher:not(.mobile-language-switcher) .language-current {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  min-width: 18px;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+/* Chevron hidden in closed state */
+.language-switcher:not(.mobile-language-switcher) .language-chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0;
+  height: 13px;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transform: translateX(-4px) rotate(0deg);
+  transition: opacity 0.18s ease,
+              transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.2s ease;
+}
+
+/* OPEN ANIMATION: button smoothly expands into capsule, arrow appears */
+.language-switcher:not(.mobile-language-switcher).open .language-trigger {
+  width: 62px;
+  min-width: 62px;
+  gap: 4px;
+  border-color: var(--border-strong);
+  background: var(--bg-panel);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1), var(--shadow-subtle);
+  transition: width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              min-width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              gap 0.2s ease,
+              border-color 0.2s ease,
+              background-color 0.2s ease,
+              box-shadow 0.2s ease,
+              color 0.2s ease;
+}
+
+.language-switcher:not(.mobile-language-switcher).open .language-chevron {
+  width: 13px;
+  opacity: 1;
+  color: var(--text-secondary);
+  transform: translateX(0) rotate(180deg);
+  transition: opacity 0.2s ease,
+              transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              color 0.2s ease;
+}
+
+/* DROPDOWN MENU: smooth and simple transition as before */
+.language-switcher:not(.mobile-language-switcher) .language-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 174px;
+  padding: 6px;
+  display: grid;
+  gap: 3px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-card);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(0.98);
+  transform-origin: top right;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.22s ease, visibility 0.2s;
+}
+
+.language-switcher:not(.mobile-language-switcher).open .language-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.22s;
+  transition-delay: 0.02s;
+}
+
+/* Fallback base styles for trigger/chevron in mobile drawer */
+.mobile-language-switcher .language-trigger {
+  min-width: 58px;
+  padding: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mobile-language-switcher .language-chevron {
+  width: 14px;
+  height: 14px;
+  color: var(--text-muted);
+  opacity: 1;
+  transform: none;
+  transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-language-switcher.open .language-chevron {
+  transform: rotate(180deg);
+}
+
+.language-option {
+  width: 100%;
+  min-height: 36px;
+  padding: 0 10px 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border: 0;
+  border-radius: calc(var(--radius-sm) - 2px);
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.language-option span {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .language-option:hover {
+    background: var(--bg-panel);
+    color: var(--text-primary);
+  }
+}
+
+.language-option.active {
+  background: var(--accent-black);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .language-option.active:hover {
+    background: #27272a;
+    color: #ffffff;
+  }
+}
+
+.language-option.active span {
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.theme-toggle {
+  width: 44px;
+  min-width: 44px;
+  flex-basis: 44px;
+}
+
+.header-actions .theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.account-logout svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  margin: auto;
+}
+
+.theme-icon {
+  display: none;
+}
+
+.theme-icon-sun {
+  display: block;
+}
+
+.theme-icon-moon {
+  display: none;
+}
+.mobile-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  transition: var(--transition);
+}

@@ -1,0 +1,179 @@
+
+.account-details {
+  display: grid;
+  gap: 15px;
+  margin: 26px 0 0;
+}
+
+.account-details div {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.account-details dt {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.account-details dd {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.account-edit-button,
+.account-save-button,
+.account-cancel-button,
+.account-delete-button {
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  font: 700 0.76rem var(--font-sans);
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.account-edit-button,
+.account-save-button {
+  border: 1px solid var(--btn-primary-border);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+}
+
+.account-edit-button {
+  margin-top: 24px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .account-edit-button:hover,
+  .account-save-button:hover:not(:disabled) {
+    background-color: var(--btn-primary-hover-bg);
+    border-color: var(--btn-primary-hover-border);
+    color: var(--btn-primary-hover-text);
+  }
+}
+
+.account-profile-form {
+  margin-top: 23px;
+}
+
+.account-field {
+  display: grid;
+  gap: 8px;
+  color: var(--text-primary);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.account-field input,
+.account-delete-confirm input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 13px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-inner);
+  outline: none;
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font: 500 0.84rem var(--font-sans);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.account-field input::placeholder,
+.account-delete-confirm input::placeholder {
+  color: var(--text-muted);
+}
+
+.account-field input:focus,
+.account-delete-confirm input:focus {
+  border-color: var(--text-primary);
+  background: var(--bg-surface);
+  box-shadow: 0 0 0 3px rgba(9, 9, 11, 0.08);
+}
+
+.account-form-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.account-cancel-button {
+  border: 1px solid var(--btn-secondary-border);
+  background-color: var(--btn-secondary-bg);
+  color: var(--btn-secondary-text);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .account-cancel-button:hover {
+    border-color: var(--btn-secondary-hover-border);
+    background-color: var(--btn-secondary-hover-bg);
+    color: var(--btn-secondary-hover-text);
+  }
+}
+
+.account-inline-error {
+  display: block;
+  margin-top: 8px;
+  color: #c43d3d;
+  font-size: 0.74rem;
+  font-weight: 600;
+}
+
+.account-panel-danger {
+  grid-column: 1 / -1;
+  min-height: 0;
+  border-color: rgba(196, 61, 61, 0.25);
+}
+
+.account-panel-danger h2 {
+  margin-top: 18px;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+}
+
+.account-delete-button {
+  margin-top: 24px;
+  border: 1px solid rgba(196, 61, 61, 0.55);
+  background: rgba(196, 61, 61, 0.08);
+  color: #b53636;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .account-delete-button:hover:not(:disabled) {
+    background: #c43d3d;
+    border-color: #c43d3d;
+    color: #fff;
+  }
+}
+
+.account-delete-confirm {
+  display: grid;
+  max-width: 420px;
+  margin-top: 22px;
+  gap: 8px;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.account-delete-confirm strong {
+  color: #b53636;
+}
+
+.account-delete-confirm .account-delete-button {
+  margin-top: 0;
+}
+
+.account-back {
+  display: inline-block;
+  margin-top: 28px;
+}

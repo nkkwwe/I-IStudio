@@ -37,7 +37,7 @@ class MetaAdsInquiryTest extends TestCase
     {
         $this->post('/ua/inquiry', $this->payload())
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/ua/inquiry')
+            ->assertRedirect('/ua/inquiry?service=meta-ads')
             ->assertSessionHas('inquiry_service', 'meta-ads');
 
         $inquiry = ProjectInquiry::query()->sole();

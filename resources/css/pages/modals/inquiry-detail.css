@@ -1,0 +1,265 @@
+/* ==========================================================================
+   Project Brief Detail Modal
+   ========================================================================== */
+.inquiry-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(9, 9, 11, 0.64);
+  backdrop-filter: blur(8px);
+  animation: account-modal-backdrop-in 0.2s ease both;
+}
+
+.inquiry-detail-modal {
+  width: min(100%, 580px);
+  max-height: calc(100vh - 40px);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  background: var(--bg-surface);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.26);
+  animation: account-modal-in 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+html[data-theme="dark"] .inquiry-detail-modal {
+  border-color: var(--border);
+  background-color: var(--bg-surface);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
+.inquiry-detail-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.inquiry-detail-heading > div:first-child {
+  min-width: 0;
+}
+
+.inquiry-detail-ticket {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.inquiry-detail-heading h2 {
+  margin: 6px 0 0;
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.inquiry-detail-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.inquiry-detail-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 22px;
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-inner);
+  background: var(--bg-subtle);
+}
+
+.inquiry-detail-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.inquiry-detail-meta-label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.inquiry-detail-meta-value {
+  color: var(--text-primary);
+  font-size: 0.86rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.inquiry-detail-subtext {
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+.inquiry-detail-comment-section {
+  margin-top: 20px;
+}
+
+.inquiry-detail-comment-label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.inquiry-detail-comment-box {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-inner);
+  background: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.inquiry-detail-review-section {
+  margin-top: 20px;
+  padding: 15px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+  background: var(--bg-subtle);
+}
+
+.inquiry-detail-review-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.inquiry-detail-review-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #e9a328;
+  font-size: 0.78rem;
+}
+
+.inquiry-detail-review-rating strong {
+  color: var(--text-primary);
+}
+
+.inquiry-detail-review-body {
+  margin-top: 11px;
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.inquiry-detail-review-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.inquiry-detail-review-photos a {
+  display: block;
+  width: 82px;
+  height: 68px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-panel);
+  transition: border-color 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inquiry-detail-review-photos a:hover {
+    border-color: var(--border-strong);
+  }
+}
+
+.inquiry-detail-review-photos img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-meta-grid,
+html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-comment-box,
+html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-grid {
+  border-color: #dedee3;
+  background: #f4f4f5;
+  box-shadow: inset 0 1px 2px rgba(9, 9, 11, 0.025);
+}
+
+html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
+  border-color: #e6e6e9;
+}
+
+.inquiry-detail-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-light);
+}
+
+.inquiry-detail-cancel-btn {
+  margin-right: auto;
+}
+
+.inquiry-detail-cancel-btn,
+.inquiry-cancel-confirm-btn {
+  color: var(--status-danger-text);
+}
+
+.inquiry-detail-chat-btn {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  border: 1px solid var(--btn-primary-border);
+  border-radius: var(--radius-pill);
+  background-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inquiry-detail-chat-btn:hover {
+    background-color: var(--btn-primary-hover-bg);
+    border-color: var(--btn-primary-hover-border);
+    color: var(--btn-primary-hover-text);
+  }
+}
+
+.inquiry-detail-chat-btn:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 3px;
+}

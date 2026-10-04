@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Dedicated Project Brief Page
+   ========================================================================== */
+.inquiry-page-body {
+  min-height: 100vh;
+  background: var(--bg-body);
+}
+
+.inquiry-page {
+  padding: 132px 0 92px;
+}
+
+.inquiry-page-container {
+  display: grid;
+  grid-template-columns: minmax(240px, 0.72fr) minmax(0, 1.28fr);
+  align-items: start;
+  gap: 72px;
+}
+
+.inquiry-page-intro {
+  position: sticky;
+  top: 116px;
+  padding-top: 16px;
+}
+
+.inquiry-page-title {
+  max-width: 540px;
+  margin: 22px 0 18px;
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 5vw, 4.9rem);
+  line-height: 0.98;
+  letter-spacing: -0.065em;
+}
+
+.inquiry-page-description {
+  max-width: 500px;
+  color: var(--text-secondary);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.inquiry-page-benefits {
+  display: grid;
+  gap: 0;
+  max-width: 500px;
+  margin-top: 42px;
+  border-top: 1px solid var(--border);
+}
+
+.inquiry-page-benefit {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 14px;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.inquiry-page-benefit > span {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+}
+
+.inquiry-page-benefit p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.inquiry-page-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 28px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inquiry-page-back:hover {
+    color: var(--text-secondary);
+    gap: 13px;
+  }
+}
+
+.inquiry-form-card {
+  position: relative;
+  min-width: 0;
+  padding: clamp(28px, 4vw, 52px);
+  overflow: hidden;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.inquiry-form-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent-black), var(--accent-blue), transparent);
+  opacity: 0.85;
+}
+
+.inquiry-form-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.form-eyebrow {
+  display: block;
+  margin-bottom: 13px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.inquiry-form-header h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: clamp(1.65rem, 3vw, 2.35rem);
+  letter-spacing: -0.045em;
+}
+
+.inquiry-form-header p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.inquiry-form-card .service-selector-tabs {
+  margin-bottom: 30px;
+}

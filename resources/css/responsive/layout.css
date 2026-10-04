@@ -1,0 +1,400 @@
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .mobile-menu-backdrop {
+    position: fixed;
+    z-index: 999;
+    inset: 0;
+    background-color: rgba(9, 9, 11, 0.68);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 200ms ease, visibility 0s linear 200ms;
+  }
+
+  .mobile-menu-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    animation: account-modal-backdrop-in 0.2s ease both;
+    transition: opacity 200ms ease, visibility 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-menu-backdrop,
+    .mobile-menu-backdrop.active {
+      animation: none;
+      transition: none;
+    }
+  }
+
+  .bento-span-7,
+  .bento-span-5 {
+    grid-column: span 12;
+  }
+
+  .cases-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .advantages-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .workflow-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .inquiry-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .inquiry-info {
+    position: static;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+
+  .header-actions .btn-sm {
+    display: none;
+  }
+
+  .nav-menu {
+    position: fixed;
+    top: 72px;
+    left: 0;
+    width: 100%;
+    max-height: calc(100vh - 72px);
+    max-height: calc(100dvh - 72px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px;
+    gap: 12px;
+    display: none;
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .nav-menu.open {
+    display: flex;
+  }
+
+  .mobile-toggle {
+    display: flex;
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    flex: 0 0 44px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 9999px;
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .mobile-toggle:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 3px;
+  }
+
+  .mobile-toggle span {
+    width: 20px;
+  }
+
+  .mobile-toggle svg {
+    display: none;
+    width: 20px;
+    height: 20px;
+  }
+
+  .mobile-toggle.open span {
+    display: none;
+  }
+
+  .mobile-toggle.open svg {
+    display: block;
+  }
+
+  .site-header:has(.nav-menu.open) {
+    background-color: var(--bg-surface);
+    border-bottom-color: var(--border-strong);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .react-page-root > main,
+  .react-page-root > footer {
+    transition: filter 200ms ease;
+  }
+
+  body.mobile-menu-open .react-page-root > main,
+  body.mobile-menu-open .react-page-root > footer {
+    filter: blur(10px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .react-page-root > main,
+    .react-page-root > footer {
+      transition: none;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .mobile-toggle:hover {
+      border-color: var(--border-strong);
+      background: var(--bg-panel);
+      box-shadow: var(--shadow-subtle);
+    }
+  }
+
+  .header-actions > .language-switcher {
+    display: none;
+  }
+
+  .account-site-header .header-actions > .language-switcher {
+    display: inline-flex;
+  }
+
+  .nav-menu .mobile-language-switcher {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    margin-top: 4px;
+  }
+
+  .mobile-language-switcher .language-trigger {
+    width: 100%;
+    min-width: 0;
+    justify-content: space-between;
+    padding-inline: 14px;
+  }
+
+  .mobile-language-switcher .language-chevron {
+    display: block;
+    width: 14px;
+    height: 14px;
+  }
+
+  .mobile-language-switcher .language-menu {
+    position: static;
+    display: none;
+    width: 100%;
+    min-width: 0;
+    margin-top: 8px;
+  }
+
+  .mobile-language-switcher.open .language-menu {
+    display: grid;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
+  }
+}
+
+@media (max-width: 900px) {
+  .admin-topbar,
+  .account-history-topbar {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .admin-topbar-actions,
+  .account-history-actions {
+    justify-content: flex-start;
+  }
+
+  .account-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .solution-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .workflow-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 64px 0 56px 0;
+  }
+
+  .hero-services-text-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .hero-editorial-wrap {
+    padding: 32px 20px;
+  }
+
+  .bento-card {
+    padding: 24px;
+  }
+
+  .bento-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .solution-output-card {
+    padding: 24px;
+  }
+
+  .solution-left .btn,
+  .solution-calc-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+
+  .cases-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .case-badge-overlay {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .goals-pills-wrapper {
+    gap: 8px;
+    margin-bottom: 28px;
+  }
+
+  .goal-pill {
+    padding: 8px 16px;
+    font-size: 0.84rem;
+  }
+
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .inquiry-action-card {
+    padding: 28px 20px;
+  }
+
+  .inquiry-features-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .modal-card {
+    padding: 28px 18px;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-cta-group {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .hero-cta-group .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .workflow-grid,
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .header-actions {
+    gap: 8px;
+  }
+
+  .account-header-link.account-sign-in-link {
+    padding-inline: 12px;
+    font-size: 0.74rem;
+  }
+
+  .header-actions .btn-sm {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+  }
+
+  .goal-pill {
+    padding: 7px 13px;
+    font-size: 0.8rem;
+  }
+
+  .action-service-pill {
+    padding: 8px 13px;
+    font-size: 0.8125rem;
+  }
+
+  .bento-pill-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .case-metrics-row .metric-val {
+    font-size: 1.15rem;
+  }
+
+  .case-metrics-row .metric-label {
+    font-size: 0.68rem;
+  }
+
+  .solution-output-card {
+    padding: 22px 16px;
+  }
+
+  .solution-left .btn,
+  .solution-calc-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+    padding: 11px 14px;
+    font-size: 0.84rem;
+    line-height: 1.3;
+    gap: 8px;
+  }
+}
+
+/* ============================================================================
+   Extra-small phones: keep the full layout usable at 320px
+   ============================================================================ */

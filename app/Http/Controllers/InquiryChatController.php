@@ -248,6 +248,7 @@ class InquiryChatController extends Controller
     {
         $messages = $inquiry->messages()
             ->oldest('created_at')
+            ->oldest('id')
             ->get();
 
         $unreadMessageIds = $messages
@@ -269,7 +270,8 @@ class InquiryChatController extends Controller
                 ->values()
                 ->all(),
             'unread_count' => 0,
-        ]);
+            'first_unread_message_id' => $unreadMessageIds->first(),
+        ])->header('Cache-Control', 'no-store');
     }
 
     private function serializeMessage(ProjectInquiryMessage $message): array
