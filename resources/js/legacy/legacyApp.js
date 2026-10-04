@@ -239,6 +239,7 @@ function initMobileMenu(signal) {
       toggle.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
       backdrop.classList.remove('active');
+      document.body.classList.remove('mobile-menu-open');
     };
 
     toggle.addEventListener('click', () => {
@@ -246,6 +247,7 @@ function initMobileMenu(signal) {
       toggle.classList.toggle('open', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
       backdrop.classList.toggle('active', isOpen);
+      document.body.classList.toggle('mobile-menu-open', isOpen);
     }, { signal });
 
     // Close on link click

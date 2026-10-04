@@ -131,8 +131,26 @@
 
   .site-header:has(.nav-menu.open) {
     background-color: var(--bg-surface);
+    border-bottom-color: var(--border-strong);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+  }
+
+  .react-page-root > main,
+  .react-page-root > footer {
+    transition: filter 200ms ease;
+  }
+
+  body.mobile-menu-open .react-page-root > main,
+  body.mobile-menu-open .react-page-root > footer {
+    filter: blur(10px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .react-page-root > main,
+    .react-page-root > footer {
+      transition: none;
+    }
   }
 
   @media (hover: hover) and (pointer: fine) {
