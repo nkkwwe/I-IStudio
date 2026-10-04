@@ -235,7 +235,7 @@ export default function Account() {
         )}
 
         {logoutModalOpen && (
-          <AccountModal eyebrow={accountCopy.accountLabel} title={accountCopy.signOutTitle} closeLabel={common.closeDialog} compact onClose={closeModals}>
+          <AccountModal eyebrow={accountCopy.accountLabel} title={accountCopy.signOutTitle} closeLabel={common.closeDialog} danger compact onClose={closeModals}>
             <p className="account-modal-copy">{accountCopy.signOutDescription}</p>
             <div className="account-modal-actions">
               <button type="button" className="account-modal-button account-modal-button-danger" onClick={confirmLogout} disabled={logoutForm.processing}>
