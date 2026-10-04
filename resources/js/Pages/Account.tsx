@@ -39,7 +39,7 @@ export default function Account() {
   const common = copy.common;
   const accountCopy = copy.account;
   const user = auth.user;
-  const submittedBriefs = inquiries.slice(0, 1);
+  const submittedBriefs = inquiries.slice(0, 3);
   const unreadChatCount = useChatUnreadCount(auth.unread_chat_count ?? 0);
   const initial = user.name?.trim().charAt(0).toUpperCase() || user.email.charAt(0).toUpperCase();
   const [nameModalOpen, setNameModalOpen] = useState(false);
@@ -133,7 +133,7 @@ export default function Account() {
       <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => setLogoutModalOpen(true)} />
       <main className="account-page">
       <div className="account-shell">
-        <section className="account-hero">
+        <section className="account-hero account-dashboard-hero">
           <div className="account-avatar">{user.avatar ? <img src={user.avatar} alt="" /> : initial}</div>
           <div>
             <span className="auth-eyebrow">{accountCopy.personalWorkspace}</span>
@@ -144,41 +144,61 @@ export default function Account() {
 
         {flash.profile_updated && <div className="account-flash">{accountCopy.profileUpdated}</div>}
 
-        <section className="account-grid">
-          <article className="account-panel account-panel-wide">
-            <div className="account-workspace-content">
-              <span className="account-panel-label">{accountCopy.accountLabel}</span>
-              <h2>{accountCopy.workspaceTitle}</h2>
-              <p>{accountCopy.workspaceDescription}</p>
-              {submittedBriefs.length > 0 && (
-                <div className="account-brief-status-list" aria-label={accountCopy.submittedBriefs}>
-                  {submittedBriefs.map((brief) => (
-                    <Link className="account-brief-status-row" key={brief.id} href={`${localizedUrl('/account/project-briefs')}?brief=${brief.id}`}>
-                      <div>
-                        <span className="account-brief-ticket">{brief.ticket}</span>
-                        <strong>{copy.services[brief.service_type] ?? brief.service_type}</strong>
-                      </div>
-                      <span className={`account-brief-status account-brief-status-${brief.status}`}>{copy.admin.statuses[brief.status] ?? brief.status}</span>
-                    </Link>
-                  ))}
-                </div>
-              )}
+        <section className="account-grid account-dashboard-grid">
+          <article className="account-panel account-dashboard-briefs">
+            <div className="account-dashboard-heading">
+              <div>
+                <span className="account-panel-label">{accountCopy.projectHistory}</span>
+                <h2>{accountCopy.myProjectBriefs}</h2>
+              </div>
+              <Link href={localizedUrl('/inquiry')} className="btn btn-primary account-dashboard-new">{accountCopy.startNewBrief}</Link>
             </div>
-            <Link href={localizedUrl('/inquiry')} className="account-primary-link">{accountCopy.startNewBrief} <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg></Link>
+            {submittedBriefs.length > 0 ? (
+              <div className="account-brief-status-list" aria-label={accountCopy.submittedBriefs}>
+                {submittedBriefs.map((brief) => (
+                  <Link className="account-brief-status-row" key={brief.id} href={`${localizedUrl('/account/project-briefs')}?brief=${brief.id}`}>
+                    <div>
+                      <span className="account-brief-ticket">{brief.ticket}</span>
+                      <strong>{copy.services[brief.service_type] ?? brief.service_type}</strong>
+                    </div>
+                    <span className={`account-brief-status account-brief-status-${brief.status}`}>{copy.admin.statuses[brief.status] ?? brief.status}</span>
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <div className="account-dashboard-empty">
+                <strong>{accountCopy.noProjectBriefs}</strong>
+                <p>{accountCopy.noProjectBriefsDescription}</p>
+              </div>
+            )}
+            <Link href={localizedUrl('/account/project-briefs')} className="account-dashboard-all">
+              <span>{accountCopy.viewAllBriefs}</span>
+              <ChatUnreadBadge count={unreadChatCount} />
+              <span aria-hidden="true">→</span>
+            </Link>
           </article>
 
-          <article className="account-panel">
-            <span className="account-panel-label">{accountCopy.profileLabel}</span>
+          <article className="account-panel account-dashboard-profile">
+            <div className="account-dashboard-profile-head">
+              <div>
+                <span className="account-panel-label">{accountCopy.accountLabel}</span>
+                <h2>{accountCopy.profileLabel}</h2>
+              </div>
+              <button type="button" className="account-edit-button" onClick={openNameModal}>{accountCopy.editName}</button>
+            </div>
             <dl className="account-details">
               <div><dt>{accountCopy.name}</dt><dd>{user.name}</dd></div>
               <div><dt>{accountCopy.email}</dt><dd>{user.email}</dd></div>
               <div><dt>{accountCopy.signIn}</dt><dd>{accountCopy.google}</dd></div>
             </dl>
-            <button type="button" className="account-edit-button" onClick={openNameModal}>{accountCopy.editName}</button>
+            <div className="account-dashboard-settings">
+              <span className="account-panel-label">{accountCopy.accountControl}</span>
+              <button type="button" className="account-delete-button" onClick={openDeleteModal}>{common.deleteAccount}</button>
+            </div>
           </article>
 
           {user.is_admin && (
-            <article className="account-panel account-action-card">
+            <article className="account-panel account-action-card account-dashboard-admin">
               <Link href="/admin" className="account-action-card-link">
                 <div className="account-action-card-content">
                   <h2>{accountCopy.adminPanel}</h2>
@@ -189,25 +209,6 @@ export default function Account() {
             </article>
           )}
 
-          <article className="account-panel account-action-card">
-              <Link href={localizedUrl('/account/project-briefs')} className="account-action-card-link">
-              <div className="account-action-card-content">
-                <h2>{copy.account.viewAllBriefs}</h2>
-                <p>{copy.account.openEveryTask}</p>
-              </div>
-              <span className="account-action-card-arrow">
-                <ChatUnreadBadge count={unreadChatCount} />
-                <span aria-hidden="true">→</span>
-              </span>
-            </Link>
-          </article>
-
-          <article className="account-panel account-panel-danger">
-            <span className="account-panel-label">{accountCopy.accountControl}</span>
-            <h2>{accountCopy.leaveStudio}</h2>
-            <p>{accountCopy.leaveStudioDescription}</p>
-            <button type="button" className="account-delete-button" onClick={openDeleteModal}>{common.deleteAccount}</button>
-          </article>
         </section>
 
         {nameModalOpen && (

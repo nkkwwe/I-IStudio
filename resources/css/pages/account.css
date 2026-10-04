@@ -297,3 +297,163 @@ html[data-theme="dark"] .account-delete-button {
   }
 }
 
+/* Dashboard: recent work first, account controls alongside it. */
+.account-dashboard-hero {
+  padding-bottom: 28px;
+}
+
+.account-dashboard-hero h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.account-dashboard-grid {
+  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  align-items: start;
+}
+
+.account-dashboard-briefs,
+.account-dashboard-profile {
+  min-height: 0;
+}
+
+.account-dashboard-heading,
+.account-dashboard-profile-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.account-dashboard-heading h2,
+.account-dashboard-profile-head h2 {
+  max-width: none;
+  margin-top: 8px;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.18;
+}
+
+.account-dashboard-new {
+  flex: 0 0 auto;
+}
+
+.account-dashboard-briefs .account-brief-status-list {
+  max-width: none;
+  margin-top: 26px;
+}
+
+.account-dashboard-empty {
+  margin-top: 26px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+  background: var(--bg-subtle);
+}
+
+.account-dashboard-empty strong {
+  color: var(--text-primary);
+}
+
+.account-dashboard-empty p {
+  margin-top: 6px;
+  font-size: 0.875rem;
+}
+
+.account-dashboard-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 16px;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.account-dashboard-all:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
+
+.account-dashboard-profile-head .account-edit-button {
+  flex: 0 0 auto;
+  margin-top: 0;
+}
+
+.account-dashboard-profile .account-details {
+  margin-top: 24px;
+}
+
+.account-dashboard-settings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 26px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.account-dashboard-settings .account-delete-button {
+  margin-top: 0;
+}
+
+.account-dashboard-admin .account-action-card-link {
+  min-height: 0;
+  padding: 18px 26px;
+}
+
+.account-dashboard-admin .account-action-card-content h2 {
+  margin: 0 0 4px;
+  font-size: 1.125rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .account-dashboard-all:hover {
+    color: var(--text-secondary);
+  }
+}
+
+@media (max-width: 900px) {
+  .account-dashboard-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .account-dashboard-hero {
+    padding-bottom: 24px;
+  }
+
+  .account-dashboard-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .account-dashboard-new {
+    width: 100%;
+  }
+
+  .account-dashboard-profile-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .account-dashboard-profile-head .account-edit-button {
+    width: auto;
+    min-height: 44px;
+  }
+
+  .account-dashboard-settings {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .account-dashboard-settings .account-delete-button {
+    width: auto;
+    min-height: 44px;
+  }
+}
+
