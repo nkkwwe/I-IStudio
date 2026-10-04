@@ -229,18 +229,23 @@ function initMobileMenu(signal) {
   const header = document.querySelector('.site-header');
 
   if (toggle && menu) {
+    const backdrop = document.createElement('div');
+    backdrop.className = 'mobile-menu-backdrop';
+    backdrop.setAttribute('aria-hidden', 'true');
+    document.body.append(backdrop);
+
     const closeMenu = () => {
       menu.classList.remove('open');
       toggle.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
-      document.body.classList.remove('mobile-menu-open');
+      backdrop.classList.remove('active');
     };
 
     toggle.addEventListener('click', () => {
       const isOpen = menu.classList.toggle('open');
       toggle.classList.toggle('open', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
-      document.body.classList.toggle('mobile-menu-open', isOpen);
+      backdrop.classList.toggle('active', isOpen);
     }, { signal });
 
     // Close on link click
@@ -255,6 +260,10 @@ function initMobileMenu(signal) {
     }, { signal });
 
     window.addEventListener('scroll', closeMenu, { passive: true, signal });
+    signal.addEventListener('abort', () => {
+      closeMenu();
+      backdrop.remove();
+    }, { once: true });
   }
 
   // Scroll listener for sticky header
