@@ -298,22 +298,41 @@ html[data-theme="dark"] .account-delete-button {
 }
 
 /* Dashboard: recent work first, account controls alongside it. */
+.account-dashboard-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.account-dashboard-page {
+  flex: 1;
+  min-height: 0;
+}
+
+.account-dashboard-page .account-shell {
+  width: min(100% - 48px, 1200px);
+  padding-bottom: 40px;
+}
+
 .account-dashboard-hero {
   padding-bottom: 28px;
 }
 
 .account-dashboard-hero h1 {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2rem, 4vw, 3.5rem);
 }
 
 .account-dashboard-grid {
-  grid-template-columns: minmax(0, 1.3fr) minmax(280px, 0.7fr);
+  grid-template-columns: minmax(0, 1.3fr) minmax(340px, 0.7fr);
+  gap: 24px;
   align-items: start;
 }
 
 .account-dashboard-briefs,
 .account-dashboard-profile {
   min-height: 0;
+  padding: 32px;
 }
 
 .account-dashboard-heading,
@@ -328,7 +347,7 @@ html[data-theme="dark"] .account-delete-button {
 .account-dashboard-profile-head h2 {
   max-width: none;
   margin-top: 8px;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
   line-height: 1.18;
 }
 
@@ -359,16 +378,8 @@ html[data-theme="dark"] .account-delete-button {
 }
 
 .account-dashboard-all {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 44px;
-  margin-top: 16px;
-  color: var(--text-primary);
-  font-size: 0.875rem;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  margin-top: 24px;
+  white-space: normal;
 }
 
 .account-dashboard-all:focus-visible {
@@ -376,9 +387,9 @@ html[data-theme="dark"] .account-delete-button {
   outline-offset: 3px;
 }
 
-.account-dashboard-profile-head .account-edit-button {
+.account-dashboard-profile-head .btn {
   flex: 0 0 auto;
-  margin-top: 0;
+  min-height: 44px;
 }
 
 .account-dashboard-profile .account-details {
@@ -397,21 +408,54 @@ html[data-theme="dark"] .account-delete-button {
 
 .account-dashboard-settings .account-delete-button {
   margin-top: 0;
+  min-height: 44px;
+  font-size: 0.875rem;
 }
 
 .account-dashboard-admin .account-action-card-link {
   min-height: 0;
-  padding: 18px 26px;
+  padding: 24px 32px;
 }
 
 .account-dashboard-admin .account-action-card-content h2 {
   margin: 0 0 4px;
-  font-size: 1.125rem;
+  font-size: 1.5rem;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .account-dashboard-all:hover {
-    color: var(--text-secondary);
+.account-dashboard-admin .account-action-card-content p {
+  font-size: 0.875rem;
+}
+
+.account-dashboard-briefs .account-brief-status-row {
+  padding: 18px 20px;
+}
+
+.account-dashboard-briefs .account-brief-status-row strong {
+  font-size: 1rem;
+}
+
+.account-dashboard-briefs .account-brief-ticket {
+  font-size: 0.75rem;
+}
+
+.account-dashboard-briefs .account-brief-status {
+  height: auto;
+  min-height: 32px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.account-dashboard-profile .account-details dt {
+  font-size: 0.875rem;
+}
+
+.account-dashboard-profile .account-details dd {
+  font-size: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .account-dashboard-all {
+    transition: none;
   }
 }
 
@@ -422,6 +466,15 @@ html[data-theme="dark"] .account-delete-button {
 }
 
 @media (max-width: 560px) {
+  .account-dashboard-page .account-shell {
+    width: calc(100% - 32px);
+  }
+
+  .account-dashboard-briefs,
+  .account-dashboard-profile {
+    padding: 24px;
+  }
+
   .account-dashboard-hero {
     padding-bottom: 24px;
   }
@@ -441,7 +494,7 @@ html[data-theme="dark"] .account-delete-button {
     gap: 16px;
   }
 
-  .account-dashboard-profile-head .account-edit-button {
+  .account-dashboard-profile-head .btn {
     width: auto;
     min-height: 44px;
   }

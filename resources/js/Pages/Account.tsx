@@ -130,8 +130,9 @@ export default function Account() {
   return (
     <>
       <Head title={accountCopy.pageTitle} />
+      <div className="account-dashboard-layout">
       <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => setLogoutModalOpen(true)} />
-      <main className="account-page">
+      <main className="account-page account-dashboard-page">
       <div className="account-shell">
         <section className="account-hero account-dashboard-hero">
           <div className="account-avatar">{user.avatar ? <img src={user.avatar} alt="" /> : initial}</div>
@@ -171,10 +172,10 @@ export default function Account() {
                 <p>{accountCopy.noProjectBriefsDescription}</p>
               </div>
             )}
-            <Link href={localizedUrl('/account/project-briefs')} className="account-dashboard-all">
+            <Link href={localizedUrl('/account/project-briefs')} className="btn btn-secondary account-dashboard-all">
               <span>{accountCopy.viewAllBriefs}</span>
               <ChatUnreadBadge count={unreadChatCount} />
-              <span aria-hidden="true">→</span>
+              <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
             </Link>
           </article>
 
@@ -184,7 +185,7 @@ export default function Account() {
                 <span className="account-panel-label">{accountCopy.accountLabel}</span>
                 <h2>{accountCopy.profileTitle}</h2>
               </div>
-              <button type="button" className="account-edit-button" onClick={openNameModal}>{accountCopy.editName}</button>
+              <button type="button" className="btn btn-secondary btn-sm" onClick={openNameModal}>{accountCopy.editName}</button>
             </div>
             <dl className="account-details">
               <div><dt>{accountCopy.name}</dt><dd>{user.name}</dd></div>
@@ -269,6 +270,7 @@ export default function Account() {
         )}
       </div>
       </main>
+      </div>
     </>
   );
 }
