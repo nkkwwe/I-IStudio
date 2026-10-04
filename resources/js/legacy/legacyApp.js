@@ -268,7 +268,10 @@ function initScrollSpy(signal) {
 
   const sectionsWithLinks = Array.from(navLinks)
     .map(link => ({ link, section: getTargetSection(link) }))
-    .filter(item => item.section !== null);
+    .filter(item => item.section !== null)
+    .sort((a, b) => (
+      a.section.compareDocumentPosition(b.section) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1
+    ));
   if (!sectionsWithLinks.length) return;
 
   let animationFrame = null;
