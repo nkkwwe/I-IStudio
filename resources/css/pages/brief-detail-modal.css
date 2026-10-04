@@ -694,21 +694,11 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
-.inquiry-chat-attach:focus-within {
+.inquiry-chat-attach:focus-visible {
   outline: 2px solid var(--text-primary);
   outline-offset: 2px;
   background: transparent;
   color: var(--text-primary);
-}
-
-.inquiry-chat-attach input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  clip-path: inset(50%);
 }
 
 .inquiry-chat-composer textarea {
@@ -739,72 +729,120 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 }
 
 .inquiry-chat-attachment-preview {
-  display: flex;
-  min-height: 58px;
-  align-items: center;
-  gap: 10px;
-  padding: 7px 9px;
+  position: relative;
+  flex: 0 0 96px;
+  padding: 6px;
   border: 1px solid var(--border-light);
-  border-radius: 14px;
+  border-radius: var(--radius-inner);
   background: var(--bg-panel);
 }
 
 .inquiry-chat-attachment-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
-  gap: 6px;
-  max-height: 160px;
-  overflow-y: auto;
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 2px;
+  overscroll-behavior-x: contain;
 }
 .inquiry-chat-attachment-list:empty { display: none; }
-.inquiry-chat-attach:has(input:disabled) { cursor: not-allowed; opacity: 0.45; }
+.inquiry-chat-attach:disabled { cursor: not-allowed; opacity: 0.45; }
 
 .inquiry-chat-attachment-preview img {
-  width: 44px;
-  height: 44px;
-  flex: 0 0 44px;
+  width: 100%;
+  height: 64px;
   object-fit: cover;
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
 }
 
-.inquiry-chat-attachment-preview div {
+.inquiry-chat-selected-photo {
   display: grid;
+  width: 100%;
   min-width: 0;
-  gap: 1px;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  cursor: pointer;
 }
 
-.inquiry-chat-attachment-preview strong {
+.inquiry-chat-selected-photo span {
   overflow: hidden;
   color: var(--text-primary);
-  font-size: 0.76rem;
+  font-size: 0.75rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.inquiry-chat-attachment-preview small {
-  color: var(--text-muted);
-  font-size: 0.68rem;
-}
-
-.inquiry-chat-attachment-preview button {
+.inquiry-chat-remove-photo {
+  position: absolute;
+  top: 0;
+  right: 0;
   display: grid;
-  width: 30px;
-  height: 30px;
-  flex: 0 0 30px;
-  margin-left: auto;
+  width: 44px;
+  height: 44px;
   place-items: center;
-  border: 1px solid var(--border-strong);
-  border-radius: 50%;
+  border: 0;
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--text-secondary);
   cursor: pointer;
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+.inquiry-chat-remove-photo svg {
+  width: 28px;
+  height: 28px;
+  padding: 6px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface);
+  transition: background-color 200ms ease, border-color 200ms ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .inquiry-chat-attachment-preview button:hover:not(:disabled) {
-    border-color: var(--text-primary);
+  .inquiry-chat-remove-photo:hover:not(:disabled) {
     color: var(--text-primary);
   }
+  .inquiry-chat-remove-photo:hover:not(:disabled) svg {
+    border-color: var(--text-primary);
+    background: var(--bg-panel);
+  }
+}
+
+.inquiry-chat-selected-photo:focus-visible,
+.inquiry-chat-remove-photo:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+.inquiry-chat-messages,
+.inquiry-chat-attachment-list,
+.inquiry-chat-input {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+:is(.inquiry-chat-messages, .inquiry-chat-attachment-list, .inquiry-chat-input)::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+:is(.inquiry-chat-messages, .inquiry-chat-attachment-list, .inquiry-chat-input)::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+:is(.inquiry-chat-messages, .inquiry-chat-attachment-list, .inquiry-chat-input)::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-pill);
+  background: var(--border-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inquiry-chat-remove-photo,
+  .inquiry-chat-remove-photo svg { transition: none; }
 }
 
 .inquiry-chat-form-error {

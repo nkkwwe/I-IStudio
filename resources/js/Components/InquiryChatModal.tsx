@@ -382,15 +382,14 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
         </div>
 
         <form ref={composerRef} className="inquiry-chat-composer" onSubmit={submitMessage}>
-          <div className="inquiry-chat-attachment-list">
+          <div className="inquiry-chat-attachment-list" role="list" aria-label={copy.chat.addImage}>
           {selectedImages.map((selectedImage, index) => previewUrls[index] && (
-            <div className="inquiry-chat-attachment-preview" key={`${selectedImage.name}-${index}`}>
-              <img src={previewUrls[index]} alt={selectedImage.name} />
-              <div>
-                <strong>{selectedImage.name}</strong>
-                <small>{Math.ceil(selectedImage.size / 1024)} KB</small>
-              </div>
-              <button type="button" disabled={form.processing} onClick={() => removeSelectedImage(index)} aria-label={`${copy.chat.removeImage}: ${selectedImage.name}`}>
+            <div className="inquiry-chat-attachment-preview" role="listitem" key={`${selectedImage.name}-${index}`}>
+              <button type="button" className="inquiry-chat-selected-photo" onClick={() => setImagePreview({ url: previewUrls[index], name: selectedImage.name })} aria-label={selectedImage.name}>
+                <img src={previewUrls[index]} alt="" />
+                <span>{Array.from(selectedImage.name).length > 10 ? `${Array.from(selectedImage.name).slice(0, 10).join('')}…` : selectedImage.name}</span>
+              </button>
+              <button type="button" className="inquiry-chat-remove-photo" disabled={form.processing} onClick={() => removeSelectedImage(index)} aria-label={`${copy.chat.removeImage}: ${selectedImage.name}`}>
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
                   <path d="M6 6l12 12M18 6L6 18" />
                 </svg>
@@ -399,28 +398,31 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
           ))}
           </div>
           <div className="inquiry-chat-composer-row">
-            <label
-              className="inquiry-chat-attach"
-              htmlFor={'inquiry-chat-attachment-' + inquiryId}
-              aria-label={copy.chat.addImage}
-              title={copy.chat.addImage}
-            >
               <input
                 ref={attachmentInputRef}
                 id={'inquiry-chat-attachment-' + inquiryId}
                 type="file"
+                hidden
                 multiple
                 accept="image/jpeg,image/png,image/gif,image/webp"
                 onChange={selectImage}
                 disabled={form.processing}
                 aria-label={copy.chat.addImage}
               />
+            <button
+              type="button"
+              className="inquiry-chat-attach"
+              onClick={() => attachmentInputRef.current?.click()}
+              disabled={form.processing}
+              aria-label={copy.chat.addImage}
+              title={copy.chat.addImage}
+            >
               <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <rect x="3" y="3" width="18" height="18" rx="3" />
                 <circle cx="8.5" cy="8.5" r="1.5" />
                 <path d="m21 15-4.5-4.5L7 20" />
               </svg>
-            </label>
+            </button>
             <textarea
               className="inquiry-chat-input"
               ref={messageInputRef}
