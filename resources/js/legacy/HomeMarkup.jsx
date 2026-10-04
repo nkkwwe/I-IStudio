@@ -41,9 +41,9 @@ function Header({ isAuthenticated, signInLabel, unreadChatCount, userName }) {
         <nav className="nav-menu" id="navMenu">
           <a href="#hero" className="nav-link" data-i18n="nav_home">Main</a>
           <a href="#services" className="nav-link" data-i18n="nav_services">Services</a>
-          <a href="#faq" className="nav-link">FAQ</a>
-          <a href="#process" className="nav-link" data-i18n="nav_process">How We Work</a>
           <a href="#advantages" className="nav-link" data-i18n="nav_about">About</a>
+          <a href="#process" className="nav-link" data-i18n="nav_process">How We Work</a>
+          <a href="#faq" className="nav-link">FAQ</a>
           <a href="#inquiry" className="nav-link" data-i18n="nav_contact">Contact</a>
           <LanguageSwitcher mobile />
         </nav>
