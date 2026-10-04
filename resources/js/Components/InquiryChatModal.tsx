@@ -78,6 +78,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const [attachmentError, setAttachmentError] = useState('');
   const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
   const [dateVisible, setDateVisible] = useState(false);
+  const [floatingDates, setFloatingDates] = useState<string[]>([]);
   const [messageMenu, setMessageMenu] = useState<{ message: ChatMessage; x: number; y: number; confirmingDelete?: boolean } | null>(null);
   const [editingMessage, setEditingMessage] = useState<ChatMessage | null>(null);
   const [editBody, setEditBody] = useState('');
@@ -101,6 +102,23 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
   const followBottomRef = useRef(true);
   const initialScrollRef = useRef(true);
+  const updateFloatingDates = useCallback(() => {
+    const list = messagesRef.current;
+    if (!list) return;
+    const keys = Array.from(list.querySelectorAll<HTMLElement>('.inquiry-chat-day')).filter((day) => {
+      const date = day.querySelector<HTMLElement>('.inquiry-chat-date');
+      return date && date.getBoundingClientRect().top > day.getBoundingClientRect().top + 1;
+    }).map((day) => day.dataset.day!);
+    setFloatingDates((previous) => previous.join('|') === keys.join('|') ? previous : keys);
+  }, []);
+  useLayoutEffect(() => {
+    updateFloatingDates();
+    const list = messagesRef.current;
+    if (!list) return;
+    const observer = new ResizeObserver(updateFloatingDates);
+    observer.observe(list);
+    return () => observer.disconnect();
+  }, [messages, loading, updateFloatingDates]);
   const onCloseRef = useRef(onClose);
   const onReadRef = useRef(onRead);
   const imagePreviewRef = useRef<ImagePreview | null>(null);
@@ -416,6 +434,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
 
         <div className={`inquiry-chat-messages${dateVisible ? ' is-scrolling' : ''}`} ref={messagesRef} aria-live="polite" onScroll={(event) => {
           const list = event.currentTarget;
+          updateFloatingDates();
           if (Math.abs(list.scrollTop - lastScrollTopRef.current) < 1) return;
           cancelHold();
           setMessageMenu(null);
@@ -432,8 +451,8 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
           ) : messages.length === 0 ? (
             <p className="inquiry-chat-state">{copy.chat.empty}</p>
           ) : (
-            groups.map((group) => <div className="inquiry-chat-day" key={group.key}>
-              <div className="inquiry-chat-date"><span>{formatDay(group.date, copy.chat)}</span></div>
+            groups.map((group) => <div className="inquiry-chat-day" key={group.key} data-day={group.key}>
+              <div className={`inquiry-chat-date${floatingDates.includes(group.key) ? ' is-floating' : ''}`}><span>{formatDay(group.date, copy.chat)}</span></div>
               {group.messages.map((message) => {
               const isOwn = message.sender_role === currentRole;
 

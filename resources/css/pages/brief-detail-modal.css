@@ -465,7 +465,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 }
 
 .inquiry-chat-date {
-  opacity: 0;
+  opacity: 1;
   transition: opacity 240ms ease;
   position: sticky;
   z-index: 1;
@@ -476,7 +476,11 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
   pointer-events: none;
 }
 
-.inquiry-chat-messages.is-scrolling .inquiry-chat-date {
+.inquiry-chat-date.is-floating {
+  opacity: 0;
+}
+
+.inquiry-chat-messages.is-scrolling .inquiry-chat-date.is-floating {
   opacity: 1;
 }
 
