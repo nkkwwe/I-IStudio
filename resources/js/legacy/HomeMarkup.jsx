@@ -61,7 +61,7 @@ function Header({ isAuthenticated, signInLabel, unreadChatCount, userName }) {
             <svg className="theme-icon theme-icon-moon" width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z" /></svg>
           </button>
           <LanguageSwitcher />
-          <button className="mobile-toggle" id="mobileToggle" data-i18n-aria-label="aria_menu" data-i18n-tooltip="aria_menu" data-tooltip="Toggle menu" aria-label="Toggle menu"><span /><span /><span /></button>
+          <button type="button" className="mobile-toggle" id="mobileToggle" data-i18n-aria-label="aria_menu" data-i18n-tooltip="aria_menu" data-tooltip="Toggle menu" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu"><span /><span /><span /><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg></button>
         </div>
       </div>
     </header>

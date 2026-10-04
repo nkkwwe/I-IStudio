@@ -229,16 +229,30 @@ function initMobileMenu(signal) {
   const header = document.querySelector('.site-header');
 
   if (toggle && menu) {
+    const closeMenu = () => {
+      menu.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    };
+
     toggle.addEventListener('click', () => {
-      menu.classList.toggle('open');
+      const isOpen = menu.classList.toggle('open');
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
     }, { signal });
 
     // Close on link click
     menu.querySelectorAll('.nav-link').forEach(link => {
-      link.addEventListener('click', () => {
-        menu.classList.remove('open');
-      }, { signal });
+      link.addEventListener('click', closeMenu, { signal });
     });
+
+    document.addEventListener('click', (event) => {
+      if (menu.classList.contains('open') && !menu.contains(event.target) && !toggle.contains(event.target)) {
+        closeMenu();
+      }
+    }, { signal });
+
+    window.addEventListener('scroll', closeMenu, { passive: true, signal });
   }
 
   // Scroll listener for sticky header
