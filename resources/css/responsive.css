@@ -2,6 +2,33 @@
    Responsive Breakpoints
    ========================================================================== */
 @media (max-width: 1024px) {
+  body::before {
+    position: fixed;
+    z-index: 999;
+    inset: 0;
+    background: rgba(9, 9, 11, 0.64);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    content: '';
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 200ms ease, visibility 0s linear 200ms;
+  }
+
+  body.mobile-menu-open::before {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition: opacity 200ms ease, visibility 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body::before {
+      transition: none;
+    }
+  }
+
   .bento-span-7,
   .bento-span-5 {
     grid-column: span 12;

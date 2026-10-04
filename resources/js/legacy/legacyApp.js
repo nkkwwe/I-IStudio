@@ -233,12 +233,14 @@ function initMobileMenu(signal) {
       menu.classList.remove('open');
       toggle.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('mobile-menu-open');
     };
 
     toggle.addEventListener('click', () => {
       const isOpen = menu.classList.toggle('open');
       toggle.classList.toggle('open', isOpen);
       toggle.setAttribute('aria-expanded', String(isOpen));
+      document.body.classList.toggle('mobile-menu-open', isOpen);
     }, { signal });
 
     // Close on link click
