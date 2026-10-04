@@ -77,6 +77,8 @@ Route::middleware('auth')->group(function (): void {
     Route::patch('/account/project-briefs/{inquiry}/cancel', [InquiryController::class, 'cancel'])->name('account.project-briefs.cancel');
     Route::get('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'indexForUser'])->name('account.project-briefs.messages');
     Route::post('/account/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'storeForUser'])->name('account.project-briefs.messages.store');
+    Route::patch('/account/project-briefs/{inquiry}/messages/{message}', [InquiryChatController::class, 'updateForUser'])->name('account.project-briefs.messages.update');
+    Route::delete('/account/project-briefs/{inquiry}/messages/{message}', [InquiryChatController::class, 'destroyForUser'])->name('account.project-briefs.messages.destroy');
     Route::post('/account/project-briefs/{inquiry}/messages/activity', [InquiryChatController::class, 'activityForUser'])->name('account.project-briefs.activity');
     Route::put('/account/project-briefs/{inquiry}/review', [ProjectInquiryReviewController::class, 'save'])->name('account.project-briefs.review.save');
     Route::get('/project-inquiry-review-attachments/{attachment}', [ProjectInquiryReviewController::class, 'attachment'])->name('project-inquiry-review-attachments.show');
@@ -91,6 +93,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function (): void {
     Route::patch('/project-briefs/{inquiry}/status', [AdminController::class, 'updateInquiryStatus'])->name('admin.project-briefs.status');
     Route::get('/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'indexForAdmin'])->name('admin.project-briefs.messages');
     Route::post('/project-briefs/{inquiry}/messages', [InquiryChatController::class, 'storeForAdmin'])->name('admin.project-briefs.messages.store');
+    Route::patch('/project-briefs/{inquiry}/messages/{message}', [InquiryChatController::class, 'updateForAdmin'])->name('admin.project-briefs.messages.update');
+    Route::delete('/project-briefs/{inquiry}/messages/{message}', [InquiryChatController::class, 'destroyForAdmin'])->name('admin.project-briefs.messages.destroy');
     Route::post('/project-briefs/{inquiry}/messages/activity', [InquiryChatController::class, 'activityForAdmin'])->name('admin.project-briefs.activity');
     Route::get('/registered-users', [AdminController::class, 'registeredUsers'])->name('admin.registered-users');
     Route::get('/registered-users/{user}', [AdminController::class, 'userDetails'])->name('admin.user-details');

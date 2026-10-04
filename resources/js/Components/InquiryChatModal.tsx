@@ -10,6 +10,8 @@ type ChatMessage = {
   body: string;
   created_at?: string | null;
   read_at?: string | null;
+  edited_at?: string | null;
+  can_manage?: boolean;
   attachments?: ImagePreview[];
   attachment_url?: string | null;
   attachment_name?: string | null;
@@ -76,6 +78,21 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   const [attachmentError, setAttachmentError] = useState('');
   const [imagePreview, setImagePreview] = useState<ImagePreview | null>(null);
   const [dateVisible, setDateVisible] = useState(false);
+  const [messageMenu, setMessageMenu] = useState<{ message: ChatMessage; x: number; y: number; confirmingDelete?: boolean } | null>(null);
+  const [editingMessage, setEditingMessage] = useState<ChatMessage | null>(null);
+  const [editBody, setEditBody] = useState('');
+  const [actionBusy, setActionBusy] = useState(false);
+  const [actionError, setActionError] = useState('');
+  const menuRef = useRef<HTMLDivElement>(null);
+  const interactionRef = useRef({ menu: false, editing: false });
+  interactionRef.current = { menu: Boolean(messageMenu), editing: Boolean(editingMessage) };
+  const holdRef = useRef<{ timer: ReturnType<typeof setTimeout>; x: number; y: number } | null>(null);
+  const suppressHoldClickRef = useRef(false);
+  const messageRevisionRef = useRef(0);
+  const cancelHold = () => {
+    if (holdRef.current) clearTimeout(holdRef.current.timer);
+    holdRef.current = null;
+  };
   const dateHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastScrollTopRef = useRef(0);
   const attachmentInputRef = useRef<HTMLInputElement>(null);
@@ -106,7 +123,19 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     input.style.overflowY = input.scrollHeight + border > maxHeight ? 'auto' : 'hidden';
   }, []);
 
-  useLayoutEffect(resizeMessageInput, [form.data.body, resizeMessageInput]);
+  useLayoutEffect(resizeMessageInput, [form.data.body, editBody, editingMessage, resizeMessageInput]);
+
+  useEffect(() => () => cancelHold(), []);
+
+  useEffect(() => {
+    if (!messageMenu) return;
+    menuRef.current?.querySelector('button')?.focus();
+    const closeOutside = (event: PointerEvent) => {
+      if (!menuRef.current?.contains(event.target as Node)) setMessageMenu(null);
+    };
+    document.addEventListener('pointerdown', closeOutside);
+    return () => document.removeEventListener('pointerdown', closeOutside);
+  }, [messageMenu?.message.id, messageMenu?.confirmingDelete]);
 
   useLayoutEffect(() => {
     const composer = composerRef.current;
@@ -170,6 +199,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   }, [selectedImages]);
 
   const loadMessages = useCallback(async (showLoader = true) => {
+    const revision = messageRevisionRef.current;
     if (document.visibilityState !== 'visible') return;
     if (showLoader) setLoading(true);
     setLoadError('');
@@ -186,7 +216,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
       if (!response.ok) throw new Error('Unable to load chat');
 
       const payload = await response.json() as { messages?: ChatMessage[] };
-      setMessages(payload.messages ?? []);
+      if (revision === messageRevisionRef.current) setMessages(payload.messages ?? []);
       onReadRef.current?.();
     } catch {
       setLoadError(copy.chat.loadError);
@@ -200,6 +230,17 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
 
     const handleEscape = (event: globalThis.KeyboardEvent) => {
       if (event.key !== 'Escape') return;
+
+      if (interactionRef.current.menu) {
+        setMessageMenu(null);
+        return;
+      }
+
+      if (interactionRef.current.editing) {
+        setEditingMessage(null);
+        setActionError('');
+        return;
+      }
 
       if (imagePreviewRef.current) {
         setImagePreview(null);
@@ -230,6 +271,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
   }, [lastMessageId, loading, scrollToBottom]);
 
   const sendMessage = () => {
+    if (editingMessage) { void saveEditedMessage(); return; }
     if ((!form.data.body.trim() && !form.data.attachments.length) || form.processing) return;
     activity.stopTyping();
 
@@ -288,6 +330,63 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
     if (attachmentInputRef.current) attachmentInputRef.current.value = '';
   };
 
+  const openMessageMenu = (message: ChatMessage, element: HTMLElement, clientX?: number, clientY?: number) => {
+    if (!message.can_manage || message.sender_role !== currentRole || actionBusy) return;
+    const modal = element.closest('.inquiry-chat-modal')?.getBoundingClientRect();
+    if (!modal) return;
+    const rect = element.getBoundingClientRect();
+    setActionError('');
+    setMessageMenu({ message,
+      x: Math.max(12, Math.min((clientX ?? rect.right) - modal.left, modal.width - 252)),
+      y: Math.max(12, Math.min((clientY ?? rect.bottom) - modal.top, modal.height - 190)),
+    });
+  };
+
+  const mutateMessage = async (message: ChatMessage, method: 'PATCH' | 'DELETE', body?: string) => {
+    const cookie = document.cookie.split('; ').find((value) => value.startsWith('XSRF-TOKEN='));
+    const response = await fetch(`${endpoint}/${message.id}`, {
+      method, credentials: 'same-origin',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json', 'X-XSRF-TOKEN': decodeURIComponent(cookie?.slice(11) ?? '') },
+      ...(method === 'PATCH' ? { body: JSON.stringify({ body }) } : {}),
+    });
+    if (!response.ok) throw new Error(copy.chat.actionError);
+    return response.json() as Promise<{ message?: ChatMessage }>;
+  };
+
+  const saveEditedMessage = async () => {
+    if (!editingMessage || actionBusy || form.processing) return;
+    if (!editBody.trim() && !editingMessage.attachments?.length && !editingMessage.attachment_url) {
+      setActionError(copy.chat.emptyEditError);
+      return;
+    }
+    setActionBusy(true);
+    messageRevisionRef.current += 1;
+    setActionError('');
+    try {
+      const result = await mutateMessage(editingMessage, 'PATCH', editBody);
+      messageRevisionRef.current += 1;
+      if (result.message) setMessages((current) => current.map((message) => message.id === editingMessage.id ? result.message! : message));
+      setEditingMessage(null);
+    } catch { setActionError(copy.chat.actionError); }
+    finally { setActionBusy(false); }
+  };
+
+  const deleteMessage = async () => {
+    if (!messageMenu || actionBusy) return;
+    const message = messageMenu.message;
+    setActionBusy(true);
+    messageRevisionRef.current += 1;
+    setActionError('');
+    try {
+      await mutateMessage(message, 'DELETE');
+      messageRevisionRef.current += 1;
+      setMessages((current) => current.filter((item) => item.id !== message.id));
+      if (editingMessage?.id === message.id) setEditingMessage(null);
+      setMessageMenu(null);
+    } catch { setActionError(copy.chat.actionError); }
+    finally { setActionBusy(false); }
+  };
+
   return (
     <>
       <section className="inquiry-chat-modal" role="dialog" aria-modal="true" aria-labelledby={`inquiry-chat-title-${inquiryId}`}>
@@ -318,6 +417,8 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
         <div className={`inquiry-chat-messages${dateVisible ? ' is-scrolling' : ''}`} ref={messagesRef} aria-live="polite" onScroll={(event) => {
           const list = event.currentTarget;
           if (Math.abs(list.scrollTop - lastScrollTopRef.current) < 1) return;
+          cancelHold();
+          setMessageMenu(null);
           lastScrollTopRef.current = list.scrollTop;
           followBottomRef.current = list.scrollHeight - list.scrollTop - list.clientHeight <= 2;
           setDateVisible(true);
@@ -338,7 +439,46 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
 
               return (
                 <div className={`inquiry-chat-message${isOwn ? ' is-own' : ''}`} key={message.id}>
-                  <div className={`inquiry-chat-bubble${(message.attachments?.length ?? 0) > 1 ? ' has-album' : ''}`}>
+                  <div className={`inquiry-chat-bubble${(message.attachments?.length ?? 0) > 1 ? ' has-album' : ''}${isOwn && message.can_manage ? ' can-manage' : ''}`}
+                    tabIndex={isOwn && message.can_manage ? 0 : undefined}
+                    aria-label={isOwn && message.can_manage ? copy.chat.messageActions : undefined}
+                    onContextMenu={(event) => {
+                      if (!isOwn || !message.can_manage) return;
+                      event.preventDefault();
+                      cancelHold();
+                      openMessageMenu(message, event.currentTarget, event.clientX, event.clientY);
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === 'ContextMenu' || (event.shiftKey && event.key === 'F10')) {
+                        if (!isOwn || !message.can_manage) return;
+                        event.preventDefault();
+                        openMessageMenu(message, event.currentTarget);
+                      }
+                    }}
+                    onPointerDown={(event) => {
+                      if (event.pointerType === 'mouse' || !isOwn || !message.can_manage) return;
+                      suppressHoldClickRef.current = false;
+                      cancelHold();
+                      const element = event.currentTarget;
+                      const x = event.clientX, y = event.clientY;
+                      holdRef.current = { x, y, timer: setTimeout(() => {
+                        holdRef.current = null;
+                        suppressHoldClickRef.current = true;
+                        openMessageMenu(message, element, x, y);
+                      }, 550) };
+                    }}
+                    onPointerMove={(event) => {
+                      if (holdRef.current && Math.hypot(event.clientX - holdRef.current.x, event.clientY - holdRef.current.y) > 10) cancelHold();
+                    }}
+                    onPointerUp={cancelHold}
+                    onPointerCancel={cancelHold}
+                    onClickCapture={(event) => {
+                      if (!suppressHoldClickRef.current) return;
+                      suppressHoldClickRef.current = false;
+                      event.preventDefault();
+                      event.stopPropagation();
+                    }}
+                  >
                     <div className={`inquiry-chat-photos${(message.attachments?.length ?? 0) > 1 ? ' is-album' : ''}`}>
                     {(message.attachments ?? (message.attachment_url ? [{ url: message.attachment_url, name: message.attachment_name || copy.chat.imageAlt }] : [])).map((photo) => (
                       <button
@@ -359,6 +499,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
                     </div>
                     {message.body && <p>{message.body}</p>}
                     <div className="inquiry-chat-message-footer">
+                      {message.edited_at && <span className="inquiry-chat-edited">{copy.chat.edited}</span>}
                       <time dateTime={message.created_at || undefined}>{formatMessageTime(message.created_at)}</time>
                       {isOwn && <span className={`inquiry-chat-receipt${message.read_at ? ' is-read' : ''}`} aria-label={message.read_at ? copy.chat.read : copy.chat.sent} title={message.read_at ? copy.chat.read : copy.chat.sent}>
                         <svg width="20" height="14" viewBox="0 0 24 16" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -382,7 +523,11 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
         </div>
 
         <form ref={composerRef} className="inquiry-chat-composer" onSubmit={submitMessage}>
-          <div className="inquiry-chat-attachment-list" role="list" aria-label={copy.chat.addImage}>
+          {editingMessage && <div className="inquiry-chat-editing-bar">
+            <span>{copy.chat.editingMessage}</span>
+            <button type="button" disabled={actionBusy} onClick={() => { setEditingMessage(null); setActionError(''); }}>{copy.common.cancel}</button>
+          </div>}
+          {!editingMessage && <div className="inquiry-chat-attachment-list" role="list" aria-label={copy.chat.addImage}>
           {selectedImages.map((selectedImage, index) => previewUrls[index] && (
             <div className="inquiry-chat-attachment-preview" role="listitem" key={`${selectedImage.name}-${index}`}>
               <button type="button" className="inquiry-chat-selected-photo" onClick={() => setImagePreview({ url: previewUrls[index], name: selectedImage.name })} aria-label={selectedImage.name}>
@@ -396,7 +541,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               </button>
             </div>
           ))}
-          </div>
+          </div>}
           <div className="inquiry-chat-composer-row">
               <input
                 ref={attachmentInputRef}
@@ -413,7 +558,7 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
               type="button"
               className="inquiry-chat-attach"
               onClick={() => attachmentInputRef.current?.click()}
-              disabled={form.processing}
+              disabled={form.processing || Boolean(editingMessage) || actionBusy}
               aria-label={copy.chat.addImage}
               title={copy.chat.addImage}
             >
@@ -426,27 +571,40 @@ export default function InquiryChatModal({ inquiryId, ticket, title, endpoint, c
             <textarea
               className="inquiry-chat-input"
               ref={messageInputRef}
-              value={form.data.body}
-              onChange={(event) => { form.setData('body', event.target.value); activity.updateTyping(event.target.value); }}
+              value={editingMessage ? editBody : form.data.body}
+              onChange={(event) => { if (editingMessage) setEditBody(event.target.value); else form.setData('body', event.target.value); activity.updateTyping(event.target.value); }}
               onBlur={activity.stopTyping}
               placeholder={copy.chat.placeholder}
               rows={1}
               maxLength={5000}
               aria-label={copy.chat.placeholder}
-              disabled={form.processing}
+              disabled={form.processing || actionBusy}
               onKeyDown={handleMessageKeyDown}
             />
-            <button type="submit" className="inquiry-chat-send" aria-label={copy.chat.send} title={copy.chat.send} disabled={form.processing || (!form.data.body.trim() && !form.data.attachments.length)}>
+            <button type="submit" className="inquiry-chat-send" aria-label={editingMessage ? copy.chat.saveMessage : copy.chat.send} title={editingMessage ? copy.chat.saveMessage : copy.chat.send} disabled={form.processing || actionBusy || (!editingMessage && !form.data.body.trim() && !form.data.attachments.length)}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="m4 4 17 8-17 8 3-8-3-8Z" />
-                <path d="M7 12h14" />
+                <path d={editingMessage ? 'm5 12 4 4L19 6' : 'm4 4 17 8-17 8 3-8-3-8Z'} />
+                {!editingMessage && <path d="M7 12h14" />}
               </svg>
             </button>
           </div>
-          {(attachmentError || Object.values(form.errors).length > 0) && (
-            <span className="inquiry-chat-form-error">{attachmentError || Object.values(form.errors)[0]}</span>
+          {(actionError || attachmentError || Object.values(form.errors).length > 0) && (
+            <span className="inquiry-chat-form-error" role="alert">{actionError || attachmentError || Object.values(form.errors)[0]}</span>
           )}
         </form>
+        {messageMenu && <div ref={menuRef} className="inquiry-chat-message-menu" role="group" aria-label={copy.chat.messageActions} style={{ left: messageMenu.x, top: messageMenu.y }}>
+          {messageMenu.confirmingDelete ? <>
+            <p>{copy.chat.deleteMessageConfirmation}</p>
+            <button type="button" className="is-danger" disabled={actionBusy} onClick={() => void deleteMessage()}>{copy.chat.deleteMessage}</button>
+            <button type="button" disabled={actionBusy} onClick={() => setMessageMenu(null)}>{copy.common.cancel}</button>
+          </> : <>
+            <button type="button" disabled={actionBusy || form.processing} onClick={() => {
+              setEditingMessage(messageMenu.message); setEditBody(messageMenu.message.body); setMessageMenu(null); setActionError('');
+              requestAnimationFrame(() => messageInputRef.current?.focus());
+            }}>{copy.chat.editMessage}</button>
+            <button type="button" className="is-danger" disabled={actionBusy || form.processing} onClick={() => setMessageMenu({ ...messageMenu, confirmingDelete: true })}>{copy.chat.deleteMessage}</button>
+          </>}
+        </div>}
       </section>
 
       {imagePreview && (

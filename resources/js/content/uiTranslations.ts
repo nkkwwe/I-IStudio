@@ -114,6 +114,15 @@ type AccountCopy = {
 };
 
 type ChatCopy = {
+  messageActions: string;
+  editMessage: string;
+  deleteMessage: string;
+  deleteMessageConfirmation: string;
+  edited: string;
+  editingMessage: string;
+  saveMessage: string;
+  actionError: string;
+  emptyEditError: string;
   today: string;
   yesterday: string;
   dayBeforeYesterday: string;
@@ -321,6 +330,15 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       loadError: 'We couldn’t load this conversation.',
       placeholder: 'Write a message…',
       addImage: 'Add image',
+      messageActions: 'Message actions',
+      editMessage: 'Edit message',
+      deleteMessage: 'Delete message',
+      deleteMessageConfirmation: 'Delete this message?',
+      edited: 'Edited',
+      editingMessage: 'Editing message',
+      saveMessage: 'Save changes',
+      actionError: 'Could not update the message. Please try again.',
+      emptyEditError: 'The message cannot be empty.',
       removeImage: 'Remove image',
       imageAlt: 'Attached image',
       imageError: 'Choose a JPG, PNG, GIF, or WEBP image up to 5 MB.',
@@ -497,6 +515,15 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       loadError: 'Не вдалося завантажити цей чат.',
       placeholder: 'Напишіть повідомлення…',
       addImage: 'Додати зображення',
+      messageActions: 'Дії з повідомленням',
+      editMessage: 'Змінити повідомлення',
+      deleteMessage: 'Видалити повідомлення',
+      deleteMessageConfirmation: 'Видалити це повідомлення?',
+      edited: 'Змінено',
+      editingMessage: 'Редагування повідомлення',
+      saveMessage: 'Зберегти зміни',
+      actionError: 'Не вдалося змінити повідомлення. Спробуйте ще раз.',
+      emptyEditError: 'Повідомлення не може бути порожнім.',
       removeImage: 'Видалити зображення',
       imageAlt: 'Прикріплене зображення',
       imageError: 'Оберіть зображення JPG, PNG, GIF або WEBP розміром до 5 МБ.',
@@ -673,6 +700,15 @@ export const uiTranslations: Record<SiteLanguage, UiCopy> = {
       loadError: 'Conversația nu a putut fi încărcată.',
       placeholder: 'Scrie un mesaj…',
       addImage: 'Adaugă o imagine',
+      messageActions: 'Acțiuni pentru mesaj',
+      editMessage: 'Editează mesajul',
+      deleteMessage: 'Șterge mesajul',
+      deleteMessageConfirmation: 'Ștergi acest mesaj?',
+      edited: 'Editat',
+      editingMessage: 'Editare mesaj',
+      saveMessage: 'Salvează modificările',
+      actionError: 'Mesajul nu a putut fi actualizat. Încearcă din nou.',
+      emptyEditError: 'Mesajul nu poate fi gol.',
       removeImage: 'Elimină imaginea',
       imageAlt: 'Imagine atașată',
       imageError: 'Alege o imagine JPG, PNG, GIF sau WEBP de maximum 5 MB.',

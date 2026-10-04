@@ -22,12 +22,14 @@ class ProjectInquiryMessage extends Model
         'attachment_size',
         'attachments',
         'read_at',
+        'edited_at',
     ];
 
     protected function casts(): array
     {
         return [
             'read_at' => 'datetime',
+            'edited_at' => 'datetime',
             'attachments' => 'array',
         ];
     }

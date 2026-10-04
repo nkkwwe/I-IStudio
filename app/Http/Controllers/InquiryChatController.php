@@ -97,6 +97,59 @@ class InquiryChatController extends Controller
         return $this->storeMessage($request, $inquiry, 'admin');
     }
 
+    public function updateForUser(Request $request, ProjectInquiry $inquiry, ProjectInquiryMessage $message): JsonResponse
+    {
+        $this->ensureOwnInquiry($request, $inquiry);
+        return $this->updateMessage($request, $inquiry, $message, 'user');
+    }
+
+    public function updateForAdmin(Request $request, ProjectInquiry $inquiry, ProjectInquiryMessage $message): JsonResponse
+    {
+        $this->ensureCanAccess($request, $inquiry);
+        return $this->updateMessage($request, $inquiry, $message, 'admin');
+    }
+
+    public function destroyForUser(Request $request, ProjectInquiry $inquiry, ProjectInquiryMessage $message): JsonResponse
+    {
+        $this->ensureOwnInquiry($request, $inquiry);
+        return $this->destroyMessage($request, $inquiry, $message, 'user');
+    }
+
+    public function destroyForAdmin(Request $request, ProjectInquiry $inquiry, ProjectInquiryMessage $message): JsonResponse
+    {
+        $this->ensureCanAccess($request, $inquiry);
+        return $this->destroyMessage($request, $inquiry, $message, 'admin');
+    }
+
+    private function ensureOwnMessage(Request $request, ProjectInquiry $inquiry, ProjectInquiryMessage $message, string $role): void
+    {
+        abort_unless((int) $message->project_inquiry_id === (int) $inquiry->id, 404);
+        abort_unless((int) $message->sender_id === (int) $request->user()->id && $message->sender_role === $role, 403);
+    }
+
+    private function updateMessage(Request $request, ProjectInquiry $inquiry, ProjectInquiryMessage $message, string $role): JsonResponse
+    {
+        $this->ensureOwnMessage($request, $inquiry, $message, $role);
+        $data = $request->validate(['body' => ['present', 'nullable', 'string', 'max:5000']]);
+        $body = trim((string) ($data['body'] ?? ''));
+        if ($body === '' && ! $this->messagePhotos($message)) {
+            throw ValidationException::withMessages(['body' => 'Write a message or attach an image first.']);
+        }
+        if ($body !== $message->body) {
+            $message->update(['body' => $body, 'edited_at' => now()]);
+        }
+        return response()->json(['message' => $this->serializeMessage($message)]);
+    }
+
+    private function destroyMessage(Request $request, ProjectInquiry $inquiry, ProjectInquiryMessage $message, string $role): JsonResponse
+    {
+        $this->ensureOwnMessage($request, $inquiry, $message, $role);
+        $paths = array_column($this->messagePhotos($message), 'path');
+        $message->delete();
+        Storage::disk('local')->delete($paths);
+        return response()->json(['deleted_id' => $message->id]);
+    }
+
     private function storeMessage(Request $request, ProjectInquiry $inquiry, string $senderRole): JsonResponse|RedirectResponse
     {
         $data = $request->validate([
@@ -228,6 +281,8 @@ class InquiryChatController extends Controller
             'body' => $message->body,
             'created_at' => $message->created_at?->toISOString(),
             'read_at' => $message->read_at?->toISOString(),
+            'edited_at' => $message->edited_at?->toISOString(),
+            'can_manage' => (int) $message->sender_id === (int) request()->user()?->id,
             'attachments' => collect($this->messagePhotos($message))->map(fn ($photo, $index) => [
                 'url' => route('project-inquiry-messages.attachment', ['message' => $message->id, 'index' => $index]),
                 'name' => $photo['name'],

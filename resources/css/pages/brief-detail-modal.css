@@ -444,6 +444,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 
 .inquiry-chat-messages {
   display: flex;
+  isolation: isolate;
   min-height: 0;
   max-height: none;
   flex: 1;
@@ -648,6 +649,7 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 
 .inquiry-chat-composer {
   position: absolute;
+  z-index: 2;
   inset: auto 0 0;
   display: flex;
   flex-direction: column;
@@ -659,6 +661,89 @@ html:not([data-theme="dark"]) .inquiry-detail-modal .inquiry-detail-brief-row {
 
 .inquiry-chat-composer > * {
   pointer-events: auto;
+}
+
+.inquiry-chat-message-menu {
+  position: absolute;
+  z-index: 3;
+  width: min(240px, calc(100% - 24px));
+  padding: 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-card);
+}
+
+.inquiry-chat-message-menu button,
+.inquiry-chat-editing-bar button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-primary);
+  font: 600 0.875rem var(--font-sans);
+  cursor: pointer;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+
+.inquiry-chat-message-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+.inquiry-chat-message-menu button.is-danger {
+  color: var(--status-danger-text);
+}
+
+.inquiry-chat-message-menu p {
+  padding: 10px 14px;
+  font-size: 0.875rem;
+}
+
+.inquiry-chat-editing-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 10px 4px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.inquiry-chat-bubble.can-manage:focus-visible,
+.inquiry-chat-message-menu button:focus-visible,
+.inquiry-chat-editing-bar button:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .inquiry-chat-message-menu button:hover:not(:disabled),
+  .inquiry-chat-editing-bar button:hover:not(:disabled) {
+    background: var(--bg-panel);
+    border-color: var(--border-strong);
+  }
+  .inquiry-chat-bubble.can-manage:hover {
+    cursor: context-menu;
+  }
+}
+
+@media (pointer: coarse) {
+  .inquiry-chat-bubble.can-manage {
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inquiry-chat-message-menu button,
+  .inquiry-chat-editing-bar button { transition: none; }
 }
 
 .inquiry-chat-composer-row {
