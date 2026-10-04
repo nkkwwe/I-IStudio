@@ -229,7 +229,6 @@ export default function Account() {
               <button type="button" className="account-modal-button account-modal-button-primary" onClick={saveName} disabled={nameForm.processing}>
                 {nameForm.processing ? common.saving : common.saveName}
               </button>
-              <button type="button" className="account-modal-button account-modal-button-secondary" onClick={closeNameModal}>{common.cancel}</button>
             </div>
           </AccountModal>
         )}
