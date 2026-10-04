@@ -271,8 +271,6 @@ function initScrollSpy(signal) {
     .filter(item => item.section !== null);
   if (!sectionsWithLinks.length) return;
 
-  let isClickScrolling = false;
-  let scrollEndTimer = null;
   let animationFrame = null;
   const header = document.querySelector('.site-header');
 
@@ -287,8 +285,6 @@ function initScrollSpy(signal) {
   };
 
   const updateActiveNav = () => {
-    if (isClickScrolling) return;
-
     const headerHeight = header?.offsetHeight || 72;
     const isBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 50);
 
@@ -321,12 +317,6 @@ function initScrollSpy(signal) {
     }
   };
 
-  const endClickScroll = () => {
-    if (!isClickScrolling) return;
-    isClickScrolling = false;
-    clearTimeout(scrollEndTimer);
-  };
-
   const scheduleUpdate = () => {
     if (animationFrame !== null) return;
     animationFrame = window.requestAnimationFrame(() => {
@@ -338,10 +328,6 @@ function initScrollSpy(signal) {
   sectionsWithLinks.forEach(({ link }) => {
     link.addEventListener('click', () => {
       setActiveLink(link);
-      isClickScrolling = true;
-      clearTimeout(scrollEndTimer);
-      // Fallback timer: auto-release if no scroll events occur
-      scrollEndTimer = setTimeout(endClickScroll, 1200);
     }, { signal });
   });
 
@@ -349,48 +335,20 @@ function initScrollSpy(signal) {
   if (logo) {
     logo.addEventListener('click', () => {
       sectionsWithLinks.forEach(({ link }) => link.classList.remove('active'));
-      isClickScrolling = true;
-      clearTimeout(scrollEndTimer);
-      scrollEndTimer = setTimeout(endClickScroll, 1200);
+      scheduleUpdate();
     }, { signal });
   }
 
   const handleScroll = () => {
-    if (isClickScrolling) {
-      // While smooth scrolling to target, keep blocking any other active state changes.
-      // Reset timer: only release lock 150ms after the very last scroll frame has settled.
-      clearTimeout(scrollEndTimer);
-      scrollEndTimer = setTimeout(endClickScroll, 150);
-      return;
-    }
     scheduleUpdate();
   };
 
   window.addEventListener('scroll', handleScroll, { passive: true, signal });
   window.addEventListener('resize', scheduleUpdate, { passive: true, signal });
 
-  if ('onscrollend' in window) {
-    window.addEventListener('scrollend', endClickScroll, { passive: true, signal });
-  }
-
-  const preventManualScroll = (event) => {
-    if (isClickScrolling) {
-      event.preventDefault();
-    }
-  };
-
-  window.addEventListener('wheel', preventManualScroll, { passive: false, signal });
-  window.addEventListener('touchmove', preventManualScroll, { passive: false, signal });
-  window.addEventListener('keydown', (event) => {
-    if (isClickScrolling && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) {
-      event.preventDefault();
-    }
-  }, { signal });
-
   updateActiveNav();
 
   return () => {
-    clearTimeout(scrollEndTimer);
     if (animationFrame !== null) window.cancelAnimationFrame(animationFrame);
   };
 }

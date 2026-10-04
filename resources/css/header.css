@@ -75,7 +75,7 @@
   padding: 8px 14px;
   border: 1px solid transparent;
   border-radius: var(--radius-pill);
-  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, font-weight 0.25s ease;
+  transition: color 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -95,7 +95,6 @@
 @media (hover: hover) and (pointer: fine) {
   .nav-link.active:hover {
     color: var(--text-primary);
-    font-weight: 600;
     background-color: var(--bg-panel);
     border-color: var(--border-strong);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -103,7 +102,6 @@
 }
 .nav-link.active {
   color: var(--text-primary);
-  font-weight: 600;
   background-color: var(--bg-panel);
   border-color: var(--border-strong);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
