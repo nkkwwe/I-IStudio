@@ -60,6 +60,7 @@
 }
 
 .design-mini > span { display: block; padding: 8px 6px; }
+.design-mini-live { display: block; text-decoration: none; text-align: center; }
 .design-mini.is-selected { border-color: var(--text-primary); color: var(--text-primary); }
 .design-selection {
   display: flex;

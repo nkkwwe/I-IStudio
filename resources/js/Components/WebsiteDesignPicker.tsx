@@ -11,6 +11,11 @@ export default function WebsiteDesignPicker({ service, language, value, onChange
   const designs = getWebsiteDesigns(service);
   const copy = getWebsiteDesignCopy(language);
   const demoCopy = demoShellCopy[language as SiteLanguage] ?? demoShellCopy.en;
+  const description = service === 'landing'
+    ? (language === 'uk' ? 'Натисніть на дизайн, щоб відкрити живе демо в новій вкладці.' : language === 'ro' ? 'Apasă pe un design pentru a deschide demo-ul live într-o filă nouă.' : 'Click a design to open its live demo in a new tab.')
+    : copy.description;
+  const newTabLabel = language === 'uk' ? ' (нова вкладка)' : language === 'ro' ? ' (filă nouă)' : ' (new tab)';
+  const liveUrl = (id: string) => localizedUrl(`/designs/${id}`, language as SiteLanguage);
   const liveLink = (id: string) => <a className="btn btn-secondary btn-sm" href={localizedUrl(`/designs/${id}`, language as SiteLanguage)} target="_blank" rel="noopener noreferrer">{demoCopy.live}<span className="sr-only">{language === 'uk' ? ' (нова вкладка)' : language === 'ro' ? ' (filă nouă)' : ' (new tab)'}</span></a>;
   // Undefined is closed; null is the gallery; a design id opens its static preview.
   const [view, setView] = useState<string | null | undefined>(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('designs') === '1' ? null : undefined);
@@ -74,12 +79,15 @@ export default function WebsiteDesignPicker({ service, language, value, onChange
         <div>
           <span className="calculator-kicker">{copy.eyebrow}</span>
           <h2 id="designPickerTitle">{copy.title}</h2>
-          <p>{copy.description}</p>
+          <p>{description}</p>
         </div>
         <button ref={triggerRef} type="button" className="btn btn-secondary" aria-haspopup="dialog" aria-expanded={open} onClick={() => setView(null)}>{selected ? copy.change : copy.gallery}<span aria-hidden="true">↗</span></button>
       </div>
       <div className="design-launcher-strip">
-        {designs.map((design) => <button type="button" key={design.id} className={`design-mini${value === design.id ? ' is-selected' : ''}`} aria-label={copy.previewLabel.replace('{name}', design.name)} onClick={() => openPreview(design.id)}>
+        {designs.map((design) => service === 'landing' ? <a key={design.id} className={`design-mini design-mini-live${value === design.id ? ' is-selected' : ''}`} href={liveUrl(design.id)} target="_blank" rel="noopener noreferrer" aria-label={`${design.name} · ${demoCopy.live}${newTabLabel}`}>
+          <img src={designImage(design.id)} alt="" width="960" height="1120" loading="lazy" />
+          <span>{design.name} <span aria-hidden="true">↗</span>{value === design.id && <span aria-hidden="true"> ✓</span>}</span>
+        </a> : <button type="button" key={design.id} className={`design-mini${value === design.id ? ' is-selected' : ''}`} aria-label={copy.previewLabel.replace('{name}', design.name)} onClick={() => openPreview(design.id)}>
           <img src={designImage(design.id)} alt="" width="960" height="1120" loading="lazy" />
           <span>{design.name}{value === design.id && <span aria-hidden="true"> ✓</span>}</span>
         </button>)}
@@ -104,18 +112,20 @@ export default function WebsiteDesignPicker({ service, language, value, onChange
             <button type="button" className="btn btn-primary" onClick={() => choose(previewed.id)}>{copy.choose}<span aria-hidden="true">✓</span></button>
           </div>
         </> : <>
-          <p className="design-gallery-description">{copy.description}</p>
+          <p className="design-gallery-description">{description}</p>
           <div className="design-gallery-grid">
             {designs.map((design) => <article key={design.id} className={`design-card${value === design.id ? ' is-selected' : ''}`}>
-              <button type="button" className="design-card-preview" aria-label={copy.previewLabel.replace('{name}', design.name)} onClick={() => openPreview(design.id)}>
+              {service === 'landing' ? <a className="design-card-preview" href={liveUrl(design.id)} target="_blank" rel="noopener noreferrer" aria-label={`${design.name} · ${demoCopy.live}${newTabLabel}`}>
                 <img src={designImage(design.id)} alt={copy.alt.replace('{name}', design.name)} width="960" height="1120" loading="lazy" />
-              </button>
+              </a> : <button type="button" className="design-card-preview" aria-label={copy.previewLabel.replace('{name}', design.name)} onClick={() => openPreview(design.id)}>
+                <img src={designImage(design.id)} alt={copy.alt.replace('{name}', design.name)} width="960" height="1120" loading="lazy" />
+              </button>}
               <div className="design-card-copy">
                 <div className="design-card-title"><h3>{design.name}</h3><span className="design-style">{designText(design.style, language)}</span></div>
                 <p>{designText(design.description, language)}</p>
                 <div className="design-card-actions">
                   {service === 'landing' && liveLink(design.id)}
-                  <button type="button" className="btn btn-secondary btn-sm" onClick={() => openPreview(design.id)}>{copy.preview}</button>
+                  {service !== 'landing' && <button type="button" className="btn btn-secondary btn-sm" onClick={() => openPreview(design.id)}>{copy.preview}</button>}
                   <button type="button" className={`btn btn-sm ${value === design.id ? 'btn-primary' : 'btn-secondary'}`} aria-pressed={value === design.id} onClick={() => choose(design.id)}>{value === design.id ? copy.chosen : copy.choose}</button>
                 </div>
               </div>
