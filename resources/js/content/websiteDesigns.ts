@@ -1,6 +1,6 @@
 // Original previews inspired by the visual directions in these public galleries:
 // https://horoshop.ua/ua/design/ and https://webflow.com/templates/search/saas-landing-pages
-// These are design references; they are not working templates or licensed copies.
+// Landing designs also have original interactive demos. Business previews remain references.
 export type WebsiteDesign = {
   id: string;
   name: string;
@@ -75,6 +75,8 @@ export function designImage(id: string): string {
 export function restoreDesignReference(service: string): string {
   if (typeof window === 'undefined') return '';
   try {
+    const requested = new URLSearchParams(window.location?.search ?? '').get('design');
+    if (requested && getWebsiteDesigns(service).some((design) => design.id === requested)) return requested;
     const draft = JSON.parse(window.localStorage.getItem('ii_studio_inquiry_draft') ?? 'null');
     return draft?.service_type === service && getWebsiteDesigns(service).some((design) => design.id === draft.design_reference)
       ? draft.design_reference : '';

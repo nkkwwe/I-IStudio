@@ -48,6 +48,10 @@ Route::prefix('{locale}')
     ->group(function (): void {
         Route::get('/', [HomeController::class, 'show'])->name('home.localized');
 
+        Route::get('/designs/{design}', fn (string $locale, string $design) => Inertia::render('LandingDemo', ['design' => $design]))
+            ->whereIn('design', ['mono', 'pulse', 'orbit', 'atelier'])
+            ->name('design-demo.localized');
+
         Route::get('/inquiry', [InquiryController::class, 'show'])->name('inquiry.localized');
         Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.store.localized');
 

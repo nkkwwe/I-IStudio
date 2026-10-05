@@ -7,9 +7,9 @@ import ts from 'typescript';
 const source = readFileSync(new URL('../../resources/js/content/websiteDesigns.ts', import.meta.url), 'utf8');
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS } }).outputText;
 
-function restore(service, draft, storageError = false) {
+function restore(service, draft, storageError = false, search = '') {
   const exports = {};
-  const context = { exports, window: { localStorage: { getItem() {
+  const context = { exports, URLSearchParams, window: { location: { search }, localStorage: { getItem() {
     if (storageError) throw new Error('Storage unavailable');
     return draft;
   } } } };
@@ -22,6 +22,14 @@ test('restores a saved design only for its matching website service', () => {
   assert.equal(restore('corporate', draft), 'meridian');
   assert.equal(restore('landing', draft), '');
   assert.equal(restore('consultation', draft), '');
+});
+
+test('explicit demo selection wins over a draft and works without storage', () => {
+  const draft = JSON.stringify({ service_type: 'landing', design_reference: 'mono' });
+  assert.equal(restore('landing', draft, false, '?service=landing&design=pulse'), 'pulse');
+  assert.equal(restore('landing', null, true, '?design=atelier'), 'atelier');
+  assert.equal(restore('landing', draft, false, '?design=meridian'), 'mono');
+  assert.equal(restore('landing', null, false, '?design=unknown'), '');
 });
 
 test('rejects unknown and cross-service design ids from saved drafts', () => {

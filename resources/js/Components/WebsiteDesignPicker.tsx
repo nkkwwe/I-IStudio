@@ -2,14 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import AccountModal from './AccountModal';
 import { designImage, designText, getWebsiteDesignCopy, getWebsiteDesigns } from '../content/websiteDesigns';
+import { demoShellCopy } from '../content/landingDemos';
+import { localizedUrl, type SiteLanguage } from '../content/siteLanguage';
 
 type Props = { service: string; language: string; value: string; onChange: (id: string) => void };
 
 export default function WebsiteDesignPicker({ service, language, value, onChange }: Props) {
   const designs = getWebsiteDesigns(service);
   const copy = getWebsiteDesignCopy(language);
+  const demoCopy = demoShellCopy[language as SiteLanguage] ?? demoShellCopy.en;
+  const liveLink = (id: string) => <a className="btn btn-secondary btn-sm" href={localizedUrl(`/designs/${id}`, language as SiteLanguage)} target="_blank" rel="noopener noreferrer">{demoCopy.live}<span className="sr-only">{language === 'uk' ? ' (нова вкладка)' : language === 'ro' ? ' (filă nouă)' : ' (new tab)'}</span></a>;
   // Undefined is closed; null is the gallery; a design id opens its static preview.
-  const [view, setView] = useState<string | null | undefined>(undefined);
+  const [view, setView] = useState<string | null | undefined>(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('designs') === '1' ? null : undefined);
+  const previousService = useRef(service);
   const portalRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const galleryScroll = useRef(0);
@@ -17,11 +22,14 @@ export default function WebsiteDesignPicker({ service, language, value, onChange
   const previewed = designs.find((design) => design.id === view);
   const open = view !== undefined;
 
-  useEffect(() => { setView(undefined); }, [service]);
+  useEffect(() => {
+    if (previousService.current !== service) setView(undefined);
+    previousService.current = service;
+  }, [service]);
 
   useEffect(() => {
     if (!open) return;
-    const returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const returnFocus = document.activeElement instanceof HTMLElement && document.activeElement !== document.body ? document.activeElement : triggerRef.current;
     const previousBody = document.body.style.overflow;
     const previousRoot = document.documentElement.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -87,6 +95,7 @@ export default function WebsiteDesignPicker({ service, language, value, onChange
           <div className="design-preview-toolbar">
             <button type="button" className="btn btn-secondary btn-sm design-preview-back" onClick={() => setView(null)}>← {copy.back}</button>
             <span className="design-style">{designText(previewed.style, language)}</span>
+            {service === 'landing' && liveLink(previewed.id)}
           </div>
           <p className="design-gallery-description">{designText(previewed.description, language)}</p>
           <img className="design-full-preview" src={designImage(previewed.id)} alt={copy.alt.replace('{name}', previewed.name)} width="960" height="1120" />
@@ -105,6 +114,7 @@ export default function WebsiteDesignPicker({ service, language, value, onChange
                 <div className="design-card-title"><h3>{design.name}</h3><span className="design-style">{designText(design.style, language)}</span></div>
                 <p>{designText(design.description, language)}</p>
                 <div className="design-card-actions">
+                  {service === 'landing' && liveLink(design.id)}
                   <button type="button" className="btn btn-secondary btn-sm" onClick={() => openPreview(design.id)}>{copy.preview}</button>
                   <button type="button" className={`btn btn-sm ${value === design.id ? 'btn-primary' : 'btn-secondary'}`} aria-pressed={value === design.id} onClick={() => choose(design.id)}>{value === design.id ? copy.chosen : copy.choose}</button>
                 </div>
