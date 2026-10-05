@@ -1,5 +1,6 @@
 /* Ordered imports preserve the existing cascade. */
 @import './brief/form.css';
 @import './brief/calculator.css';
+@import './brief/design-picker.css';
 @import './brief/ads.css';
 @import './brief/fields-responsive.css';

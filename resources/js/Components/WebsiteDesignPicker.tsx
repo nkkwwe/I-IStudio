@@ -1,0 +1,119 @@
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import AccountModal from './AccountModal';
+import { designImage, designText, getWebsiteDesignCopy, getWebsiteDesigns } from '../content/websiteDesigns';
+
+type Props = { service: string; language: string; value: string; onChange: (id: string) => void };
+
+export default function WebsiteDesignPicker({ service, language, value, onChange }: Props) {
+  const designs = getWebsiteDesigns(service);
+  const copy = getWebsiteDesignCopy(language);
+  // Undefined is closed; null is the gallery; a design id opens its static preview.
+  const [view, setView] = useState<string | null | undefined>(undefined);
+  const portalRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const galleryScroll = useRef(0);
+  const selected = designs.find((design) => design.id === value);
+  const previewed = designs.find((design) => design.id === view);
+  const open = view !== undefined;
+
+  useEffect(() => { setView(undefined); }, [service]);
+
+  useEffect(() => {
+    if (!open) return;
+    const returnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousBody = document.body.style.overflow;
+    const previousRoot = document.documentElement.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    portalRef.current?.querySelector<HTMLButtonElement>('.account-modal-close')?.focus();
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); setView(undefined); }
+      if (event.key !== 'Tab') return;
+      const elements = Array.from(portalRef.current?.querySelectorAll<HTMLElement>('button:not(:disabled), [href], [tabindex="0"]') ?? []);
+      const first = elements[0];
+      const last = elements[elements.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousBody;
+      document.documentElement.style.overflow = previousRoot;
+      if (returnFocus?.isConnected) returnFocus.focus();
+    };
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const dialog = portalRef.current?.querySelector<HTMLElement>('.account-modal');
+    if (dialog) dialog.scrollTop = view === null ? galleryScroll.current : 0;
+    portalRef.current?.querySelector<HTMLButtonElement>(view === null ? '.account-modal-close' : '.design-preview-back')?.focus();
+  }, [view, open]);
+
+  if (!designs.length) return null;
+  const openPreview = (id: string) => {
+    galleryScroll.current = portalRef.current?.querySelector('.account-modal')?.scrollTop ?? 0;
+    setView(id);
+  };
+  const choose = (id: string) => { onChange(id); setView(undefined); };
+  const serviceLabel = service === 'landing' ? copy.landing : copy.corporate;
+
+  return <>
+    <section className="design-launcher" aria-labelledby="designPickerTitle">
+      <div className="design-launcher-header">
+        <div>
+          <span className="calculator-kicker">{copy.eyebrow}</span>
+          <h2 id="designPickerTitle">{copy.title}</h2>
+          <p>{copy.description}</p>
+        </div>
+        <button ref={triggerRef} type="button" className="btn btn-secondary" aria-haspopup="dialog" aria-expanded={open} onClick={() => setView(null)}>{selected ? copy.change : copy.gallery}<span aria-hidden="true">↗</span></button>
+      </div>
+      <div className="design-launcher-strip">
+        {designs.map((design) => <button type="button" key={design.id} className={`design-mini${value === design.id ? ' is-selected' : ''}`} aria-label={copy.previewLabel.replace('{name}', design.name)} onClick={() => openPreview(design.id)}>
+          <img src={designImage(design.id)} alt="" width="960" height="1120" loading="lazy" />
+          <span>{design.name}{value === design.id && <span aria-hidden="true"> ✓</span>}</span>
+        </button>)}
+      </div>
+      {selected && <div className="design-selection" aria-live="polite">
+        <span>{copy.chosen}: <strong>{selected.name}</strong> · {designText(selected.style, language)}</span>
+        <button type="button" className="design-clear" onClick={() => { onChange(''); triggerRef.current?.focus(); }} aria-label={copy.clear}>×</button>
+      </div>}
+    </section>
+    {open && createPortal(<div ref={portalRef} className="account-modal-backdrop design-modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) setView(undefined); }}>
+      <AccountModal embedded eyebrow={serviceLabel} title={previewed?.name ?? copy.galleryTitle} closeLabel={copy.close} onClose={() => setView(undefined)}>
+        {previewed ? <>
+          <div className="design-preview-toolbar">
+            <button type="button" className="btn btn-secondary btn-sm design-preview-back" onClick={() => setView(null)}>← {copy.back}</button>
+            <span className="design-style">{designText(previewed.style, language)}</span>
+          </div>
+          <p className="design-gallery-description">{designText(previewed.description, language)}</p>
+          <img className="design-full-preview" src={designImage(previewed.id)} alt={copy.alt.replace('{name}', previewed.name)} width="960" height="1120" />
+          <div className="design-preview-actions">
+            <p>{copy.note}</p>
+            <button type="button" className="btn btn-primary" onClick={() => choose(previewed.id)}>{copy.choose}<span aria-hidden="true">✓</span></button>
+          </div>
+        </> : <>
+          <p className="design-gallery-description">{copy.description}</p>
+          <div className="design-gallery-grid">
+            {designs.map((design) => <article key={design.id} className={`design-card${value === design.id ? ' is-selected' : ''}`}>
+              <button type="button" className="design-card-preview" aria-label={copy.previewLabel.replace('{name}', design.name)} onClick={() => openPreview(design.id)}>
+                <img src={designImage(design.id)} alt={copy.alt.replace('{name}', design.name)} width="960" height="1120" loading="lazy" />
+              </button>
+              <div className="design-card-copy">
+                <div className="design-card-title"><h3>{design.name}</h3><span className="design-style">{designText(design.style, language)}</span></div>
+                <p>{designText(design.description, language)}</p>
+                <div className="design-card-actions">
+                  <button type="button" className="btn btn-secondary btn-sm" onClick={() => openPreview(design.id)}>{copy.preview}</button>
+                  <button type="button" className={`btn btn-sm ${value === design.id ? 'btn-primary' : 'btn-secondary'}`} aria-pressed={value === design.id} onClick={() => choose(design.id)}>{value === design.id ? copy.chosen : copy.choose}</button>
+                </div>
+              </div>
+            </article>)}
+          </div>
+          <div className="design-preview-actions"><p>{copy.note}</p><button type="button" className="btn btn-secondary" onClick={() => choose('')}>{copy.skip}</button></div>
+        </>}
+      </AccountModal>
+    </div>, document.body)}
+  </>;
+}

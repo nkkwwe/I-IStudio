@@ -2,6 +2,8 @@ import ServiceBrief from '../Components/ServiceBrief';
 import { landing, translate } from '../content/startupContent';
 import AccountSiteHeader from '../Components/AccountSiteHeader';
 import calculatorCopy from '../content/inquiryCalculatorCopy';
+import WebsiteDesignPicker from '../Components/WebsiteDesignPicker';
+import { designText, getWebsiteDesignCopy, getWebsiteDesigns, restoreDesignReference } from '../content/websiteDesigns';
 import { localizedUrl } from '../content/siteLanguage';
 import { createPortal } from 'react-dom';
 import { useEffect, useMemo, useState } from 'react';
@@ -48,6 +50,16 @@ export default function InquiryMarkup({
   const [calculatorStep, setCalculatorStep] = useState(1);
   const [scopeChoice, setScopeChoice] = useState(service.scope[0].value);
   const [extras, setExtras] = useState({});
+  const [designReference, setDesignReference] = useState(() => restoreDesignReference(activeService));
+  const selectedDesign = getWebsiteDesigns(activeService).find((design) => design.id === designReference);
+  const designCopy = getWebsiteDesignCopy(language);
+
+  useEffect(() => {
+    const form = document.getElementById('projectForm');
+    const handleReset = () => setDesignReference('');
+    form?.addEventListener('reset', handleReset);
+    return () => form?.removeEventListener('reset', handleReset);
+  }, [activeService]);
 
   useEffect(() => {
     const overlay = document.getElementById('feedbackOverlay');
@@ -91,6 +103,7 @@ export default function InquiryMarkup({
     setCalculatorStep(1);
     setScopeChoice(service.scope[0].value);
     setExtras({});
+    setDesignReference(restoreDesignReference(activeService));
   }, [activeService]);
 
   useEffect(() => {
@@ -128,6 +141,7 @@ export default function InquiryMarkup({
     `${copy.serviceBase}: ${copy.serviceNames[activeService] ?? activeService}`,
     ...selectedOptions.map((option) => `${option.label}: ${option.price === null ? copy.customPrice : formatPrice(option.price, language)}`),
     `${copy.estimate}: ${totalDisplay}`,
+    ...(selectedDesign ? [`${designCopy.summary}: ${selectedDesign.name} (${selectedDesign.id}) — ${designText(selectedDesign.style, language)}`] : []),
   ].join('\n');
   const toggleExtra = (key) => setExtras((current) => ({ ...current, [key]: !current[key] }));
 
@@ -194,6 +208,8 @@ export default function InquiryMarkup({
         </div>
       </section>
         <input type="hidden" name="calculator_summary" value={calculatorSummary} readOnly />
+        <input type="hidden" name="design_reference" value={selectedDesign?.id ?? ''} readOnly />
+        <WebsiteDesignPicker service={activeService} language={language} value={selectedDesign?.id ?? ''} onChange={setDesignReference} />
         <div className="form-grid-2 inquiry-form-grid">
           <div className="form-group"><label htmlFor="clientName" data-i18n-html="form_name_label">Your Name <span className="req">*</span></label><input type="text" id="clientName" name="client_name" placeholder="Alex" data-i18n-placeholder="form_name_ph" required /></div>
           <div className="form-group"><label htmlFor="clientContact" data-i18n="form_contact_label">Your business Instagram or social media (optional)</label><input type="text" id="clientContact" name="client_contact" placeholder="Instagram, Telegram or social handle (optional)" data-i18n-placeholder="form_contact_ph" /></div>

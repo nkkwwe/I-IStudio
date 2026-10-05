@@ -610,7 +610,7 @@ function restoreInquiryDraft(form) {
   if (['ads', 'meta-ads', 'tiktok-ads', 'marketplaces'].includes(draft.service_type)) return;
 
   Object.entries(draft).forEach(([name, value]) => {
-    if (name === 'calculator_summary') return;
+    if (name === 'calculator_summary' || name === 'design_reference') return;
 
     const field = form.elements.namedItem(name);
     if (field && typeof value === 'string') field.value = value;
