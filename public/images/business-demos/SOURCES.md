@@ -27,3 +27,5 @@ Photography is downloaded from Unsplash and stored locally as WebP. The [Unsplas
 | abstract.webp | https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4 |
 
 Gallery thumbnails in `../design-previews/{meridian,forma,verde,studio}.webp` are captures of these rendered demo homepages, without the I&I Studio preview toolbar.
+
+Studio project boards are original SVG identity, website and packaging mockups rendered by `StudioWorkArt.tsx`. They use fictional brands and contain no competitor artwork. Forma galleries are illustrative spatial studies, not photographs documenting a built project.

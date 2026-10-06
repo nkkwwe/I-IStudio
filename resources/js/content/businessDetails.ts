@@ -1,0 +1,62 @@
+export type DemoText = [string, string, string];
+export const detailsCopy = {
+  case: ['A plan that became progress.', 'План, що перетворився на прогрес.', 'Un plan devenit progres.'],
+  caseLabel: ['ILLUSTRATIVE CLIENT CASE / NORTHLINE', 'ПРИКЛАД КЛІЄНТСЬКОГО КЕЙСУ / NORTHLINE', 'STUDIU DE CAZ ILUSTRATIV / NORTHLINE'],
+  challenge: ['The challenge', 'Завдання', 'Provocarea'], approach: ['Our approach', 'Наш підхід', 'Abordarea noastră'], outcome: ['The outcome', 'Результат', 'Rezultatul'],
+  caseChallenge: ['A growing distribution company had more orders, but less visibility. Its teams used different reports and decisions took too long.', 'Дистриб’ютор отримував більше замовлень, але мав менше ясності. Команди працювали з різними звітами, а рішення затягувалися.', 'O companie de distribuție avea mai multe comenzi, dar mai puțină claritate. Echipele foloseau rapoarte diferite, iar deciziile întârziau.'],
+  caseApproach: ['Six working sessions brought sales, operations and finance to one table. We simplified reporting and built a shared 90-day roadmap.', 'Шість робочих сесій об’єднали продажі, операції та фінанси. Ми спростили звітність і створили спільний план на 90 днів.', 'Șase sesiuni au reunit vânzările, operațiunile și finanțele. Am simplificat raportarea și am construit un plan comun de 90 de zile.'],
+  caseOutcome: ['One set of numbers. Clear owners for every priority. A leadership meeting focused on decisions, instead of reconciling reports.', 'Єдині цифри. Відповідальний за кожен пріоритет. Зустрічі керівників присвячені рішенням, а не звірянню звітів.', 'Un singur set de cifre. Responsabili clari. Întâlniri dedicate deciziilor, nu comparării rapoartelor.'],
+  team: ['People behind the perspective.', 'Люди, що формують погляд.', 'Oamenii din spatele perspectivei.'],
+  scope: ['What we deliver', 'Що ви отримуєте', 'Ce livrăm'],
+  brief: ['Start with a working conversation.', 'Почнімо з робочої розмови.', 'Începem cu o conversație de lucru.'],
+  principles: ['Less noise. More substance.', 'Менше шуму. Більше змісту.', 'Mai puțin zgomot. Mai multă substanță.'],
+  philosophy: ['Light, material, everyday life.', 'Світло, матеріали, щоденне життя.', 'Lumină, materiale, viață de zi cu zi.'],
+  philosophyText: ['We measure a good space by how it feels to live in it. Our studio takes time to understand habits, landscape and light before drawing the first line.', 'Якість простору визначаємо тим, як у ньому живеться. Перед першою лінією вивчаємо звички, ландшафт і світло.', 'Măsurăm un spațiu prin felul în care se trăiește în el. Înaintea primei linii, înțelegem obiceiurile, peisajul și lumina.'],
+  materials: ['Material palette', 'Палітра матеріалів', 'Paleta de materiale'],
+  oak: ['Warm oak', 'Теплий дуб', 'Stejar cald'], stone: ['Natural stone', 'Природний камінь', 'Piatră naturală'], linen: ['Soft linen', 'М’який льон', 'In moale'],
+  area: ['Floor area', 'Площа', 'Suprafață'], type: ['Project type', 'Тип проєкту', 'Tip de proiect'], stage: ['Stage', 'Етап', 'Etapă'], concept: ['Concept study', 'Концептуальний проєкт', 'Studiu conceptual'],
+  visualStudies: ['Spatial studies', 'Просторові дослідження', 'Studii spațiale'],
+  intention: ['The intention', 'Ідея', 'Intenția'], designNotes: ['Design notes', 'Проєктні рішення', 'Note de proiectare'],
+  projectBrief: ['Tell us about your space.', 'Розкажіть про ваш простір.', 'Spune-ne despre spațiul tău.'],
+  rooted: ['Rooted in the everyday.', 'Коріння у щоденному житті.', 'Rădăcini în viața de zi cu zi.'],
+  rootedText: ['We started with a single windowsill. Today our collection still follows the same rule: choose fewer things, care for them well, and leave room to grow.', 'Ми почали з одного підвіконня. Наша колекція досі підкоряється простому правилу: обирати менше, дбати краще та залишати простір для зростання.', 'Am început cu un singur pervaz. Alegem mai puține lucruri, le îngrijim bine și lăsăm loc pentru creștere.'],
+  care: ['A little care goes a long way.', 'Трохи турботи змінює багато.', 'Puțină grijă face mult.'],
+  full: ['Full view', 'Загальний вигляд', 'Vedere completă'], detail: ['Detail', 'Деталь', 'Detaliu'], texture: ['Texture', 'Фактура', 'Textură'],
+  sort: ['Sort by', 'Сортувати', 'Sortează'], featured: ['Featured', 'Рекомендовані', 'Recomandate'], low: ['Price: low to high', 'Ціна: від нижчої', 'Preț: crescător'], high: ['Price: high to low', 'Ціна: від вищої', 'Preț: descrescător'], name: ['Name: A–Z', 'Назва: А–Я', 'Nume: A–Z'],
+  needHelp: ['How can we help you grow?', 'Як допомогти вам зростати?', 'Cum te ajutăm să crești?'],
+  light: ['Light', 'Світло', 'Lumină'], water: ['Water', 'Полив', 'Udare'], delivery: ['Delivery & returns', 'Доставка та повернення', 'Livrare și retur'],
+  lightText: ['Bright, indirect light. Keep away from harsh midday sun.', 'Яскраве розсіяне світло. Уникайте прямого полуденного сонця.', 'Lumină indirectă. Evită soarele puternic de la prânz.'],
+  waterText: ['Check the soil first. Water when the top layer feels dry.', 'Спочатку перевірте ґрунт. Поливайте, коли верхній шар підсохне.', 'Verifică solul. Udă când stratul superior este uscat.'],
+  deliveryText: ['This is a sample collection. The bag and checkout let you try the experience; no delivery, payment or real order is created.', 'Це демонстраційна колекція. Кошик і оформлення показують досвід покупки без доставки, оплати чи реального замовлення.', 'Colecție demonstrativă. Coșul și comanda nu creează livrări, plăți sau comenzi reale.'],
+  supportTopics: [['Plant care', 'Догляд за рослинами', 'Îngrijirea plantelor'], ['Delivery', 'Доставка', 'Livrare'], ['Something else', 'Інше', 'Altceva']],
+  manifesto: ['NO ORDINARY\nTHINKING.', 'НЕЗВИЧАЙНЕ\nМИСЛЕННЯ.', 'GÂNDIRE\nNEOBIȘNUITĂ.'],
+  manifestoText: ['We are strategists, designers and curious people. Small by choice, collaborative by nature. The best work happens when different perspectives meet.', 'Ми стратеги, дизайнери та допитливі люди. Свідомо невелика команда, відкрита до співпраці. Найкращі роботи народжуються на перетині поглядів.', 'Suntem strategi, designeri și oameni curioși. O echipă mică prin alegere, colaborativă prin natură. Cele mai bune idei apar din perspective diferite.'],
+  capabilities: ['A few things we do very well.', 'Те, що ми вміємо найкраще.', 'Lucruri pe care le facem foarte bine.'],
+  identity: ['Identity', 'Айдентика', 'Identitate'], digital: ['Digital', 'Цифровий досвід', 'Digital'], packaging: ['Packaging', 'Пакування', 'Ambalaj'],
+  workSystem: ['One idea. A whole system.', 'Одна ідея. Ціла система.', 'O idee. Un sistem întreg.'],
+  studioBrief: ['WHAT ARE\nWE MAKING?', 'ЩО МИ\nСТВОРЮЄМО?', 'CE\nCREĂM?'],
+  service: ['What do you need?', 'Що вам потрібно?', 'De ce ai nevoie?'], company: ['Company (optional)', 'Компанія (необов’язково)', 'Companie (opțional)'],
+  space: ['Your space', 'Ваш простір', 'Spațiul tău'], location: ['Location (optional)', 'Локація (необов’язково)', 'Locație (opțional)'],
+  topic: ['Your question is about', 'Тема вашого запитання', 'Întrebarea ta este despre'],
+  selectServices: ['Choose the disciplines for your project', 'Оберіть напрями вашого проєкту', 'Alege disciplinele proiectului'],
+  insights: ['Perspectives for your next decision.', 'Погляди для наступного рішення.', 'Perspective pentru următoarea decizie.'],
+  notes: ['Notes from the practice.', 'Нотатки студії.', 'Note din studio.'],
+  fieldNotes: ['The little green guide.', 'Маленький зелений посібник.', 'Micul ghid verde.'],
+  notebook: ['IDEAS IN\nPROGRESS.', 'ІДЕЇ\nВ РОБОТІ.', 'IDEI ÎN\nPROGRES.'],
+  readTime: ['1 MIN READ', '1 ХВ ЧИТАННЯ', '1 MIN DE LECTURĂ'],
+} satisfies Record<string, DemoText | DemoText[]>;
+
+export const meridianPeople: { name: string; role: DemoText; focus: DemoText }[] = [
+  { name: 'Anna Reed', role: ['Strategy partner', 'Партнерка зі стратегії', 'Partener strategie'], focus: ['Market positioning, growth and leadership alignment.', 'Позиціювання, зростання та узгодженість керівництва.', 'Poziționare, creștere și alinierea echipei.'] },
+  { name: 'Daniel Park', role: ['Operations partner', 'Партнер з операцій', 'Partener operațiuni'], focus: ['Teams, processes and sustainable ways of working.', 'Команди, процеси та стійкі робочі практики.', 'Echipe, procese și moduri de lucru durabile.'] },
+  { name: 'Marta Hill', role: ['Finance partner', 'Партнерка з фінансів', 'Partener finanțe'], focus: ['Clear reporting, scenarios and investment decisions.', 'Зрозуміла звітність, сценарії та інвестиційні рішення.', 'Raportare clară, scenarii și decizii de investiții.'] },
+];
+
+export const serviceDeliverables: Record<string, DemoText[]> = {
+  'growth-strategy': [['Market & competitor map', 'Карта ринку та конкурентів', 'Harta pieței și concurenței'], ['Positioning workshop', 'Сесія з позиціювання', 'Atelier de poziționare'], ['90-day growth roadmap', 'План зростання на 90 днів', 'Plan de creștere de 90 de zile']],
+  'operating-model': [['Process & ownership map', 'Карта процесів і відповідальності', 'Harta proceselor și responsabilității'], ['A simpler team rhythm', 'Простіший ритм команди', 'Un ritm mai simplu'], ['Practical operating playbook', 'Практичний операційний посібник', 'Ghid operațional practic']],
+  'financial-clarity': [['Cash-flow forecast', 'Прогноз грошових потоків', 'Prognoza fluxului de numerar'], ['Scenario planning model', 'Модель сценарного планування', 'Model de scenarii'], ['Decision-ready reporting', 'Звіти для прийняття рішень', 'Rapoarte pentru decizii']],
+  'market-entry': [['Demand & opportunity study', 'Дослідження попиту та можливостей', 'Studiu de cerere și oportunități'], ['Partner & channel shortlist', 'Добірка партнерів і каналів', 'Listă de parteneri și canale'], ['Phased launch plan', 'Поетапний план запуску', 'Plan de lansare în etape']],
+};
+
+export const projectAreas: Record<string, string> = { 'quiet-residence': '240 m²', 'soft-interior': '86 m²', 'open-studio': '420 m²', 'garden-room': '120 m²' };

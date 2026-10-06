@@ -193,10 +193,10 @@
 .bd-filter-tabs button { padding: 10px 16px; min-height: 44px; border: 1px solid var(--bd-line); border-radius: var(--bd-radius); color: var(--bd-ink); background: transparent; font-size: 12px; transition: background-color 200ms,border-color 200ms,color 200ms; }
 .bd-filter-tabs button.is-active { color: var(--bd-on-accent); background: var(--bd-accent); border-color: var(--bd-accent); }
 .bd-search { flex: 0 1 280px; }
-.business-demo :is(input,textarea) { display: block; width: 100%; padding: 14px 16px; min-height: 48px; background: var(--bd-bg); border: 1px solid var(--bd-line); border-radius: var(--bd-radius); color: var(--bd-ink); font: 400 16px/1.5 var(--font-sans); box-shadow: none; }
-.business-demo :is(input,textarea)::placeholder { color: var(--bd-muted); font-size: 13px; }
+.business-demo :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),textarea) { display: block; width: 100%; padding: 14px 16px; min-height: 48px; background: var(--bd-bg); border: 1px solid var(--bd-line); border-radius: var(--bd-radius); color: var(--bd-ink); font: 400 16px/1.5 var(--font-sans); box-shadow: none; }
+.business-demo :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),textarea)::placeholder { color: var(--bd-muted); font-size: 13px; }
 .business-demo textarea { resize: vertical; }
-.business-demo :is(input,textarea):focus { border-color: var(--bd-accent); box-shadow: 0 0 0 2px var(--bd-accent); }
+.business-demo :is(input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="hidden"]):not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="image"]),textarea):focus { border-color: var(--bd-accent); box-shadow: 0 0 0 2px var(--bd-accent); }
 .bd-result-count { margin-bottom: 32px !important; font-size: 12px; }
 .bd-empty { padding-block: 60px; }
 .bd-empty .bd-button { margin-top: 28px; }
