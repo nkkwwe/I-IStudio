@@ -98,7 +98,7 @@ export default function LandingDemo({ design }: { design: LandingDemoId }) {
     // Focus without jumping while the section scrolls into view.
     formRef.current?.querySelector<HTMLInputElement>('input')?.focus({ preventScroll: true });
   };
-  const selectTab = (index: number) => { setTab(index); tabRefs.current[index]?.focus(); };
+  const selectTab = (index: number) => { setTab(index); tabRefs.current[index]?.focus({ preventScroll: true }); };
 
   return <>
     <Head title={`${design[0].toUpperCase()}${design.slice(1)} — Live demo`}><meta name="robots" content="noindex, nofollow" /></Head>

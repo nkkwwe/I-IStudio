@@ -45,7 +45,7 @@
 .ld-atelier .ld-button { border-radius: 0; }
 .ld-skip { position: fixed; left: 20px; top: 12px; z-index: 20; padding: 12px; background: var(--ld-bg); border: 1px solid var(--ld-ink); clip-path: inset(100%); }
 .ld-skip:focus { clip-path: none; }
-.landing-demo :is(main,section[id]) { scroll-margin-top: 110px; }
+.landing-demo :is(main,section[id]) { scroll-margin-top: var(--ld-scroll-offset,104px); }
 .ld-hero { padding-block: 76px; display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 60px; }
 .ld-hero h1 { margin-top: 22px; }
 .ld-hero-copy > p { max-width: 445px; margin-top: 26px; font-size: 16px; }
@@ -81,7 +81,7 @@
 .landing-demo summary > span { flex-shrink: 0; font-size: 24px; line-height: 1; }
 .landing-demo details[open] summary > span { transform: rotate(45deg); }
 .ld-story p { margin-bottom: 16px; font-size: 14px; }
-.ld-text-link { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; font-weight: 600; text-decoration: underline !important; text-underline-offset: 5px; }
+.ld-text-link { display: inline-flex; align-items: center; min-height: 44px; font-size: 13px; font-weight: 600; text-decoration-line: underline; text-underline-offset: 5px; }
 .ld-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
 .ld-tabs [aria-selected="true"], .ld-billing [aria-pressed="true"] { background: var(--ld-accent); border-color: var(--ld-accent); color: var(--ld-on-accent) !important; }
 .ld-tab-panel { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 48px; background: var(--ld-card); padding: 40px; border: 1px solid var(--ld-line); border-radius: 16px; }
@@ -160,7 +160,7 @@
 .ld-hero-copy, .ld-hero-art { animation: ld-content-in 650ms cubic-bezier(.22,1,.36,1) both; }
 .ld-hero-art { animation-delay: 100ms; }
 .ld-hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 24px; margin-top: 30px; }
-.ld-hero-actions .ld-text-link { gap: 12px; color: var(--ld-muted); text-decoration: none !important; }
+.ld-hero-actions .ld-text-link { gap: 12px; color: var(--ld-muted); }
 .ld-hero-footnote { display: flex; align-items: center; gap: 9px; }
 .ld-status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--ld-accent); }
 .ld-nav a, .landing-demo summary, .ld-text-link { transition: color 200ms ease, border-color 200ms ease; }
@@ -246,7 +246,7 @@
 @media (hover: hover) and (pointer: fine) {
   .landing-demo .ld-button:hover:not(:disabled) { background: var(--ld-hover); border-color: var(--ld-hover); color: var(--ld-on-accent) !important; }
   .landing-demo .ld-secondary:hover:not(:disabled) { background: var(--ld-card); border-color: var(--ld-accent); color: var(--ld-ink) !important; }
-  .landing-demo :is(.ld-tabs [aria-selected="true"],.ld-billing [aria-pressed="true"]):hover { background: var(--ld-hover); color: var(--ld-on-accent) !important; }
+  .landing-demo :is(.ld-tabs [aria-selected="true"],.ld-billing [aria-pressed="true"]):hover:not(:disabled) { background: var(--ld-hover); color: var(--ld-on-accent) !important; }
   .ld-nav a:hover { border-bottom-color: var(--ld-accent); }
   .landing-demo summary:hover, .landing-demo .ld-text-link:hover { color: var(--ld-accent); }
 }
