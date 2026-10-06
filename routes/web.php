@@ -52,6 +52,24 @@ Route::prefix('{locale}')
             ->whereIn('design', ['mono', 'pulse', 'orbit', 'atelier'])
             ->name('design-demo.localized');
 
+        Route::get('/designs/{design}/{section?}/{item?}', function (string $locale, string $design, string $section = 'home', ?string $item = null) {
+            $items = [
+                'meridian' => ['growth-strategy', 'operating-model', 'financial-clarity', 'market-entry'],
+                'forma' => ['quiet-residence', 'soft-interior', 'open-studio', 'garden-room'],
+                'verde' => ['ficus', 'succulent', 'garden-kit', 'quiet-corner'],
+                'studio' => ['objects-of-tomorrow', 'open-culture', 'make-room', 'future-office'],
+            ];
+
+            abort_if($section === 'bag' && $design !== 'verde', 404);
+            abort_if($section === 'item' ? ! in_array($item, $items[$design], true) : $item !== null, 404);
+
+            return Inertia::render('BusinessDemo', ['design' => $design, 'section' => $section, 'item' => $item]);
+        })
+            ->whereIn('design', ['meridian', 'forma', 'verde', 'studio'])
+            ->whereIn('section', ['collection', 'about', 'journal', 'contact', 'item', 'bag'])
+            ->where('item', '[a-z-]+')
+            ->name('business-demo.localized');
+
         Route::get('/inquiry', [InquiryController::class, 'show'])->name('inquiry.localized');
         Route::post('/inquiry', [InquiryController::class, 'store'])->name('inquiry.store.localized');
 

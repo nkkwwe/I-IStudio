@@ -22,7 +22,7 @@ class LandingDemoTest extends TestCase
 
     public function test_unavailable_designs_and_locales_are_not_rendered(): void
     {
-        foreach (['/en/designs/unknown', '/en/designs/meridian', '/fr/designs/mono'] as $path) {
+        foreach (['/en/designs/unknown', '/fr/designs/mono'] as $path) {
             $this->get($path)->assertNotFound();
         }
     }

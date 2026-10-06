@@ -1,6 +1,6 @@
 // Original previews inspired by the visual directions in these public galleries:
 // https://horoshop.ua/ua/design/ and https://webflow.com/templates/search/saas-landing-pages
-// Landing previews are screenshots of the interactive demos. Business previews remain references.
+// All gallery thumbnails are screenshots of the original interactive demos.
 export type WebsiteDesign = {
   id: string;
   name: string;
@@ -69,8 +69,7 @@ export function designText(values: [string, string, string], language: string): 
 }
 
 export function designImage(id: string): string {
-  const extension = designs.landing.some((design) => design.id === id) ? 'webp' : 'svg';
-  return `/images/design-previews/${id}.${extension}`;
+  return `/images/design-previews/${id}.webp`;
 }
 
 export function restoreDesignReference(service: string): string {
