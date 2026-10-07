@@ -11,6 +11,7 @@ export type WebsiteDesign = {
 
 const designs: Record<string, WebsiteDesign[]> = {
   landing: [
+    { id: 'prism', name: 'Prism', style: ['Creative gradients', 'Творчі градієнти', 'Gradiente creative'], description: ['Fluid colour, sculptural artwork and an interactive spectrum of moods.', 'Плавні кольори, скульптурна графіка та інтерактивний спектр настроїв.', 'Culori fluide, grafică sculpturală și un spectru interactiv de atmosfere.'] },
     { id: 'bento', name: 'Bento', style: ['Bento workspace', 'Bento-простір', 'Spațiu Bento'], description: ['A modular grid, soft lilac accents and an interactive product story.', 'Модульна сітка, м’які бузкові акценти та інтерактивна історія продукту.', 'Grilă modulară, accente liliachii și o poveste interactivă a produsului.'] },
     { id: 'signal', name: 'Signal', style: ['Swiss graphic', 'Швейцарська графіка', 'Grafică elvețiană'], description: ['Confident typography, graphic posters and a precise editorial rhythm.', 'Впевнена типографіка, графічні постери та чіткий журнальний ритм.', 'Tipografie puternică, postere grafice și un ritm editorial precis.'] },
     { id: 'mono', name: 'Mono', style: ['Minimal', 'Мінімалізм', 'Minimalist'], description: ['Clear typography, a quiet palette and a focused offer.', 'Чітка типографіка, стримані кольори та акцент на пропозиції.', 'Tipografie clară, culori discrete și accent pe ofertă.'] },
@@ -19,6 +20,7 @@ const designs: Record<string, WebsiteDesign[]> = {
     { id: 'atelier', name: 'Atelier', style: ['Warm editorial', 'Теплий журнальний', 'Editorial cald'], description: ['Warm tones, elegant type and generous space for visuals.', 'Теплі відтінки, елегантний шрифт і простір для візуалів.', 'Tonuri calde, font elegant și spațiu pentru imagini.'] },
   ],
   corporate: [
+    { id: 'haven', name: 'Haven', style: ['Warm workspace', 'Теплий робочий простір', 'Spațiu de lucru primitor'], description: ['A spacious photo-led layout, soft terracotta and a welcoming business story.', 'Простора композиція з фотографіями, м’яка теракота та привітна історія бізнесу.', 'Compoziție spațioasă cu fotografii, teracotă delicată și o poveste primitoare.'] },
     { id: 'cobalt', name: 'Cobalt', style: ['Modern corporate', 'Сучасний корпоративний', 'Corporate modern'], description: ['Cobalt accents, connected systems and a clear service presentation.', 'Кобальтові акценти, поєднані системи та зрозуміла презентація послуг.', 'Accente cobalt, sisteme conectate și servicii prezentate clar.'] },
     { id: 'maison', name: 'Maison', style: ['Quiet luxury', 'Стримана розкіш', 'Lux discret'], description: ['Editorial typography, architectural imagery and warm natural tones.', 'Журнальна типографіка, архітектурні фото та теплі природні відтінки.', 'Tipografie editorială, imagini arhitecturale și tonuri naturale calde.'] },
     { id: 'meridian', name: 'Meridian', style: ['Business classic', 'Ділова класика', 'Clasic business'], description: ['A professional blue palette with services and trust signals.', 'Ділова синя палітра, послуги та елементи довіри.', 'Paletă albastră profesională, servicii și elemente de încredere.'] },

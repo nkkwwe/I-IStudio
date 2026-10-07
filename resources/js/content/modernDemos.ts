@@ -3,6 +3,30 @@ type Text = [string, string, string];
 export const modernText = (value: Text, language: SiteLanguage) => value[language === 'uk' ? 1 : language === 'ro' ? 2 : 0];
 type Concept = { service: 'landing' | 'corporate'; brand: string; label: Text; title: Text; intro: Text; section: Text; about: Text; items: { title: Text; text: Text; image?: string }[] };
 export const modernDemos: Record<string, Concept> = {
+  prism: {
+    service: 'landing', brand: 'prism /', label: ['A NEW DIMENSION OF CREATIVE WORK', 'НОВИЙ ВИМІР ТВОРЧОСТІ', 'O NOUĂ DIMENSIUNE A CREATIVITĂȚII'],
+    title: ['Ideas without\nlimits.', 'Ідеї без\nмеж.', 'Idei fără\nlimite.'],
+    intro: ['A creative toolkit for your next bright idea. Bring colour, clarity and a little unexpected magic to the things you make.', 'Творчий інструмент для вашої наступної яскравої ідеї. Додайте кольору, ясності та трохи несподіваного до того, що створюєте.', 'Un instrument creativ pentru următoarea ta idee. Adu culoare, claritate și puțină magie în ceea ce creezi.'],
+    section: ['Find your own spectrum.', 'Знайдіть власний спектр.', 'Găsește-ți propriul spectru.'],
+    about: ['Start with a spark, explore a few directions and make it yours. A playful concept that gives your product space to stand out, with thoughtful details on every screen.', 'Почніть з іскри, дослідіть кілька напрямів і знайдіть свій. Грайливий концепт, що допомагає продукту виділитися завдяки продуманим деталям на кожному екрані.', 'Pornește de la o scânteie, explorează direcții și găsește-o pe a ta. Un concept expresiv care evidențiază produsul prin detalii atent lucrate pe fiecare ecran.'],
+    items: [
+      { title: ['Soft focus', 'М’який фокус', 'Focus delicat'], text: ['Gentle gradients and a little breathing room for a fresh beginning.', 'М’які градієнти та трохи простору для нового початку.', 'Gradiente delicate și puțin spațiu pentru un început nou.'] },
+      { title: ['Bold energy', 'Яскрава енергія', 'Energie expresivă'], text: ['A brighter palette for ideas that deserve to be seen.', 'Виразніша палітра для ідей, які заслуговують бути помітними.', 'O paletă vie pentru idei care merită să fie văzute.'] },
+      { title: ['Open possibilities', 'Відкриті можливості', 'Posibilități deschise'], text: ['An unexpected combination. A direction that feels entirely yours.', 'Несподіване поєднання. Напрям, що відчувається саме вашим.', 'O combinație neașteptată. O direcție care îți aparține.'] },
+    ],
+  },
+  haven: {
+    service: 'corporate', brand: 'haven.', label: ['GOOD WORK STARTS WITH A GOOD PLACE', 'ХОРОША РОБОТА ПОЧИНАЄТЬСЯ З ПРОСТОРУ', 'MUNCA BUNĂ ÎNCEPE CU UN LOC BUN'],
+    title: ['Your space.\nYour pace.', 'Ваш простір.\nВаш ритм.', 'Spațiul tău.\nRitmul tău.'],
+    intro: ['Thoughtful workspaces for independent minds. Find your quiet corner, bring your team together or make room for something new.', 'Продумані робочі простори для незалежних людей. Знайдіть тихий куточок, зберіть команду або створіть місце для нового.', 'Spații de lucru pentru minți independente. Găsește un colț liniștit, adună echipa sau fă loc pentru ceva nou.'],
+    section: ['A little room to do more.', 'Простір для більшого.', 'Puțin spațiu pentru mai mult.'],
+    about: ['We believe a workspace should feel as good as it works. Natural light, comfortable details and room for real connection — shaped around the way you spend your day.', 'Віримо, що робочий простір має бути і зручним, і приємним. Природне світло, продумані деталі та місце для спілкування — під ваш щоденний ритм.', 'Credem că un spațiu de lucru trebuie să fie plăcut și funcțional. Lumină naturală, detalii confortabile și loc pentru conexiuni, în ritmul zilei tale.'],
+    items: [
+      { title: ['A place to focus', 'Місце зосередитись', 'Un loc pentru concentrare'], text: ['A personal desk, a calm atmosphere and space for your best ideas.', 'Власний стіл, спокійна атмосфера та простір для найкращих ідей.', 'Un birou personal, o atmosferă calmă și loc pentru ideile tale.'] },
+      { title: ['Room for your team', 'Простір для команди', 'Loc pentru echipa ta'], text: ['Flexible offices that bring people and their projects together.', 'Гнучкі офіси, що поєднують людей та їхні проєкти.', 'Birouri flexibile care aduc oamenii și proiectele împreună.'] },
+      { title: ['Meet, make, connect', 'Зустрічайтесь і творіть', 'Întâlnește, creează, conectează'], text: ['Welcoming meeting spaces for conversations that move things forward.', 'Затишні кімнати для розмов, що допомагають рухатись уперед.', 'Spații primitoare pentru conversații care duc lucrurile înainte.'] },
+    ],
+  },
   bento: {
     service: 'landing', brand: 'bento.', label: ['LESS FRICTION. MORE MOMENTUM.', 'МЕНШЕ ЗАЙВОГО. БІЛЬШЕ РУХУ.', 'MAI PUȚIN EFORT. MAI MULT AVÂNT.'],
     title: ['A little space.\nA bigger possibility.', 'Трохи простору.\nБільше можливостей.', 'Puțin spațiu.\nMai multe posibilități.'],

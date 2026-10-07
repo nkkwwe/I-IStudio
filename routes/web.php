@@ -49,12 +49,12 @@ Route::prefix('{locale}')
         Route::get('/', [HomeController::class, 'show'])->name('home.localized');
 
         Route::get('/designs/{design}/{section?}', fn (string $locale, string $design, string $section = 'home') => Inertia::render('ModernDemo', ['design' => $design, 'section' => $section]))
-            ->whereIn('design', ['cobalt', 'maison'])
+            ->whereIn('design', ['cobalt', 'maison', 'haven'])
             ->whereIn('section', ['collection', 'about', 'journal', 'contact'])
             ->name('modern-business-demo.localized');
 
-        Route::get('/designs/{design}', fn (string $locale, string $design) => Inertia::render(in_array($design, ['bento', 'signal'], true) ? 'ModernDemo' : 'LandingDemo', ['design' => $design]))
-            ->whereIn('design', ['mono', 'pulse', 'orbit', 'atelier', 'bento', 'signal'])
+        Route::get('/designs/{design}', fn (string $locale, string $design) => Inertia::render(in_array($design, ['bento', 'signal', 'prism'], true) ? 'ModernDemo' : 'LandingDemo', ['design' => $design]))
+            ->whereIn('design', ['mono', 'pulse', 'orbit', 'atelier', 'bento', 'signal', 'prism'])
             ->name('design-demo.localized');
 
         Route::get('/designs/{design}/{section?}/{item?}', function (string $locale, string $design, string $section = 'home', ?string $item = null) {
