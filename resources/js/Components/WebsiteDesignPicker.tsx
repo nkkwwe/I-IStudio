@@ -72,6 +72,7 @@ export default function WebsiteDesignPicker({ service, language, value, onChange
           <span>{design.name} <span aria-hidden="true">↗</span>{value === design.id && <span aria-hidden="true"> ✓</span>}</span>
         </a>)}
       </div>
+      <p className="design-direction-note">{copy.note}</p>
       {selected && <div className="design-selection" aria-live="polite">
         <span>{copy.chosen}: <strong>{selected.name}</strong> · {designText(selected.style, language)}</span>
         <button type="button" className="design-clear" onClick={() => { onChange(''); triggerRef.current?.focus(); }} aria-label={copy.clear}>×</button>
