@@ -76,7 +76,8 @@ export function designText(values: [string, string, string], language: string): 
 }
 
 export function designImage(id: string): string {
-  return `/images/design-previews/${id}.webp`;
+  const revision = ['bento', 'signal', 'prism', 'cobalt', 'maison', 'haven'].includes(id) ? '?v=20261007-2' : '';
+  return `/images/design-previews/${id}.webp${revision}`;
 }
 
 export function restoreDesignReference(service: string): string {

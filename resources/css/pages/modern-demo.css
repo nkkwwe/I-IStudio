@@ -110,10 +110,6 @@ html[data-theme="dark"] .md-maison { --ld-bg: #20231d; --ld-ink: #f1eee4; --ld-m
   .modern-demo :is(.ld-nav a,.ld-text-link,.md-footer nav a):hover { color: var(--ld-accent); }
   .modern-demo summary:hover { background: var(--ld-card); color: var(--ld-accent); }
   .md-maison .md-photo { transition: filter 400ms ease; }
-  .md-maison article:hover .md-photo { filter: saturate(.7); }
-  .md-signal article:hover .md-poster { background: var(--ld-ink); color: var(--ld-bg); }
-  .md-bento article:hover .md-workspace { border-color: var(--ld-accent); }
-  .md-cobalt article:hover .md-system { background: var(--md-pop); }
 }
 @media (max-width: 1000px) {
   .md-hero { gap: 32px; }
@@ -198,9 +194,6 @@ html[data-theme="dark"] .md-haven { --ld-bg: #241e19; --ld-ink: #f5eee4; --ld-mu
 .md-haven .md-about { border-block: 1px solid var(--ld-line); }
 .md-haven .md-values > div { background: var(--ld-bg); border: 1px solid var(--ld-line); border-radius: var(--radius-inner); padding: 24px; }
 @media (hover: hover) and (pointer: fine) {
-  .md-prism article:hover .md-prism-art { border-color: var(--ld-accent); background: var(--md-pop); }
-  .md-haven article:hover .md-photo { filter: saturate(.75); }
-  .md-haven article:hover .md-haven-caption { color: var(--ld-on-accent); background: var(--ld-accent); }
 }
 @media (max-width: 1000px) {
   .md-haven .ld-hero-copy { column-gap: 32px; }
