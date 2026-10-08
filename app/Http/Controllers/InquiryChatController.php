@@ -36,22 +36,24 @@ class InquiryChatController extends Controller
         ]);
         $identity = ['project_inquiry_id' => $inquiry->id, 'user_id' => $request->user()->id, 'client_id' => $data['client_id']];
         if ($data['active']) {
-            DB::table('inquiry_chat_activities')->updateOrInsert($identity, [
+            DB::table('inquiry_chat_activities')->upsert([[...$identity,
                 'role' => $role,
                 'last_seen_at' => now(),
                 'typing_until' => $data['typing'] ? now()->addSeconds(6) : null,
-            ]);
+            ]], array_keys($identity), ['role', 'last_seen_at', 'typing_until']);
         } else {
             DB::table('inquiry_chat_activities')->where($identity)->delete();
         }
         DB::table('inquiry_chat_activities')->where('last_seen_at', '<', now()->subMinute())->delete();
         $peers = DB::table('inquiry_chat_activities')
             ->where('project_inquiry_id', $inquiry->id)->where('role', '!=', $role)
-            ->where('last_seen_at', '>=', now()->subSeconds(12));
+            ->where('last_seen_at', '>=', now()->subSeconds(12))
+            ->selectRaw('COUNT(*) AS present_count, MAX(CASE WHEN typing_until > ? THEN 1 ELSE 0 END) AS typing', [now()])
+            ->first();
 
         return response()->json([
-            'peer_present' => (clone $peers)->exists(),
-            'peer_typing' => $peers->where('typing_until', '>', now())->exists(),
+            'peer_present' => (int) $peers->present_count > 0,
+            'peer_typing' => (int) $peers->typing === 1,
         ])->header('Cache-Control', 'no-store');
     }
 

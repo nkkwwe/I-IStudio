@@ -6,6 +6,10 @@ export function useInquiryChatActivity(endpoint: string) {
   const notify = useRef<() => void>(() => {});
 
   useEffect(() => {
+    const updatePeer = (present: boolean, typing: boolean) => {
+      setPeer((current) => current.peer_present === present && current.peer_typing === typing
+        ? current : { peer_present: present, peer_typing: typing });
+    };
     const clientId = crypto.randomUUID();
     let disposed = false;
     let pending = false;
@@ -32,10 +36,10 @@ export function useInquiryChatActivity(endpoint: string) {
         const result = await response.json();
         if (!disposed && !leaving) {
           lastSuccess = Date.now();
-          setPeer({ peer_present: result.peer_present === true, peer_typing: result.peer_typing === true });
+          updatePeer(result.peer_present === true, result.peer_typing === true);
         }
       } catch {
-        if (!disposed && Date.now() - lastSuccess > 12000) setPeer({ peer_present: false, peer_typing: false });
+        if (!disposed && Date.now() - lastSuccess > 12000) updatePeer(false, false);
       } finally {
         window.clearTimeout(timeout);
         controllers.delete(controller);

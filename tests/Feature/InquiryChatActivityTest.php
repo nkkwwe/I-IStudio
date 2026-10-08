@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\ProjectInquiry;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Tests\TestCase;
 
@@ -56,6 +57,37 @@ class InquiryChatActivityTest extends TestCase
         $this->assertDatabaseCount('project_inquiry_messages', 0);
         $inquiry->delete();
         $this->assertDatabaseCount('inquiry_chat_activities', 0);
+    }
+
+    public function test_activity_uses_three_queries_and_preserves_typing_across_tabs(): void
+    {
+        config(['admin.emails' => ['admin@example.com']]);
+        $user = User::factory()->create();
+        $admin = User::factory()->create(['email' => 'admin@example.com']);
+        $inquiry = $this->inquiry($user);
+        $adminRoute = route('admin.project-briefs.activity', $inquiry);
+        $this->actingAs($admin)->postJson($adminRoute, [
+            'client_id' => (string) Str::uuid(), 'active' => true, 'typing' => false,
+        ])->assertOk();
+        $this->postJson($adminRoute, [
+            'client_id' => (string) Str::uuid(), 'active' => true, 'typing' => true,
+        ])->assertOk();
+
+        $data = ['client_id' => (string) Str::uuid(), 'active' => true, 'typing' => false];
+        // Check both the first heartbeat and an update of the same client.
+        foreach ([1, 2] as $heartbeat) {
+            DB::flushQueryLog();
+            DB::enableQueryLog();
+            try {
+                $this->actingAs($user)->postJson(route('account.project-briefs.activity', $inquiry), $data)
+                    ->assertOk()->assertJsonPath('peer_present', true)->assertJsonPath('peer_typing', true);
+                $queries = collect(DB::getQueryLog())->filter(fn ($query) => str_contains($query['query'], 'inquiry_chat_activities'));
+                $this->assertCount(3, $queries);
+            } finally {
+                DB::disableQueryLog();
+            }
+        }
+        $this->assertDatabaseCount('inquiry_chat_activities', 3);
     }
 
     private function inquiry(User $user): ProjectInquiry

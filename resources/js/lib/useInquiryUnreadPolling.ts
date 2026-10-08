@@ -14,10 +14,18 @@ export default function useInquiryUnreadPolling(
         const payload = await fetchChatUnreadCounts(endpoint);
         if (disposed) return;
         const counts = new Map((payload.inquiries ?? []).map((item) => [item.id, item]));
-        setInquiries((current) => current.map((inquiry) => ({
-          ...inquiry, unread_count: counts.get(inquiry.id)?.unread_count ?? 0,
-          status: counts.get(inquiry.id)?.status ?? inquiry.status,
-        })));
+        setInquiries((current) => {
+          let changed = false;
+          const next = current.map((inquiry) => {
+            const count = counts.get(inquiry.id);
+            const unreadCount = count?.unread_count ?? 0;
+            const status = count?.status ?? inquiry.status;
+            if (inquiry.unread_count === unreadCount && inquiry.status === status) return inquiry;
+            changed = true;
+            return { ...inquiry, unread_count: unreadCount, status };
+          });
+          return changed ? next : current;
+        });
       } catch {
         // Preserve the previous counts during a temporary network failure.
       }
