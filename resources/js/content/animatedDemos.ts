@@ -13,7 +13,7 @@ export const animatedText = (value: Text, language: SiteLanguage) => value[langu
 export const animatedDemos: Record<AnimatedDesignId, Concept> = {
   rally: {
     service: 'landing', brand: 'RALLY', label: ['IDEAS NEED PEOPLE / A FICTIONAL CREATIVE FESTIVAL', 'ІДЕЯМ ПОТРІБНІ ЛЮДИ / КОНЦЕПТ ТВОРЧОГО ФЕСТИВАЛЮ', 'IDEILE AU NEVOIE DE OAMENI / FESTIVAL CREATIV IMAGINAR'],
-    title: ['Make some\nbeautiful noise.', 'Створюй.\nЗвучить голосно.', 'Creează ceva\nmemorabil.'],
+    title: ['Make some\nbeautiful noise.', 'Створюй.\nЗвучи голосно.', 'Creează ceva\nmemorabil.'],
     intro: ['Two days of fresh perspectives, open conversations and ideas worth getting out of bed for.', 'Два дні свіжих поглядів, відкритих розмов та ідей, заради яких варто прокинутися.', 'Două zile de perspective noi, conversații deschise și idei pentru care merită să te trezești.'],
     action: ['Join the gathering', 'Приєднатися', 'Alătură-te'], heading: ['Pick your frequency.', 'Знайди свою частоту.', 'Găsește-ți frecvența.'],
     about: ['A meeting of curious minds. No perfect answers, just great questions, hands-on sessions and a little room for the unexpected.', 'Зустріч допитливих людей. Без ідеальних відповідей: цікаві запитання, практичні сесії та місце для несподіваного.', 'O întâlnire a minților curioase. Întrebări bune, sesiuni practice și loc pentru neașteptat.'],
