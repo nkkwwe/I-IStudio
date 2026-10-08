@@ -1,14 +1,10 @@
 /* Original concepts inspired by bento, Swiss graphic design and editorial portfolios.
-   Each identity owns its palette; Flow's preview controls keep the site's theme. */
+   Each identity keeps its fixed light palette; Flow's preview controls keep the site's theme. */
 .md-preview-note { flex: 0 0 100%; margin: 0; color: var(--text-muted); font-size: .875rem; line-height: 1.5; }
-.modern-demo { --ld-bg: #faf9f6; --ld-ink: #292b31; --ld-muted: #62646e; --ld-card: #eeedf3; --ld-line: #d8d7df; --ld-accent: #5443a1; --ld-on-accent: #ffffff; --ld-hover: #40337d; --md-pop: #e5dfef; }
+.modern-demo { color-scheme: light; --ld-bg: #faf9f6; --ld-ink: #292b31; --ld-muted: #62646e; --ld-card: #eeedf3; --ld-line: #d8d7df; --ld-accent: #5443a1; --ld-on-accent: #ffffff; --ld-hover: #40337d; --md-pop: #e5dfef; }
 .md-signal { --ld-bg: #f2f0e9; --ld-ink: #202220; --ld-muted: #62635c; --ld-card: #e6e4dc; --ld-line: #cccac0; --ld-accent: #b63425; --ld-on-accent: #fff; --ld-hover: #93291d; --md-pop: #d3e1b3; }
 .md-cobalt { --ld-bg: #f5f7fa; --ld-ink: #17243b; --ld-muted: #546277; --ld-card: #e7edf6; --ld-line: #cbd5e3; --ld-accent: #244ac5; --ld-on-accent: #fff; --ld-hover: #19399f; --md-pop: #d2e1ff; }
 .md-maison { --ld-bg: #f7f3eb; --ld-ink: #353b31; --ld-muted: #66695e; --ld-card: #e9e4d8; --ld-line: #d0cbbc; --ld-accent: #47543e; --ld-on-accent: #fff; --ld-hover: #34412b; --md-pop: #d4d7c5; }
-html[data-theme="dark"] .modern-demo { color-scheme: dark; --ld-bg: #191820; --ld-ink: #f1eff8; --ld-muted: #b6b1c7; --ld-card: #292633; --ld-line: #494353; --ld-accent: #c4b6f1; --ld-on-accent: #211a35; --ld-hover: #d7ccf8; --md-pop: #3b3351; }
-html[data-theme="dark"] .md-signal { --ld-bg: #1b1d19; --ld-ink: #f2f0e8; --ld-muted: #bebfb2; --ld-card: #2b2e26; --ld-line: #494c41; --ld-accent: #f1a598; --ld-on-accent: #341b16; --ld-hover: #ffc1b7; --md-pop: #3b482c; }
-html[data-theme="dark"] .md-cobalt { --ld-bg: #111c30; --ld-ink: #edf2ff; --ld-muted: #b2bfd8; --ld-card: #1c2d49; --ld-line: #354967; --ld-accent: #a2bdff; --ld-on-accent: #14244a; --ld-hover: #bfd1ff; --md-pop: #243f70; }
-html[data-theme="dark"] .md-maison { --ld-bg: #20231d; --ld-ink: #f1eee4; --ld-muted: #bbbfb0; --ld-card: #30352b; --ld-line: #4d5443; --ld-accent: #c9d2b7; --ld-on-accent: #252e1d; --ld-hover: #e0e6d5; --md-pop: #414a35; }
 .modern-demo :is(h1,h2,h3) { line-height: 1.14; }
 .modern-demo :is(a,button,summary) { transition: color 200ms ease, background-color 200ms ease, border-color 200ms ease; }
 .modern-demo .ld-hero-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; margin-top: 32px; }
@@ -151,7 +147,6 @@ html[data-theme="dark"] .md-maison { --ld-bg: #20231d; --ld-ink: #f1eee4; --ld-m
 
 /* Prism: fluid sculptural colour and a centred product introduction. */
 .md-prism { --ld-bg: #f8f7fc; --ld-ink: #262139; --ld-muted: #645d78; --ld-card: #eeebf5; --ld-line: #d8d2e6; --ld-accent: #514086; --ld-on-accent: #fff; --ld-hover: #3d2f6b; --md-pop: #e3ddf3; --prism-a: #e9b5c4; --prism-b: #a28bde; --prism-c: #85cbbd; }
-html[data-theme="dark"] .md-prism { --ld-bg: #171420; --ld-ink: #f5f0ff; --ld-muted: #bfb3d3; --ld-card: #272133; --ld-line: #443953; --ld-accent: #d7c3f8; --ld-on-accent: #291d3b; --ld-hover: #e8d8ff; --md-pop: #3a2e4b; --prism-a: #eba9c1; --prism-b: #ad91ef; --prism-c: #8ad1c0; }
 .md-prism .md-hero { grid-template-columns: 1fr; text-align: center; gap: 28px; padding-block: 48px; }
 .md-prism .ld-hero-copy > p { max-width: 56ch; margin-inline: auto; }
 .md-prism .ld-hero-copy > p { margin-top: 20px; }
@@ -178,7 +173,6 @@ html[data-theme="dark"] .md-prism { --ld-bg: #171420; --ld-ink: #f5f0ff; --ld-mu
 
 /* Haven: an open photographic composition for people-focused businesses. */
 .md-haven { --ld-bg: #fcf7f0; --ld-ink: #373329; --ld-muted: #716659; --ld-card: #efe5d8; --ld-line: #d9ccbc; --ld-accent: #974b34; --ld-on-accent: #fff; --ld-hover: #793a28; --md-pop: #e9cbb8; }
-html[data-theme="dark"] .md-haven { --ld-bg: #241e19; --ld-ink: #f5eee4; --ld-muted: #c5b6a6; --ld-card: #342b23; --ld-line: #574737; --ld-accent: #e6b59a; --ld-on-accent: #352218; --ld-hover: #f4cbb3; --md-pop: #51392c; }
 .md-haven .md-hero { grid-template-columns: 1fr; gap: 40px; padding-block: 56px; }
 .md-haven .ld-hero-copy { display: grid; grid-template-columns: 1.2fr 1fr; column-gap: 64px; align-items: start; }
 .md-haven .ld-hero-copy > .ld-kicker { grid-column: 1 / -1; }
