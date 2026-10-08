@@ -38,6 +38,18 @@ test('rejects unknown and cross-service design ids from saved drafts', () => {
   }
 });
 
+test('new animated designs restore and transfer from their matching demo only', () => {
+  for (const [service, ids] of [['landing', ['rally', 'serein']], ['corporate', ['foundry', 'ledger']]]) {
+    const other = service === 'landing' ? 'corporate' : 'landing';
+    for (const id of ids) {
+      const draft = JSON.stringify({ service_type: service, design_reference: id });
+      assert.equal(restore(service, draft), id);
+      assert.equal(restore(service, null, true, `?design=${id}`), id);
+      assert.equal(restore(other, null, false, `?design=${id}`), '');
+    }
+  }
+});
+
 test('missing, malformed and blocked draft storage do not prevent rendering', () => {
   for (const draft of [null, '{broken', 'null', '[]', '42']) assert.equal(restore('landing', draft), '');
   assert.equal(restore('landing', '{}', true), '');
