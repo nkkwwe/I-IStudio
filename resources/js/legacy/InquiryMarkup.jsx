@@ -5,6 +5,7 @@ import calculatorCopy from '../content/inquiryCalculatorCopy';
 import WebsiteDesignPicker from '../Components/WebsiteDesignPicker';
 import InquiryServiceSelector from '../Components/InquiryServiceSelector';
 import AutoGrowingTextarea from '../Components/AutoGrowingTextarea';
+import InquiryDisclosure from '../Components/InquiryDisclosure';
 import { getInquiryUxCopy } from '../content/inquiryUxCopy';
 import { getWebsiteDesignCopy, getWebsiteDesigns, restoreDesignReference } from '../content/websiteDesigns';
 import { localizedUrl } from '../content/siteLanguage';
@@ -188,8 +189,7 @@ export default function InquiryMarkup({
           <div className="form-group"><label htmlFor="replyContact">{ux.reply}{!isAuthenticated && <span className="req"> *</span>}</label><input type="text" id="replyContact" name="reply_contact" placeholder={ux.replyPlaceholder} required={!isAuthenticated} maxLength={255} autoComplete="off" aria-describedby={isAuthenticated ? "replyContactHint" : undefined} />{isAuthenticated && <p className="inquiry-form-note" id="replyContactHint">{ux.replyAccount}</p>}</div>
         </div>
         <div className="form-group project-comment-group"><label htmlFor="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span className="req">*</span></label><AutoGrowingTextarea id="projectComment" name="project_comment" rows={4} placeholder={ux.commentPlaceholder} required maxLength={10000} defaultValue="" /></div>
-        <details className="inquiry-optional">
-          <summary>{ux.optional}</summary>
+        <InquiryDisclosure className="inquiry-optional" title={ux.optional}>
           <div className="inquiry-optional-content">
             <div className="form-group"><label htmlFor="clientContact">{ux.business}</label><input type="text" id="clientContact" name="client_contact" placeholder={ux.businessPlaceholder} maxLength={255} aria-describedby="businessProfileHint" /><p className="inquiry-form-note" id="businessProfileHint">{ux.businessHint}</p></div>
             <div className="form-group"><label htmlFor="clientBudget" data-i18n="form_budget_label">Proposed budget / payment amount (optional)</label><input type="text" id="clientBudget" name="client_budget" placeholder="e.g. $500, $1,000, 20,000 ₴ or your offer" data-i18n-placeholder="form_budget_ph" maxLength={120} /></div>
@@ -201,7 +201,7 @@ export default function InquiryMarkup({
             </div>}
             <WebsiteDesignPicker service={activeService} language={language} value={selectedDesign?.id ?? ''} onChange={setDesignReference} />
           </div>
-        </details>
+        </InquiryDisclosure>
         <input type="hidden" name="calculator_summary" value={[appliedEstimate?.summary, selectedDesign ? `${designCopy.summary}: ${selectedDesign.name} (${selectedDesign.id})` : ''].filter(Boolean).join('\n')} readOnly />
         <input type="hidden" name="design_reference" value={selectedDesign?.id ?? ''} readOnly />
         {(estimateApplied || selectedDesign) && <p className="inquiry-form-note" aria-live="polite">{estimateApplied && `${ux.applied}: ${appliedEstimate.total}`}{estimateApplied && selectedDesign && ' · '}{selectedDesign && `${designCopy.chosen}: ${selectedDesign.name}`}</p>}
@@ -234,7 +234,7 @@ export default function InquiryMarkup({
                     <button type="button" className={calculatorStep === 2 ? 'calculator-step active' : 'calculator-step'} onClick={() => setCalculatorStep(2)}><span>02</span>{service.stepTwo}</button>
                   </div>
                   {calculatorStep === 1 ? (
-                    <div className="calculator-step-content">
+                    <div className="calculator-step-content inquiry-step-content" key="scope">
                       <div className="calculator-section-heading"><h3>{service.stepOne}</h3><p>{service.stepOneDescription}</p></div>
                       <div className="calculator-options-grid">
                         {service.scope.map((option) => (
@@ -243,7 +243,7 @@ export default function InquiryMarkup({
                       </div>
                     </div>
                   ) : (
-                    <div className="calculator-step-content">
+                    <div className="calculator-step-content inquiry-step-content" key="extras">
                       <div className="calculator-section-heading"><h3>{service.stepTwo}</h3><p>{service.stepTwoDescription}</p></div>
                       <div className="calculator-options-list">
                         {service.extras.map((option) => (

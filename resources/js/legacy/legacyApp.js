@@ -623,5 +623,7 @@ function restoreInquiryDraft(form) {
     if (field && typeof value === 'string') field.value = value;
   });
 
-  if (draft.reply_contact) form.querySelector('.inquiry-optional')?.setAttribute('open', '');
+  if (draft.client_contact || draft.client_budget || draft.design_reference) {
+    form.querySelector('.inquiry-optional')?.dispatchEvent(new CustomEvent('inquiry:expand'));
+  }
 }

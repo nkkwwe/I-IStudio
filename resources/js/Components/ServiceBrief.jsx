@@ -5,6 +5,7 @@ import { landing, schema, translate, serviceLabel, visibleField, getStartupBrief
 import { buildLeadContext } from './GoogleAdsBrief';
 import StartupSelect from './StartupSelect';
 import AutoGrowingTextarea from './AutoGrowingTextarea';
+import InquiryDisclosure from './InquiryDisclosure';
 import { getInquiryUxCopy } from '../content/inquiryUxCopy';
 
 export default function ServiceBrief({ service, language, submitted, ticket }) {
@@ -91,10 +92,12 @@ export default function ServiceBrief({ service, language, submitted, ticket }) {
     <h1>{serviceLabel(service, language)}</h1>
     <p className="startup-brief-note">{t(landing.budgetNote)}</p>
     <p className="inquiry-form-note">{getInquiryUxCopy(language).noAccount}</p>
-    <details className="startup-brief-draft"><summary>{t(landing.draft)}</summary><button type="button" className="btn btn-secondary btn-sm" onClick={clear}>{t(landing.clear)}</button></details>
+    <InquiryDisclosure className="startup-brief-draft" title={t(landing.draft)}><button type="button" className="btn btn-secondary btn-sm" onClick={clear}>{t(landing.clear)}</button></InquiryDisclosure>
     <div className="startup-brief-progress"><p>{t(landing.step)} {step + 1} / {stepCount + 1} · {t(review ? landing.review : schema.steps[step].title)}</p><progress max={stepCount + 1} value={step + 1} aria-label={t(landing.step)} /></div>
+    <div className="inquiry-step-content" key={step}>
     <h2 ref={title} tabIndex={-1}>{t(review ? landing.review : schema.steps[step].title)}</h2>
     {review ? <><dl>{getStartupBriefRows(answers, language).map((row) => <div key={row.label}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}</dl><label className="ads-consent"><input type="checkbox" required checked={form.data.consent} onChange={(e) => form.setData('consent', e.target.checked)} />{t(landing.consent)}</label></> : schema.steps[step].fields.map(renderField)}
+    </div>
     {Object.keys(form.errors).length > 0 && <div className="account-inline-error" role="alert">{Object.values(form.errors).map((error, i) => <p key={i}>{error}</p>)}</div>}
     <div className="startup-brief-actions">
       {step > 0 && <button type="button" className="btn btn-secondary" disabled={form.processing} onClick={() => setStep(step - 1)}>{t(landing.back)}</button>}
