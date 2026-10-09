@@ -4,6 +4,7 @@ import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import ChatUnreadBadge from './ChatUnreadBadge';
 import { formatDate, formatBudget, type Inquiry } from '../lib/inquiries';
 import { getMetaBriefRows } from '../content/metaAdsBrief';
+import { getInquiryUxCopy } from '../content/inquiryUxCopy';
 
 function formatBriefKey(key: string): string {
   return key
@@ -64,7 +65,7 @@ export default function InquiryDetailModal({
   const briefRows = inquiry.brief_data
     ? inquiry.brief_data.schema_version === 1 ? getStartupBriefRows(inquiry.brief_data, language) : inquiry.service_type === 'meta-ads' ? getMetaBriefRows(inquiry.brief_data, language) : Object.entries(inquiry.brief_data)
       .filter(([key, value]) => key !== 'consent' && formatBriefValue(value) !== '')
-      .map(([key, value]) => ({ label: formatBriefKey(key), value: formatBriefValue(value) }))
+      .map(([key, value]) => ({ label: key === 'business_profile' ? getInquiryUxCopy(language).business : formatBriefKey(key), value: formatBriefValue(value) }))
     : [];
 
   return (

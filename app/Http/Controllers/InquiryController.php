@@ -133,6 +133,9 @@ class InquiryController extends Controller
         $isInitial = $request->input('submission_kind') === 'initial';
         $isStructured = ! $isInitial && $request->input('brief_version') == 1;
         $structuredServices = ['ads', 'meta-ads', 'tiktok-ads', 'marketplaces'];
+        $isQuickInquiry = ! $isInitial && ! $isStructured
+            && ! in_array($request->input('service_type'), $structuredServices, true)
+            && $request->has('reply_contact');
         $requiresContact = $isInitial || in_array($request->input('service_type'), $structuredServices, true);
         $data = $request->validate([
             'submission_kind' => ['nullable', 'in:initial,detailed'],
@@ -141,6 +144,7 @@ class InquiryController extends Controller
             'client_name' => ['required', 'string', 'max:120'],
             'client_email' => [Rule::requiredIf($requiresContact), 'nullable', 'email', 'max:255'],
             'client_contact' => ['nullable', 'string', 'max:255'],
+            'reply_contact' => [Rule::requiredIf($isQuickInquiry && ! $request->user()), 'nullable', 'string', 'max:255'],
             'client_budget' => ['nullable', 'string', 'max:120'],
             'project_comment' => [Rule::requiredIf(! $isInitial), 'nullable', 'string', $isInitial ? 'max:1000' : 'max:10000'],
             'calculator_summary' => ['nullable', 'string', 'max:10000'],
@@ -150,6 +154,7 @@ class InquiryController extends Controller
         ], [
             'client_name.required' => 'Please enter your name.',
             'project_comment.required' => 'Please describe your project or task.',
+            'reply_contact.required' => 'Please enter an email address, Telegram username or Instagram profile for our reply.',
         ]);
 
         // New service types always use the structured contract outside initial contact.
@@ -169,6 +174,16 @@ class InquiryController extends Controller
         unset($data['calculator_summary']);
 
         $briefData = $isInitial ? ['consent' => true] : $this->decodeJson($data['brief_data'] ?? null);
+        if ($isQuickInquiry) {
+            $businessProfile = trim((string) ($data['client_contact'] ?? ''));
+            $replyContact = trim((string) ($data['reply_contact'] ?? ''));
+            $briefData = $businessProfile !== '' ? ['business_profile' => $businessProfile] : null;
+            $data['client_contact'] = $replyContact ?: null;
+            if (filter_var($replyContact, FILTER_VALIDATE_EMAIL)) {
+                $data['client_email'] = $replyContact;
+            }
+        }
+        unset($data['reply_contact']);
         if ($isStructured) {
             $briefData = $this->validateStartupBrief($briefData ?? [], $data['service_type']);
             $briefData['schema_version'] = 1;
@@ -199,7 +214,7 @@ class InquiryController extends Controller
 
         unset($data['client_email'], $data['brief_data'], $data['lead_context'], $data['ads_consent'], $data['submission_kind'], $data['brief_version']);
 
-        if (! $request->user() && ! $isAdsBrief && ! $isInitial && ! $isStructured) {
+        if (! $request->user() && ! $isAdsBrief && ! $isInitial && ! $isStructured && ! $isQuickInquiry) {
             $request->session()->put('pending_inquiry', $data);
             $request->session()->put('url.intended', $this->localizedRoute($request, 'inquiry.localized'));
 

@@ -94,7 +94,7 @@
   background: rgba(9, 9, 11, 0.72);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  animation: calculator-modal-backdrop-in 0.2s ease both;
+  animation: account-modal-backdrop-in 0.2s ease both;
 }
 
 .calculator-modal {
@@ -109,7 +109,7 @@
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-card);
   box-shadow: 0 28px 90px rgba(0, 0, 0, 0.42);
-  animation: calculator-modal-in 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: account-modal-in 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .calculator-modal-header {
@@ -207,16 +207,6 @@
 
 .calculator-modal-footer .btn {
   flex: 0 0 auto;
-}
-
-@keyframes calculator-modal-backdrop-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes calculator-modal-in {
-  from { opacity: 0; transform: translateY(14px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .calculator-panel {

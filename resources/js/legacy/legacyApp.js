@@ -470,7 +470,7 @@ function initSolutionsByGoal(signal) {
    4. Service Direction Selector
    ========================================================================== */
 function initServiceTabs(signal) {
-  const tabs = document.querySelectorAll('#serviceTabs .tab-btn');
+  const tabs = document.querySelectorAll('#serviceTabs .tab-btn[data-service]');
   const serviceInput = document.getElementById('serviceTypeInput');
 
   tabs.forEach(tab => {
@@ -562,6 +562,13 @@ function initSmartForm(signal) {
   if (form && overlay) {
     if (form.dataset.briefMode === 'generic') {
       restoreInquiryDraft(form);
+      const saveDraft = () => {
+        try {
+          localStorage.setItem('ii_studio_inquiry_draft', JSON.stringify(Object.fromEntries(new FormData(form).entries())));
+        } catch { /* The form remains usable when storage is unavailable. */ }
+      };
+      form.addEventListener('input', saveDraft, { signal });
+      form.addEventListener('change', saveDraft, { signal });
     }
 
     form.addEventListener('submit', (e) => {
@@ -570,7 +577,7 @@ function initSmartForm(signal) {
       const payload = Object.fromEntries(new FormData(form).entries());
 
       if (form.dataset.authenticated !== 'true') {
-        localStorage.setItem('ii_studio_inquiry_draft', JSON.stringify(payload));
+        try { localStorage.setItem('ii_studio_inquiry_draft', JSON.stringify(payload)); } catch { /* Storage must not block submission. */ }
       }
 
       router.post(localizedUrl('/inquiry'), payload, {
@@ -590,7 +597,7 @@ function initSmartForm(signal) {
         localStorage.removeItem('ii_studio_inquiry_draft');
         const budgetRow = document.getElementById('feedbackBudgetRow');
         if (budgetRow) budgetRow.style.display = 'none';
-        window.preselectService('landing', false);
+        if (form.dataset.briefMode !== 'generic') window.preselectService('landing', false);
       }, { signal });
     }
   }
@@ -610,12 +617,11 @@ function restoreInquiryDraft(form) {
   if (['ads', 'meta-ads', 'tiktok-ads', 'marketplaces'].includes(draft.service_type)) return;
 
   Object.entries(draft).forEach(([name, value]) => {
-    if (name === 'calculator_summary' || name === 'design_reference') return;
+    if (name === 'calculator_summary' || name === 'design_reference' || name === 'service_type') return;
 
     const field = form.elements.namedItem(name);
     if (field && typeof value === 'string') field.value = value;
   });
 
-  const serviceTab = document.querySelector(`#serviceTabs .tab-btn[data-service="${draft.service_type}"]`);
-  serviceTab?.click();
+  if (draft.reply_contact) form.querySelector('.inquiry-optional')?.setAttribute('open', '');
 }

@@ -11,7 +11,7 @@ export default function WebsiteDesignPicker({ service, language, value, onChange
   const designs = getWebsiteDesigns(service);
   const copy = getWebsiteDesignCopy(language);
   const demoCopy = demoShellCopy[language as SiteLanguage] ?? demoShellCopy.en;
-  const description = (language === 'uk' ? 'Натисніть на дизайн, щоб відкрити живе демо в новій вкладці.' : language === 'ro' ? 'Apasă pe un design pentru a deschide demo-ul live într-o filă nouă.' : 'Click a design to open its live demo in a new tab.');
+  const description = copy.description;
   const newTabLabel = language === 'uk' ? ' (нова вкладка)' : language === 'ro' ? ' (filă nouă)' : ' (new tab)';
   const liveUrl = (id: string) => localizedUrl(`/designs/${id}`, language as SiteLanguage);
   const liveLink = (id: string) => <a className="btn btn-secondary btn-sm" href={localizedUrl(`/designs/${id}`, language as SiteLanguage)} target="_blank" rel="noopener noreferrer">{demoCopy.live}<span className="sr-only">{language === 'uk' ? ' (нова вкладка)' : language === 'ro' ? ' (filă nouă)' : ' (new tab)'}</span></a>;
@@ -67,10 +67,10 @@ export default function WebsiteDesignPicker({ service, language, value, onChange
         <button ref={triggerRef} type="button" className="btn btn-secondary" aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(true)}>{selected ? copy.change : copy.gallery}<span aria-hidden="true">↗</span></button>
       </div>
       <div className="design-launcher-strip">
-        {designs.map((design) => <a key={design.id} className={`design-mini design-mini-live${value === design.id ? ' is-selected' : ''}`} href={liveUrl(design.id)} target="_blank" rel="noopener noreferrer" aria-label={`${design.name} · ${demoCopy.live}${newTabLabel}`}>
-          <img src={designImage(design.id)} alt="" width="1440" height="900" loading="lazy" />
-          <span>{design.name} <span aria-hidden="true">↗</span>{value === design.id && <span aria-hidden="true"> ✓</span>}</span>
-        </a>)}
+        {designs.slice(0, 3).map((design) => <article key={design.id} className={`design-mini${value === design.id ? ' is-selected' : ''}`}>
+          <a className="design-mini-live" href={liveUrl(design.id)} target="_blank" rel="noopener noreferrer" aria-label={`${design.name} · ${demoCopy.live}${newTabLabel}`}><img src={designImage(design.id)} alt="" width="1440" height="900" loading="lazy" /><span>{design.name} ↗</span></a>
+          <button type="button" className={`btn btn-sm ${value === design.id ? 'btn-primary' : 'btn-secondary'}`} aria-pressed={value === design.id} onClick={() => onChange(design.id)}>{value === design.id ? copy.chosen : copy.choose}</button>
+        </article>)}
       </div>
       <p className="design-direction-note">{copy.note}</p>
       {selected && <div className="design-selection" aria-live="polite">

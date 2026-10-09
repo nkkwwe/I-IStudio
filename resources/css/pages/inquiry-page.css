@@ -134,9 +134,9 @@
   }
 
   .inquiry-form-card .service-selector-tabs {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     gap: 7px;
-    overflow-x: auto;
+    overflow-x: visible;
     padding-bottom: 4px;
     scrollbar-width: none;
     overscroll-behavior-x: contain;
@@ -364,3 +364,44 @@
   }
 }
 
+
+/* Short inquiry first; optional planning tools stay within the same form. */
+.inquiry-form-only-card { margin-top: 24px; }
+.inquiry-services { margin-bottom: 24px; }
+.inquiry-service-label { margin-bottom: 10px; color: var(--text-primary); font-size: .875rem; font-weight: 600; }
+.inquiry-services .service-selector-tabs { margin-bottom: 0; flex-wrap: wrap; }
+.inquiry-services .tab-btn { min-height: 44px; white-space: normal; line-height: 1.4; }
+.inquiry-website-types { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+.inquiry-services .tab-btn:focus-visible,
+.inquiry-optional > summary:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
+.inquiry-form-only-card .form-group textarea { min-height: 120px; max-height: 360px; overflow-y: auto; resize: vertical; }
+.inquiry-form-only-card .inquiry-form-note { font-size: .875rem; color: var(--text-secondary); }
+.inquiry-form-only-card .form-group input,
+.inquiry-form-only-card .form-group textarea { font-size: 1rem; }
+.inquiry-optional { border: 1px solid var(--border); border-radius: var(--radius-inner); background: var(--bg-subtle); }
+.inquiry-optional > summary { padding: 14px 16px; cursor: pointer; min-height: 48px; font-size: .875rem; font-weight: 600; color: var(--text-primary); }
+.inquiry-optional-content { display: grid; gap: 20px; padding: 4px 16px 16px; }
+.inquiry-optional-content .design-launcher { margin: 0; padding: 16px; background: var(--bg-surface); }
+.inquiry-estimate-tool { display: grid; gap: 12px; }
+.inquiry-estimate-tool > div:first-child { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.inquiry-estimate-tool .btn { justify-self: start; white-space: normal; min-height: 44px; }
+.inquiry-form-only-card .startup-brief { gap: 16px; }
+.inquiry-form-only-card .startup-brief-note { margin: 0; color: var(--text-secondary); }
+.inquiry-form-only-card .startup-brief-draft { display: block; margin: 0; padding: 0; border: 0; }
+.inquiry-form-only-card .startup-brief-draft summary { min-height: 44px; cursor: pointer; color: var(--text-secondary); font-size: .875rem; }
+.inquiry-form-only-card .startup-brief-draft summary:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
+.inquiry-form-only-card .startup-brief-draft .btn { margin-top: 8px; padding-inline: 12px; }
+.inquiry-form-only-card .startup-brief-progress p { font-size: .875rem; color: var(--text-secondary); }
+.inquiry-form-only-card .startup-brief progress { display: block; height: 8px; margin: 10px 0 0; }
+.inquiry-form-only-card .startup-brief h2 { margin: 0; }
+.calculator-footer-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.calculator-footer-actions .btn { min-height: 44px; white-space: normal; }
+.calculator-modal-close { width: 44px; height: 44px; flex-basis: 44px; }
+.calculator-option { min-height: 60px; }
+.calculator-option:has(input:focus-visible) { outline: 2px solid var(--text-primary); outline-offset: 3px; }
+@media (max-width: 640px) {
+  .inquiry-optional-content { padding-inline: 12px; }
+  .inquiry-optional-content .design-launcher { padding: 12px; }
+  .calculator-footer-actions { flex-direction: column-reverse; }
+  .inquiry-services .tab-btn { flex: 0 1 auto; }
+}

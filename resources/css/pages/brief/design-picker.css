@@ -209,3 +209,11 @@
 @media (prefers-reduced-motion: reduce) {
   .design-mini, .design-clear { transition: none; }
 }
+
+.design-mini-live > span { display: block; padding: 8px; }
+.design-mini > .btn { width: calc(100% - 16px); margin: 0 8px 8px; min-height: 44px; padding: 8px; white-space: normal; font-size: .75rem; }
+.design-mini a:focus-visible { outline: 2px solid var(--text-primary); outline-offset: -3px; }
+@media (max-width: 640px) {
+  .inquiry-optional .design-launcher-strip { grid-template-columns: 1fr; }
+  .inquiry-optional .design-launcher-header { align-items: flex-start; flex-direction: column; gap: 12px; }
+}

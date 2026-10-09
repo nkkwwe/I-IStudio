@@ -4,6 +4,8 @@ import { localizedUrl } from '../content/siteLanguage';
 import { landing, schema, translate, serviceLabel, visibleField, getStartupBriefRows } from '../content/startupContent';
 import { buildLeadContext } from './GoogleAdsBrief';
 import StartupSelect from './StartupSelect';
+import AutoGrowingTextarea from './AutoGrowingTextarea';
+import { getInquiryUxCopy } from '../content/inquiryUxCopy';
 
 export default function ServiceBrief({ service, language, submitted, ticket }) {
   const t = (value) => translate(value, language);
@@ -80,7 +82,7 @@ export default function ServiceBrief({ service, language, submitted, ticket }) {
     const props = { id: `brief-${key}`, value: form.data[key] || '', required: Boolean(field.required), placeholder: field.placeholder ? t(field.placeholder) : undefined, onChange: (e) => form.setData(key, e.target.value), 'aria-invalid': Boolean(error), 'aria-describedby': error ? `error-${key}` : undefined };
     return <div className="form-group" key={key}><label htmlFor={props.id}>{t(field.label)}{field.required ? ' *' : ''}</label>
       {field.type === 'select' ? <StartupSelect {...props} onChange={(value) => form.setData(key, value)} ariaLabel={t(field.label)}><option value="">{t(landing.choose)}</option>{field.options.map((value) => <option value={value} key={value}>{t(schema.options[value] || value)}</option>)}</StartupSelect>
-        : field.type === 'textarea' ? <textarea {...props} rows={3} maxLength={1000} /> : <input {...props} type={field.type || 'text'} maxLength={key === 'client_name' ? 120 : 255} {...(field.type === 'number' ? { min: '0.01', step: '0.01' } : {})} />}
+        : field.type === 'textarea' ? <AutoGrowingTextarea {...props} rows={4} maxLength={1000} /> : <input {...props} type={field.type || 'text'} maxLength={key === 'client_name' ? 120 : 255} {...(field.type === 'number' ? { min: '0.01', step: '0.01' } : {})} />}
       {error && <p className="account-inline-error" id={`error-${key}`}>{error}</p>}
     </div>;
   };
@@ -88,8 +90,9 @@ export default function ServiceBrief({ service, language, submitted, ticket }) {
     {submitted && <p role="status">{t(landing.success)} <strong>{ticket}</strong></p>}
     <h1>{serviceLabel(service, language)}</h1>
     <p className="startup-brief-note">{t(landing.budgetNote)}</p>
-    <div className="startup-brief-draft"><p className="startup-brief-note">{t(landing.draft)}</p><button type="button" className="btn btn-secondary btn-sm" onClick={clear}>{t(landing.clear)}</button></div>
-    <p>{t(landing.step)} {step + 1} / {stepCount + 1}</p><progress max={stepCount + 1} value={step + 1} aria-label={t(landing.step)} />
+    <p className="inquiry-form-note">{getInquiryUxCopy(language).noAccount}</p>
+    <details className="startup-brief-draft"><summary>{t(landing.draft)}</summary><button type="button" className="btn btn-secondary btn-sm" onClick={clear}>{t(landing.clear)}</button></details>
+    <div className="startup-brief-progress"><p>{t(landing.step)} {step + 1} / {stepCount + 1} · {t(review ? landing.review : schema.steps[step].title)}</p><progress max={stepCount + 1} value={step + 1} aria-label={t(landing.step)} /></div>
     <h2 ref={title} tabIndex={-1}>{t(review ? landing.review : schema.steps[step].title)}</h2>
     {review ? <><dl>{getStartupBriefRows(answers, language).map((row) => <div key={row.label}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}</dl><label className="ads-consent"><input type="checkbox" required checked={form.data.consent} onChange={(e) => form.setData('consent', e.target.checked)} />{t(landing.consent)}</label></> : schema.steps[step].fields.map(renderField)}
     {Object.keys(form.errors).length > 0 && <div className="account-inline-error" role="alert">{Object.values(form.errors).map((error, i) => <p key={i}>{error}</p>)}</div>}

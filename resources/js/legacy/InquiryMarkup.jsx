@@ -3,10 +3,13 @@ import { landing, translate } from '../content/startupContent';
 import AccountSiteHeader from '../Components/AccountSiteHeader';
 import calculatorCopy from '../content/inquiryCalculatorCopy';
 import WebsiteDesignPicker from '../Components/WebsiteDesignPicker';
-import { designText, getWebsiteDesignCopy, getWebsiteDesigns, restoreDesignReference } from '../content/websiteDesigns';
+import InquiryServiceSelector from '../Components/InquiryServiceSelector';
+import AutoGrowingTextarea from '../Components/AutoGrowingTextarea';
+import { getInquiryUxCopy } from '../content/inquiryUxCopy';
+import { getWebsiteDesignCopy, getWebsiteDesigns, restoreDesignReference } from '../content/websiteDesigns';
 import { localizedUrl } from '../content/siteLanguage';
 import { createPortal } from 'react-dom';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 function formatPrice(value, language) {
   const locale = language === 'uk' ? 'uk-UA' : language === 'ro' ? 'ro-RO' : 'en-US';
@@ -45,6 +48,11 @@ export default function InquiryMarkup({
   errors = {},
 }) {
   const copy = calculatorCopy[language] || calculatorCopy.en;
+  const ux = getInquiryUxCopy(language);
+  const [appliedEstimate, setAppliedEstimate] = useState(null);
+  const estimateApplied = Boolean(appliedEstimate);
+  const calculatorRef = useRef(null);
+  const calculatorTrigger = useRef(null);
   const service = copy.services[activeService] || copy.services.other;
   const [calculatorOpen, setCalculatorOpen] = useState(false);
   const [calculatorStep, setCalculatorStep] = useState(1);
@@ -56,7 +64,7 @@ export default function InquiryMarkup({
 
   useEffect(() => {
     const form = document.getElementById('projectForm');
-    const handleReset = () => setDesignReference('');
+    const handleReset = () => { setDesignReference(''); setAppliedEstimate(null); };
     form?.addEventListener('reset', handleReset);
     return () => form?.removeEventListener('reset', handleReset);
   }, [activeService]);
@@ -90,17 +98,9 @@ export default function InquiryMarkup({
   }, []);
 
   useEffect(() => {
-    // Keep the selected direction visible inside the horizontal mobile selector.
-    const tabs = document.getElementById('serviceTabs');
-    const activeTab = tabs?.querySelector('.active');
-    if (tabs && activeTab && tabs.scrollWidth > tabs.clientWidth) {
-      tabs.scrollLeft = activeTab.offsetLeft - tabs.offsetLeft;
-    }
-  }, [activeService]);
-
-  useEffect(() => {
     setCalculatorOpen(false);
     setCalculatorStep(1);
+    setAppliedEstimate(null);
     setScopeChoice(service.scope[0].value);
     setExtras({});
     setDesignReference(restoreDesignReference(activeService));
@@ -109,16 +109,23 @@ export default function InquiryMarkup({
   useEffect(() => {
     if (!calculatorOpen) return undefined;
 
+    const returnFocus = document.activeElement;
     const handleEscape = (event) => {
       if (event.key === 'Escape') setCalculatorOpen(false);
+      if (event.key !== 'Tab') return;
+      const controls = [...(calculatorRef.current?.querySelectorAll('button:not(:disabled), input:not(:disabled)') ?? [])];
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     };
-
+    calculatorRef.current?.querySelector('.calculator-modal-close')?.focus();
     document.body.classList.add('calculator-modal-open');
     document.addEventListener('keydown', handleEscape);
-
     return () => {
       document.body.classList.remove('calculator-modal-open');
       document.removeEventListener('keydown', handleEscape);
+      if (returnFocus?.isConnected) returnFocus.focus();
     };
   }, [calculatorOpen]);
 
@@ -141,7 +148,6 @@ export default function InquiryMarkup({
     `${copy.serviceBase}: ${copy.serviceNames[activeService] ?? activeService}`,
     ...selectedOptions.map((option) => `${option.label}: ${option.price === null ? copy.customPrice : formatPrice(option.price, language)}`),
     `${copy.estimate}: ${totalDisplay}`,
-    ...(selectedDesign ? [`${designCopy.summary}: ${selectedDesign.name} (${selectedDesign.id}) — ${designText(selectedDesign.style, language)}`] : []),
   ].join('\n');
   const toggleExtra = (key) => setExtras((current) => ({ ...current, [key]: !current[key] }));
 
@@ -149,7 +155,7 @@ export default function InquiryMarkup({
     return <div className="react-page-root">
       <AccountSiteHeader isDark={isDark} onToggleTheme={onToggleTheme} showProfile={true} isAuthenticated={isAuthenticated} userInitial={userName?.trim()?.charAt(0)?.toLocaleUpperCase() || 'A'} unreadChatCount={unreadChatCount} />
       <main className="inquiry-form-only"><section className="inquiry-form-card inquiry-form-only-card">
-        <div className="service-selector-tabs" id="serviceTabs">{landing.services.map((item) => <button type="button" key={item.id} className={activeService === item.id ? 'tab-btn active' : 'tab-btn'} aria-pressed={activeService === item.id} onClick={() => onServiceChange(item.id)}>{translate(item.name, language)}</button>)}<button type="button" className="tab-btn" onClick={() => onServiceChange('consultation')}>{translate(landing.advice, language)}</button></div>
+        <InquiryServiceSelector service={activeService} language={language} onChange={onServiceChange} />
         <ServiceBrief key={activeService} service={activeService} language={language} submitted={inquirySubmitted} ticket={inquiryTicket} />
       </section></main>
     </div>;
@@ -169,60 +175,43 @@ export default function InquiryMarkup({
     <section className="inquiry-form-card inquiry-form-only-card" aria-labelledby="inquiryPageTitle">
       <div className="inquiry-form-header">
         <div>
-          <span className="form-eyebrow" data-i18n="inquiry_eyebrow">[ PROJECT BRIEF ]</span>
-          <h1 id="inquiryPageTitle" data-i18n-html="form_title">Get in Touch with I&amp;I Studio</h1>
-          <p data-i18n="form_desc">Leave your contacts and describe what you have in mind.</p>
+          <span className="form-eyebrow">{ux.noAccount}</span>
+          <h1 id="inquiryPageTitle">{ux.title}</h1>
+          <p>{ux.description}</p>
         </div>
       </div>
-      <div className="service-selector-tabs" id="serviceTabs">
-        <button type="button" className={activeService === 'landing' ? 'tab-btn active' : 'tab-btn'} data-service="landing" data-i18n="tab_landing" onClick={() => onServiceChange('landing')}>Landing Page</button>
-        <button type="button" className={activeService === 'corporate' ? 'tab-btn active' : 'tab-btn'} data-service="corporate" data-i18n="tab_corporate" onClick={() => onServiceChange('corporate')}>Business Website</button>
-        <button type="button" className={activeService === 'redesign' ? 'tab-btn active' : 'tab-btn'} data-service="redesign" data-i18n="tab_redesign" onClick={() => onServiceChange('redesign')}>Website Redesign</button>
-        <button type="button" className={activeService === 'ads' ? 'tab-btn active' : 'tab-btn'} data-service="ads" aria-pressed={activeService === 'ads'} onClick={() => onServiceChange('ads')}>Google Ads</button>
-        <button type="button" className="tab-btn" data-service="meta-ads" aria-pressed={false} onClick={() => onServiceChange('meta-ads')}>Meta (Facebook) Ads</button>
-        {landing.services.filter((item) => ['tiktok-ads', 'marketplaces'].includes(item.id)).map((item) => <button type="button" key={item.id} className="tab-btn" onClick={() => onServiceChange(item.id)}>{translate(item.name, language)}</button>)}
-        <button type="button" className={activeService === 'consultation' ? 'tab-btn active' : 'tab-btn'} data-service="consultation" data-i18n="tab_consultation" onClick={() => onServiceChange('consultation')}>Consultation</button>
-        <button type="button" className={activeService === 'other' ? 'tab-btn active' : 'tab-btn'} data-service="other" data-i18n="tab_other" onClick={() => onServiceChange('other')}>Other</button>
-      </div>
+      <InquiryServiceSelector service={activeService} language={language} onChange={onServiceChange} />
       <form id="projectForm" className="smart-form" action={localizedUrl('/inquiry')} method="post" data-authenticated={isAuthenticated ? 'true' : 'false'} data-brief-mode="generic">
         <input type="hidden" name="service_type" id="serviceTypeInput" value={activeService} readOnly />
-      <section className="calculator-launcher" aria-labelledby="calculatorLauncherTitle">
-        <div className="calculator-launcher-copy">
-          <span className="calculator-kicker">{copy.kicker}</span>
-          <h2 id="calculatorLauncherTitle">{service.title}</h2>
-          <p>{service.description}</p>
-        </div>
-        <div className="calculator-launcher-actions">
-          <div className="calculator-total" aria-live="polite">
-            <span>{copy.estimate}</span>
-            <strong>{totalDisplay}</strong>
-            <small>{copy.finalNote}</small>
-          </div>
-          <button type="button" className="btn btn-primary calculator-open-button" onClick={() => setCalculatorOpen(true)}>{copy.openCalculator}<span aria-hidden="true">→</span></button>
-        </div>
-        <div className="calculator-selection-preview" aria-label={copy.selected}>
-          <span className="calculator-selection-label">{copy.configured}</span>
-          {selectedOptions.slice(1).map((option, index) => (
-            <span className="calculator-selection-chip" key={`${option.label}-${index}`}>{option.label}</span>
-          ))}
-        </div>
-      </section>
-        <input type="hidden" name="calculator_summary" value={calculatorSummary} readOnly />
-        <input type="hidden" name="design_reference" value={selectedDesign?.id ?? ''} readOnly />
-        <WebsiteDesignPicker service={activeService} language={language} value={selectedDesign?.id ?? ''} onChange={setDesignReference} />
         <div className="form-grid-2 inquiry-form-grid">
           <div className="form-group"><label htmlFor="clientName" data-i18n-html="form_name_label">Your Name <span className="req">*</span></label><input type="text" id="clientName" name="client_name" placeholder="Alex" data-i18n-placeholder="form_name_ph" required /></div>
-          <div className="form-group"><label htmlFor="clientContact" data-i18n="form_contact_label">Your business Instagram or social media (optional)</label><input type="text" id="clientContact" name="client_contact" placeholder="Instagram, Telegram or social handle (optional)" data-i18n-placeholder="form_contact_ph" /></div>
+          <div className="form-group"><label htmlFor="replyContact">{ux.reply}{!isAuthenticated && <span className="req"> *</span>}</label><input type="text" id="replyContact" name="reply_contact" placeholder={ux.replyPlaceholder} required={!isAuthenticated} maxLength={255} autoComplete="off" aria-describedby={isAuthenticated ? "replyContactHint" : undefined} />{isAuthenticated && <p className="inquiry-form-note" id="replyContactHint">{ux.replyAccount}</p>}</div>
         </div>
-        <div className="form-group"><label htmlFor="clientBudget" data-i18n="form_budget_label">Proposed budget / payment amount (optional)</label><input type="text" id="clientBudget" name="client_budget" placeholder="e.g. $500, $1,000, 20,000 ₴ or your offer" data-i18n-placeholder="form_budget_ph" /></div>
-        <div className="form-group project-comment-group"><label htmlFor="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span className="req">*</span></label><textarea id="projectComment" name="project_comment" rows={8} placeholder="Write in your own words: what your company does, what you want to achieve, any reference links, questions, or your approximate budget. We'll reply quickly with a concrete proposal." data-i18n-placeholder="form_comment_ph" required defaultValue={""} /></div>
+        <div className="form-group project-comment-group"><label htmlFor="projectComment" data-i18n-html="form_comment_label">Tell us about your project or task <span className="req">*</span></label><AutoGrowingTextarea id="projectComment" name="project_comment" rows={4} placeholder={ux.commentPlaceholder} required maxLength={10000} defaultValue="" /></div>
+        <details className="inquiry-optional">
+          <summary>{ux.optional}</summary>
+          <div className="inquiry-optional-content">
+            <div className="form-group"><label htmlFor="clientContact">{ux.business}</label><input type="text" id="clientContact" name="client_contact" placeholder={ux.businessPlaceholder} maxLength={255} aria-describedby="businessProfileHint" /><p className="inquiry-form-note" id="businessProfileHint">{ux.businessHint}</p></div>
+            <div className="form-group"><label htmlFor="clientBudget" data-i18n="form_budget_label">Proposed budget / payment amount (optional)</label><input type="text" id="clientBudget" name="client_budget" placeholder="e.g. $500, $1,000, 20,000 ₴ or your offer" data-i18n-placeholder="form_budget_ph" maxLength={120} /></div>
+            {activeService !== 'other' && <div className="inquiry-estimate-tool">
+              <div><span className="calculator-kicker">{estimateApplied ? ux.applied : ux.base}</span><strong>{appliedEstimate?.total ?? (isCustomEstimate ? copy.customEstimate : formatPrice(service.basePrice, language))}</strong></div>
+              <button ref={calculatorTrigger} type="button" className="btn btn-secondary" aria-haspopup="dialog" onClick={() => { setCalculatorStep(1); setCalculatorOpen(true); }}>{ux.estimate}</button>
+              <p className="inquiry-form-note">{copy.finalNote}</p>
+              {estimateApplied && <div className="calculator-selection-preview" aria-live="polite">{appliedEstimate.options.slice(1).map((option) => <span className="calculator-selection-chip" key={option.label}>{option.label}</span>)}</div>}
+            </div>}
+            <WebsiteDesignPicker service={activeService} language={language} value={selectedDesign?.id ?? ''} onChange={setDesignReference} />
+          </div>
+        </details>
+        <input type="hidden" name="calculator_summary" value={[appliedEstimate?.summary, selectedDesign ? `${designCopy.summary}: ${selectedDesign.name} (${selectedDesign.id})` : ''].filter(Boolean).join('\n')} readOnly />
+        <input type="hidden" name="design_reference" value={selectedDesign?.id ?? ''} readOnly />
+        {(estimateApplied || selectedDesign) && <p className="inquiry-form-note" aria-live="polite">{estimateApplied && `${ux.applied}: ${appliedEstimate.total}`}{estimateApplied && selectedDesign && ' · '}{selectedDesign && `${designCopy.chosen}: ${selectedDesign.name}`}</p>}
         {Object.keys(errors).length > 0 && <div className="account-inline-error" role="alert">{Object.values(errors).map((error, index) => <p key={index}>{error}</p>)}</div>}
-        <p className="inquiry-form-note">{translate(landing.contactDescription, language)}</p>
+        <p className="inquiry-form-note">{isAuthenticated ? ux.accountNextStep : ux.nextStep}</p>
         <button type="submit" className="btn btn-primary btn-block btn-submit" id="submitBtn"><span data-i18n="form_btn_submit">Send Request</span><svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}><line x1={22} y1={2} x2={11} y2={13} /><polygon points="22 2 15 22 11 13 2 9 22 2" /></svg></button>
       </form>
       {calculatorOpen && typeof document !== 'undefined' && createPortal(
         <div className="calculator-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setCalculatorOpen(false); }}>
-          <section className="calculator-modal" role="dialog" aria-modal="true" aria-labelledby="calculatorModalTitle">
+          <section ref={calculatorRef} className="calculator-modal" role="dialog" aria-modal="true" aria-labelledby="calculatorModalTitle">
             <header className="calculator-modal-header">
               <div className="calculator-modal-heading">
                 <span className="calculator-kicker">{copy.kicker}</span>
@@ -276,7 +265,10 @@ export default function InquiryMarkup({
             </div>
             <footer className="calculator-modal-footer">
               <span>{copy.finalNote}</span>
-              <button type="button" className="btn btn-primary" onClick={() => setCalculatorOpen(false)}>{copy.applyCalculator}<span aria-hidden="true">✓</span></button>
+              <div className="calculator-footer-actions">
+                {calculatorStep === 2 && <button type="button" className="btn btn-secondary" onClick={() => setCalculatorStep(1)}>{ux.back}</button>}
+                <button type="button" className="btn btn-primary" onClick={() => { if (calculatorStep === 1) setCalculatorStep(2); else { setAppliedEstimate({ summary: calculatorSummary, total: totalDisplay, options: selectedOptions }); setCalculatorOpen(false); } }}>{calculatorStep === 1 ? ux.next : ux.apply}</button>
+              </div>
             </footer>
           </section>
         </div>,
