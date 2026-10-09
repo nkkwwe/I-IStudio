@@ -388,7 +388,7 @@
 .inquiry-optional-content { display: grid; gap: 20px; padding: 4px 16px 16px; }
 .inquiry-optional-content .design-launcher { margin: 0; padding: 16px; background: var(--bg-surface); }
 .inquiry-estimate-tool { display: grid; gap: 12px; }
-.inquiry-estimate-tool > div:first-child { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.inquiry-estimate-tool > div:first-child { display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; }
 .inquiry-estimate-tool > div:first-child > span:first-child,
 .inquiry-estimate-tool > div:first-child > strong { line-height: 1.25; }
 .inquiry-estimate-tool > div:first-child > span:first-child { font-size: 1rem; }
