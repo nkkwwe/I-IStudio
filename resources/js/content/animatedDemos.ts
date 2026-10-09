@@ -2,8 +2,8 @@ import type { SiteLanguage } from './siteLanguage';
 
 type Text = [string, string, string];
 type Story = { title: Text; text: Text };
-type Concept = { service: 'landing' | 'corporate'; brand: string; label: Text; title: Text; intro: Text; action: Text; heading: Text; about: Text; items: Story[] };
-export type AnimatedDesignId = 'rally' | 'serein' | 'foundry' | 'ledger';
+export type Concept = { service: 'landing' | 'corporate'; brand: string; label: Text; title: Text; intro: Text; action: Text; heading: Text; about: Text; items: Story[] };
+export type AnimatedDesignId = 'rally' | 'serein' | 'foundry' | 'ledger' | 'drift' | 'frequency' | 'vellum' | 'canopy';
 export const animatedText = (value: Text, language: SiteLanguage) => value[language === 'uk' ? 1 : language === 'ro' ? 2 : 0];
 // Original concepts, informed by these public award galleries; no copied layouts or assets.
 // Rally: https://www.awwwards.com/sites/flowfest-2025
@@ -11,6 +11,54 @@ export const animatedText = (value: Text, language: SiteLanguage) => value[langu
 // Foundry: https://www.awwwards.com/websites/%23F36B6C/ (Terminal Industries)
 // Ledger: https://www.awwwards.com/sites/pacific-partners
 export const animatedDemos: Record<AnimatedDesignId, Concept> = {
+  drift: {
+    service: 'landing', brand: 'drift.', label: ['LESS PLANNING. MORE WANDERING. / TRAVEL CONCEPT', 'МЕНШЕ ПЛАНІВ. БІЛЬШЕ МАНДРІВ. / КОНЦЕПТ ПОДОРОЖЕЙ', 'MAI PUȚINE PLANURI. MAI MULTE CĂLĂTORII. / CONCEPT TURISTIC'],
+    title: ['Take the\nscenic route.', 'Обирай шлях\nіз краєвидами.', 'Alege drumul\ncu priveliști.'],
+    intro: ['Small journeys. Wide horizons. Find a slower escape, somewhere between the mountains and the sea.', 'Невеликі подорожі. Безмежні обрії. Знайдіть спокійний відпочинок між горами та морем.', 'Călătorii mici. Orizonturi largi. Descoperă o escapadă liniștită între munți și mare.'],
+    action: ['Plan your escape', 'Спланувати подорож', 'Planifică escapada'], heading: ['Where will you wander?', 'Куди вирушаємо?', 'Unde vei călători?'],
+    about: ['An imagined travel collective for people who collect moments. Thoughtful routes, small groups and enough room to take the unexpected turn.', 'Концепт спільноти мандрівників, які збирають миті. Продумані маршрути, невеликі групи та свобода звернути з дороги.', 'Un colectiv turistic imaginar pentru cei care adună momente. Trasee atent alese, grupuri mici și libertatea de a schimba drumul.'],
+    items: [
+      { title: ['Above the clouds', 'Вище хмар', 'Deasupra norilor'], text: ['Alpine trails, lakeside mornings and a cabin at the end of the path. A sample four-day escape.', 'Альпійські стежки, ранки біля озера та будиночок наприкінці шляху. Приклад подорожі на чотири дні.', 'Poteci alpine, dimineți pe malul lacului și o cabană la capătul drumului. O escapadă exemplu de patru zile.'] },
+      { title: ['By the water', 'Біля води', 'Lângă apă'], text: ['Salt on your skin, quiet coves and long lunches. A sample three-day coastal journey.', 'Сіль на шкірі, тихі бухти та неквапливі обіди. Приклад триденної подорожі узбережжям.', 'Sare pe piele, golfuri liniștite și prânzuri lungi. O călătorie exemplu de trei zile pe coastă.'] },
+      { title: ['Into the green', 'Серед зелені', 'În mijlocul naturii'], text: ['Forest paths, open windows and a slower pace. A sample weekend in the countryside.', 'Лісові стежки, відкриті вікна та повільний ритм. Приклад вихідних за містом.', 'Poteci prin pădure, ferestre deschise și un ritm lent. Un weekend exemplu la țară.'] },
+    ],
+  },
+  frequency: {
+    service: 'landing', brand: 'FREQUENCY', label: ['INDEPENDENT SOUND / A MUSIC PLATFORM CONCEPT', 'НЕЗАЛЕЖНИЙ ЗВУК / КОНЦЕПТ МУЗИЧНОЇ ПЛАТФОРМИ', 'SUNET INDEPENDENT / CONCEPT DE PLATFORMĂ MUZICALĂ'],
+    title: ['Feel every\nfrequency.', 'Відчуй кожну\nчастоту.', 'Simte fiecare\nfrecvență.'],
+    intro: ['A place for curious ears. Discover independent sounds, build your own mood and get closer to the music.', 'Місце для допитливих слухачів. Відкривайте незалежний звук, створюйте настрій та ставайте ближче до музики.', 'Un loc pentru ascultători curioși. Descoperă sunete independente, creează o atmosferă și apropie-te de muzică.'],
+    action: ['Find your sound', 'Знайти свій звук', 'Găsește-ți sunetul'], heading: ['Change the mood.', 'Зміни настрій.', 'Schimbă atmosfera.'],
+    about: ['No algorithm can tell you how to feel. This fictional platform puts discovery first, with listening rooms shaped around atmosphere rather than charts.', 'Жоден алгоритм не знає ваших почуттів. Концептуальна платформа ставить відкриття на перше місце: музичні кімнати за настроєм, а не рейтингами.', 'Niciun algoritm nu îți poate dicta emoțiile. Această platformă imaginară pune descoperirea pe primul loc, cu camere muzicale create în jurul atmosferei.'],
+    items: [
+      { title: ['Deep focus', 'Зосередженість', 'Concentrare'], text: ['Soft textures and spacious rhythms. The visualiser shifts into a slower, deeper pattern. This demo plays no audio.', 'М’які текстури та просторі ритми. Візуалізатор переходить у повільний глибокий режим. Демо не відтворює аудіо.', 'Texturi fine și ritmuri ample. Vizualizarea trece la un ritm mai lent și profund. Demo-ul nu redă sunet.'] },
+      { title: ['After dark', 'Після заходу', 'După apus'], text: ['Warm bass and late-night energy. A sharper visual rhythm for the hours after sunset. Visual demo only.', 'Теплий бас та нічна енергія. Виразний візуальний ритм після заходу сонця. Лише візуальне демо.', 'Bas cald și energie nocturnă. Un ritm vizual mai pronunțat după apus. Doar demo vizual.'] },
+      { title: ['Open air', 'Просто неба', 'În aer liber'], text: ['Bright tones and a little space to move. An open, playful pattern. Visual demo only.', 'Світлі тони та простір для руху. Відкритий грайливий ритм. Лише візуальне демо.', 'Tonuri luminoase și spațiu de mișcare. Un ritm deschis și jucăuș. Doar demo vizual.'] },
+    ],
+  },
+  vellum: {
+    service: 'corporate', brand: 'Vellum', label: ['WORDS WITH WEIGHT / EDITORIAL STUDIO CONCEPT', 'СЛОВА ЗІ ЗМІСТОМ / КОНЦЕПТ РЕДАКЦІЙНОЇ СТУДІЇ', 'CUVINTE CU GREUTATE / CONCEPT DE STUDIO EDITORIAL'],
+    title: ['Stories worth\nturning pages for.', 'Історії, які\nхочеться читати.', 'Povești pentru care\nmerită să citești.'],
+    intro: ['We give ideas a lasting form. Editorial strategy, independent publishing and considered identities for cultural organisations.', 'Надаємо ідеям довговічної форми. Редакційна стратегія, незалежне видавництво та айдентика культурних організацій.', 'Dăm ideilor o formă durabilă. Strategie editorială, publicații independente și identități pentru organizații culturale.'],
+    action: ['Tell us your story', 'Розкажіть свою історію', 'Spune-ne povestea ta'], heading: ['A practice in three chapters.', 'Практика у трьох розділах.', 'O practică în trei capitole.'],
+    about: ['An imagined editorial practice with a simple belief: the right words and the right form belong together. We work from the first question to the final page.', 'Концепт редакційної студії з простим переконанням: точні слова та правильна форма нероздільні. Працюємо від першого запитання до останньої сторінки.', 'Un studio editorial imaginar cu o convingere simplă: cuvintele potrivite și forma potrivită se completează. De la prima întrebare la ultima pagină.'],
+    items: [
+      { title: ['Editorial', 'Редакція', 'Editorial'], text: ['A clear point of view. Research, narratives and a voice that sounds unmistakably like you.', 'Чіткий погляд. Дослідження, історії та голос, що впізнавано звучить як ви.', 'Un punct de vedere clar. Cercetare, povești și o voce care te reprezintă.'] },
+      { title: ['Publishing', 'Видавництво', 'Publicații'], text: ['From manuscript to a meaningful object. Books, journals and digital editions built to be kept.', 'Від рукопису до значущого об’єкта. Книги, журнали та цифрові видання, які хочеться зберегти.', 'De la manuscris la un obiect cu sens. Cărți, reviste și ediții digitale de păstrat.'] },
+      { title: ['Identity', 'Айдентика', 'Identitate'], text: ['A visual language with a story inside it. Identities for institutions, exhibitions and independent voices.', 'Візуальна мова з історією всередині. Айдентика інституцій, виставок та незалежних голосів.', 'Un limbaj vizual cu o poveste. Identități pentru instituții, expoziții și voci independente.'] },
+    ],
+  },
+  canopy: {
+    service: 'corporate', brand: 'canopy', label: ['A BETTER TOMORROW, BY DESIGN / CLEAN ENERGY CONCEPT', 'КРАЩЕ ЗАВТРА / КОНЦЕПТ ЧИСТОЇ ЕНЕРГІЇ', 'UN VIITOR MAI BUN / CONCEPT DE ENERGIE CURATĂ'],
+    title: ['Good energy.\nShared futures.', 'Чиста енергія.\nСпільне майбутнє.', 'Energie curată.\nUn viitor comun.'],
+    intro: ['Connecting communities, clean power and practical change. A thoughtful energy partner for places ready to move forward.', 'Поєднуємо громади, чисту енергію та практичні зміни. Енергетичний партнер для тих, хто готовий рухатися вперед.', 'Conectăm comunități, energie curată și schimbări practice. Un partener energetic pentru cei pregătiți să avanseze.'],
+    action: ['Explore a partnership', 'Обговорити партнерство', 'Discută un parteneriat'], heading: ['Everything is connected.', 'Усе взаємопов’язане.', 'Totul este conectat.'],
+    about: ['A fictional clean-energy company with a community-first approach. Understand the place, design a practical system and support the people who use it.', 'Концепт компанії чистої енергії, яка починає з громади. Зрозуміти місце, спроєктувати практичну систему та підтримати людей.', 'O companie imaginară de energie curată orientată spre comunitate. Înțelege locul, proiectează sistemul și sprijină oamenii.'],
+    items: [
+      { title: ['Generate', 'Генерувати', 'Generează'], text: ['Explore solar generation at the heart of an illustrative community network.', 'Дослідіть сонячну генерацію в центрі умовної мережі громади.', 'Explorează producția solară în centrul unei rețele comunitare ilustrative.'] },
+      { title: ['Store', 'Зберігати', 'Stochează'], text: ['See how storage connects supply to the moments when people need it. An illustrative system, not measured performance.', 'Побачте, як зберігання поєднує виробництво з потребами людей. Умовна система, не виміряні показники.', 'Vezi cum stocarea conectează producția la nevoile oamenilor. Un sistem ilustrativ, fără date măsurate.'] },
+      { title: ['Share', 'Ділитися', 'Distribuie'], text: ['Bring the network together. Homes, workspaces and shared infrastructure in one connected view.', 'Поєднайте мережу. Домівки, робочі простори та спільна інфраструктура в єдиній системі.', 'Conectează rețeaua. Locuințe, spații de lucru și infrastructură comună într-o singură imagine.'] },
+    ],
+  },
   rally: {
     service: 'landing', brand: 'RALLY', label: ['IDEAS NEED PEOPLE / A FICTIONAL CREATIVE FESTIVAL', 'ІДЕЯМ ПОТРІБНІ ЛЮДИ / КОНЦЕПТ ТВОРЧОГО ФЕСТИВАЛЮ', 'IDEILE AU NEVOIE DE OAMENI / FESTIVAL CREATIV IMAGINAR'],
     title: ['Make some\nbeautiful noise.', 'Створюй.\nЗвучи голосно.', 'Creează ceva\nmemorabil.'],

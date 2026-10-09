@@ -48,13 +48,13 @@ Route::prefix('{locale}')
     ->group(function (): void {
         Route::get('/', [HomeController::class, 'show'])->name('home.localized');
 
-        Route::get('/designs/{design}/{section?}', fn (string $locale, string $design, string $section = 'home') => Inertia::render(in_array($design, ['foundry', 'ledger'], true) ? 'AnimatedDemo' : 'ModernDemo', ['design' => $design, 'section' => $section]))
-            ->whereIn('design', ['cobalt', 'maison', 'haven', 'foundry', 'ledger'])
+        Route::get('/designs/{design}/{section?}', fn (string $locale, string $design, string $section = 'home') => Inertia::render(in_array($design, ['foundry', 'ledger', 'vellum', 'canopy'], true) ? 'AnimatedDemo' : 'ModernDemo', ['design' => $design, 'section' => $section]))
+            ->whereIn('design', ['cobalt', 'maison', 'haven', 'foundry', 'ledger', 'vellum', 'canopy'])
             ->whereIn('section', ['collection', 'about', 'journal', 'contact'])
             ->name('modern-business-demo.localized');
 
-        Route::get('/designs/{design}', fn (string $locale, string $design) => Inertia::render(in_array($design, ['rally', 'serein'], true) ? 'AnimatedDemo' : (in_array($design, ['bento', 'signal', 'prism'], true) ? 'ModernDemo' : 'LandingDemo'), ['design' => $design]))
-            ->whereIn('design', ['mono', 'pulse', 'orbit', 'atelier', 'bento', 'signal', 'prism', 'rally', 'serein'])
+        Route::get('/designs/{design}', fn (string $locale, string $design) => Inertia::render(in_array($design, ['rally', 'serein', 'drift', 'frequency'], true) ? 'AnimatedDemo' : (in_array($design, ['bento', 'signal', 'prism'], true) ? 'ModernDemo' : 'LandingDemo'), ['design' => $design]))
+            ->whereIn('design', ['mono', 'pulse', 'orbit', 'atelier', 'bento', 'signal', 'prism', 'rally', 'serein', 'drift', 'frequency'])
             ->name('design-demo.localized');
 
         Route::get('/designs/{design}/{section?}/{item?}', function (string $locale, string $design, string $section = 'home', ?string $item = null) {
