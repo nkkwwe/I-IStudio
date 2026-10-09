@@ -194,7 +194,7 @@ export default function InquiryMarkup({
             <div className="form-group"><label htmlFor="clientContact">{ux.business}</label><input type="text" id="clientContact" name="client_contact" placeholder={ux.businessPlaceholder} maxLength={255} aria-describedby="businessProfileHint" /><p className="inquiry-form-note" id="businessProfileHint">{ux.businessHint}</p></div>
             <div className="form-group"><label htmlFor="clientBudget" data-i18n="form_budget_label">Proposed budget / payment amount (optional)</label><input type="text" id="clientBudget" name="client_budget" placeholder="e.g. $500, $1,000, 20,000 ₴ or your offer" data-i18n-placeholder="form_budget_ph" maxLength={120} /></div>
             {activeService !== 'other' && <div className="inquiry-estimate-tool">
-              <div><span className="calculator-kicker">{estimateApplied ? ux.applied : ux.base}</span><strong>{appliedEstimate?.total ?? (isCustomEstimate ? copy.customEstimate : formatPrice(service.basePrice, language))}</strong></div>
+              <div><span className="calculator-kicker">{estimateApplied ? ux.applied : ux.base}:</span><strong>{appliedEstimate?.total ?? (isCustomEstimate ? copy.customEstimate : formatPrice(service.basePrice, language))}</strong></div>
               <button ref={calculatorTrigger} type="button" className="btn btn-secondary" aria-haspopup="dialog" onClick={() => { setCalculatorStep(1); setCalculatorOpen(true); }}>{ux.estimate}</button>
               <p className="inquiry-form-note">{copy.finalNote}</p>
               {estimateApplied && <div className="calculator-selection-preview" aria-live="polite">{appliedEstimate.options.slice(1).map((option) => <span className="calculator-selection-chip" key={option.label}>{option.label}</span>)}</div>}

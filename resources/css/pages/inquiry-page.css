@@ -389,6 +389,7 @@
 .inquiry-optional-content .design-launcher { margin: 0; padding: 16px; background: var(--bg-surface); }
 .inquiry-estimate-tool { display: grid; gap: 12px; }
 .inquiry-estimate-tool > div:first-child { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.inquiry-estimate-tool > div:first-child > span:first-child { font-size: 1rem; }
 .inquiry-estimate-tool .btn { justify-self: start; white-space: normal; min-height: 44px; }
 .inquiry-form-only-card .startup-brief { gap: 16px; }
 .inquiry-form-only-card .startup-brief-note { margin: 0; color: var(--text-secondary); }
