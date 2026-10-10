@@ -81,6 +81,9 @@
 }
 @media (max-width: 1024px) {
   .startup-hero-layout { grid-template-columns: minmax(0, 1fr); }
+  .startup-hero::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(90deg, rgba(16, 17, 19, .98) 0%, rgba(16, 17, 19, .94) 46%, rgba(16, 17, 19, .65) 76%, rgba(16, 17, 19, .25) 100%); }
+  .startup-hero-copy .hero-title { max-width: 560px; font-size: clamp(36px, 4.6vw, 48px); }
+  .startup-hero-copy .hero-subtitle { max-width: 480px; font-size: clamp(17px, 2vw, 20px); }
   .startup-hero-copy .hero-cta-group { gap: 18px; }
   .startup-hero-copy .btn, .startup-hero-explore { font-size: 15px; }
   .startup-service-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
@@ -92,6 +95,11 @@
 @media (max-width: 760px) {
   .startup-hero-layout { grid-template-columns: minmax(0, 1fr); padding: 0 20px; min-height: 0; }
   .startup-hero-copy { padding-block: 56px 32px; }
+  .startup-hero-copy .hero-title { max-width: 540px; font-size: clamp(34px, 7.2vw, 46px); }
+  .startup-hero-copy .hero-subtitle { max-width: 460px; }
+  .startup-hero-copy .hero-cta-group { align-items: flex-start; flex-direction: column; gap: 14px; margin-bottom: 36px; }
+  .startup-hero-copy .hero-cta-group .btn { width: min(100%, 360px); }
+  .startup-hero-explore { align-self: flex-start; }
   .startup-hero::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; background: linear-gradient(90deg, rgba(16, 17, 19, .97) 0%, rgba(16, 17, 19, .9) 48%, rgba(16, 17, 19, .35) 100%); }
   .startup-hero-visual { position: absolute; inset-block: 0; left: 50%; width: 100vw; height: 100%; margin: 0 0 0 -50vw; }
   .startup-hero-visual img { height: 100%; object-fit: cover; object-position: 64% center; }
@@ -104,10 +112,8 @@
   .startup-hero-copy .hero-cta-group { margin-bottom: 36px; }
   .startup-hero-copy .hero-trust-bar { font-size: 13px; gap: 10px; }
   .startup-hero-copy .hero-trust-bar > span + span::before { margin-right: 10px; }
-  .startup-hero-copy .hero-title { font-size: clamp(2.35rem, 11vw, 3.25rem); }
-  .startup-hero-copy .hero-cta-group { align-items: stretch; flex-direction: column; }
-  .startup-hero-copy .hero-cta-group .btn { width: 100%; }
-  .startup-hero-explore { align-self: center; }
+  .startup-hero-copy .hero-title { font-size: clamp(2rem, 9vw, 2.5rem); }
+  .startup-hero-copy .hero-cta-group .btn { width: min(100%, 360px); }
   .startup-hero-copy .hero-trust-bar > span { white-space: nowrap; }
   .startup-section { padding-block: 64px; }
   .startup-service-grid, .startup-steps, .startup-principles { grid-template-columns: minmax(0, 1fr); }
