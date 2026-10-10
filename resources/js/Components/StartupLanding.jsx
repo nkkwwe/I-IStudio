@@ -38,17 +38,13 @@ export default function StartupLanding({ reviews = [] }) {
   return <>
     <section className="hero-section startup-hero" id="hero"><div className="container startup-hero-layout">
       <div className="startup-hero-copy">
-        <div className="hero-badge"><span className="hero-badge-dot" />{t(landing.badge)}</div>
-        <h1 className="hero-title">{t(landing.title)}</h1>
-        <p className="hero-subtitle">{t(landing.description)}</p>
-        <div className="hero-cta-group"><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}</a><a className="btn btn-secondary" href="#services">{t(landing.explore)}</a></div>
-        <div className="hero-trust-bar">{landing.trust.map((item, i) => <span className="trust-pill" key={i}>{t(item)}</span>)}</div>
+        <div className="hero-badge">{t(['Digital studio for growing brands', 'Діджитал-студія для зростаючих брендів', 'Studio digital pentru branduri în creștere'])}</div>
+        <h1 className="hero-title">{t(['Make your next digital move count.', 'Зробіть наступний цифровий крок вагомим.', 'Fă ca următorul pas digital să conteze.'])}</h1>
+        <p className="hero-subtitle">{t(['A clear website or campaign, shaped around your business and budget.', 'Зрозумілий сайт або кампанія, створені під ваш бізнес і бюджет.', 'Un site sau o campanie clară, adaptate afacerii și bugetului tău.'])}</p>
+        <div className="hero-cta-group"><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}<svg className="startup-hero-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg></a><a className="startup-hero-explore" href="#services"><span>{t(landing.explore)}</span><svg className="startup-hero-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg></a></div>
+        <div className="hero-trust-bar">{t(['Websites · Advertising · Marketplaces', 'Сайти · Реклама · Маркетплейси', 'Site-uri · Publicitate · Marketplace-uri']).split(' · ').map((item, i) => <span key={i}>{item}</span>)}</div>
       </div>
-      <aside className="startup-hero-panel" aria-label={t(landing.heroPanelTitle)}>
-        <span className="startup-panel-kicker">I&amp;I STUDIO / DIGITAL</span>
-        <h2>{t(landing.heroPanelTitle)}</h2><p>{t(landing.heroPanelDescription)}</p>
-        <ol>{landing.heroPanelItems.map(([number, en, uk, ro]) => <li key={number}><span>{number}</span><strong>{t([en, uk, ro])}</strong></li>)}</ol>
-      </aside>
+      <div className="startup-hero-visual"><img src="/images/hero/digital-showcase.webp?v=1" width="797" height="789" alt={t(['Two website previews featuring a calm interior store and an e-commerce strategy.', 'Два приклади сайтів: магазин інтер’єру та стратегія електронної комерції.', 'Două exemple de site-uri: un magazin de interior și o strategie e-commerce.'])} fetchPriority="high" /></div>
     </div></section>
     <section className="startup-section service-solutions-section" id="services"><div className="container">
       <div className="section-header"><span className="section-tag">{t(landing.servicesTag)}</span><h2 className="section-title">{t(landing.servicesTitle)}</h2><p className="section-desc">{t(landing.servicesDescription)}</p></div>
