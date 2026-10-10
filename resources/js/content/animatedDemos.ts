@@ -3,7 +3,7 @@ import type { SiteLanguage } from './siteLanguage';
 type Text = [string, string, string];
 type Story = { title: Text; text: Text };
 export type Concept = { service: 'landing' | 'corporate'; brand: string; label: Text; title: Text; intro: Text; action: Text; heading: Text; about: Text; items: Story[] };
-export type AnimatedDesignId = 'rally' | 'serein' | 'foundry' | 'ledger' | 'drift' | 'frequency' | 'vellum' | 'canopy';
+export type AnimatedDesignId = 'rally' | 'serein' | 'foundry' | 'ledger' | 'drift' | 'frequency' | 'vellum' | 'canopy' | 'glaze' | 'transit';
 export const animatedText = (value: Text, language: SiteLanguage) => value[language === 'uk' ? 1 : language === 'ro' ? 2 : 0];
 // Original concepts, informed by these public award galleries; no copied layouts or assets.
 // Rally: https://www.awwwards.com/sites/flowfest-2025
@@ -11,6 +11,35 @@ export const animatedText = (value: Text, language: SiteLanguage) => value[langu
 // Foundry: https://www.awwwards.com/websites/%23F36B6C/ (Terminal Industries)
 // Ledger: https://www.awwwards.com/sites/pacific-partners
 export const animatedDemos: Record<AnimatedDesignId, Concept> = {
+  // References: awwwards.com/inspiration/website-for-buying-ice-cream and terminal-industries.com.
+  glaze: {
+    service: 'landing', brand: 'glaze.',
+    label: ['SMALL BATCH. BIG JOY. / GELATO CONCEPT', 'МАЛЕНЬКІ ПАРТІЇ. ВЕЛИКА РАДІСТЬ. / КОНЦЕПТ ДЖЕЛАТО', 'LOTURI MICI. BUCURIE MARE. / CONCEPT GELATO'],
+    title: ['Life needs\na little scoop.', 'Життю потрібна\nкулька радості.', 'Viața merită\no cupă de bucurie.'],
+    intro: ['Unexpected flavours. Simple ingredients. A little everyday happiness, served cold.', 'Несподівані смаки. Прості інгредієнти. Трохи щоденного щастя, яке подають холодним.', 'Arome neașteptate. Ingrediente simple. Puțină fericire zilnică, servită rece.'],
+    action: ['Meet your flavour', 'Знайти свій смак', 'Descoperă aroma ta'],
+    heading: ['Three scoops.\nPick your happy.', 'Три кульки.\nОбери свою радість.', 'Trei cupe.\nAlege bucuria ta.'],
+    about: ['An imaginary neighbourhood gelateria with a playful spirit. Seasonal ingredients, small batches and a new favourite around every corner.', 'Концепт сусідньої джелатерії з грайливим характером. Сезонні інгредієнти, маленькі партії та новий улюблений смак щодня.', 'O gelaterie imaginară de cartier cu spirit jucăuș. Ingrediente de sezon, loturi mici și o nouă aromă preferată la fiecare pas.'],
+    items: [
+      { title: ['Berry day', 'Ягідний день', 'Zi cu fructe'], text: ['Strawberry gelato with a bright raspberry swirl. Sweet, a little tart and full of summer.', 'Полуничне джелато з малиновим вихором. Солодке, трохи кисле та сповнене літа.', 'Gelato de căpșuni cu un vârtej de zmeură. Dulce, puțin acrișor și plin de vară.'] },
+      { title: ['Pistachio club', 'Фісташковий клуб', 'Clubul fisticului'], text: ['Roasted pistachios, silky texture and a pinch of sea salt. For the quietly adventurous.', 'Обсмажені фісташки, шовкова текстура та дрібка морської солі. Для тих, хто любить відкриття.', 'Fistic prăjit, textură fină și un strop de sare de mare. Pentru exploratorii discreți.'] },
+      { title: ['Sunny mango', 'Сонячне манго', 'Mango însorit'], text: ['Mango sorbet with a squeeze of lime. A fresh, dairy-free slice of sunshine.', 'Сорбет манго з краплею лайма. Свіжий сонячний смак без молочних продуктів.', 'Sorbet de mango cu puțin lime. O rază proaspătă de soare, fără lactate.'] },
+    ],
+  },
+  transit: {
+    service: 'corporate', brand: 'TRANSIT',
+    label: ['MOVEMENT, MADE SIMPLE. / LOGISTICS CONCEPT', 'РУХ БЕЗ ЗАЙВИХ СКЛАДНОЩІВ. / КОНЦЕПТ ЛОГІСТИКИ', 'MIȘCARE SIMPLIFICATĂ. / CONCEPT LOGISTIC'],
+    title: ['Your next move.\nAlready connected.', 'Ваш наступний крок.\nУсе вже поєднано.', 'Următoarea mișcare.\nDeja conectată.'],
+    intro: ['From the first mile to the final handover. One clear view of the journey ahead.', 'Від першого кілометра до передачі вантажу. Зрозумілий погляд на весь шлях.', 'De la primul kilometru la predarea finală. O perspectivă clară asupra întregului traseu.'],
+    action: ['Plan a shipment', 'Спланувати доставку', 'Planifică o livrare'],
+    heading: ['One network.\nDifferent ways forward.', 'Єдина мережа.\nРізні шляхи вперед.', 'O singură rețea.\nMai multe căi înainte.'],
+    about: ['An imagined logistics partner built around clarity. Road freight, ocean connections and warehouse coordination work together, with people at every handover.', 'Концепт логістичного партнера, який цінує прозорість. Автоперевезення, морські маршрути та складська координація працюють разом із людьми на кожному етапі.', 'Un partener logistic imaginar construit în jurul transparenței. Transport rutier, conexiuni maritime și coordonare de depozit, cu oameni la fiecare etapă.'],
+    items: [
+      { title: ['Road freight', 'Автоперевезення', 'Transport rutier'], text: ['Connect regional hubs with a clear route and coordinated handovers. Select this mode to explore the road corridor.', 'Поєднуйте регіональні хаби зрозумілим маршрутом і узгодженою передачею вантажу. Оберіть режим для перегляду автокоридору.', 'Conectează huburile regionale cu trasee clare și predări coordonate. Selectează modul pentru a explora coridorul rutier.'] },
+      { title: ['Ocean connections', 'Морські маршрути', 'Conexiuni maritime'], text: ['Bring ports and inland destinations into the same plan. Explore the ocean corridor in our illustrative network.', 'Поєднайте порти та внутрішні напрямки в одному плані. Перегляньте морський коридор концептуальної мережі.', 'Unește porturile și destinațiile interioare într-un singur plan. Explorează coridorul maritim al rețelei ilustrative.'] },
+      { title: ['Warehouse flow', 'Складські потоки', 'Flux de depozit'], text: ['Make room for a smoother next step, from receiving to dispatch. Explore the warehouse corridor.', 'Створіть умови для плавного переходу від приймання до відправлення. Перегляньте складський коридор.', 'Pregătește următorul pas, de la recepție la expediere. Explorează coridorul de depozit.'] },
+    ],
+  },
   drift: {
     service: 'landing', brand: 'drift.', label: ['LESS PLANNING. MORE WANDERING. / TRAVEL CONCEPT', 'МЕНШЕ ПЛАНІВ. БІЛЬШЕ МАНДРІВ. / КОНЦЕПТ ПОДОРОЖЕЙ', 'MAI PUȚINE PLANURI. MAI MULTE CĂLĂTORII. / CONCEPT TURISTIC'],
     title: ['Take the\nscenic route.', 'Обирай шлях\nіз краєвидами.', 'Alege drumul\ncu priveliști.'],

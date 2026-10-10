@@ -1,0 +1,94 @@
+/* Original fixed demo palettes; Flow's preview toolbar retains both site themes. */
+.animated-demo.cd-glaze { --ld-bg: #e8ddff; --ld-ink: #39265b; --ld-muted: #66537c; --ld-card: #dcc9f3; --ld-line: #b29ccf; --ld-accent: #39265b; --ld-on-accent: #fff9ee; --ld-hover: #543a7b; --nx-paper: #fff9ee; --nx-flavour: #ee8dad; }
+.animated-demo.cd-transit { --ld-bg: #f2f5f7; --ld-ink: #142d58; --ld-muted: #526783; --ld-card: #e2e9ef; --ld-line: #b7c6d6; --ld-accent: #d8f25b; --ld-on-accent: #142d58; --ld-hover: #e8ff85; --nx-paper: #f9fbff; --nx-navy: #142d58; --nx-muted-inverse: #c5d3e5; --nx-line-inverse: #526783; }
+.animated-demo.cd-glaze .ld-brand { font-size: 42px; font-weight: 800; }
+.animated-demo.cd-glaze .cd-hero { grid-template-columns: 1.1fr 1fr; gap: 48px; padding-block: 72px 96px; }
+.animated-demo.cd-glaze .cd-hero h1 { font-weight: 800; font-size: clamp(56px,7vw,98px); letter-spacing: -.075em; }
+.nx-gelato { position: relative; overflow: hidden; border-radius: 48% 48% 12px 12px; background: var(--nx-flavour); color: var(--ld-ink); text-align: center; padding: 28px 24px; }
+.nx-flavour-0 { --nx-flavour: #ee8dad; }
+.nx-flavour-1 { --nx-flavour: #b8cf8b; }
+.nx-flavour-2 { --nx-flavour: #f4be55; }
+.nx-gelato-label, .nx-gelato-foot { display: block; font-size: 10px; font-weight: 700; letter-spacing: .12em; }
+.nx-scoop { display: block; width: 100%; max-height: 400px; }
+.nx-cup-float { transform-origin: 230px 240px; animation: nx-cup-sway 7s ease-in-out infinite; }
+.nx-flavour-caption { display: block; font-size: clamp(24px,3vw,36px); letter-spacing: -.045em; }
+.nx-gelato-foot { margin-top: 12px; }
+.nx-tasting > :is(h1,h2) { margin-block: 20px 44px; }
+.nx-flavour-cards { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
+.nx-flavour-cards article { display: flex; flex-direction: column; align-items: start; background: var(--nx-flavour); padding: 30px; color: var(--ld-ink); border-radius: var(--radius-card); }
+.nx-flavour-number { font-size: 64px; line-height: 1.2; font-weight: 800; opacity: .4; }
+.nx-flavour-cards h3 { margin: 20px 0 16px; }
+.nx-flavour-cards p { color: var(--ld-ink); margin-bottom: 28px; }
+.nx-flavour-cards .ld-button { margin-top: auto; border-color: var(--ld-ink); }
+.nx-flavour-cards .ld-button[aria-pressed="true"] { background: var(--ld-ink); color: var(--nx-paper) !important; }
+.nx-tasting-result { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; margin-top: 60px; }
+.nx-tasting-result .nx-gelato { max-width: 460px; }
+.nx-tasting-result h3 { font-size: 42px; margin-block: 18px; }
+.nx-tasting-result p { margin-bottom: 28px; max-width: 430px; }
+.animated-demo.cd-glaze .cd-about { border-radius: 80px 80px 0 0; }
+/* Transit uses a horizontal dispatch canvas and an offset, two-column masthead. */
+.animated-demo.cd-transit .ld-brand { letter-spacing: -.06em; font-weight: 800; }
+.animated-demo.cd-transit .ld-button { border-radius: 3px; border-color: var(--ld-ink); }
+.animated-demo.cd-transit .cd-hero { grid-template-columns: 1fr; gap: 48px; padding-block: 64px 48px; }
+.animated-demo.cd-transit .cd-hero-copy { display: grid; grid-template-columns: 1.8fr 1fr; gap: 24px 64px; align-items: start; }
+.animated-demo.cd-transit .cd-hero-copy > .ld-kicker { grid-column: 1/-1; }
+.animated-demo.cd-transit .cd-hero h1 { grid-row: span 2; font-size: clamp(48px,5.6vw,76px); font-weight: 700; margin: 0; }
+.animated-demo.cd-transit .ld-hero-actions { margin-top: 0; gap: 16px; }
+.nx-dispatch { border: 1px solid var(--ld-line); background: var(--ld-card); overflow: hidden; }
+.nx-dispatch-meta, .nx-dispatch-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; padding: 20px 24px; font-size: 11px; font-weight: 600; letter-spacing: .05em; }
+.nx-dispatch-meta { background: var(--ld-ink); color: var(--nx-paper); }
+.nx-dispatch svg { width: 100%; display: block; }
+.nx-dispatch-bottom { border-top: 1px solid var(--ld-line); }
+.nx-dispatch-bottom strong { font-size: 18px; letter-spacing: -.025em; }
+.nx-cargo { transform: translate(100px,240px); animation: nx-road 12s linear infinite; }
+.nx-mode-1 .nx-cargo { transform: translate(100px,80px); animation-name: nx-ocean; animation-duration: 16s; }
+.nx-mode-2 .nx-cargo { transform: translate(100px,160px); animation-name: nx-warehouse; animation-duration: 10s; }
+.nx-transport > :is(h1,h2) { margin-block: 20px 40px; }
+.nx-transport .nc-options { flex-direction: row; flex-wrap: wrap; gap: 0; border-bottom: 1px solid var(--ld-line); }
+.nx-transport .nc-options .ld-button { flex: 1 1 240px; border-radius: 0; padding-block: 22px; }
+.nx-transport .nc-options .ld-button[aria-pressed="true"] { color: var(--ld-ink) !important; border-color: var(--ld-ink); }
+.nx-transport-story { display: flex; align-items: center; justify-content: space-between; gap: 40px; margin-top: 36px; }
+.nx-transport-story > div { max-width: 630px; }
+.nx-transport-story h3 { margin-bottom: 16px; }
+.nx-transport-story > .ld-button { flex-shrink: 0; }
+.animated-demo.cd-transit .cd-about { background: var(--nx-navy); --ld-ink: var(--nx-paper); --ld-muted: var(--nx-muted-inverse); --ld-line: var(--nx-line-inverse); }
+.animated-demo.cd-transit :is(a,button,input,textarea,summary,[tabindex]):focus-visible { outline-color: var(--ld-ink); }
+.animated-demo.cd-transit { --form-field-focus-ring: 0 0 0 2px var(--ld-ink); }
+.animated-demo.cd-transit :is(input,textarea):focus { border-color: var(--ld-ink); }
+.animated-demo.cd-transit .cd-about .ld-container { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 64px; }
+.animated-demo.cd-transit .cd-about .ld-kicker, .animated-demo.cd-transit .cd-principles { grid-column: 1/-1; }
+.animated-demo.cd-transit .cd-about :is(h1,h2) { margin: 0; }
+@media (hover: hover) and (pointer: fine) {
+  .nx-flavour-cards .ld-button:not(:disabled):hover { background: var(--ld-ink); color: var(--nx-paper) !important; }
+  .nx-transport .nc-options .ld-button[aria-pressed="false"]:not(:disabled):hover { background: var(--ld-card); color: var(--ld-ink) !important; }
+}
+@keyframes nx-cup-sway { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-12px) rotate(3deg); } }
+@keyframes nx-road { 0% { transform: translate(100px,240px); } 28% { transform: translate(360px,240px); } 34% { transform: translate(397px,226px); } 38% { transform: translate(410px,190px); } 46% { transform: translate(410px,130px); } 50% { transform: translate(424px,94px); } 56% { transform: translate(460px,80px); } 100% { transform: translate(900px,80px); } }
+@keyframes nx-ocean { 0% { transform: translate(100px,80px); } 28% { transform: translate(340px,80px); } 34% { transform: translate(377px,94px); } 38% { transform: translate(390px,130px); } 46% { transform: translate(390px,190px); } 50% { transform: translate(404px,226px); } 56% { transform: translate(440px,240px); } 100% { transform: translate(900px,240px); } }
+@keyframes nx-warehouse { from { transform: translate(100px,160px); } to { transform: translate(900px,160px); } }
+@media (max-width: 1000px) {
+  .nx-flavour-cards article { padding: 24px; }
+  .nx-tasting-result { gap: 40px; }
+  .animated-demo.cd-transit .cd-hero-copy { grid-template-columns: 1.4fr 1fr; gap: 24px 32px; }
+}
+@media (max-width: 700px) {
+  .animated-demo.cd-glaze .cd-hero { grid-template-columns: 1fr; padding-block: 40px 56px; gap: 32px; }
+  .animated-demo.cd-glaze .cd-hero h1 { font-size: clamp(44px,12vw,68px); }
+  .nx-gelato { max-width: 460px; margin-inline: auto; }
+  .nx-flavour-cards, .nx-tasting-result { grid-template-columns: 1fr; }
+  .nx-flavour-cards article { padding: 28px; }
+  .nx-flavour-cards .nx-flavour-number { font-size: 48px; }
+  .nx-tasting-result { gap: 28px; }
+  .animated-demo.cd-glaze .cd-about { border-radius: 36px 36px 0 0; }
+  .animated-demo.cd-transit .cd-hero-copy, .animated-demo.cd-transit .cd-about .ld-container { grid-template-columns: 1fr; gap: 24px; }
+  .animated-demo.cd-transit .cd-hero h1 { font-size: clamp(40px,10vw,64px); }
+  .animated-demo.cd-transit .cd-hero { padding-block: 40px; gap: 32px; }
+  .nx-dispatch-meta, .nx-dispatch-bottom { padding: 16px; font-size: 10px; }
+  .nx-dispatch-bottom strong { flex-basis: 100%; order: -1; }
+  .nx-transport-story { flex-direction: column; align-items: start; gap: 24px; }
+  .nx-transport .nc-options .ld-button { flex-basis: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-cup-float, .nx-cargo { animation: none; }
+  .nx-cargo, .nx-mode-1 .nx-cargo, .nx-mode-2 .nx-cargo { transform: translate(500px,160px); }
+}

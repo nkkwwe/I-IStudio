@@ -8,6 +8,7 @@ import { useSiteLanguage } from '../content/uiTranslations';
 import '../../css/pages/landing-demo.css';
 import '../../css/pages/animated-demo.css';
 import '../../css/pages/new-animated-concepts.css';
+import '../../css/pages/glaze-transit.css';
 import { isNewAnimated, NewConceptArt, NewConceptExplore } from '../Components/NewAnimatedConcept';
 
 function Arrow() { return <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg>; }
