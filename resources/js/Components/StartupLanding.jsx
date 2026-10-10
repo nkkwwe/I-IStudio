@@ -44,7 +44,7 @@ export default function StartupLanding({ reviews = [] }) {
         <div className="hero-cta-group"><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}<svg className="startup-hero-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg></a><a className="startup-hero-explore" href="#services"><span>{t(landing.explore)}</span><svg className="startup-hero-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg></a></div>
         <div className="hero-trust-bar">{t(['Websites · Advertising · Marketplaces', 'Сайти · Реклама · Маркетплейси', 'Site-uri · Publicitate · Marketplace-uri']).split(' · ').map((item, i) => <span key={i}>{item}</span>)}</div>
       </div>
-      <div className="startup-hero-visual"><img src="/images/hero/digital-showcase.webp?v=1" width="797" height="789" alt={t(['Two website previews featuring a calm interior store and an e-commerce strategy.', 'Два приклади сайтів: магазин інтер’єру та стратегія електронної комерції.', 'Două exemple de site-uri: un magazin de interior și o strategie e-commerce.'])} fetchPriority="high" /></div>
+      <div className="startup-hero-visual" aria-hidden="true"><img src="/images/hero/studio-background.webp?v=2" width="1672" height="941" alt="" fetchPriority="high" /></div>
     </div></section>
     <section className="startup-section service-solutions-section" id="services"><div className="container">
       <div className="section-header"><span className="section-tag">{t(landing.servicesTag)}</span><h2 className="section-title">{t(landing.servicesTitle)}</h2><p className="section-desc">{t(landing.servicesDescription)}</p></div>
@@ -80,3 +80,4 @@ export default function StartupLanding({ reviews = [] }) {
     </div></section>
   </>;
 }
+
