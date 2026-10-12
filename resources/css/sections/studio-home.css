@@ -23,9 +23,8 @@ html:not([data-theme="dark"]) .studio-home-sections > section { border-bottom-co
 .studio-home-sections .startup-service-card:nth-last-child(2),
 .studio-home-sections .startup-service-card:last-child { grid-column: auto; }
 .studio-service-image { position: absolute; z-index: -1; inset: 0 0 0 auto; width: 62%; height: 100%; object-fit: cover; object-position: right center; mask-image: linear-gradient(90deg, transparent, black 65%); }
-.studio-service-image-light { display: none; }
-html:not([data-theme="dark"]) .studio-home-sections .studio-service-image-dark { display: none; }
-html:not([data-theme="dark"]) .studio-home-sections .studio-service-image-light { display: block; }
+/* Use the same photograph and crop in both themes; only exposure changes. */
+html:not([data-theme="dark"]) .studio-home-sections .studio-service-image { filter: brightness(1.8); }
 html:not([data-theme="dark"]) .studio-home-sections .startup-service-card:first-child::after { content: ''; position: absolute; z-index: 0; inset: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--studio-photo-surface) 76%, transparent), color-mix(in srgb, var(--studio-photo-surface) 36%, transparent) 58%, color-mix(in srgb, var(--studio-photo-surface) 8%, transparent)); pointer-events: none; }
 html:not([data-theme="dark"]) .studio-home-sections .startup-service-card:first-child > :not(.studio-service-image) { position: relative; z-index: 1; }
 .studio-home-sections .startup-service-card:first-child .studio-service-image { width: 100%; mask-image: linear-gradient(180deg, rgba(0, 0, 0, .45), black 70%); object-position: center bottom; }
