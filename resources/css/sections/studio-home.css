@@ -1,0 +1,107 @@
+/* Homepage below the hero. The header, hero and other routes retain their styles. */
+.studio-home-sections { --studio-accent: var(--accent-blue); background: var(--bg-body); }
+html[data-theme="dark"] .studio-home-sections { --studio-accent: #60a5fa; }
+.studio-home-sections .startup-section,
+.studio-home-sections .client-reviews-section,
+.studio-home-sections .inquiry-section { padding-block: 72px; background: var(--bg-body); border-color: var(--border-light); }
+.studio-home-sections .section-header { max-width: none; margin: 0 0 36px; text-align: left; }
+.studio-home-sections .startup-section .section-tag, .studio-home-sections .studio-reviews .section-tag { padding: 0; border: 0; border-radius: 0; background: transparent; color: var(--text-muted); font-size: .75rem; letter-spacing: .1em; margin-bottom: 16px; }
+.studio-home-sections .section-title { margin-bottom: 16px; font-size: clamp(1.8rem, 3.1vw, 2.75rem); line-height: 1.18; letter-spacing: -.04em; }
+.studio-home-sections .section-desc { margin: 0; max-width: 65ch; font-size: .9375rem; line-height: 1.6; }
+.studio-home-sections .startup-service-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+.studio-home-sections .startup-service-card { grid-column: auto; min-height: 0; padding: 24px 20px; gap: 20px; border-color: var(--border-light); border-radius: var(--radius-inner); box-shadow: none; }
+.studio-home-sections .startup-service-card:nth-last-child(2),
+.studio-home-sections .startup-service-card:last-child { grid-column: auto; }
+.studio-service-top { display: flex; align-items: center; gap: 20px; width: 100%; min-height: 40px; }
+.studio-service-top svg { color: var(--studio-accent); }
+.studio-home-sections .advantage-num { position: static; font-size: .75rem; color: var(--text-muted); }
+.studio-home-sections .startup-service-card h3 { font-size: 1rem; line-height: 1.4; min-height: 2.8em; }
+.studio-home-sections .startup-service-card > p { font-size: .8125rem; line-height: 1.65; }
+.studio-home-sections .startup-service-card ul { display: flex; flex-wrap: wrap; list-style: none; padding: 0; gap: 6px; margin-top: auto; }
+.studio-home-sections .startup-service-card li { padding: 6px 8px; border-radius: var(--radius-sm); background: var(--bg-panel); font-size: .6875rem; line-height: 1.5; }
+.studio-service-action { display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%; min-height: 44px; padding: 8px 0; border: 0; border-top: 1px solid var(--border-light); background: transparent; color: var(--text-primary); font: inherit; font-size: .75rem; font-weight: 600; text-align: left; cursor: pointer; }
+.studio-service-action svg { flex-shrink: 0; }
+.studio-service-action:focus-visible { outline: 3px solid var(--studio-accent); outline-offset: 3px; }
+.studio-home-sections .startup-faq-trigger:focus-visible { outline: 3px solid var(--studio-accent); outline-offset: 3px; }
+.studio-approach-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+.studio-approach-layout > .section-header { margin: 0; padding-right: 48px; }
+.studio-approach-layout .section-title { max-width: 400px; }
+.studio-home-sections .startup-principles { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; border-left: 1px solid var(--border); padding-left: 48px; }
+.studio-home-sections .startup-section .startup-principle-card { display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 24px; min-height: 0; padding: 24px 0; border: 0; border-bottom: 1px solid var(--border-light); border-radius: 0; background: transparent; box-shadow: none; }
+.studio-home-sections .startup-principle-card:first-child { padding-top: 0; }
+.studio-home-sections .startup-principle-card:last-child { padding-bottom: 0; border-bottom: 0; }
+.studio-home-sections .startup-principle-card h3 { font-size: 1rem; margin-bottom: 8px; }
+.studio-home-sections .startup-principle-card p { font-size: .875rem; line-height: 1.65; }
+.studio-home-sections .studio-reviews > .container { max-width: 1200px; padding-inline: 24px; }
+.studio-reviews .section-header { position: relative; padding: 0 120px 0 0; }
+.studio-review-controls { position: absolute; top: 16px; right: 0; display: flex; gap: 12px; }
+.studio-review-controls .btn { min-width: 44px; min-height: 44px; padding: 10px; border-radius: var(--radius-pill); }
+.studio-reviews .client-reviews-viewport { margin: 0; padding: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.studio-reviews .client-reviews-viewport::-webkit-scrollbar { display: none; }
+.studio-reviews .client-reviews-track { width: max-content; }
+.studio-reviews .client-reviews-group { display: flex; padding: 0; gap: 24px; }
+.studio-reviews .client-review-card { position: relative; width: 368px; flex-basis: 368px; flex-shrink: 0; padding: 28px; gap: 16px; border-radius: var(--radius-inner); border-color: var(--border-light); box-shadow: none; scroll-snap-align: start; }
+.studio-reviews .client-review-card blockquote { max-height: 240px; font-size: .9375rem; line-height: 1.6; }
+.studio-reviews .client-review-rating { order: 3; }
+.studio-reviews .client-review-stars { display: none; }
+.studio-reviews .client-review-demo-tag { color: var(--studio-accent); border-color: var(--border); background: transparent; }
+.studio-review-quote { position: absolute; right: 24px; bottom: 24px; color: var(--studio-accent); }
+.studio-home-sections .startup-steps { gap: 24px; }
+.studio-home-sections .startup-steps .workflow-card { padding: 0; min-height: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
+.studio-home-sections .workflow-card-top { display: flex; justify-content: flex-start; align-items: center; gap: 16px; margin-bottom: 20px; padding: 0; border: 0; }
+.studio-home-sections .workflow-num { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 44px; height: 44px; border: 1px solid var(--studio-accent); border-radius: var(--radius-pill); font-size: .75rem; color: var(--text-primary); }
+.studio-home-sections .startup-steps .workflow-card h3 { margin: 0; font-size: .9375rem; line-height: 1.4; }
+.studio-step-body { display: flex; gap: 16px; padding-top: 16px; border-top: 1px solid var(--border); }
+.studio-step-body svg { flex-shrink: 0; color: var(--text-muted); }
+.studio-home-sections .startup-steps .workflow-card p { font-size: .8125rem; }
+.studio-home-sections .startup-pricing-section { padding-block: 0; }
+.studio-pricing-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.studio-pricing-copy { padding-block: 64px; }
+.studio-pricing-copy p { max-width: 58ch; margin-block: 24px; font-size: .9375rem; line-height: 1.7; }
+.studio-pricing-copy .btn { gap: 20px; }
+.studio-pricing-image { width: 100%; height: 100%; min-height: 360px; max-height: 480px; object-fit: cover; }
+.studio-faq-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+.studio-faq-layout > div:last-child { border-left: 1px solid var(--border); padding-left: 48px; }
+.studio-home-sections .startup-faq-trigger { font-size: .9375rem; }
+.studio-home-sections .inquiry-container { grid-template-columns: .8fr 1.2fr; gap: 48px; }
+.studio-contact-heading { grid-column: 1 / -1; }
+.studio-home-sections .startup-contact-card { margin-top: 0; }
+.studio-home-sections .inquiry-copy .section-title { max-width: 14ch; }
+.studio-home-sections .startup-lead { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; border-color: var(--border-light); border-radius: var(--radius-inner); padding: 28px; box-shadow: none; }
+.studio-home-sections .startup-lead > :not(.form-group),
+.studio-home-sections .startup-lead > .form-group:nth-of-type(n+3) { grid-column: 1 / -1; }
+.studio-home-sections .startup-lead label { font-size: .8125rem; }
+.studio-home-sections .startup-lead .ads-consent { font-size: .75rem; }
+.studio-home-sections .startup-contact-card { box-shadow: none; border-color: var(--border-light); border-radius: var(--radius-inner); }
+@media (hover: hover) and (pointer: fine) {
+  .studio-service-action:hover { color: var(--studio-accent); }
+  .studio-home-sections .startup-principle-card:hover { box-shadow: none; }
+}
+@media (max-width: 1100px) {
+  .studio-home-sections .startup-service-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .studio-reviews .client-review-card { width: calc((100vw - 72px) / 2); flex-basis: calc((100vw - 72px) / 2); }
+  .studio-approach-layout, .studio-faq-layout { gap: 32px; }
+  .studio-home-sections .startup-principles, .studio-faq-layout > div:last-child { padding-left: 32px; }
+  .studio-home-sections .startup-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+}
+@media (max-width: 760px) {
+  .studio-home-sections .startup-section, .studio-home-sections .client-reviews-section, .studio-home-sections .inquiry-section { padding-block: 48px; }
+  .studio-home-sections .startup-service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .studio-approach-layout, .studio-faq-layout, .studio-pricing-layout, .studio-home-sections .inquiry-container { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .studio-approach-layout > .section-header { padding-right: 0; }
+  .studio-home-sections .startup-principles, .studio-faq-layout > div:last-child { padding-left: 0; border-left: 0; }
+  .studio-pricing-copy { padding-block: 0; }
+  .studio-pricing-image { min-height: 0; height: 280px; border-radius: var(--radius-inner); }
+  .studio-home-sections .inquiry-copy .section-title { max-width: none; }
+  .studio-reviews .section-header { padding-right: 0; }
+  .studio-review-controls { position: static; margin-top: 24px; }
+  .studio-reviews .client-review-card { width: calc(100vw - 72px); flex-basis: calc(100vw - 72px); }
+  .studio-reviews .client-review-card blockquote { display: block; overflow-y: auto; -webkit-line-clamp: unset; }
+}
+@media (max-width: 480px) {
+  .studio-home-sections .startup-service-grid, .studio-home-sections .startup-steps, .studio-home-sections .startup-lead { grid-template-columns: minmax(0, 1fr); }
+  .studio-home-sections .startup-service-card h3 { min-height: 0; font-size: 1.125rem; }
+  .studio-home-sections .startup-service-card > p { font-size: .9375rem; }
+  .studio-home-sections .startup-service-card li { font-size: .8125rem; }
+  .studio-home-sections .startup-lead { padding: 24px; }
+}
