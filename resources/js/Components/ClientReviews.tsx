@@ -59,6 +59,7 @@ export default function ClientReviews({ reviews, variant }: { reviews: PublicRev
 
   const cards = (duplicate = false) => reviews.map((review) => (
     <article className={`client-review-card${review.demo ? ' is-demo-review' : ''}`} key={review.id}>
+      {variant === 'studio' && <Quotes className="studio-review-quote" size={24} weight="fill" aria-hidden="true" />}
       {review.demo && <span className="client-review-demo-tag">{text.sample}</span>}
       <div className="client-review-rating" aria-label={copy.review.ratingValue.replace('{rating}', String(review.rating))}>
         <div className="client-review-stars" aria-hidden="true">
@@ -73,7 +74,6 @@ export default function ClientReviews({ reviews, variant }: { reviews: PublicRev
       </div>
       <blockquote tabIndex={duplicate ? -1 : 0}>{review.body}</blockquote>
       <footer><strong>{review.author || text.client}</strong><span>{copy.services[review.service] ?? text.client}</span></footer>
-      {variant === 'studio' && <Quotes className="studio-review-quote" size={26} weight="fill" aria-hidden="true" />}
     </article>
   ));
 

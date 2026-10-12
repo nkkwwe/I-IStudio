@@ -72,16 +72,17 @@ function Footer() {
   return (
     <footer className="site-footer" id="contact">
       <div className="container footer-container">
-        <div className="footer-top"><Logo /></div>
-        <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} I&amp;I Studio</span>
+        <div className="footer-top"><Logo />
           <nav className="footer-nav">
             <a href="#hero" data-i18n="nav_home">Main</a>
             <a href="#services" data-i18n="nav_services">Services</a>
+            <a href="#advantages" data-i18n="nav_about">About</a>
+            <a href="#process" data-i18n="nav_process">How We Work</a>
             <a href="#faq">FAQ</a>
             <a href="#inquiry" data-i18n="nav_contact">Contact</a>
           </nav>
         </div>
+        <div className="footer-bottom"><span>© {new Date().getFullYear()} I&amp;I Studio</span></div>
       </div>
     </footer>
   );
@@ -89,7 +90,7 @@ function Footer() {
 
 export default function HomeMarkup({ isAuthenticated = false, signInLabel = 'Sign in', unreadChatCount = 0, userName = '', reviews = /** @type {import('../Components/ClientReviews').PublicReview[]} */ ([]) }) {
   return (
-    <div className="react-page-root">
+    <div className="react-page-root studio-home-page">
       <Header isAuthenticated={isAuthenticated} signInLabel={signInLabel} unreadChatCount={unreadChatCount} userName={userName} />
       <main>
         <StartupLanding reviews={reviews} />

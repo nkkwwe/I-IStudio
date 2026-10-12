@@ -5,18 +5,11 @@ import { localizedUrl } from '../content/siteLanguage';
 import { landing, translate } from '../content/startupContent';
 import ClientReviews from './ClientReviews';
 import StartupSelect from './StartupSelect';
-import { Monitor, GoogleLogo, InstagramLogo, ShoppingCart, TiktokLogo, ArrowRight, ChatCircle, FileText, RocketLaunch, Gear } from '@phosphor-icons/react';
+import { Monitor, GoogleLogo, InstagramLogo, ShoppingCart, TiktokLogo, ArrowRight } from '@phosphor-icons/react';
 import '../../css/sections/studio-home.css';
 
 const serviceIcons = [Monitor, GoogleLogo, InstagramLogo, ShoppingCart, TiktokLogo];
-const processIcons = [ChatCircle, FileText, RocketLaunch, Gear];
-const serviceFeatures = [
-  [['Design', 'Дизайн', 'Design'], ['Development', 'Розробка', 'Dezvoltare'], ['Analytics', 'Аналітика', 'Analiză']],
-  [['Campaign setup', 'Запуск кампаній', 'Configurare'], ['Tracking', 'Відстеження', 'Monitorizare'], ['Optimisation', 'Оптимізація', 'Optimizare']],
-  [['Creative', 'Креативи', 'Materiale'], ['Targeting', 'Аудиторії', 'Audiențe'], ['Measurement', 'Вимірювання', 'Măsurare']],
-  [['Store setup', 'Запуск магазину', 'Configurare magazin'], ['Product listings', 'Картки товарів', 'Listări produse'], ['Support', 'Супровід', 'Suport']],
-  [['Strategy', 'Стратегія', 'Strategie'], ['Video creative', 'Відеокреативи', 'Videouri'], ['Campaign setup', 'Запуск кампаній', 'Configurare']],
-];
+const serviceImages = ['web', 'google', 'social', 'market', 'video'];
 
 function StartupFaqItem({ id, question, answer, t }) {
   const [open, setOpen] = useState(false);
@@ -62,9 +55,9 @@ export default function StartupLanding({ reviews = [] }) {
     <section className="startup-section service-solutions-section" id="services"><div className="container">
       <div className="section-header"><span className="section-tag">{t(landing.servicesTag)}</span><h2 className="section-title">{t(landing.servicesTitle)}</h2><p className="section-desc">{t(landing.servicesDescription)}</p></div>
       <div className="startup-service-grid">{landing.services.map((service, i) => <article className="advantage-card startup-service-card" key={service.id}>
+        <img className="studio-service-image" src={`/images/home/service-${serviceImages[i]}.webp`} width="800" height="1100" loading="lazy" alt="" />
         <div className="studio-service-top"><span className="advantage-num">0{i + 1}</span>{(() => { const Icon = serviceIcons[i]; return <Icon size={32} weight="duotone" aria-hidden="true" />; })()}</div><h3>{t(service.name)}</h3><p>{t(service.description)}</p>
-        <ul>{serviceFeatures[i].map((item, index) => <li key={index}>{t(item)}</li>)}</ul>
-        <button type="button" className="studio-service-action" onClick={() => selectService(service.id)}>{t(landing.discuss)}<ArrowRight size={18} aria-hidden="true" /></button>
+        <button type="button" className="studio-service-action" aria-label={`${t(landing.discuss)}: ${t(service.name)}`} onClick={() => selectService(service.id)}><ArrowRight size={22} aria-hidden="true" /></button>
       </article>)}</div>
     </div></section>
     <section className="startup-section" id="advantages"><div className="container studio-approach-layout">
@@ -74,13 +67,12 @@ export default function StartupLanding({ reviews = [] }) {
     {reviews.length > 0 && <ClientReviews reviews={reviews} variant="studio" />}
     <section className="startup-section workflow-section" id="process"><div className="container">
       <div className="section-header"><span className="section-tag">{t(landing.processTag)}</span><h2 className="section-title">{t(landing.processTitle)}</h2></div>
-      <div className="startup-steps">{landing.steps.map(([title, body], i) => <article className="workflow-card" key={i}><div className="workflow-card-top"><span className="workflow-num">0{i + 1}</span><h3>{t(title)}</h3></div><div className="studio-step-body">{(() => { const Icon = processIcons[i]; return <Icon size={22} aria-hidden="true" />; })()}<p>{t(body)}</p></div></article>)}</div>
+      <div className="startup-steps">{landing.steps.map(([title, body], i) => <article className="workflow-card" key={i}><div className="workflow-card-top"><span className="workflow-num">0{i + 1}</span></div><h3>{t(title)}</h3><p>{t(body)}</p></article>)}</div>
     </div></section>
-    <section className="startup-section startup-pricing-section" id="pricing"><div className="container studio-pricing-layout"><div className="studio-pricing-copy"><span className="section-tag">{t(landing.pricingTag)}</span><h2 className="section-title">{t(landing.pricingTitle)}</h2><p>{t(landing.pricing)}</p><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}<ArrowRight size={18} aria-hidden="true" /></a></div><img className="studio-pricing-image" src="/images/home/studio-process.webp" width="1448" height="1086" loading="lazy" alt="" /></div></section>
+    <section className="startup-section startup-pricing-section" id="pricing"><img className="studio-pricing-image" src="/images/home/pricing-architecture.webp" width="1600" height="800" loading="lazy" alt="" /><div className="container studio-pricing-layout"><div className="studio-pricing-copy"><span className="section-tag">{t(landing.pricingTag)}</span><h2 className="section-title">{t(landing.pricingTitle)}</h2><p>{t(landing.pricing)}</p><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}<ArrowRight size={18} aria-hidden="true" /></a></div></div></section>
     <section className="startup-section startup-faq-section" id="faq"><div className="container studio-faq-layout"><div><span className="section-tag">{t(landing.faqTag)}</span><h2 className="section-title">{t(landing.faqTitle)}</h2></div><div>{landing.faq.map(([question, answer], i) => <StartupFaqItem id={i} key={i} question={question} answer={answer} t={t} />)}</div></div></section>
     <section className="inquiry-section" id="inquiry"><div className="container inquiry-container">
-      <div className="studio-contact-heading"><h2 className="section-title" ref={heading} tabIndex={-1}>{t(landing.contactTitle)}</h2><p className="section-desc">{t(landing.contactDescription)}</p></div>
-      <div className="inquiry-copy"><aside className="startup-contact-card"><h3>{t(landing.contactStepsTitle)}</h3><ol className="startup-contact-steps">{landing.contactSteps.map(([title, body], i) => <li key={i}><span>0{i + 1}</span><div><strong>{t(title)}</strong><p>{t(body)}</p></div></li>)}</ol></aside></div>
+      <div className="inquiry-copy"><div className="studio-contact-heading"><span className="section-tag">{t(['GET IN TOUCH', 'ЗВ’ЯЖІТЬСЯ З НАМИ', 'CONTACTEAZĂ-NE'])}</span><h2 className="section-title" ref={heading} tabIndex={-1}>{t(landing.contactTitle)}</h2><p className="section-desc">{t(landing.contactDescription)}</p></div><aside className="startup-contact-card"><h3>{t(landing.contactStepsTitle)}</h3><ol className="startup-contact-steps">{landing.contactSteps.map(([title, body], i) => <li key={i}><span>0{i + 1}</span><div><strong>{t(title)}</strong><p>{t(body)}</p></div></li>)}</ol></aside></div>
       <form className="smart-form inquiry-cta-card startup-lead" onSubmit={(e) => { e.preventDefault(); if (form.processing) return; form.post(localizedUrl('/inquiry'), { preserveScroll: true, onSuccess: () => form.reset('client_name', 'client_email', 'project_comment', 'ads_consent') }); }}>
         {flash.inquiry_submitted && <p role="status">{t(landing.success)} <strong>{flash.inquiry_ticket}</strong></p>}
         {input('client_name', landing.name)}{input('client_email', landing.email, 'email')}
