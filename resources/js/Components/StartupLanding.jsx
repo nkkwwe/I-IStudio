@@ -55,7 +55,8 @@ export default function StartupLanding({ reviews = [] }) {
     <section className="startup-section service-solutions-section" id="services"><div className="container">
       <div className="section-header"><span className="section-tag">{t(landing.servicesTag)}</span><h2 className="section-title">{t(landing.servicesTitle)}</h2><p className="section-desc">{t(landing.servicesDescription)}</p></div>
       <div className="startup-service-grid">{landing.services.map((service, i) => <article className="advantage-card startup-service-card" key={service.id}>
-        <img className="studio-service-image" src={`/images/home/service-${serviceImages[i]}.webp`} width="800" height="1100" loading="lazy" alt="" />
+        <img className="studio-service-image studio-service-image-dark" src={`/images/home/service-${serviceImages[i]}.webp`} width="800" height="1100" loading="lazy" alt="" />
+        <img className="studio-service-image studio-service-image-light" src={`/images/home/service-${serviceImages[i]}-light.webp?v=2`} width="800" height="1100" loading="lazy" alt="" />
         <div className="studio-service-top"><span className="advantage-num">0{i + 1}</span>{(() => { const Icon = serviceIcons[i]; return <Icon size={32} weight="duotone" aria-hidden="true" />; })()}</div><h3>{t(service.name)}</h3><p>{t(service.description)}</p>
         <button type="button" className="studio-service-action" aria-label={`${t(landing.discuss)}: ${t(service.name)}`} onClick={() => selectService(service.id)}><ArrowRight size={22} aria-hidden="true" /></button>
       </article>)}</div>
