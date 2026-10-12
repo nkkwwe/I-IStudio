@@ -52,7 +52,7 @@ export default function StartupLanding({ reviews = [] }) {
         <div className="hero-cta-group"><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}<svg className="startup-hero-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg></a><a className="startup-hero-explore" href="#services"><span>{t(landing.explore)}</span><svg className="startup-hero-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg></a></div>
         <div className="hero-trust-bar">{t(['Websites · Advertising · Marketplaces', 'Сайти · Реклама · Маркетплейси', 'Site-uri · Publicitate · Marketplace-uri']).split(' · ').map((item, i) => <span key={i}>{item}</span>)}</div>
       </div>
-      <div className="startup-hero-visual" aria-hidden="true"><img src="/images/hero/studio-background.webp?v=2" width="1672" height="941" alt="" fetchPriority="high" /></div>
+      <div className="startup-hero-visual" aria-hidden="true"><img className="startup-hero-image-dark" src="/images/hero/studio-background.webp?v=2" width="1672" height="941" alt="" fetchPriority="high" /><img className="startup-hero-image-light" src="/images/hero/studio-background-light.webp" width="1672" height="941" alt="" fetchPriority="high" /></div>
     </div></section>
     <div className="studio-home-sections" ref={sections}>
     <section className="startup-section service-solutions-section" id="services"><div className="container">
