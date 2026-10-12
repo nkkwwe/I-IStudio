@@ -5,6 +5,7 @@ import { localizedUrl } from '../content/siteLanguage';
 import { landing, translate } from '../content/startupContent';
 import ClientReviews from './ClientReviews';
 import StartupSelect from './StartupSelect';
+import useStudioScrollMotion from './useStudioScrollMotion';
 import { Monitor, GoogleLogo, InstagramLogo, ShoppingCart, TiktokLogo, ArrowRight } from '@phosphor-icons/react';
 import '../../css/sections/studio-home.css';
 
@@ -29,6 +30,8 @@ export default function StartupLanding({ reviews = [] }) {
   const t = (value) => translate(value, language);
   const { flash = {} } = usePage().props;
   const heading = useRef(null);
+  const sections = useRef(null);
+  useStudioScrollMotion(sections);
   const form = useForm({ submission_kind: 'initial', service_type: 'consultation', client_name: '', client_email: '', project_comment: '', ads_consent: false });
   const selectService = (id) => {
     form.setData('service_type', id);
@@ -51,7 +54,7 @@ export default function StartupLanding({ reviews = [] }) {
       </div>
       <div className="startup-hero-visual" aria-hidden="true"><img src="/images/hero/studio-background.webp?v=2" width="1672" height="941" alt="" fetchPriority="high" /></div>
     </div></section>
-    <div className="studio-home-sections">
+    <div className="studio-home-sections" ref={sections}>
     <section className="startup-section service-solutions-section" id="services"><div className="container">
       <div className="section-header"><span className="section-tag">{t(landing.servicesTag)}</span><h2 className="section-title">{t(landing.servicesTitle)}</h2><p className="section-desc">{t(landing.servicesDescription)}</p></div>
       <div className="startup-service-grid">{landing.services.map((service, i) => <article className="advantage-card startup-service-card" key={service.id}>
@@ -70,7 +73,7 @@ export default function StartupLanding({ reviews = [] }) {
       <div className="section-header"><span className="section-tag">{t(landing.processTag)}</span><h2 className="section-title">{t(landing.processTitle)}</h2></div>
       <div className="startup-steps">{landing.steps.map(([title, body], i) => <article className="workflow-card" key={i}><div className="workflow-card-top"><span className="workflow-num">0{i + 1}</span></div><h3>{t(title)}</h3><p>{t(body)}</p></article>)}</div>
     </div></section>
-    <section className="startup-section startup-pricing-section" id="pricing"><img className="studio-pricing-image" src="/images/home/pricing-architecture.webp" width="1600" height="800" loading="lazy" alt="" /><div className="container studio-pricing-layout"><div className="studio-pricing-copy"><span className="section-tag">{t(landing.pricingTag)}</span><h2 className="section-title">{t(landing.pricingTitle)}</h2><p>{t(landing.pricing)}</p><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}<ArrowRight size={18} aria-hidden="true" /></a></div></div></section>
+    <section className="startup-section startup-pricing-section" id="pricing"><img className="studio-pricing-image studio-pricing-image-dark" src="/images/home/pricing-architecture.webp" width="1600" height="800" loading="lazy" alt="" /><img className="studio-pricing-image studio-pricing-image-light" src="/images/home/pricing-architecture-light.webp" width="1600" height="800" loading="lazy" alt="" /><div className="container studio-pricing-layout"><div className="studio-pricing-copy"><span className="section-tag">{t(landing.pricingTag)}</span><h2 className="section-title">{t(landing.pricingTitle)}</h2><p>{t(landing.pricing)}</p><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}<ArrowRight size={18} aria-hidden="true" /></a></div></div></section>
     <section className="startup-section startup-faq-section" id="faq"><div className="container studio-faq-layout"><div><span className="section-tag">{t(landing.faqTag)}</span><h2 className="section-title">{t(landing.faqTitle)}</h2></div><div>{landing.faq.map(([question, answer], i) => <StartupFaqItem id={i} key={i} question={question} answer={answer} t={t} />)}</div></div></section>
     <section className="inquiry-section" id="inquiry"><div className="container inquiry-container">
       <div className="inquiry-copy"><div className="studio-contact-heading"><span className="section-tag">{t(['GET IN TOUCH', 'ЗВ’ЯЖІТЬСЯ З НАМИ', 'CONTACTEAZĂ-NE'])}</span><h2 className="section-title" ref={heading} tabIndex={-1}>{t(landing.contactTitle)}</h2><p className="section-desc">{t(landing.contactDescription)}</p></div><aside className="startup-contact-card"><h3>{t(landing.contactStepsTitle)}</h3><ol className="startup-contact-steps">{landing.contactSteps.map(([title, body], i) => <li key={i}><span>0{i + 1}</span><div><strong>{t(title)}</strong><p>{t(body)}</p></div></li>)}</ol></aside></div>
