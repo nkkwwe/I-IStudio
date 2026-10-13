@@ -153,7 +153,7 @@ export default function InquiryMarkup({
   const toggleExtra = (key) => setExtras((current) => ({ ...current, [key]: !current[key] }));
 
   if (['ads', 'meta-ads', 'tiktok-ads', 'marketplaces'].includes(activeService)) {
-    return <div className="react-page-root">
+    return <div className="react-page-root workspace-surface workspace-inquiry">
       <AccountSiteHeader isDark={isDark} onToggleTheme={onToggleTheme} showProfile={true} isAuthenticated={isAuthenticated} userInitial={userName?.trim()?.charAt(0)?.toLocaleUpperCase() || 'A'} unreadChatCount={unreadChatCount} />
       <main className="inquiry-form-only"><section className="inquiry-form-card inquiry-form-only-card">
         <InquiryServiceSelector service={activeService} language={language} onChange={onServiceChange} />
@@ -163,7 +163,7 @@ export default function InquiryMarkup({
   }
 
   return (
-    <div className="react-page-root">
+    <div className="react-page-root workspace-surface workspace-inquiry">
       <AccountSiteHeader
         isDark={isDark}
         onToggleTheme={onToggleTheme}
