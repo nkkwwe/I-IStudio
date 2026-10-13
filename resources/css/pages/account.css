@@ -376,6 +376,8 @@ html[data-theme="dark"] .account-delete-button {
   --account-accent: var(--accent-blue);
   --account-glow: color-mix(in srgb, var(--account-accent) 10%, transparent);
   --account-glow-soft: color-mix(in srgb, var(--account-accent) 5%, transparent);
+  --account-hover-bg: color-mix(in srgb, var(--text-primary) 4%, transparent);
+  --account-row-hover-bg: color-mix(in srgb, var(--text-primary) 2%, transparent);
   background:
     radial-gradient(ellipse at 100% 0%, var(--account-glow), transparent 48%),
     radial-gradient(ellipse at 78% 90%, var(--account-glow-soft), transparent 52%),
@@ -396,6 +398,8 @@ html[data-theme="dark"] .account-dashboard-layout {
   --account-accent: #168bff;
   --account-glow: color-mix(in srgb, var(--account-accent) 18%, transparent);
   --account-glow-soft: color-mix(in srgb, var(--account-accent) 8%, transparent);
+  --account-hover-bg: color-mix(in srgb, var(--text-primary) 6%, transparent);
+  --account-row-hover-bg: color-mix(in srgb, var(--text-primary) 3%, transparent);
 }
 html[data-theme="dark"] .account-dashboard-layout .account-dashboard-page { background: transparent; }
 html[data-theme="dark"] .account-dashboard-layout .account-brief-status-row { background: transparent; box-shadow: none; }
@@ -403,10 +407,37 @@ html[data-theme="dark"] .account-dashboard-layout .account-dashboard-admin {
   background: radial-gradient(ellipse at 78% 50%, var(--account-glow), transparent 75%), var(--bg-surface);
   border-color: var(--border); box-shadow: none;
 }
-html[data-theme="dark"] .account-dashboard-layout .btn-secondary { background: transparent; }
+/* A translucent wash preserves the background instead of filling the control. */
+.account-dashboard-layout .account-dashboard-page .btn-secondary {
+  --btn-secondary-bg: transparent;
+  --btn-secondary-hover-bg: var(--account-hover-bg);
+  background-color: var(--btn-secondary-bg);
+}
+.account-dashboard-layout .account-dashboard-page .btn-secondary:focus-visible {
+  background-color: var(--btn-secondary-hover-bg);
+  outline: 2px solid var(--text-primary);
+  outline-offset: 3px;
+}
 @media (hover: hover) and (pointer: fine) {
-  html[data-theme="dark"] .account-dashboard-layout a.account-brief-status-row:hover { background: var(--bg-subtle); }
-  html[data-theme="dark"] .account-dashboard-layout .btn-secondary:hover:not(:disabled) { background: var(--btn-secondary-hover-bg); }
+  :is(html, html[data-theme="dark"]) .account-dashboard-layout .account-dashboard-page .btn-secondary:hover:not(:disabled) {
+    background-color: var(--btn-secondary-hover-bg);
+    border-color: var(--btn-secondary-hover-border);
+    color: var(--btn-secondary-hover-text);
+  }
+  :is(html, html[data-theme="dark"]) .account-dashboard-layout a.account-brief-status-row:hover {
+    background-color: var(--account-row-hover-bg);
+  }
+  :is(html, html[data-theme="dark"]) .account-dashboard-layout .account-delete-button:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--status-danger-text) 5%, transparent);
+    border-color: var(--status-danger-text);
+    color: var(--status-danger-text);
+    box-shadow: none;
+  }
+  .account-dashboard-layout .account-dashboard-page .btn-secondary:disabled:hover {
+    background-color: var(--btn-secondary-bg);
+    border-color: var(--btn-secondary-border);
+    color: var(--btn-secondary-text);
+  }
 }
 @media (max-width: 640px) {
   .account-dashboard-layout .account-dashboard-brief-actions .btn { min-height: 48px; padding-inline: 20px; font-size: .9375rem; }
