@@ -304,32 +304,32 @@ html[data-theme="dark"] .account-delete-button {
 .account-dashboard-page { flex: 1; min-height: 0; }
 .account-dashboard-page .account-shell { padding-top: 40px; padding-bottom: 32px; }
 .account-dashboard-identity { padding-bottom: 32px; border-bottom: 1px solid var(--border); }
-.account-dashboard-layout .account-panel-label { display: inline-flex; align-items: center; gap: 16px; color: var(--text-muted); font-size: .6875rem; font-weight: 600; letter-spacing: .12em; }
+.account-dashboard-layout .account-panel-label { display: inline-flex; align-items: center; gap: 16px; color: var(--text-muted); font-size: .75rem; font-weight: 600; letter-spacing: .12em; }
 .account-dashboard-layout .account-panel-label::before { content: ''; width: 28px; height: 2px; flex-shrink: 0; background: var(--accent-blue); }
 .account-dashboard-identity-row { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(420px, 1.2fr) auto; align-items: center; gap: 32px; margin-top: 16px; }
 .account-dashboard-hero { padding: 0; border: 0; gap: 28px; }
-.account-dashboard-hero h1 { margin: 0; font-size: clamp(2rem, 3.2vw, 3rem); line-height: 1.18; }
+.account-dashboard-hero h1 { margin: 0; font-size: clamp(2rem, 3.2vw, 3.25rem); line-height: 1.18; }
 .account-dashboard-hero p { margin-top: 4px; font-size: 1rem; }
 .account-dashboard-details { display: grid; grid-template-columns: .7fr 1.5fr .7fr; gap: 0; margin: 0; }
 .account-dashboard-details div { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; padding: 12px 24px; border: 0; border-left: 1px solid var(--border); min-width: 0; }
 .account-dashboard-details dt { font-size: .8125rem; }
-.account-dashboard-details dd { font-size: .9375rem; text-align: left; font-weight: 600; }
+.account-dashboard-details dd { font-size: 1rem; text-align: left; font-weight: 500; }
 .account-dashboard-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
 .account-dashboard-controls .account-delete-button { margin: 0; min-height: 48px; padding: 12px 26px; border: 1px solid var(--status-danger-text); color: var(--status-danger-text); font-size: .9375rem; font-weight: 600; }
 .account-dashboard-controls .account-delete-button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
 .account-dashboard-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; margin-top: 36px; }
 .account-dashboard-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.account-dashboard-heading h2 { margin: 12px 0 0; font-size: clamp(2rem, 3vw, 2.75rem); line-height: 1.18; }
+.account-dashboard-heading h2 { margin: 12px 0 0; font-size: clamp(2rem, 3vw, 3rem); line-height: 1.18; }
 .account-dashboard-brief-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 20px; }
 .account-dashboard-all { margin: 0; }
 .account-dashboard-briefs .account-brief-status-list { max-width: none; gap: 0; margin-top: 32px; }
 .account-brief-table-head,
 .account-dashboard-briefs .account-brief-status-row { display: grid; grid-template-columns: minmax(140px, .8fr) minmax(0, 3fr) minmax(180px, 1fr); align-items: center; gap: 24px; padding: 20px 24px; }
-.account-brief-table-head { border-bottom: 1px solid var(--border-strong); color: var(--text-muted); font-size: .6875rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.account-brief-table-head { border-bottom: 1px solid var(--border-strong); color: var(--text-muted); font-size: .75rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
 .account-dashboard-briefs .account-brief-status-row { min-height: 76px; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; background: transparent; box-shadow: none; }
 .account-dashboard-briefs .account-brief-status-row strong { font-size: 1.375rem; letter-spacing: -.03em; }
 .account-dashboard-briefs .account-brief-ticket { font-size: .9375rem; font-weight: 500; }
-.account-dashboard-briefs .account-brief-status { justify-self: start; height: auto; min-height: 40px; padding: 8px 20px; font-size: .6875rem; line-height: 1.4; }
+.account-dashboard-briefs .account-brief-status { justify-self: start; height: auto; min-height: 44px; padding: 8px 24px; font-size: .8125rem; line-height: 1.4; }
 .account-dashboard-empty { margin-top: 32px; padding-block: 24px; border-block: 1px solid var(--border); }
 .account-dashboard-empty p { margin-top: 8px; }
 .account-dashboard-layout .account-dashboard-admin { min-height: 0; border-radius: var(--radius-inner); background: var(--bg-subtle); box-shadow: none; }
@@ -369,4 +369,45 @@ html[data-theme="dark"] .account-delete-button {
   .account-dashboard-briefs .account-brief-status { grid-column: 2; grid-row: 1 / span 2; max-width: 150px; padding-inline: 12px; font-size: .625rem; }
   .account-dashboard-admin .account-action-card-link { padding: 24px; gap: 16px; }
   .account-dashboard-admin .account-action-card-content p { font-size: .875rem; }
+}
+
+/* Match the reference atmosphere without affecting other account screens. */
+.account-dashboard-layout { --account-accent: var(--accent-blue); --account-backdrop: url('/images/account/workspace-dark.webp'); background: var(--bg-body); }
+.account-dashboard-layout .account-panel-label::before { width: 34px; background: var(--account-accent); }
+.account-dashboard-layout .account-site-header { background: transparent; box-shadow: none; }
+.account-dashboard-layout .header-container { height: 92px; gap: 24px; }
+.account-dashboard-layout .logo-symbol svg { width: 44px; height: 44px; }
+.account-dashboard-layout .logo-text { font-size: 1.625rem; }
+.account-dashboard-navigation { gap: 16px; }
+.account-dashboard-navigation .nav-link { font-size: 1rem; }
+.account-dashboard-layout .header-actions { gap: 24px; }
+.account-dashboard-layout .header-actions .account-logout { width: auto; flex-basis: auto; padding-inline: 24px; font-size: .9375rem; order: -1; }
+.account-dashboard-layout .header-actions .theme-toggle,
+.account-dashboard-layout .header-actions .language-trigger { width: 56px; height: 56px; }
+.account-dashboard-layout .account-dashboard-page { background: transparent; }
+.account-dashboard-hero .account-avatar { width: 80px; height: 80px; flex-basis: 80px; }
+.account-dashboard-layout .account-dashboard-brief-actions .btn { min-height: 56px; padding-inline: 32px; font-size: 1rem; }
+.account-dashboard-layout .account-dashboard-controls .btn,
+.account-dashboard-layout .account-dashboard-controls .account-delete-button { min-height: 50px; }
+.account-dashboard-layout .account-dashboard-details dd { font-weight: 500; }
+.account-dashboard-admin .account-action-card-content h2 { font-size: 1.875rem; }
+html[data-theme="dark"] .account-dashboard-layout { --account-accent: #168bff; --border: #293442; --border-strong: #465361; --text-muted: #9aaac4; --text-secondary: #aab7cd; background: var(--bg-dark) var(--account-backdrop) center top / cover no-repeat; }
+html[data-theme="dark"] .account-dashboard-layout .account-site-header { background: transparent; }
+html[data-theme="dark"] .account-dashboard-layout .account-dashboard-page { background: transparent; }
+html[data-theme="dark"] .account-dashboard-layout .account-brief-status-row { background: transparent; box-shadow: none; }
+html[data-theme="dark"] .account-dashboard-layout .account-dashboard-admin { background: var(--bg-subtle) var(--account-backdrop) right bottom / cover; border-color: var(--border); box-shadow: none; }
+html[data-theme="dark"] .account-dashboard-layout .btn-secondary,
+html[data-theme="dark"] .account-dashboard-layout .account-logout { background: transparent; }
+@media (hover: hover) and (pointer: fine) {
+  html[data-theme="dark"] .account-dashboard-layout a.account-brief-status-row:hover { background: var(--bg-subtle); }
+  html[data-theme="dark"] .account-dashboard-layout .btn-secondary:hover:not(:disabled),
+  html[data-theme="dark"] .account-dashboard-layout .account-logout:hover:not(:disabled) { background: var(--btn-secondary-hover-bg); }
+}
+@media (max-width: 1200px) { .account-dashboard-navigation { gap: 0; } .account-dashboard-navigation .nav-link { padding-inline: 8px; font-size: .875rem; } .account-dashboard-layout .header-actions { gap: 12px; } }
+@media (max-width: 1000px) { .account-dashboard-layout .header-container { flex-wrap: wrap; height: auto; min-height: 92px; padding-block: 16px; } .account-dashboard-navigation { display: flex; order: 3; width: 100%; flex-wrap: wrap; justify-content: center; } }
+@media (max-width: 640px) { .account-dashboard-layout .logo-text { font-size: 1.25rem; } .account-dashboard-layout .logo-symbol svg { width: 32px; height: 32px; } .account-dashboard-layout .header-container { gap: 12px; } .account-dashboard-layout .header-actions { gap: 8px; } .account-dashboard-layout .header-actions .theme-toggle, .account-dashboard-layout .header-actions .language-trigger { width: 44px; height: 44px; } .account-dashboard-layout .header-actions .account-logout { padding-inline: 12px; font-size: .8125rem; } .account-dashboard-layout .account-dashboard-brief-actions .btn { min-height: 48px; padding-inline: 20px; font-size: .9375rem; } }
+
+@media (max-width: 1000px) {
+  :is(html, html[data-theme="dark"]) .account-dashboard-layout .account-dashboard-navigation { position: static; flex-direction: row; align-items: center; max-height: none; padding: 0; border: 0; background: transparent; box-shadow: none; opacity: 1; visibility: visible; transform: none; }
+  .account-dashboard-layout .account-dashboard-navigation .nav-link { width: auto; min-height: 44px; padding: 10px 8px; font-size: .8125rem; }
 }

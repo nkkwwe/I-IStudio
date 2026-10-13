@@ -132,7 +132,7 @@ export default function Account() {
     <>
       <Head title={accountCopy.pageTitle} />
       <div className="account-dashboard-layout">
-      <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => setLogoutModalOpen(true)} />
+      <AccountSiteHeader showNavigation isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => setLogoutModalOpen(true)} />
       <main className="account-page account-dashboard-page">
       <div className="account-shell">
         <section className="account-dashboard-identity" aria-label={accountCopy.personalWorkspace}>

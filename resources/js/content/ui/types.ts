@@ -1,4 +1,5 @@
 type CommonCopy = {
+  home: string;
   nav: {
     solutions: string;
     services: string;
