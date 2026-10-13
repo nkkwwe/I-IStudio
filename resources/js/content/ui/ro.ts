@@ -76,6 +76,10 @@ const copy: UiCopy = {
     account: {
       pageTitle: 'Cont',
       personalWorkspace: 'SPAȚIU PERSONAL',
+      projectId: 'ID proiect',
+      projectTitle: 'Titlu proiect',
+      status: 'Status',
+      administration: 'ADMINISTRARE',
       projectHistory: 'ISTORICUL PROIECTELOR',
       myProjectBriefs: 'Solicitările mele',
       openEveryTask: 'Deschide toate solicitările trimise către I&I Studio din acest cont.',

@@ -70,6 +70,10 @@ type AdminCopy = {
 type AccountCopy = {
   pageTitle: string;
   personalWorkspace: string;
+  projectId: string;
+  projectTitle: string;
+  status: string;
+  administration: string;
   projectHistory: string;
   myProjectBriefs: string;
   openEveryTask: string;

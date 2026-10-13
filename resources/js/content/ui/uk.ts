@@ -76,6 +76,10 @@ const copy: UiCopy = {
     account: {
       pageTitle: 'Акаунт',
       personalWorkspace: 'ОСОБИСТИЙ ПРОСТІР',
+      projectId: 'ID проєкту',
+      projectTitle: 'Назва проєкту',
+      status: 'Статус',
+      administration: 'АДМІНІСТРУВАННЯ',
       projectHistory: 'ІСТОРІЯ ПРОЄКТІВ',
       myProjectBriefs: 'Мої завдання',
       openEveryTask: 'Відкрийте всі завдання, які ви надіслали I&I Studio з цього акаунта.',

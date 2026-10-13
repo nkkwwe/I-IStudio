@@ -1,5 +1,6 @@
 import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import { useEffect, useState } from 'react';
+import { ArrowRight } from '@phosphor-icons/react';
 import { getUiCopy, useSiteLanguage } from '../content/uiTranslations';
 import { localizedUrl } from '../content/siteLanguage';
 import ChatUnreadBadge, { useChatUnreadCount } from '../Components/ChatUnreadBadge';
@@ -134,34 +135,48 @@ export default function Account() {
       <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} onLogout={() => setLogoutModalOpen(true)} />
       <main className="account-page account-dashboard-page">
       <div className="account-shell">
-        <section className="account-hero account-dashboard-hero">
-          <div className="account-avatar">{user.avatar ? <img src={user.avatar} alt="" /> : initial}</div>
-          <div>
-            <span className="auth-eyebrow">{accountCopy.personalWorkspace}</span>
-            <h1>{user.name}</h1>
-            <p>{user.email}</p>
+        <section className="account-dashboard-identity" aria-label={accountCopy.personalWorkspace}>
+          <span className="account-panel-label">{accountCopy.personalWorkspace}</span>
+          <div className="account-dashboard-identity-row">
+            <div className="account-hero account-dashboard-hero">
+              <div className="account-avatar">{user.avatar ? <img src={user.avatar} alt="" /> : initial}</div>
+              <div><h1>{user.name}</h1><p>{user.email}</p></div>
+            </div>
+            <dl className="account-details account-dashboard-details">
+              <div><dt>{accountCopy.name}</dt><dd>{user.name}</dd></div>
+              <div><dt>{accountCopy.email}</dt><dd>{user.email}</dd></div>
+              <div><dt>{accountCopy.signIn}</dt><dd>{accountCopy.google}</dd></div>
+            </dl>
+            <div className="account-dashboard-controls">
+              <button type="button" className="btn btn-secondary" onClick={openNameModal}>{accountCopy.editName}</button>
+              <button type="button" className="account-delete-button" onClick={openDeleteModal}>{common.deleteAccount}</button>
+            </div>
           </div>
         </section>
 
         {flash.profile_updated && <div className="account-flash">{accountCopy.profileUpdated}</div>}
 
         <section className="account-grid account-dashboard-grid">
-          <article className="account-panel account-dashboard-briefs">
+          <article className="account-dashboard-briefs">
             <div className="account-dashboard-heading">
               <div>
                 <span className="account-panel-label">{accountCopy.projectHistory}</span>
                 <h2>{accountCopy.myProjectBriefs}</h2>
               </div>
-              <Link href={localizedUrl('/inquiry')} className="btn btn-primary account-dashboard-new">{accountCopy.startNewBrief}</Link>
+              <div className="account-dashboard-brief-actions">
+                <Link href={localizedUrl('/inquiry')} className="btn btn-primary account-dashboard-new">{accountCopy.startNewBrief}</Link>
+                <Link href={localizedUrl('/account/project-briefs')} className="btn btn-secondary account-dashboard-all">
+                  <span>{accountCopy.viewAllBriefs}</span><ChatUnreadBadge count={unreadChatCount} /><ArrowRight size={20} aria-hidden="true" />
+                </Link>
+              </div>
             </div>
             {submittedBriefs.length > 0 ? (
               <div className="account-brief-status-list" aria-label={accountCopy.submittedBriefs}>
+                <div className="account-brief-table-head" aria-hidden="true"><span>{accountCopy.projectId}</span><span>{accountCopy.projectTitle}</span><span>{accountCopy.status}</span></div>
                 {submittedBriefs.map((brief) => (
                   <Link className="account-brief-status-row" key={brief.id} href={`${localizedUrl('/account/project-briefs')}?brief=${brief.id}`}>
-                    <div>
-                      <span className="account-brief-ticket">{brief.ticket}</span>
-                      <strong>{copy.services[brief.service_type] ?? brief.service_type}</strong>
-                    </div>
+                    <span className="account-brief-ticket">{brief.ticket}</span>
+                    <strong>{copy.services[brief.service_type] ?? brief.service_type}</strong>
                     <span className={`account-brief-status account-brief-status-${brief.status}`}>{copy.admin.statuses[brief.status] ?? brief.status}</span>
                   </Link>
                 ))}
@@ -172,40 +187,17 @@ export default function Account() {
                 <p>{accountCopy.noProjectBriefsDescription}</p>
               </div>
             )}
-            <Link href={localizedUrl('/account/project-briefs')} className="btn btn-secondary account-dashboard-all">
-              <span>{accountCopy.viewAllBriefs}</span>
-              <ChatUnreadBadge count={unreadChatCount} />
-              <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
-            </Link>
-          </article>
-
-          <article className="account-panel account-dashboard-profile">
-            <div className="account-dashboard-profile-head">
-              <div>
-                <span className="account-panel-label">{accountCopy.accountLabel}</span>
-                <h2>{accountCopy.profileTitle}</h2>
-              </div>
-              <button type="button" className="btn btn-secondary btn-sm" onClick={openNameModal}>{accountCopy.editName}</button>
-            </div>
-            <dl className="account-details">
-              <div><dt>{accountCopy.name}</dt><dd>{user.name}</dd></div>
-              <div><dt>{accountCopy.email}</dt><dd>{user.email}</dd></div>
-              <div><dt>{accountCopy.signIn}</dt><dd>{accountCopy.google}</dd></div>
-            </dl>
-            <div className="account-dashboard-settings">
-              <span className="account-panel-label">{accountCopy.accountControl}</span>
-              <button type="button" className="account-delete-button" onClick={openDeleteModal}>{common.deleteAccount}</button>
-            </div>
           </article>
 
           {user.is_admin && (
             <article className="account-panel account-action-card account-dashboard-admin">
               <Link href="/admin" className="account-action-card-link">
                 <div className="account-action-card-content">
+                  <span className="account-panel-label">{accountCopy.administration}</span>
                   <h2>{accountCopy.adminPanel}</h2>
                   <p>{accountCopy.adminPanelDescription}</p>
                 </div>
-                <span className="account-action-card-arrow" aria-hidden="true">→</span>
+                <ArrowRight className="account-action-card-arrow" size={28} aria-hidden="true" />
               </Link>
             </article>
           )}

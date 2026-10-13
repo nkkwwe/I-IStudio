@@ -297,216 +297,76 @@ html[data-theme="dark"] .account-delete-button {
   }
 }
 
-/* Dashboard: recent work first, account controls alongside it. */
-.account-dashboard-layout {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  min-height: 100dvh;
+/* Profile uses the same 1600px container and gutters as the homepage. */
+.account-dashboard-layout { --account-gutter: 32px; display: flex; flex-direction: column; min-height: 100dvh; }
+.account-dashboard-layout .account-site-header .container,
+.account-dashboard-page .account-shell { width: 100%; max-width: 1600px; margin-inline: auto; padding-inline: var(--account-gutter); }
+.account-dashboard-page { flex: 1; min-height: 0; }
+.account-dashboard-page .account-shell { padding-top: 40px; padding-bottom: 32px; }
+.account-dashboard-identity { padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+.account-dashboard-layout .account-panel-label { display: inline-flex; align-items: center; gap: 16px; color: var(--text-muted); font-size: .6875rem; font-weight: 600; letter-spacing: .12em; }
+.account-dashboard-layout .account-panel-label::before { content: ''; width: 28px; height: 2px; flex-shrink: 0; background: var(--accent-blue); }
+.account-dashboard-identity-row { display: grid; grid-template-columns: minmax(260px, 1fr) minmax(420px, 1.2fr) auto; align-items: center; gap: 32px; margin-top: 16px; }
+.account-dashboard-hero { padding: 0; border: 0; gap: 28px; }
+.account-dashboard-hero h1 { margin: 0; font-size: clamp(2rem, 3.2vw, 3rem); line-height: 1.18; }
+.account-dashboard-hero p { margin-top: 4px; font-size: 1rem; }
+.account-dashboard-details { display: grid; grid-template-columns: .7fr 1.5fr .7fr; gap: 0; margin: 0; }
+.account-dashboard-details div { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; padding: 12px 24px; border: 0; border-left: 1px solid var(--border); min-width: 0; }
+.account-dashboard-details dt { font-size: .8125rem; }
+.account-dashboard-details dd { font-size: .9375rem; text-align: left; font-weight: 600; }
+.account-dashboard-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; }
+.account-dashboard-controls .account-delete-button { margin: 0; min-height: 48px; padding: 12px 26px; border: 1px solid var(--status-danger-text); color: var(--status-danger-text); font-size: .9375rem; font-weight: 600; }
+.account-dashboard-controls .account-delete-button:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 3px; }
+.account-dashboard-grid { grid-template-columns: minmax(0, 1fr); gap: 40px; margin-top: 36px; }
+.account-dashboard-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.account-dashboard-heading h2 { margin: 12px 0 0; font-size: clamp(2rem, 3vw, 2.75rem); line-height: 1.18; }
+.account-dashboard-brief-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 20px; }
+.account-dashboard-all { margin: 0; }
+.account-dashboard-briefs .account-brief-status-list { max-width: none; gap: 0; margin-top: 32px; }
+.account-brief-table-head,
+.account-dashboard-briefs .account-brief-status-row { display: grid; grid-template-columns: minmax(140px, .8fr) minmax(0, 3fr) minmax(180px, 1fr); align-items: center; gap: 24px; padding: 20px 24px; }
+.account-brief-table-head { border-bottom: 1px solid var(--border-strong); color: var(--text-muted); font-size: .6875rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
+.account-dashboard-briefs .account-brief-status-row { min-height: 76px; border: 0; border-bottom: 1px solid var(--border); border-radius: 0; background: transparent; box-shadow: none; }
+.account-dashboard-briefs .account-brief-status-row strong { font-size: 1.375rem; letter-spacing: -.03em; }
+.account-dashboard-briefs .account-brief-ticket { font-size: .9375rem; font-weight: 500; }
+.account-dashboard-briefs .account-brief-status { justify-self: start; height: auto; min-height: 40px; padding: 8px 20px; font-size: .6875rem; line-height: 1.4; }
+.account-dashboard-empty { margin-top: 32px; padding-block: 24px; border-block: 1px solid var(--border); }
+.account-dashboard-empty p { margin-top: 8px; }
+.account-dashboard-layout .account-dashboard-admin { min-height: 0; border-radius: var(--radius-inner); background: var(--bg-subtle); box-shadow: none; }
+.account-dashboard-admin .account-action-card-link { min-height: 124px; padding: 24px 40px; }
+.account-dashboard-admin .account-action-card-content h2 { max-width: none; margin: 12px 0 4px; font-size: 1.75rem; line-height: 1.18; }
+.account-dashboard-admin .account-action-card-content p { max-width: none; font-size: .9375rem; }
+.account-dashboard-admin .account-action-card-arrow { min-width: 28px; }
+@media (hover: hover) and (pointer: fine) {
+  .account-dashboard-briefs a.account-brief-status-row:hover { background: var(--bg-subtle); }
 }
-
-.account-dashboard-page {
-  flex: 1;
-  min-height: 0;
+@media (max-width: 1200px) {
+  .account-dashboard-identity-row { grid-template-columns: minmax(220px, 1fr) minmax(380px, 1.4fr); gap: 24px; }
+  .account-dashboard-controls { grid-column: 1 / -1; }
 }
-
-.account-dashboard-page .account-shell {
-  width: min(100% - 48px, 1200px);
-  padding-bottom: 40px;
-}
-
-.account-dashboard-hero {
-  padding-bottom: 28px;
-}
-
-.account-dashboard-hero h1 {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-}
-
-.account-dashboard-grid {
-  grid-template-columns: minmax(0, 1.3fr) minmax(340px, 0.7fr);
-  gap: 24px;
-  align-items: start;
-}
-
-.account-dashboard-briefs,
-.account-dashboard-profile {
-  min-height: 0;
-  padding: 32px;
-}
-
-.account-dashboard-heading,
-.account-dashboard-profile-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.account-dashboard-heading h2,
-.account-dashboard-profile-head h2 {
-  max-width: none;
-  margin-top: 8px;
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
-  line-height: 1.18;
-}
-
-.account-dashboard-new {
-  flex: 0 0 auto;
-}
-
-.account-dashboard-briefs .account-brief-status-list {
-  max-width: none;
-  margin-top: 26px;
-}
-
-.account-dashboard-empty {
-  margin-top: 26px;
-  padding: 22px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-inner);
-  background: var(--bg-subtle);
-}
-
-.account-dashboard-empty strong {
-  color: var(--text-primary);
-}
-
-.account-dashboard-empty p {
-  margin-top: 6px;
-  font-size: 0.875rem;
-}
-
-.account-dashboard-all {
-  margin-top: 24px;
-  white-space: normal;
-}
-
-.account-dashboard-all:focus-visible {
-  outline: 2px solid var(--text-primary);
-  outline-offset: 3px;
-}
-
-.account-dashboard-profile-head .btn {
-  flex: 0 0 auto;
-  min-height: 44px;
-}
-
-.account-dashboard-profile .account-details {
-  margin-top: 24px;
-}
-
-.account-dashboard-settings {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 26px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border);
-}
-
-.account-dashboard-settings .account-delete-button {
-  margin-top: 0;
-  min-height: 44px;
-  font-size: 0.875rem;
-}
-
-.account-dashboard-admin .account-action-card-link {
-  min-height: 0;
-  padding: 24px 32px;
-}
-
-.account-dashboard-admin .account-action-card-content h2 {
-  margin: 0 0 4px;
-  font-size: 1.5rem;
-}
-
-.account-dashboard-admin .account-action-card-content p {
-  font-size: 0.875rem;
-}
-
-.account-dashboard-briefs .account-brief-status-row {
-  padding: 18px 20px;
-}
-
-.account-dashboard-briefs .account-brief-status-row strong {
-  font-size: 1rem;
-}
-
-.account-dashboard-briefs .account-brief-ticket {
-  font-size: 0.75rem;
-}
-
-.account-dashboard-briefs .account-brief-status {
-  height: auto;
-  min-height: 32px;
-  font-size: 0.75rem;
-  line-height: 1.4;
-}
-
-.account-dashboard-profile .account-details dt {
-  font-size: 0.875rem;
-}
-
-.account-dashboard-profile .account-details dd {
-  font-size: 1rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .account-dashboard-all {
-    transition: none;
-  }
-}
-
 @media (max-width: 900px) {
-  .account-dashboard-grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  .account-dashboard-identity-row { grid-template-columns: minmax(0, 1fr); }
+  .account-dashboard-details div:first-child { border-left: 0; padding-left: 0; }
+  .account-dashboard-heading { align-items: flex-start; flex-direction: column; }
+  .account-dashboard-brief-actions { justify-content: flex-start; }
 }
-
-@media (max-width: 560px) {
-  .account-dashboard-page .account-shell {
-    width: calc(100% - 32px);
-  }
-
-  .account-dashboard-briefs,
-  .account-dashboard-profile {
-    padding: 24px;
-  }
-
-  .account-dashboard-hero {
-    padding-bottom: 24px;
-  }
-
-  .account-dashboard-heading {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .account-dashboard-new {
-    width: 100%;
-  }
-
-  .account-dashboard-profile-head {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .account-dashboard-profile-head .btn {
-    width: auto;
-    min-height: 44px;
-  }
-
-  .account-dashboard-settings {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .account-dashboard-settings .account-delete-button {
-    width: auto;
-    min-height: 44px;
-  }
+@media (max-width: 767px) {
+  .account-dashboard-layout { --account-gutter: 20px; }
 }
-
+@media (max-width: 640px) {
+  .account-dashboard-page .account-shell { padding-top: 28px; }
+  .account-dashboard-hero { gap: 20px; }
+  .account-dashboard-details { grid-template-columns: minmax(0, 1fr); }
+  .account-dashboard-details div { border-left: 0; border-bottom: 1px solid var(--border-light); padding: 12px 0; gap: 4px; }
+  .account-dashboard-controls { gap: 12px; }
+  .account-dashboard-controls > * { flex: 1 1 auto; }
+  .account-dashboard-brief-actions { gap: 12px; width: 100%; }
+  .account-dashboard-brief-actions .btn { flex: 1 1 auto; }
+  .account-brief-table-head { display: none; }
+  .account-dashboard-briefs .account-brief-status-row { grid-template-columns: minmax(0, 1fr) auto; padding: 20px 0; gap: 8px 12px; }
+  .account-dashboard-briefs .account-brief-ticket { grid-column: 1; font-size: .75rem; }
+  .account-dashboard-briefs .account-brief-status-row strong { grid-column: 1; font-size: 1.125rem; }
+  .account-dashboard-briefs .account-brief-status { grid-column: 2; grid-row: 1 / span 2; max-width: 150px; padding-inline: 12px; font-size: .625rem; }
+  .account-dashboard-admin .account-action-card-link { padding: 24px; gap: 16px; }
+  .account-dashboard-admin .account-action-card-content p { font-size: .875rem; }
+}
