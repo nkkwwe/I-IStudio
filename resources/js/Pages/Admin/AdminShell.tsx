@@ -40,7 +40,7 @@ export default function AdminShell({ title, eyebrow, heading, count, activeSecti
   return (
     <>
       <Head title={title} />
-      <main className="account-page admin-page">
+      <main className={`account-page admin-page${activeSection === 'briefs' ? ' workspace-surface workspace-briefs' : ''}`}>
         <div className="account-shell">
           <div className="admin-topbar">
             <div>

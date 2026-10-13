@@ -371,8 +371,8 @@ html[data-theme="dark"] .account-delete-button {
   .account-dashboard-admin .account-action-card-content p { font-size: .875rem; }
 }
 
-/* Soft blue illumination follows the active theme; no raster background. */
-.account-dashboard-layout {
+/* Shared workspace atmosphere; no raster background. */
+.workspace-surface {
   --account-accent: var(--accent-blue);
   --account-glow: color-mix(in srgb, var(--account-accent) 10%, transparent);
   --account-glow-soft: color-mix(in srgb, var(--account-accent) 5%, transparent);
@@ -394,7 +394,7 @@ html[data-theme="dark"] .account-delete-button {
 .account-dashboard-layout .account-dashboard-admin {
   background: radial-gradient(ellipse at 78% 50%, var(--account-glow), transparent 75%), var(--bg-surface);
 }
-html[data-theme="dark"] .account-dashboard-layout {
+html[data-theme="dark"] .workspace-surface {
   --account-accent: #168bff;
   --account-glow: color-mix(in srgb, var(--account-accent) 18%, transparent);
   --account-glow-soft: color-mix(in srgb, var(--account-accent) 8%, transparent);

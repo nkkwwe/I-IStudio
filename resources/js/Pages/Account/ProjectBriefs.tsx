@@ -71,6 +71,7 @@ export default function AccountProjectBriefs() {
   return (
     <>
       <Head title={copy.account.myProjectBriefs} />
+      <div className="workspace-surface workspace-briefs">
       <AccountSiteHeader isDark={isDark} onToggleTheme={toggleTheme} showProfile isAuthenticated userInitial={auth.user.name?.trim().charAt(0).toUpperCase() || auth.user.email.charAt(0).toUpperCase()} />
       <main className="account-page account-history-page">
         <div className="account-shell">
@@ -81,7 +82,7 @@ export default function AccountProjectBriefs() {
               <p>{copy.account.allTasks}</p>
             </div>
             <div className="account-history-actions">
-              <Link href={localizedUrl('/inquiry')} className="account-admin-button">{copy.account.startNewBrief}</Link>
+              <Link href={localizedUrl('/inquiry')} className="btn btn-primary">{copy.account.startNewBrief}</Link>
             </div>
           </div>
 
@@ -238,6 +239,7 @@ export default function AccountProjectBriefs() {
           </section>
         </div>
       </main>
+      </div>
     </>
   );
 }
