@@ -9,7 +9,6 @@ const copy: UiCopy = {
       notice: 'This brief is cancelled and will be permanently deleted 14 days after cancellation.',
     },
     common: {
-      home: 'Home',
       nav: { solutions: 'Solutions', services: 'Services', cases: 'Cases', process: 'How We Work', about: 'About', contact: 'Contact' },
       discussProject: 'Discuss Project',
       homeMetaDescription: 'We build high-converting landing pages, functional business websites, modern website redesigns, and high-ROI ad campaigns.',

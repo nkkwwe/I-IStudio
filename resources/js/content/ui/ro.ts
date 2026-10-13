@@ -9,7 +9,6 @@ const copy: UiCopy = {
       notice: 'Acest brief este anulat și va fi șters definitiv la 14 zile după anulare.',
     },
     common: {
-      home: 'Acasă',
       nav: { solutions: 'Soluții', services: 'Servicii', cases: 'Studii de caz', process: 'Cum lucrăm', about: 'Despre noi', contact: 'Contact' },
       discussProject: 'Discută proiectul',
       homeMetaDescription: 'Construim landing pages cu conversie ridicată, site-uri funcționale, redesignuri moderne și campanii de publicitate eficiente.',

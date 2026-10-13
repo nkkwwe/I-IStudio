@@ -371,19 +371,17 @@ html[data-theme="dark"] .account-delete-button {
   .account-dashboard-admin .account-action-card-content p { font-size: .875rem; }
 }
 
-/* Match the reference atmosphere without affecting other account screens. */
-.account-dashboard-layout { --account-accent: var(--accent-blue); --account-backdrop: url('/images/account/workspace-dark.webp'); background: var(--bg-body); }
+/* Soft blue illumination follows the active theme; no raster background. */
+.account-dashboard-layout {
+  --account-accent: var(--accent-blue);
+  --account-glow: color-mix(in srgb, var(--account-accent) 10%, transparent);
+  --account-glow-soft: color-mix(in srgb, var(--account-accent) 5%, transparent);
+  background:
+    radial-gradient(ellipse at 100% 0%, var(--account-glow), transparent 48%),
+    radial-gradient(ellipse at 78% 90%, var(--account-glow-soft), transparent 52%),
+    var(--bg-body);
+}
 .account-dashboard-layout .account-panel-label::before { width: 34px; background: var(--account-accent); }
-.account-dashboard-layout .account-site-header { background: transparent; box-shadow: none; }
-.account-dashboard-layout .header-container { height: 92px; gap: 24px; }
-.account-dashboard-layout .logo-symbol svg { width: 44px; height: 44px; }
-.account-dashboard-layout .logo-text { font-size: 1.625rem; }
-.account-dashboard-navigation { gap: 16px; }
-.account-dashboard-navigation .nav-link { font-size: 1rem; }
-.account-dashboard-layout .header-actions { gap: 24px; }
-.account-dashboard-layout .header-actions .account-logout { width: auto; flex-basis: auto; padding-inline: 24px; font-size: .9375rem; order: -1; }
-.account-dashboard-layout .header-actions .theme-toggle,
-.account-dashboard-layout .header-actions .language-trigger { width: 56px; height: 56px; }
 .account-dashboard-layout .account-dashboard-page { background: transparent; }
 .account-dashboard-hero .account-avatar { width: 80px; height: 80px; flex-basis: 80px; }
 .account-dashboard-layout .account-dashboard-brief-actions .btn { min-height: 56px; padding-inline: 32px; font-size: 1rem; }
@@ -391,23 +389,25 @@ html[data-theme="dark"] .account-delete-button {
 .account-dashboard-layout .account-dashboard-controls .account-delete-button { min-height: 50px; }
 .account-dashboard-layout .account-dashboard-details dd { font-weight: 500; }
 .account-dashboard-admin .account-action-card-content h2 { font-size: 1.875rem; }
-html[data-theme="dark"] .account-dashboard-layout { --account-accent: #168bff; --border: #293442; --border-strong: #465361; --text-muted: #9aaac4; --text-secondary: #aab7cd; background: var(--bg-dark) var(--account-backdrop) center top / cover no-repeat; }
-html[data-theme="dark"] .account-dashboard-layout .account-site-header { background: transparent; }
+.account-dashboard-layout .account-dashboard-admin {
+  background: radial-gradient(ellipse at 78% 50%, var(--account-glow), transparent 75%), var(--bg-surface);
+}
+html[data-theme="dark"] .account-dashboard-layout {
+  --account-accent: #168bff;
+  --account-glow: color-mix(in srgb, var(--account-accent) 18%, transparent);
+  --account-glow-soft: color-mix(in srgb, var(--account-accent) 8%, transparent);
+}
 html[data-theme="dark"] .account-dashboard-layout .account-dashboard-page { background: transparent; }
 html[data-theme="dark"] .account-dashboard-layout .account-brief-status-row { background: transparent; box-shadow: none; }
-html[data-theme="dark"] .account-dashboard-layout .account-dashboard-admin { background: var(--bg-subtle) var(--account-backdrop) right bottom / cover; border-color: var(--border); box-shadow: none; }
-html[data-theme="dark"] .account-dashboard-layout .btn-secondary,
-html[data-theme="dark"] .account-dashboard-layout .account-logout { background: transparent; }
+html[data-theme="dark"] .account-dashboard-layout .account-dashboard-admin {
+  background: radial-gradient(ellipse at 78% 50%, var(--account-glow), transparent 75%), var(--bg-surface);
+  border-color: var(--border); box-shadow: none;
+}
+html[data-theme="dark"] .account-dashboard-layout .btn-secondary { background: transparent; }
 @media (hover: hover) and (pointer: fine) {
   html[data-theme="dark"] .account-dashboard-layout a.account-brief-status-row:hover { background: var(--bg-subtle); }
-  html[data-theme="dark"] .account-dashboard-layout .btn-secondary:hover:not(:disabled),
-  html[data-theme="dark"] .account-dashboard-layout .account-logout:hover:not(:disabled) { background: var(--btn-secondary-hover-bg); }
+  html[data-theme="dark"] .account-dashboard-layout .btn-secondary:hover:not(:disabled) { background: var(--btn-secondary-hover-bg); }
 }
-@media (max-width: 1200px) { .account-dashboard-navigation { gap: 0; } .account-dashboard-navigation .nav-link { padding-inline: 8px; font-size: .875rem; } .account-dashboard-layout .header-actions { gap: 12px; } }
-@media (max-width: 1000px) { .account-dashboard-layout .header-container { flex-wrap: wrap; height: auto; min-height: 92px; padding-block: 16px; } .account-dashboard-navigation { display: flex; order: 3; width: 100%; flex-wrap: wrap; justify-content: center; } }
-@media (max-width: 640px) { .account-dashboard-layout .logo-text { font-size: 1.25rem; } .account-dashboard-layout .logo-symbol svg { width: 32px; height: 32px; } .account-dashboard-layout .header-container { gap: 12px; } .account-dashboard-layout .header-actions { gap: 8px; } .account-dashboard-layout .header-actions .theme-toggle, .account-dashboard-layout .header-actions .language-trigger { width: 44px; height: 44px; } .account-dashboard-layout .header-actions .account-logout { padding-inline: 12px; font-size: .8125rem; } .account-dashboard-layout .account-dashboard-brief-actions .btn { min-height: 48px; padding-inline: 20px; font-size: .9375rem; } }
-
-@media (max-width: 1000px) {
-  :is(html, html[data-theme="dark"]) .account-dashboard-layout .account-dashboard-navigation { position: static; flex-direction: row; align-items: center; max-height: none; padding: 0; border: 0; background: transparent; box-shadow: none; opacity: 1; visibility: visible; transform: none; }
-  .account-dashboard-layout .account-dashboard-navigation .nav-link { width: auto; min-height: 44px; padding: 10px 8px; font-size: .8125rem; }
+@media (max-width: 640px) {
+  .account-dashboard-layout .account-dashboard-brief-actions .btn { min-height: 48px; padding-inline: 20px; font-size: .9375rem; }
 }

@@ -8,7 +8,6 @@ type AccountSiteHeaderProps = {
   onToggleTheme: () => void;
   onLogout?: () => void;
   showProfile?: boolean;
-  showNavigation?: boolean;
   isAuthenticated?: boolean;
   userInitial?: string;
   unreadChatCount?: number;
@@ -19,7 +18,6 @@ export default function AccountSiteHeader({
   onToggleTheme,
   onLogout,
   showProfile = false,
-  showNavigation = false,
   isAuthenticated = false,
   userInitial = 'A',
   unreadChatCount = 0,
@@ -75,14 +73,6 @@ export default function AccountSiteHeader({
           <span className="logo-text">I&amp;I<span className="logo-sub">Studio</span></span>
         </a>
 
-        {showNavigation && <nav className="nav-menu account-dashboard-navigation" aria-label={copy.common.home}>
-          <a className="nav-link" href={localizedUrl('/#hero')}>{copy.common.home}</a>
-          <a className="nav-link" href={localizedUrl('/#services')}>{copy.common.nav.services}</a>
-          <a className="nav-link" href={localizedUrl('/#about')}>{copy.common.nav.about}</a>
-          <a className="nav-link" href={localizedUrl('/#process')}>{copy.common.nav.process}</a>
-          <a className="nav-link" href={localizedUrl('/#faq')}>FAQ</a>
-          <a className="nav-link" href={localizedUrl('/#contact')}>{copy.common.nav.contact}</a>
-        </nav>}
         <div className="header-actions">
           {showProfile && (
             isAuthenticated ? (
@@ -128,7 +118,7 @@ export default function AccountSiteHeader({
 
           {onLogout && (
             <button type="button" className="account-logout" onClick={onLogout} aria-label={copy.common.signOut} data-tooltip={copy.common.signOut}>
-              {showNavigation ? copy.common.signOut : <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 5H6.75A1.75 1.75 0 0 0 5 6.75v10.5A1.75 1.75 0 0 0 6.75 19H10" /><path d="M13 12h7" /><path d="m17 8 4 4-4 4" /></svg>}
+              <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M10 5H6.75A1.75 1.75 0 0 0 5 6.75v10.5A1.75 1.75 0 0 0 6.75 19H10" /><path d="M13 12h7" /><path d="m17 8 4 4-4 4" /></svg>
             </button>
           )}
         </div>
