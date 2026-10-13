@@ -40,7 +40,7 @@ export default function StartupLanding({ reviews = [] }) {
   };
   const input = (name, label, type = 'text') => <div className="form-group">
     <label htmlFor={`lead-${name}`}>{t(label)} *</label>
-    <input id={`lead-${name}`} type={type} autoComplete={type === 'email' ? 'email' : 'name'} required maxLength={name === 'client_name' ? 120 : 255} value={form.data[name]} onChange={(e) => form.setData(name, e.target.value)} aria-invalid={Boolean(form.errors[name])} aria-describedby={form.errors[name] ? `lead-${name}-error` : undefined} />
+    <input id={`lead-${name}`} type={type} placeholder={type === 'email' ? 'you@example.com' : t(['How should we address you?', 'Як до вас звертатися?', 'Cum să ne adresăm ție?'])} autoComplete={type === 'email' ? 'email' : 'name'} required maxLength={name === 'client_name' ? 120 : 255} value={form.data[name]} onChange={(e) => form.setData(name, e.target.value)} aria-invalid={Boolean(form.errors[name])} aria-describedby={form.errors[name] ? `lead-${name}-error` : undefined} />
     {form.errors[name] && <p className="account-inline-error" id={`lead-${name}-error`}>{form.errors[name]}</p>}
   </div>;
   return <>
@@ -52,7 +52,10 @@ export default function StartupLanding({ reviews = [] }) {
         <div className="hero-cta-group"><a className="btn btn-primary" href="#inquiry">{t(landing.discuss)}<svg className="startup-hero-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg></a><a className="startup-hero-explore" href="#services"><span>{t(landing.explore)}</span><svg className="startup-hero-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg></a></div>
         <div className="hero-trust-bar">{t(['Websites · Advertising · Marketplaces', 'Сайти · Реклама · Маркетплейси', 'Site-uri · Publicitate · Marketplace-uri']).split(' · ').map((item, i) => <span key={i}>{item}</span>)}</div>
       </div>
-      <div className="startup-hero-visual" aria-hidden="true"><img className="startup-hero-image-dark" src="/images/hero/studio-background.webp?v=2" width="1672" height="941" alt="" fetchPriority="high" /><img className="startup-hero-image-light" src="/images/hero/studio-background-light.webp" width="1672" height="941" alt="" fetchPriority="high" /></div>
+      <div className="startup-hero-visual" aria-hidden="true">{['dark', 'light'].map((theme) => {
+        const source = `/images/hero/studio-background${theme === 'light' ? '-light' : ''}`;
+        return <img key={theme} className={`startup-hero-image-${theme}`} src={`${source}.webp?v=3`} srcSet={`${source}-960.webp?v=3 960w, ${source}.webp?v=3 1672w`} sizes="100vw" width="1672" height="941" alt="" fetchPriority="high" />;
+      })}</div>
     </div></section>
     <div className="studio-home-sections" ref={sections}>
     <section className="startup-section service-solutions-section" id="services"><div className="container">
@@ -60,7 +63,7 @@ export default function StartupLanding({ reviews = [] }) {
       <div className="startup-service-grid">{landing.services.map((service, i) => <article className="advantage-card startup-service-card" key={service.id}>
         <img className="studio-service-image studio-service-image-dark" src={`/images/home/service-${serviceImages[i]}.webp`} width="800" height="1100" loading="lazy" alt="" />
         <img className="studio-service-image studio-service-image-light" src={`/images/home/service-${serviceImages[i]}-light.webp?v=2`} width="800" height="1100" loading="lazy" alt="" />
-        <div className="studio-service-top"><span className="advantage-num">0{i + 1}</span>{(() => { const Icon = serviceIcons[i]; return <Icon size={32} weight="duotone" aria-hidden="true" />; })()}</div><h3>{t(service.name)}</h3><p>{t(service.description)}</p>
+        <div className="studio-service-top"><span className="advantage-num">0{i + 1}</span><span className="studio-service-icon">{(() => { const Icon = serviceIcons[i]; return <Icon size={28} weight="duotone" aria-hidden="true" />; })()}</span></div><h3>{t(service.name)}</h3><p>{t(service.description)}</p>
         <button type="button" className="studio-service-action" aria-label={`${t(landing.discuss)}: ${t(service.name)}`} onClick={() => selectService(service.id)}><ArrowRight size={22} aria-hidden="true" /></button>
       </article>)}</div>
     </div></section>
@@ -81,7 +84,7 @@ export default function StartupLanding({ reviews = [] }) {
         {flash.inquiry_submitted && <p role="status">{t(landing.success)} <strong>{flash.inquiry_ticket}</strong></p>}
         {input('client_name', landing.name)}{input('client_email', landing.email, 'email')}
         <div className="form-group"><label htmlFor="lead-service">{t(landing.service)}</label><StartupSelect id="lead-service" ariaLabel={t(landing.service)} value={form.data.service_type} onChange={(value) => form.setData('service_type', value)}><option value="consultation">{t(landing.advice)}</option>{landing.services.map((service) => <option key={service.id} value={service.id}>{t(service.name)}</option>)}</StartupSelect></div>
-        <div className="form-group"><label htmlFor="lead-task">{t(landing.task)}</label><textarea id="lead-task" rows={3} maxLength={1000} value={form.data.project_comment} onChange={(e) => form.setData('project_comment', e.target.value)} /></div>
+        <div className="form-group"><label htmlFor="lead-task">{t(landing.task)}</label><textarea id="lead-task" placeholder={t(['What do you want to create or improve?', 'Що ви хочете створити або покращити?', 'Ce vrei să creezi sau să îmbunătățești?'])} rows={3} maxLength={1000} value={form.data.project_comment} onChange={(e) => form.setData('project_comment', e.target.value)} /></div>
         <label className="ads-consent"><input type="checkbox" required checked={form.data.ads_consent} onChange={(e) => form.setData('ads_consent', e.target.checked)} />{t(landing.consent)}</label>
         {Object.keys(form.errors).length > 0 && <div role="alert" className="account-inline-error">{Object.entries(form.errors).filter(([key]) => !['client_name', 'client_email'].includes(key)).map(([key, error]) => <p key={key}>{error}</p>)}</div>}
         <button className="btn btn-primary" type="submit" disabled={form.processing}>{t(form.processing ? landing.sending : landing.submit)}</button>

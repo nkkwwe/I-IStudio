@@ -324,7 +324,7 @@ function initScrollSpy(signal) {
     }
 
     if (window.scrollY < 80) {
-      sectionsWithLinks.forEach(({ link }) => link.classList.remove('active'));
+      setActiveLink(sectionsWithLinks[0].link);
       return;
     }
 

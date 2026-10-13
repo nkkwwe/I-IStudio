@@ -29,7 +29,13 @@ html:not([data-theme="dark"]) .studio-home-sections .studio-service-image-dark {
 html:not([data-theme="dark"]) .studio-home-sections .studio-service-image-light { display: block; }
 .studio-home-sections .startup-service-card:first-child .studio-service-image { width: 100%; mask-image: linear-gradient(180deg, rgba(0, 0, 0, .45), black 70%); object-position: center bottom; }
 .studio-service-top { display: flex; align-items: center; gap: 20px; min-height: 32px; }
-.studio-service-top svg { color: #60a5fa; }
+.studio-service-icon { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid color-mix(in srgb, var(--studio-accent) 28%, transparent); border-radius: var(--radius-sm); background: linear-gradient(145deg, color-mix(in srgb, var(--studio-accent) 14%, var(--studio-photo-surface)), var(--studio-photo-surface)); color: var(--studio-accent); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--studio-photo-ink) 8%, transparent); }
+.studio-home-page .studio-service-action,
+.studio-home-page .startup-faq-trigger,
+.studio-home-page .startup-principle-card,
+.studio-home-page .footer-nav a { transition: color 200ms ease, background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease; }
+.studio-home-page .startup-lead input::placeholder,
+.studio-home-page .startup-lead textarea::placeholder { color: var(--text-dim); opacity: 1; font-weight: 400; }
 .studio-home-sections .advantage-num { position: static; font-size: .75rem; color: var(--text-muted); }
 .studio-home-sections .studio-service-top .advantage-num { color: var(--studio-photo-muted); }
 .studio-home-sections .startup-service-card h3 { max-width: 65%; margin: 0; font-size: 1.25rem; line-height: 1.35; color: var(--studio-photo-ink); }
@@ -95,8 +101,15 @@ html:not([data-theme="dark"]) .studio-home-sections .studio-pricing-image-light 
 .studio-home-page .footer-top { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
 .studio-home-page .footer-nav { display: flex; align-items: center; flex-wrap: wrap; gap: 24px; }
 @media (hover: hover) and (pointer: fine) {
-  .studio-service-action:hover { color: #60a5fa; }
+  .studio-home-page .btn-primary:disabled:hover { background-color: var(--btn-primary-bg); border-color: var(--btn-primary-border); color: var(--btn-primary-text); }
+  .studio-service-action:not(:disabled):hover { color: var(--studio-accent); background-color: color-mix(in srgb, var(--studio-accent) 10%, transparent); }
   .studio-home-sections .startup-principle-card:hover { box-shadow: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .studio-home-page .studio-service-action,
+  .studio-home-page .startup-faq-trigger,
+  .studio-home-page .startup-principle-card,
+  .studio-home-page .footer-nav a { transition: none; }
 }
 @media (max-width: 1100px) {
   .studio-home-sections .startup-service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
